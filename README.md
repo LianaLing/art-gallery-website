@@ -1,1 +1,2 @@
-# web-app-dev
+# art-gallery-website
+Year 2 sem 3 project
