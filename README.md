@@ -2,7 +2,7 @@
 
 ## How to run this project?
 
-Currently, did not find anyway to run this project outside of Visual Studio since it depends on Windows's IIS Express Server. Therefore, `git clone` the project to anywhere locally then open it in Visual Studio and open `ArtGalleryWebsite.sln` and run the project in Visual Studio.
+Currently, we did not find any way to run this project outside of Visual Studio since it depends on Windows's IIS Express Server. Therefore, `git clone` the project to any where locally then open it in Visual Studio and open `ArtGalleryWebsite.sln` and run the project in Visual Studio.
 
 ## How to use TailwindCSS in this project
 
