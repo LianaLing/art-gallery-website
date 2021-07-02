@@ -11,7 +11,7 @@ namespace ArtGalleryWebsite
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-			Console.Write("Heyy");
+
 		}
 	}
 }
