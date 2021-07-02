@@ -3,7 +3,8 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="">
-        <h1 class="text-6xl">HAHAHHA</h1>
+        <asp:Label ID="lblCounter" runat="server" />
+        <asp:Button ID="btnIncrement" Text="Click me" runat="server" OnClick="btn_Click" />
     </div>
 
 </asp:Content>
