@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # art-gallery-website
 
 ## How to run this project?
@@ -22,7 +21,3 @@ This will watch the folder and rebuild `tailwind.css` whenever extra classes is 
 
 For a detailed docs of what the command is doing refer to [TailwindCSS Docs](https://tailwindcss.com/docs/installation#using-tailwind-cli)
 
-=======
-# art-gallery-website
-Year 2 sem 3 project
->>>>>>> Stashed changes
