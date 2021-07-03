@@ -33,6 +33,10 @@ namespace ArtGalleryWebsite
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                             "~/Scripts/modernizr-*"));
+
+            // Add Vue
+            bundles.Add(new ScriptBundle("~/bundles/vue").Include(
+                "~/Scripts/vue.global.prod.js"));
         }
     }
 }

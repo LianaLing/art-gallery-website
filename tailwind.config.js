@@ -1,15 +1,26 @@
 module.exports = {
   mode: "jit",
-    purge: [
-        "./**/*.aspx",
-        "./**/*.Master",
-    ],
+  purge: ["./**/*.aspx", "./**/*.Master", "./Components/*.js"],
   darkMode: "class", // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        red: {
+          DEFAULT: "#E60023",
+          hover: "#AD081B",
+        },
+        light: {
+          DEFAULT: "#EFEFEF",
+          hover: "#E2E2E2",
+        },
+        dark: {
+          DEFAULT: "#111111",
+        },
+      },
+    },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};
