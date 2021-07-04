@@ -139,7 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="Scripts\src\components\ArtCard.js" />
+    <None Include="Scripts\src\components\ArtCard.bak" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
@@ -147,15 +147,15 @@
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Home.aspx" />
+    <None Include="Scripts\src\components\ArtCard.vue" />
     <Content Include="Scripts\src\HomePage.js" />
     <Content Include="webpack.config.js" />
-    <Content Include="Scripts\helper.js" />
+    <Content Include="Scripts\src\utils\Helper.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\vue.global.prod.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
     <Content Include="Scripts\WebForms\GridView.js" />
@@ -285,9 +285,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
-  <Target Name="BeforeBuild">
+  <!--<Target Name="BeforeBuild">
     <Exec Command="yarn build" />
-  </Target>
+  </Target>-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

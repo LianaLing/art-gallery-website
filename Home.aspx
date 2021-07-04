@@ -5,6 +5,5 @@
     <div id="app">
     </div>
 
-    <script src="Scripts/helper.js"></script>
     <script src="Scripts/dist/HomePage.dist.js"></script>
 </asp:Content>

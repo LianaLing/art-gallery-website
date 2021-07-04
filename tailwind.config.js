@@ -1,6 +1,6 @@
 module.exports = {
   mode: "jit",
-  purge: ["./**/*.aspx", "./**/*.Master", "./Scripts/src/**/*.js"],
+  purge: ["./**/*.aspx", "./**/*.Master", "./Scripts/src/**/*.js", "./Scripts/src/**/*.vue"],
   darkMode: "class", // or 'media' or 'class'
   theme: {
     extend: {

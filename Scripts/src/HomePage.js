@@ -1,5 +1,6 @@
 ﻿import { createApp } from 'vue';
-import { ArtCard } from "./components/ArtCard";
+import ArtCard from "./components/ArtCard";
+import { sliceIntoChunks } from "./utils/Helper";
 
 // Getting the data from code-behind
 const state = JSON.parse(document.getElementById("state").value);
