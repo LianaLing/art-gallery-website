@@ -80,6 +80,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./Scripts/src/utils/Helper.ts":
+/*!*************************************!*\
+  !*** ./Scripts/src/utils/Helper.ts ***!
+  \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"sliceIntoChunks\": () => (/* binding */ sliceIntoChunks)\n/* harmony export */ });\n/**\r\n * Slice a 1-dimensional array into chunks of arrays in a 2-dimensional array\r\n * @param {Array<T>} arr - the input array\r\n * @param {number} chunkSize - desired chunk size\r\n * @returns {Array<Array<T>>} 2D array consisting chunks of the original array\r\n */\r\nconst sliceIntoChunks = (arr, chunkSize) => {\r\n    const res = [];\r\n    for (let i = 0; i < arr.length; i += chunkSize) {\r\n        const chunk = arr.slice(i, i + chunkSize);\r\n        res.push(chunk);\r\n    }\r\n    return res;\r\n};\r\n\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/utils/Helper.ts?");
+
+/***/ }),
+
 /***/ "./node_modules/ts-loader/index.js??clonedRuleSet-1!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/components/ArtCard.vue?vue&type=script&lang=ts":
 /*!*******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/ts-loader/index.js??clonedRuleSet-1!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/components/ArtCard.vue?vue&type=script&lang=ts ***!
@@ -87,6 +97,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.esm-bundler.js\");\n/* harmony import */ var _headlessui_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @headlessui/vue */ \"./node_modules/@headlessui/vue/dist/headlessui.esm.js\");\n/* harmony import */ var _components_icons_Whatsapp_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/icons/Whatsapp.vue */ \"./Scripts/src/components/icons/Whatsapp.vue\");\n/* harmony import */ var _components_icons_Facebook_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/icons/Facebook.vue */ \"./Scripts/src/components/icons/Facebook.vue\");\n/* harmony import */ var _components_icons_Email_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/icons/Email.vue */ \"./Scripts/src/components/icons/Email.vue\");\n/* harmony import */ var _components_icons_Link_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/icons/Link.vue */ \"./Scripts/src/components/icons/Link.vue\");\n/* harmony import */ var _components_icons_Search_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/icons/Search.vue */ \"./Scripts/src/components/icons/Search.vue\");\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,vue__WEBPACK_IMPORTED_MODULE_0__.defineComponent)({\r\n    components: {\r\n        Popover: _headlessui_vue__WEBPACK_IMPORTED_MODULE_1__.Popover,\r\n        PopoverButton: _headlessui_vue__WEBPACK_IMPORTED_MODULE_1__.PopoverButton,\r\n        PopoverPanel: _headlessui_vue__WEBPACK_IMPORTED_MODULE_1__.PopoverPanel,\r\n        Whatsapp: _components_icons_Whatsapp_vue__WEBPACK_IMPORTED_MODULE_2__.default,\r\n        Facebook: _components_icons_Facebook_vue__WEBPACK_IMPORTED_MODULE_3__.default,\r\n        Email: _components_icons_Email_vue__WEBPACK_IMPORTED_MODULE_4__.default,\r\n        Link: _components_icons_Link_vue__WEBPACK_IMPORTED_MODULE_5__.default,\r\n        Search: _components_icons_Search_vue__WEBPACK_IMPORTED_MODULE_6__.default,\r\n    },\r\n    props: {\r\n        art: { type: Object, required: true },\r\n    },\r\n    data() {\r\n        return {\r\n            transition: \"transition ease-in-out duration-200\",\r\n        };\r\n    },\r\n}));\r\n\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/components/ArtCard.vue?./node_modules/ts-loader/index.js??clonedRuleSet-1!./node_modules/vue-loader/dist/index.js??ruleSet%5B1%5D.rules%5B3%5D.use%5B0%5D");
+
+/***/ }),
+
+/***/ "./node_modules/ts-loader/index.js??clonedRuleSet-1!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/pages/Home.vue?vue&type=script&lang=ts":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/ts-loader/index.js??clonedRuleSet-1!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/pages/Home.vue?vue&type=script&lang=ts ***!
+  \***********************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _components_ArtCard_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/ArtCard.vue */ \"./Scripts/src/components/ArtCard.vue\");\n/* harmony import */ var _utils_Helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils/Helper */ \"./Scripts/src/utils/Helper.ts\");\n\r\n\r\n// Getting the data from code-behind\r\nconst state = JSON.parse(document.getElementById(\"state\").value);\r\n// Slice the data from 1D array to 2D array\r\n// eg. [1, 2, 3, 4, 5, 6] -> [[1, 2, 3], [4, 5, 6]]\r\nconst arts2D = (0,_utils_Helper__WEBPACK_IMPORTED_MODULE_1__.sliceIntoChunks)(state, 3);\r\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({\r\n    components: { ArtCard: _components_ArtCard_vue__WEBPACK_IMPORTED_MODULE_0__.default },\r\n    data() {\r\n        return { arts2D };\r\n    },\r\n});\r\n\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/pages/Home.vue?./node_modules/ts-loader/index.js??clonedRuleSet-1!./node_modules/vue-loader/dist/index.js??ruleSet%5B1%5D.rules%5B3%5D.use%5B0%5D");
 
 /***/ }),
 
@@ -150,6 +170,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./Scripts/src/pages/Home.vue":
+/*!************************************!*\
+  !*** ./Scripts/src/pages/Home.vue ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _Home_vue_vue_type_template_id_f28922ec__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Home.vue?vue&type=template&id=f28922ec */ \"./Scripts/src/pages/Home.vue?vue&type=template&id=f28922ec\");\n/* harmony import */ var _Home_vue_vue_type_script_lang_ts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home.vue?vue&type=script&lang=ts */ \"./Scripts/src/pages/Home.vue?vue&type=script&lang=ts\");\n\n\n\n_Home_vue_vue_type_script_lang_ts__WEBPACK_IMPORTED_MODULE_1__.default.render = _Home_vue_vue_type_template_id_f28922ec__WEBPACK_IMPORTED_MODULE_0__.render\n/* hot reload */\nif (false) {}\n\n_Home_vue_vue_type_script_lang_ts__WEBPACK_IMPORTED_MODULE_1__.default.__file = \"Scripts/src/pages/Home.vue\"\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Home_vue_vue_type_script_lang_ts__WEBPACK_IMPORTED_MODULE_1__.default);\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/pages/Home.vue?");
+
+/***/ }),
+
 /***/ "./Scripts/src/components/ArtCard.vue?vue&type=script&lang=ts":
 /*!********************************************************************!*\
   !*** ./Scripts/src/components/ArtCard.vue?vue&type=script&lang=ts ***!
@@ -157,6 +187,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* reexport safe */ _node_modules_ts_loader_index_js_clonedRuleSet_1_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_3_use_0_ArtCard_vue_vue_type_script_lang_ts__WEBPACK_IMPORTED_MODULE_0__.default)\n/* harmony export */ });\n/* harmony import */ var _node_modules_ts_loader_index_js_clonedRuleSet_1_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_3_use_0_ArtCard_vue_vue_type_script_lang_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/ts-loader/index.js??clonedRuleSet-1!../../../node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./ArtCard.vue?vue&type=script&lang=ts */ \"./node_modules/ts-loader/index.js??clonedRuleSet-1!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/components/ArtCard.vue?vue&type=script&lang=ts\");\n \n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/components/ArtCard.vue?");
+
+/***/ }),
+
+/***/ "./Scripts/src/pages/Home.vue?vue&type=script&lang=ts":
+/*!************************************************************!*\
+  !*** ./Scripts/src/pages/Home.vue?vue&type=script&lang=ts ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* reexport safe */ _node_modules_ts_loader_index_js_clonedRuleSet_1_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_3_use_0_Home_vue_vue_type_script_lang_ts__WEBPACK_IMPORTED_MODULE_0__.default)\n/* harmony export */ });\n/* harmony import */ var _node_modules_ts_loader_index_js_clonedRuleSet_1_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_3_use_0_Home_vue_vue_type_script_lang_ts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/ts-loader/index.js??clonedRuleSet-1!../../../node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Home.vue?vue&type=script&lang=ts */ \"./node_modules/ts-loader/index.js??clonedRuleSet-1!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/pages/Home.vue?vue&type=script&lang=ts\");\n \n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/pages/Home.vue?");
 
 /***/ }),
 
@@ -220,6 +260,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./Scripts/src/pages/Home.vue?vue&type=template&id=f28922ec":
+/*!******************************************************************!*\
+  !*** ./Scripts/src/pages/Home.vue?vue&type=template&id=f28922ec ***!
+  \******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": () => (/* reexport safe */ _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_1_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_3_use_0_Home_vue_vue_type_template_id_f28922ec__WEBPACK_IMPORTED_MODULE_0__.render)\n/* harmony export */ });\n/* harmony import */ var _node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_1_node_modules_vue_loader_dist_index_js_ruleSet_1_rules_3_use_0_Home_vue_vue_type_template_id_f28922ec__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[1]!../../../node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Home.vue?vue&type=template&id=f28922ec */ \"./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[1]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/pages/Home.vue?vue&type=template&id=f28922ec\");\n\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/pages/Home.vue?");
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[1]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/components/ArtCard.vue?vue&type=template&id=4e377c1a":
 /*!********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[1]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/components/ArtCard.vue?vue&type=template&id=4e377c1a ***!
@@ -277,6 +327,16 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": () => (/* binding */ render)\n/* harmony export */ });\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.esm-bundler.js\");\n\n\nconst _hoisted_1 = {\n  xmlns: \"http://www.w3.org/2000/svg\",\n  viewBox: \"0 0 48 48\",\n  width: \"48\",\n  height: \"48\",\n  version: \"1.1\"\n}\nconst _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(\"g\", { id: \"surface1\" }, [\n  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(\"path\", {\n    d: \"M 48 24 C 48 37.253906 37.253906 48 24 48 C 10.746094 48 0 37.253906 0 24 C 0 10.746094 10.746094 0 24 0 C 37.253906 0 48 10.746094 48 24 Z M 48 24 \",\n    style: {\"fill\":\"rgb(37, 211, 102)\",\"stroke\":\"transparent\"}\n  }),\n  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(\"path\", {\n    d: \"M 33.851562 13.910156 C 28.871094 9.039062 21.070312 8.566406 15.539062 12.800781 C 10.011719 17.039062 8.4375 24.695312 11.851562 30.769531 L 9.871094 38 L 17.28125 36 C 19.332031 37.148438 21.644531 37.757812 24 37.769531 C 31.730469 37.769531 38 31.503906 38 23.769531 C 38.019531 20.058594 36.542969 16.496094 33.910156 13.878906 M 24 35.410156 C 21.921875 35.410156 19.878906 34.851562 18.089844 33.789062 L 17.671875 33.539062 L 13.269531 34.699219 L 14.441406 30.410156 L 14.128906 30 C 11.304688 25.523438 11.863281 19.707031 15.484375 15.847656 C 19.109375 11.992188 24.886719 11.074219 29.527344 13.621094 C 34.167969 16.164062 36.5 21.523438 35.199219 26.652344 C 33.898438 31.785156 29.292969 35.386719 24 35.410156 M 30.371094 26.710938 C 30.019531 26.539062 28.300781 25.710938 27.980469 25.578125 C 27.660156 25.449219 27.429688 25.398438 27.199219 25.75 C 26.96875 26.101562 26.300781 26.890625 26.089844 27.121094 C 25.878906 27.351562 25.679688 27.378906 25.328125 27.210938 C 24.304688 26.792969 23.359375 26.203125 22.53125 25.46875 C 21.765625 24.765625 21.109375 23.953125 20.578125 23.058594 C 20.378906 22.710938 20.578125 22.519531 20.738281 22.339844 C 20.898438 22.160156 21.089844 21.929688 21.261719 21.730469 C 21.40625 21.554688 21.523438 21.359375 21.609375 21.148438 C 21.71875 20.960938 21.71875 20.730469 21.609375 20.539062 C 21.519531 20.359375 20.820312 18.640625 20.53125 17.941406 C 20.238281 17.238281 19.960938 17.351562 19.75 17.339844 L 19 17.339844 C 18.640625 17.351562 18.304688 17.511719 18.070312 17.78125 C 17.269531 18.53125 16.820312 19.589844 16.839844 20.691406 C 16.957031 22.007812 17.453125 23.261719 18.269531 24.300781 C 19.773438 26.554688 21.84375 28.375 24.269531 29.578125 C 24.921875 29.859375 25.589844 30.105469 26.269531 30.308594 C 26.980469 30.527344 27.734375 30.578125 28.46875 30.449219 C 29.453125 30.25 30.308594 29.648438 30.828125 28.789062 C 31.058594 28.269531 31.128906 27.691406 31.03125 27.128906 C 30.941406 26.988281 30.710938 26.898438 30.359375 26.71875 \",\n    style: {\"fill\":\"rgb(255, 255, 255)\",\"stroke\":\"transparent\"}\n  })\n], -1 /* HOISTED */)\n\nfunction render(_ctx, _cache) {\n  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(\"svg\", _hoisted_1, [\n    _hoisted_2\n  ]))\n}\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/components/icons/Whatsapp.vue?./node_modules/vue-loader/dist/templateLoader.js??ruleSet%5B1%5D.rules%5B1%5D!./node_modules/vue-loader/dist/index.js??ruleSet%5B1%5D.rules%5B3%5D.use%5B0%5D");
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[1]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/pages/Home.vue?vue&type=template&id=f28922ec":
+/*!************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[1]!./node_modules/vue-loader/dist/index.js??ruleSet[1].rules[3].use[0]!./Scripts/src/pages/Home.vue?vue&type=template&id=f28922ec ***!
+  \************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": () => (/* binding */ render)\n/* harmony export */ });\n/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ \"./node_modules/vue/dist/vue.esm-bundler.js\");\n\n\nconst _hoisted_1 = { class: \"flex justify-around w-full py-8 mx-auto max-w-7xl\" }\n\nfunction render(_ctx, _cache) {\n  const _component_ArtCard = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)(\"ArtCard\")\n\n  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(\"div\", _hoisted_1, [\n    ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.arts2D, (arts) => {\n      return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(\"div\", {\n        class: \"flex flex-col mx-4\",\n        key: arts\n      }, [\n        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(arts, (art) => {\n          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ArtCard, {\n            key: art.id,\n            art: art\n          }, null, 8 /* PROPS */, [\"art\"]))\n        }), 128 /* KEYED_FRAGMENT */))\n      ]))\n    }), 128 /* KEYED_FRAGMENT */))\n  ]))\n}\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/pages/Home.vue?./node_modules/vue-loader/dist/templateLoader.js??ruleSet%5B1%5D.rules%5B1%5D!./node_modules/vue-loader/dist/index.js??ruleSet%5B1%5D.rules%5B3%5D.use%5B0%5D");
 
 /***/ }),
 
@@ -362,7 +422,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	var __webpack_exports__ = __webpack_require__("./Scripts/src/components/ArtCard.vue");
+/******/ 	var __webpack_exports__ = __webpack_require__("./Scripts/src/pages/Home.vue");
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()

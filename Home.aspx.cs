@@ -27,15 +27,15 @@ namespace ArtGalleryWebsite
     public class Art 
     {
         public string id;
-        public string imgSrc;
+        public string imageSrc;
         public string title;
         public double price;
         public Author author;
 
-        public Art(string id, string imgSrc, double price, string title, Author author)
+        public Art(string id, string imageSrc, double price, string title, Author author)
         {
             this.id = id;
-            this.imgSrc = imgSrc;
+            this.imageSrc = imageSrc;
             this.price = price;
             this.title = title;
             this.author = author;

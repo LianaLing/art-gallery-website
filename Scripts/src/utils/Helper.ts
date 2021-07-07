@@ -4,11 +4,12 @@
  * @param {number} chunkSize - desired chunk size
  * @returns {Array<Array<T>>} 2D array consisting chunks of the original array
  */
-export const sliceIntoChunks = (arr, chunkSize) => {
-    const res = [];
+export const sliceIntoChunks = <T>(arr: T[], chunkSize: number): T[][] => {
+    const res: T[][] = [];
     for (let i = 0; i < arr.length; i += chunkSize) {
-    const chunk = arr.slice(i, i + chunkSize);
+        const chunk = arr.slice(i, i + chunkSize);
         res.push(chunk);
     }
     return res;
 };
+

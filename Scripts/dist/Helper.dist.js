@@ -10,13 +10,13 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./Scripts/src/utils/Helper.js":
+/***/ "./Scripts/src/utils/Helper.ts":
 /*!*************************************!*\
-  !*** ./Scripts/src/utils/Helper.js ***!
+  !*** ./Scripts/src/utils/Helper.ts ***!
   \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"sliceIntoChunks\": () => (/* binding */ sliceIntoChunks)\n/* harmony export */ });\n﻿/**\r\n * Slice a 1-dimensional array into chunks of arrays in a 2-dimensional array\r\n * @param {Array<T>} arr - the input array\r\n * @param {number} chunkSize - desired chunk size\r\n * @returns {Array<Array<T>>} 2D array consisting chunks of the original array\r\n */\r\nconst sliceIntoChunks = (arr, chunkSize) => {\r\n    const res = [];\r\n    for (let i = 0; i < arr.length; i += chunkSize) {\r\n    const chunk = arr.slice(i, i + chunkSize);\r\n        res.push(chunk);\r\n    }\r\n    return res;\r\n};\r\n\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/utils/Helper.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"sliceIntoChunks\": () => (/* binding */ sliceIntoChunks)\n/* harmony export */ });\n/**\r\n * Slice a 1-dimensional array into chunks of arrays in a 2-dimensional array\r\n * @param {Array<T>} arr - the input array\r\n * @param {number} chunkSize - desired chunk size\r\n * @returns {Array<Array<T>>} 2D array consisting chunks of the original array\r\n */\r\nconst sliceIntoChunks = (arr, chunkSize) => {\r\n    const res = [];\r\n    for (let i = 0; i < arr.length; i += chunkSize) {\r\n        const chunk = arr.slice(i, i + chunkSize);\r\n        res.push(chunk);\r\n    }\r\n    return res;\r\n};\r\n\n\n//# sourceURL=webpack://art-gallery-website/./Scripts/src/utils/Helper.ts?");
 
 /***/ })
 
@@ -60,7 +60,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
 /******/ 	var __webpack_exports__ = {};
-/******/ 	__webpack_modules__["./Scripts/src/utils/Helper.js"](0, __webpack_exports__, __webpack_require__);
+/******/ 	__webpack_modules__["./Scripts/src/utils/Helper.ts"](0, __webpack_exports__, __webpack_require__);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()
