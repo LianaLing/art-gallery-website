@@ -9,6 +9,7 @@
 <script lang="ts">
 import ArtCard from "../components/ArtCard.vue";
 import { sliceIntoChunks } from "../utils/Helper";
+import * as API from "../types/api";
 
 // Getting the data from code-behind
 const state = JSON.parse(
@@ -16,7 +17,7 @@ const state = JSON.parse(
 );
 // Slice the data from 1D array to 2D array
 // eg. [1, 2, 3, 4, 5, 6] -> [[1, 2, 3], [4, 5, 6]]
-const arts2D = sliceIntoChunks(state, 3);
+const arts2D = sliceIntoChunks<API.Art>(state, 3);
 
 export default {
   components: { ArtCard },
