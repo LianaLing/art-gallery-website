@@ -3,12 +3,6 @@ module.exports = {
   purge: ["./**/*.aspx", "./**/*.Master", "./Scripts/src/**/*.js", "./Scripts/src/**/*.vue"],
   darkMode: "class", // or 'media' or 'class'
   theme: {
-<<<<<<< HEAD
-      extend: {},
-      fontFamily: {
-          'garamond': ['Garamond']
-      },
-=======
     extend: {
       colors: {
         red: {
@@ -23,8 +17,10 @@ module.exports = {
           DEFAULT: "#111111",
         },
       },
-    },
->>>>>>> 18e17843a7606dc88050b9eab7d975d81e086ede
+      fontFamily: {
+        garamond: ['Garamond']
+      },
+      },
   },
   variants: {
     extend: {},
