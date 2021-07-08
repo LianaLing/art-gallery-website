@@ -28,7 +28,7 @@ module.exports = {
             },
           },
           fontFamily: {
-            garamond: ['Garamond']
+            garamond: ['EB Garamond']
           },
       },
   },
