@@ -15,7 +15,7 @@
 
     <!-- Slogan -->
     <div class="flex-auto mt-20">
-        <h1 class="text-center text-red text-8xl font-bold font-garamond">BEAUTY</h1>
+        <h1 class="text-center text-accent text-8xl font-bold font-garamond">BEAUTY</h1>
         <br />
         <h1 class="text-center text-5xl font-bold font-garamond">is in the eye of the beholder.</h1>
     </div>
