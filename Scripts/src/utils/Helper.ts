@@ -13,3 +13,9 @@ export const sliceIntoChunks = <T>(arr: T[], chunkSize: number): T[][] => {
     return res;
 };
 
+/**
+ * Pause execution for specified duration 
+ * @param {number} ms - sleep duration in milliseconds
+ * @returns {Prmoise<unknown>} a Promise that resolves in the given duration
+ */
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
