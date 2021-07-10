@@ -24,13 +24,38 @@
       :class="transition"
     ></div>
     <button
-      class="absolute px-4 py-2 font-bold rounded-full opacity-0  bg-red hover:bg-red-hover text-light top-4 right-4 group-hover:opacity-100"
+      class="
+        absolute
+        px-4
+        py-2
+        font-bold
+        rounded-full
+        opacity-0
+        bg-red
+        hover:bg-red-hover
+        text-light
+        top-4
+        right-4
+        group-hover:opacity-100
+      "
       :class="transition"
     >
       Save
     </button>
     <p
-      class="absolute px-4 py-2 font-semibold rounded-full opacity-0  bottom-4 left-4 group-hover:opacity-100 text-dark bg-light"
+      class="
+        absolute
+        px-4
+        py-2
+        font-semibold
+        rounded-full
+        opacity-0
+        bottom-4
+        left-4
+        group-hover:opacity-100
+        text-dark
+        bg-light
+      "
       :class="transition"
     >
       RM {{ art.price.toFixed(2) }}
@@ -40,7 +65,13 @@
       :class="transition"
     >
       <PopoverButton
-        class="p-2 rounded-full  bg-light focus:outline-none hover:bg-light-hover"
+        class="
+          p-2
+          rounded-full
+          bg-light
+          focus:outline-none
+          hover:bg-light-hover
+        "
         :class="transition"
       >
         <Search />

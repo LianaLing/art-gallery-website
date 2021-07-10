@@ -156,6 +156,7 @@
     <None Include="Scripts\src\components\ArtCard.vue" />
     <TypeScriptCompile Include="shims-vue.d.ts" />
     <Content Include="Scripts\src\HomePage.js" />
+    <Content Include="User.aspx" />
     <Content Include="webpack.config.js" />
     <TypeScriptCompile Include="Scripts\src\utils\Helper.ts" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -237,6 +238,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="User.aspx.cs">
+      <DependentUpon>User.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User.aspx.designer.cs">
+      <DependentUpon>User.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
