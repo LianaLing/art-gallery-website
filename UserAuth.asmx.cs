@@ -13,15 +13,43 @@ namespace ArtGalleryWebsite
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     [System.Web.Script.Services.ScriptService]
     public class UserAuth : System.Web.Services.WebService
     {
+        // Since C# enum doesn't support string values, we use struct instead
+        struct AccountType
+        {
+            public const string Personal = "personal";
+            public const string Artist = "artist";
+        }
 
         [WebMethod]
-        public string HelloWorld()
+        public string Login(string email, string password)
         {
-            return JsonConvert.SerializeObject("Hello World");
+            Dictionary<string, string> map = new Dictionary<string, string>();
+            map.Add("email", email);
+            map.Add("password", password);
+
+            return JsonConvert.SerializeObject(map);
+        }
+
+        [WebMethod]
+        public string SignUp(string email, string password, string type)
+        {
+            // Check the account type
+            switch(type)
+            {
+                case AccountType.Personal:
+                    break;
+                case AccountType.Artist:
+                    break;
+            }
+            Dictionary<string, string> map = new Dictionary<string, string>();
+            map.Add("email", email);
+            map.Add("password", password);
+            map.Add("type", type);
+
+            return JsonConvert.SerializeObject(map);
         }
     }
 }
