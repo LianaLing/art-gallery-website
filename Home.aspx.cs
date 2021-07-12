@@ -24,7 +24,7 @@ namespace ArtGalleryWebsite
         }
     }
 
-    public class Art 
+    public class Art
     {
         public string id;
         public string imageSrc;
@@ -39,6 +39,22 @@ namespace ArtGalleryWebsite
             this.price = price;
             this.title = title;
             this.author = author;
+        }
+    }
+
+    public class Icon
+    {
+        public string id;
+        public string title;
+        public string iconSrc;
+        public string href;
+
+        public Icon(string id, string title, string iconSrc, string href)
+        {
+            this.id = id;
+            this.title = title;
+            this.iconSrc = iconSrc;
+            this.href = href;
         }
     }
 
@@ -65,6 +81,14 @@ namespace ArtGalleryWebsite
                 new Art("art_0007", "https://i.pinimg.com/564x/1a/86/56/1a865603d9cb21e1f8f8b947c1df4e80.jpg", 90099.99, title: "A Wheatfield, with Cypresses", author: Liana),
                 new Art("art_0008", "https://i.pinimg.com/564x/3d/dd/3f/3ddd3fa8fe1ae75133c877406abe280f.jpg", 22222.22, title: "A Wheatfield, with Cypresses", author: Marcus),
                 new Art("art_0009", "https://i.pinimg.com/564x/b9/92/49/b99249c860d9b507251991d063a245b4.jpg", 33333.33, title: "A Wheatfield, with Cypresses", author: Liana),
+            };
+
+            Icon[] icons =
+            {
+                new Icon("icon_0001", "Edit Icon", "https://icons8.com/icon/89821/pencil", "/"),
+                // new Icon("icon_0001", "Share Icon", "https://icons8.com/icon/89821/pencil", "/"),
+                // new Icon("icon_0001", "Settings Icon", "https://icons8.com/icon/89821/pencil", "/"),
+                // new Icon("icon_0001", "Add Icon", "https://icons8.com/icon/89821/pencil", "/"),
             };
 
             Page.ClientScript.RegisterHiddenField("state", JsonConvert.SerializeObject(arts));

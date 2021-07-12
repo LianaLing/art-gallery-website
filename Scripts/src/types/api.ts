@@ -11,3 +11,10 @@ export type Art = {
   price: number;
   author: Author;
 };
+
+export type Icon = {
+  id: string;
+  title: string;
+  iconSrc: string;
+  href: string;
+}
