@@ -11,22 +11,21 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
+import { Art } from "../types/model";
+import { getStateFromBackend, sliceIntoChunks } from "../utils/helper";
 import ArtCard from "../components/ArtCard.vue";
-import { sliceIntoChunks } from "../utils/helper";
-import * as API from "../types/api";
 
 // Getting the data from code-behind
-const state = JSON.parse(
-  (<HTMLInputElement>document.getElementById("state")).value
-);
+const arts = getStateFromBackend<Art[]>("state");
 // Slice the data from 1D array to 2D array
 // eg. [1, 2, 3, 4, 5, 6] -> [[1, 2, 3], [4, 5, 6]]
-const arts2D = sliceIntoChunks<API.Art>(state, 3);
+const arts2D = sliceIntoChunks<Art>(arts, 3);
 
-export default {
+export default defineComponent({
   components: { ArtCard },
   data() {
     return { arts2D };
   },
-};
+});
 </script>

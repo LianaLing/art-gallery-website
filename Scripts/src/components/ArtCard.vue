@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="relative group filter drop-shadow-none w-[300px]">
+  <div class="relative group filter drop-shadow-none w-[300px] font-garamond">
     <img
       :alt="art.title"
       class="
@@ -31,8 +31,8 @@
         font-bold
         rounded-full
         opacity-0
-        bg-red
-        hover:bg-red-hover
+        bg-accent
+        hover:bg-accent-hover
         text-light
         top-4
         right-4
@@ -139,7 +139,7 @@
       </PopoverPanel>
     </Popover>
   </div>
-  <div class="w-[300px] mb-8">
+  <div class="w-[300px] mb-8 font-garamond">
     <p class="px-2 mt-1 font-bold line-clamp-2">{{ art.title }}</p>
     <div class="flex items-center px-2 mt-1">
       <img :src="art.author.avatarUrl" class="w-[24px] rounded-full" />
@@ -151,12 +151,12 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import { Art } from "../types/model";
 import Whatsapp from "../components/icons/Whatsapp.vue";
 import Facebook from "../components/icons/Facebook.vue";
 import Email from "../components/icons/Email.vue";
 import Link from "../components/icons/Link.vue";
 import Search from "../components/icons/Search.vue";
-import * as API from "../types/api";
 
 export default defineComponent({
   components: {
@@ -170,7 +170,7 @@ export default defineComponent({
     Search,
   },
   props: {
-    art: { type: Object as PropType<API.Art>, required: true },
+    art: { type: Object as PropType<Art>, required: true },
   },
   data() {
     return {
