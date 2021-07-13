@@ -157,6 +157,7 @@
     <TypeScriptCompile Include="shims-vue.d.ts" />
     <Content Include="Scripts\src\HomePage.js" />
     <Content Include="User.aspx" />
+    <Content Include="UserAuth.asmx" />
     <Content Include="webpack.config.js" />
     <TypeScriptCompile Include="Scripts\src\utils\Helper.ts" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -245,6 +246,10 @@
     </Compile>
     <Compile Include="User.aspx.designer.cs">
       <DependentUpon>User.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserAuth.asmx.cs">
+      <DependentUpon>UserAuth.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>

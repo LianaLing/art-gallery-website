@@ -60,7 +60,7 @@ namespace ArtGalleryWebsite
 
     public partial class Home : System.Web.UI.Page
     {
-        private static readonly HttpClient client = new HttpClient();
+        // private static readonly HttpClient client = new HttpClient();
 
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -148,7 +148,7 @@
 
 
 <!-- Auto crop image (not sure if needed)-->
-// <script lang="ts">
+<script lang="ts">
 // (function () {
 //   let img = document.getElementById("homeGallery1") as HTMLDivElement;
 //   let firstChild = img.firstChild as HTMLDivElement;
@@ -162,4 +162,4 @@
 //     };
 //   }
 // })();
-// </script>
+</script>

@@ -1,6 +1,10 @@
 ﻿<template>
   <div class="flex justify-around w-full py-8 mx-auto max-w-7xl">
-    <div class="flex flex-col mx-4" v-for="arts in arts2D" :key="arts">
+    <div
+      class="flex flex-col mx-4"
+      v-for="arts in arts2D"
+      :key="arts.toString()"
+    >
       <ArtCard v-for="art in arts" :key="art.id" :art="art" />
     </div>
   </div>
@@ -8,7 +12,7 @@
 
 <script lang="ts">
 import ArtCard from "../components/ArtCard.vue";
-import { sliceIntoChunks } from "../utils/Helper";
+import { sliceIntoChunks } from "../utils/helper";
 import * as API from "../types/api";
 
 // Getting the data from code-behind
