@@ -39,10 +39,18 @@ That's it! Visual Studio should open up your browser and you can now start contr
 
 It is a modifed from Visual Studio's ASP.NET Web Forms template. Most of the things follow standard ASP.NET standards except that we have our frontend Vue/Typescript files located in `Scripts/src`.
 
+### ASP.NET
+
+- `Api` - This folder stores all web services exposed by the backend
+- `Model` - All models (classes) should be under here eg. ApiResponse, Error
+- `Auth` - Here stores all auth redirect pages eg. Login
+- `Utils` - Here stores C# utilities for ASP.NET
+
 ### Vue / Typescript
 
 - `Scripts/src/components` - All Vue components should be located here
 - `Scripts/src/pages` - The page component for a specific page eg. Home.vue
+- `Scripts/src/stores` - Global states that are shareable across different pages
 - `Scripts/src/types` - Typescript types files are stored here
 - `Scripts/src/utils` - Utilities or helpers functions are stored here
 - `Scripts/dist` - This folder stores the bundled javascript files by Webpack

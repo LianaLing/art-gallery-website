@@ -33,15 +33,15 @@ namespace ArtGalleryWebsite
         {
             // This counter works because every button click will trigger
             // a new page load, and hence the counter increases
-            counter++;
-            lblCounter.Text = counter.ToString();
+            //counter++;
+            //lblCounter.Text = counter.ToString();
         }
 
-        protected void btn_Click(object sender, EventArgs e)
-        {
-            // Instead of Console.WriteLine(), we use the following to write
-            // output to the Debug console
-            System.Diagnostics.Debug.WriteLine("I am clicked from client side");
-        }
+        //protected void btn_Click(object sender, EventArgs e)
+        //{
+        //    // Instead of Console.WriteLine(), we use the following to write
+        //    // output to the Debug console
+        //    System.Diagnostics.Debug.WriteLine("I am clicked from client side");
+        //}
     }
 }
