@@ -15,55 +15,16 @@
     @lianalingliya
   </h2>
   <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
-    0 following
+    10000 following
   </h2>
 
   <!-- Icons -->
-  <div class="w-full">
-    <!-- <div class="m-3 inline">
-      <a href="/">
-        <img
-          class="bg-transparent hover:bg-light-hover inline"
-          src="https://img.icons8.com/material-sharp/24/000000/pencil--v2.png"
-          alt="Edit icon"
-        />
-      </a>
-    </div> -->
-    <Icon v-for="icon in icons" :key="icon.id" :icon="icon" />
-    <div class="m-3 inline">
-      <a href="/">
-        <img
-          class="bg-transparent hover:bg-light-hover inline"
-          src="https://img.icons8.com/material-rounded/24/000000/share.png"
-          alt="Edit icon"
-        />
-      </a>
-    </div>
-
-    <div class="m-3 inline float-right">
-      <a href="/">
-        <img
-          class="bg-transparent hover:bg-light-hover inline float-right"
-          src="https://img.icons8.com/material-outlined/24/000000/settings--v1.png"
-          alt="Settings icon"
-        />
-      </a>
-    </div>
-
-    <div class="m-3 inline float-right">
-      <a href="/">
-        <img
-          class="bg-transparent hover:bg-light-hover inline float-right"
-          src="https://img.icons8.com/material-rounded/24/000000/add.png"
-          alt="Add icon"
-        />
-      </a>
-    </div>
-  </div>
+  <Icon class="w-full">Test</Icon>
 
   <!-- My saves -->
   <div class="border-b-2 w-full">
-    <div class="m-14 mr-0 grid grid-cols-2 gap-[1px] w-[22.1rem]">
+    <Save></Save>
+    <!-- <div class="m-14 mr-0 grid grid-cols-2 gap-[1px] w-[22.1rem]">
       <div class="inline">
         <a href="/">
           <img
@@ -96,7 +57,7 @@
       <br />
       <h3 class="inline">12 Arts&nbsp;</h3>
       <h4 class="inline text-sm text-gray-500 font-bold">9d</h4>
-    </div>
+    </div>-->
   </div>
 
   <!-- Unorganised Saves -->
@@ -129,34 +90,36 @@
       <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
     </div>
 
-    <a href="https://icons8.com/icon/89821/pencil">Pencil icon by Icons8</a>
+    <a href="https://icons8.com/icon/5824/pencil">Pencil icon by Icons8</a>
     <br />
     <a href="https://icons8.com/icon/83213/share">Share icon by Icons8</a>
     <br />
     <a href="https://icons8.com/icon/82535/settings">Settings icon by Icons8</a>
     <br />
-    <a href="https://icons8.com/icon/85096/add">Add icon by Icons8</a> <br />
+    <a href="https://icons8.com/icon/85096/add">Add icon by Icons8</a>
+    <br />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
 import Icon from "../components/Icon.vue";
+import Save from "../components/Save.vue";
 import { sliceIntoChunks } from "../utils/Helper";
 import * as API from "../types/api";
 
-// Getting the data from code-behind
-const state = JSON.parse(
-  (<HTMLInputElement>document.getElementById("state")).value
-);
-// Slice the data from 1D array to 2D array
-// eg. [1, 2, 3, 4, 5, 6] -> [[1, 2], [3,4], [5, 6]]
-const icons2D = sliceIntoChunks<API.Art>(state, 2);
+// const iconId = JSON.parse(
+//   (<HTMLInputElement>document.getElementById("iconId")).value
+// );
+
+// const icons2D = sliceIntoChunks<API.Icon>(iconId, 4);
 
 export default {
-  components: { Icon },
+  components: {
+    Icon,
+    Save,
+  },
   data() {
-    return { icons2D };
+    // return { icons2D };
   },
 };
 </script>

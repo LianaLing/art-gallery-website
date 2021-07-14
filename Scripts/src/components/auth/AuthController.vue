@@ -198,7 +198,7 @@ import { defineComponent } from "vue";
 import { Dialog, DialogOverlay } from "@headlessui/vue";
 import { Form, Field, ErrorMessage, configure } from "vee-validate";
 import * as Yup from "yup";
-import { sleep } from "../../utils/helper";
+import { sleep } from "../../utils/Helper";
 import { useAuthView } from "../../stores/useAuthView";
 import { AuthView } from "../../types/state";
 import Pinterest from "../icons/Pinterest.vue";

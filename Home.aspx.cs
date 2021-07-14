@@ -45,15 +45,15 @@ namespace ArtGalleryWebsite
     public class Icon
     {
         public string id;
-        public string title;
-        public string iconSrc;
+        public string src;
+        public string alt;
         public string href;
 
-        public Icon(string id, string title, string iconSrc, string href)
+        public Icon(string id, string src, string alt, string href)
         {
             this.id = id;
-            this.title = title;
-            this.iconSrc = iconSrc;
+            this.src = src;
+            this.alt = alt;
             this.href = href;
         }
     }
@@ -85,13 +85,15 @@ namespace ArtGalleryWebsite
 
             Icon[] icons =
             {
-                new Icon("icon_0001", "Edit Icon", "https://icons8.com/icon/89821/pencil", "/"),
-                // new Icon("icon_0001", "Share Icon", "https://icons8.com/icon/89821/pencil", "/"),
-                // new Icon("icon_0001", "Settings Icon", "https://icons8.com/icon/89821/pencil", "/"),
-                // new Icon("icon_0001", "Add Icon", "https://icons8.com/icon/89821/pencil", "/"),
+                new Icon("icon_0001", "https://img.icons8.com/material/24/000000/pencil--v1.png", "Edit Icon", "/"),
+                new Icon("icon_0001", "https://img.icons8.com/material-rounded/24/000000/share.png", "Share Icon", "/"),
+                new Icon("icon_0001", "https://img.icons8.com/material-outlined/24/000000/settings--v1.png", "Settings Icon", "/"),
+                new Icon("icon_0001", "https://img.icons8.com/material-rounded/24/000000/add.png", "Add Icon", "/"),
             };
 
             Page.ClientScript.RegisterHiddenField("state", JsonConvert.SerializeObject(arts));
+
+            Page.ClientScript.RegisterHiddenField("iconsId", JsonConvert.SerializeObject(icons));
         }
     }
 }

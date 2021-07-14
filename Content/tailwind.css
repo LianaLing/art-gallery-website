@@ -537,14 +537,14 @@ samp {
  *    CSS Remedy, with `svg` added as well.
  *
  *    https://github.com/mozdevs/cssremedy/issues/14
- *
+ * 
  * 2. Add `vertical-align: middle` to align replaced elements more
  *    sensibly by default when overriding `display` by adding a
  *    utility like `inline`.
  *
  *    This can trigger a poorly considered linting error in some
  *    tools but is included by design.
- *
+ * 
  *    https://github.com/jensimmons/cssremedy/issues/14#issuecomment-634934210
  */
 
@@ -694,6 +694,10 @@ video {
   z-index: 10;
 }
 
+.float-right {
+  float: right;
+}
+
 .m-3 {
   margin: 0.75rem;
 }
@@ -753,16 +757,12 @@ video {
   margin-right: 1rem;
 }
 
-.mt-4 {
-  margin-top: 1rem;
-}
-
-.mt-1 {
-  margin-top: 0.25rem;
-}
-
 .mt-10 {
   margin-top: 2.5rem;
+}
+
+.mr-0 {
+  margin-right: 0px;
 }
 
 .mt-6 {
@@ -775,14 +775,6 @@ video {
 
 .mr-2 {
   margin-right: 0.5rem;
-}
-
-.mt-10 {
-  margin-top: 2.5rem;
-}
-
-.mr-0 {
-  margin-right: 0px;
 }
 
 .block {
@@ -805,32 +797,12 @@ video {
   display: none;
 }
 
-.h-3\/6 {
-  height: 50%;
-}
-
 .h-full {
   height: 100%;
 }
 
 .h-\[48px\] {
   height: 48px;
-}
-
-.h-\[130px\] {
-  height: 130px;
-}
-
-.h-\[161px\] {
-  height: 161px;
-}
-
-.h-\[10rem\] {
-  height: 10rem;
-}
-
-.h-\[5rem\] {
-  height: 5rem;
 }
 
 .h-2 {
@@ -849,8 +821,20 @@ video {
   height: 50%;
 }
 
-.h-24 {
-  height: 6rem;
+.h-\[130px\] {
+  height: 130px;
+}
+
+.h-\[161px\] {
+  height: 161px;
+}
+
+.h-\[10rem\] {
+  height: 10rem;
+}
+
+.h-\[5rem\] {
+  height: 5rem;
 }
 
 .w-\[300px\] {
@@ -869,6 +853,18 @@ video {
   width: 24px;
 }
 
+.w-2 {
+  width: 0.5rem;
+}
+
+.w-4 {
+  width: 1rem;
+}
+
+.w-6 {
+  width: 1.5rem;
+}
+
 .w-\[130px\] {
   width: 130px;
 }
@@ -883,22 +879,6 @@ video {
 
 .w-\[5rem\] {
   width: 5rem;
-}
-
-.w-2 {
-  width: 0.5rem;
-}
-
-.w-4 {
-  width: 1rem;
-}
-
-.w-6 {
-  width: 1.5rem;
-}
-
-.w-24 {
-  width: 6rem;
 }
 
 .w-\[95\%\] {
@@ -1001,10 +981,6 @@ video {
   gap: 1px;
 }
 
-.rounded-xl {
-  border-radius: 0.75rem;
-}
-
 .rounded-3xl {
   border-radius: 1.5rem;
 }
@@ -1017,8 +993,17 @@ video {
   border-radius: 0.75rem;
 }
 
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
 .rounded-l-2xl {
   border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+
+.rounded-b-2xl {
+  border-bottom-right-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
 
@@ -1030,26 +1015,12 @@ video {
   border-bottom-right-radius: 1rem;
 }
 
-.border-b-2 {
-  border-bottom-width: 2px;
-}
-
-.bg-accent {
-  --tw-bg-opacity: 1;
-  background-color: rgba(141, 83, 193, var(--tw-bg-opacity));
-}
-
-.rounded-2xl {
-  border-radius: 1rem;
-}
-
-.rounded-b-2xl {
-  border-bottom-right-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-}
-
 .border-2 {
   border-width: 2px;
+}
+
+.border-b-2 {
+  border-bottom-width: 2px;
 }
 
 .border-b-\[1px\] {
@@ -1222,11 +1193,6 @@ video {
   line-height: 1.75rem;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
-}
-
 .text-4xl {
   font-size: 2.25rem;
   line-height: 2.5rem;
@@ -1258,11 +1224,6 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgba(255, 255, 255, var(--tw-text-opacity));
-}
-
-.text-light {
-  --tw-text-opacity: 1;
-  color: rgba(239, 239, 239, var(--tw-text-opacity));
 }
 
 .text-gray-500 {

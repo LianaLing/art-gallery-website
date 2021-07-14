@@ -14,7 +14,14 @@ export type Art = {
 
 export type Icon = {
   id: string;
+  src: string;
+  alt: string;
+  href: string;
+}
+
+export type Save = {
+  id: string;
   title: string;
-  iconSrc: string;
+  alt: string;
   href: string;
 }

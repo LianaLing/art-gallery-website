@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import ArtCard from "../components/ArtCard.vue";
-import { sliceIntoChunks } from "../utils/helper";
+import { sliceIntoChunks } from "../utils/Helper";
 import * as API from "../types/api";
 
 // Getting the data from code-behind
