@@ -12,7 +12,7 @@
   <br />
   <h1 class="text-center text-4xl font-bold font-garamond">Liana Ling</h1>
   <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
-    @lianalingliya
+    @lianaling
   </h2>
   <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
     10000 following
@@ -23,7 +23,13 @@
 
   <!-- My saves -->
   <div class="border-b-2 w-full">
-    <Save></Save>
+    <Save
+      v-for="art in arts"
+      :key="art.id"
+      :art="art.imageSrc"
+      :title="art.title"
+      :saves="saves"
+    ></Save>
     <!-- <div class="m-14 mr-0 grid grid-cols-2 gap-[1px] w-[22.1rem]">
       <div class="inline">
         <a href="/">
@@ -112,6 +118,11 @@ import * as API from "../types/api";
 // );
 
 // const icons2D = sliceIntoChunks<API.Icon>(iconId, 4);
+// const arts = JSON.parse(
+//   (<HTMLInputElement>document.getElementById("state")).value
+// );
+// Slice the data from 1D array to 2D array
+// eg. [1, 2, 3, 4, 5, 6] -> [[1, 2, 3], [4, 5, 6]]
 
 export default {
   components: {
@@ -119,7 +130,77 @@ export default {
     Save,
   },
   data() {
-    // return { icons2D };
+    return {
+      // authors: [
+      //   {
+      //     id: "aut_0001",
+      //     name: "Liana",
+      //     avatarUrl: "/",
+      //   },
+      // ],
+      saves: [
+        {
+          id: "save_0001",
+          title: "My saves",
+          pinNo: 12,
+          updatedAt: 0,
+        },
+        {
+          id: "save_0002",
+          title: "Harry Potter",
+          pinNo: 9,
+          updatedAt: 0,
+        },
+      ],
+      arts: [
+        {
+          id: "save_0001",
+          imageSrc: [
+            "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg",
+            "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg",
+            "https://i.pinimg.com/564x/dc/c6/7e/dcc67ed0107da71b834615d48421efa4.jpg",
+          ],
+          title: [
+            "Still Life with Flowers in a Glass Vase",
+            "The Weasleys",
+            "A Wheatfield, with Cypresses",
+          ],
+        },
+        {
+          id: "save_0002",
+          imageSrc: [
+            "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg",
+            "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg",
+            "https://i.pinimg.com/564x/dc/c6/7e/dcc67ed0107da71b834615d48421efa4.jpg",
+          ],
+          title: [
+            "Still Life with Flowers in a Glass Vase",
+            "The Weasleys",
+            "A Wheatfield, with Cypresses",
+          ],
+        },
+        //   id: "art_0001",
+        //   imageSrc:
+        //     "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg",
+        //   title: "Still Life with Flowers in a Glass Vase",
+        //   price: 19000.0,
+        // },
+        // {
+        //   id: "art_0010",
+        //   imageSrc:
+        //     "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg",
+        //   title: "The Weasleys",
+        //   price: 975.0,
+        // },
+        // {
+        //   id: "art_0011",
+        //   imageSrc:
+        //     "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg",
+        //   title: "The Weasleys",
+        //   price: 975.0,
+        // },
+      ],
+    };
   },
 };
 </script>

@@ -32,25 +32,25 @@ export default defineComponent({
       position: "float-right",
       icons: [
         {
-          id: "001",
+          id: "0001",
           src: "https://img.icons8.com/material/24/000000/pencil--v1.png",
           alt: "Edit Icon",
           href: "/",
         },
         {
-          id: "002",
+          id: "0002",
           src: "https://img.icons8.com/material-rounded/24/000000/share.png",
           alt: "Share Icon",
           href: "/",
         },
         {
-          id: "003",
+          id: "0003",
           src: "https://img.icons8.com/material-outlined/24/000000/settings--v1.png",
           alt: "Settings Icon",
           href: "/Home",
         },
         {
-          id: "004",
+          id: "0004",
           src: "https://img.icons8.com/material-rounded/24/000000/add.png",
           alt: "Add Icon",
           href: "/",

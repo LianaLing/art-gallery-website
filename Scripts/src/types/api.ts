@@ -22,6 +22,6 @@ export type Icon = {
 export type Save = {
   id: string;
   title: string;
-  alt: string;
-  href: string;
+  pinNo: number;
+  updatedAt: number;
 }
