@@ -33,16 +33,16 @@ namespace ArtGalleryWebsite
         public int pinNo;
         public int updatedAt;
         public string href;
-        public SavedArt[] savedArt;
+        public SavedArt[] arts;
 
-        public Save(string id, string title, int pinNo, int updatedAt, string href, SavedArt[] savedArt)
+        public Save(string id, string title, int pinNo, int updatedAt, string href, SavedArt[] arts)
         {
             this.id = id;
             this.title = title;
             this.pinNo = pinNo;
             this.updatedAt = updatedAt;
             this.href = href;
-            this.savedArt = savedArt;
+            this.arts = arts;
         }
     }
 
