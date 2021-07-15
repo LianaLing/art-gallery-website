@@ -17,6 +17,8 @@ export type Icon = {
   src: string;
   alt: string;
   href: string;
+  creditRef: string;
+  author: string;
 }
 
 export type Save = {

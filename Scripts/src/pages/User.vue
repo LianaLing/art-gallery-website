@@ -13,7 +13,7 @@
   </div>
 
   <!-- Unorganised Saves -->
-  <div class="m-14 font-garamond">
+  <div class="m-14 font-garamond border-b-2">
     <strong class="inline text-xl">Unorganised Saves</strong>
 
     <a
@@ -30,26 +30,27 @@
       href="/"
       >Organise</a
     >
+    <div class="flex justify-around w-full py-8 mx-auto max-w-7xl">
+      <div
+        class="flex flex-col mx-4"
+        v-for="arts in arts2D"
+        :key="arts.toString()"
+      >
+        <ArtCard v-for="art in arts" :key="art.id" :art="art" />
+      </div>
+    </div>
   </div>
 
-  <div id="reference">
-    <div>
-      Icons made by
-      <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols"
-        >Prosymbols</a
-      >
-      from
-      <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-    </div>
-
-    <a href="https://icons8.com/icon/5824/pencil">Pencil icon by Icons8</a>
-    <br />
-    <a href="https://icons8.com/icon/83213/share">Share icon by Icons8</a>
-    <br />
-    <a href="https://icons8.com/icon/82535/settings">Settings icon by Icons8</a>
-    <br />
-    <a href="https://icons8.com/icon/85096/add">Add icon by Icons8</a>
-    <br />
+  <div id="reference" class="text-sm font-garamond">
+    <h1>Credits to:</h1>
+    <a
+      v-for="ref in icons"
+      :key="ref.id"
+      :href="ref.creditRef"
+      class="text-gray-500"
+    >
+      -&nbsp;{{ ref.alt }} by {{ ref.author }} -&nbsp;</a
+    >
   </div>
 </template>
 
@@ -57,6 +58,7 @@
 import Icon from "../components/Icon.vue";
 import Save from "../components/Save.vue";
 import Profile from "../components/Profile.vue";
+import ArtCard from "../components/ArtCard.vue";
 import { sliceIntoChunks } from "../utils/Helper";
 import * as API from "../types/api";
 
@@ -72,17 +74,25 @@ const inprofile = JSON.parse(
   (<HTMLInputElement>document.getElementById("profileState")).value
 );
 
+const artsState = JSON.parse(
+  (<HTMLInputElement>document.getElementById("artsState")).value
+);
+
+const arts2D = sliceIntoChunks<API.Art>(artsState, 3);
+
 export default {
   components: {
     Icon,
     Save,
     Profile,
+    ArtCard,
   },
   data() {
     return {
       icons,
       saves,
       inprofile,
+      arts2D,
     };
   },
 };
