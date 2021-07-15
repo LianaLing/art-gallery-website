@@ -60,6 +60,24 @@ namespace ArtGalleryWebsite
         }
     }
 
+    public class Profile
+    {
+        public string name;
+        public string username;
+        public int following;
+        public string avatarUrl;
+        public string profileUrl;
+
+        public Profile(string name, string username, int following, string avatarUrl, string profileUrl)
+        {
+            this.name = name;
+            this.username = username;
+            this.following = following;
+            this.avatarUrl = avatarUrl;
+            this.profileUrl = profileUrl;
+        }
+    }
+
     public partial class User : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -90,8 +108,11 @@ namespace ArtGalleryWebsite
                 new Save("save_0002", "Harry Potter", savedArts2.Length, 0, "/", savedArts2),
             };
 
+            Profile profile = new Profile("Liana Ling", "lianaling", 4444, "https://avatars.githubusercontent.com/u/68136684?v=4", "/");
+
             Page.ClientScript.RegisterHiddenField("iconsState", JsonConvert.SerializeObject(icons));
             Page.ClientScript.RegisterHiddenField("savesState", JsonConvert.SerializeObject(saves));
+            Page.ClientScript.RegisterHiddenField("profileState", JsonConvert.SerializeObject(profile));
         }
     }
 }

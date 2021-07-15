@@ -34,7 +34,7 @@ export type SavedArt = {
   title: string;
 }
 
-export type User = {
+export type Profile = {
   name: string;
   username: string;
   following: number;
