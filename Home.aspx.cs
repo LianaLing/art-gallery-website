@@ -42,22 +42,6 @@ namespace ArtGalleryWebsite
         }
     }
 
-    public class Icon
-    {
-        public string id;
-        public string src;
-        public string alt;
-        public string href;
-
-        public Icon(string id, string src, string alt, string href)
-        {
-            this.id = id;
-            this.src = src;
-            this.alt = alt;
-            this.href = href;
-        }
-    }
-
     public partial class Home : System.Web.UI.Page
     {
         // private static readonly HttpClient client = new HttpClient();
@@ -83,17 +67,7 @@ namespace ArtGalleryWebsite
                 new Art("art_0009", "https://i.pinimg.com/564x/b9/92/49/b99249c860d9b507251991d063a245b4.jpg", 33333.33, title: "A Wheatfield, with Cypresses", author: Liana),
             };
 
-            Icon[] icons =
-            {
-                new Icon("icon_0001", "https://img.icons8.com/material/24/000000/pencil--v1.png", "Edit Icon", "/"),
-                new Icon("icon_0001", "https://img.icons8.com/material-rounded/24/000000/share.png", "Share Icon", "/"),
-                new Icon("icon_0001", "https://img.icons8.com/material-outlined/24/000000/settings--v1.png", "Settings Icon", "/"),
-                new Icon("icon_0001", "https://img.icons8.com/material-rounded/24/000000/add.png", "Add Icon", "/"),
-            };
-
             Page.ClientScript.RegisterHiddenField("state", JsonConvert.SerializeObject(arts));
-
-            Page.ClientScript.RegisterHiddenField("iconsId", JsonConvert.SerializeObject(icons));
         }
     }
 }

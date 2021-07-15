@@ -25,13 +25,13 @@ export type Save = {
   pinNo: number;
   updatedAt: number;
   href: string;
-  arts: SaveArt;
+  arts: SavedArt[];
 }
 
-export type SaveArt = {
+export type SavedArt = {
   id: string;
-  imageSrc: string[];
-  title: string[];
+  imageSrc: string;
+  title: string;
 }
 
 export type User = {

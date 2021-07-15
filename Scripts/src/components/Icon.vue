@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a v-for="icon in icons" :key="icon.id" :href="icon.href">
+    <a :href="icon.href">
       <img
         class="bg-transparent hover:bg-light-hover inline m-3"
         :class="toggleFloatRight(icon.alt)"
@@ -12,7 +12,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import * as API from "../types/api";
 
 export default defineComponent({
   methods: {
@@ -20,43 +21,17 @@ export default defineComponent({
       switch (alt) {
         case "Settings Icon":
         case "Add Icon":
-          return this.position;
+          return "float-right";
         default:
-          return "";
+          return "float-left";
       }
     },
   },
+  props: {
+    icon: { type: Object as PropType<API.Icon>, required: true },
+  },
   data() {
-    return {
-      floatRight: false,
-      position: "float-right",
-      icons: [
-        {
-          id: "0001",
-          src: "https://img.icons8.com/material/24/000000/pencil--v1.png",
-          alt: "Edit Icon",
-          href: "/",
-        },
-        {
-          id: "0002",
-          src: "https://img.icons8.com/material-rounded/24/000000/share.png",
-          alt: "Share Icon",
-          href: "/",
-        },
-        {
-          id: "0003",
-          src: "https://img.icons8.com/material-outlined/24/000000/settings--v1.png",
-          alt: "Settings Icon",
-          href: "/Home",
-        },
-        {
-          id: "0004",
-          src: "https://img.icons8.com/material-rounded/24/000000/add.png",
-          alt: "Add Icon",
-          href: "/",
-        },
-      ],
-    };
+    return {};
   },
 });
 </script>

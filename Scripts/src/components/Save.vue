@@ -1,115 +1,69 @@
 <template>
-  <!-- <div class="m-14 mr-0 grid grid-cols-2 gap-[1px] w-[22.1rem]">
-    <div class="inline">
-      <a href="/">
-        <img
-          class="inline h-[161px] w-[11rem] object-cover rounded-l-2xl"
-          src="https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg"
-          :alt="title"
-        />
-      </a>
-    </div>
-
-    <div class="inline grid grid-rows-2 gap-[1px] h-[10rem]">
-      <a href="/">
-        <img
-          class="inline h-[5rem] w-[5rem] object-cover rounded-tr-2xl"
-          src="https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg"
-          :alt="title"
-        />
-      </a>
-      <a href="/">
-        <img
-          class="inline h-[5rem] w-[5rem] object-cover rounded-br-2xl"
-          src="https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg"
-          :alt="title"
-        />
-      </a>
-    </div>
-  </div> -->
-
   <div
-    v-for="save in saves"
-    :key="save.id"
-    class="m-14 mr-0 grid grid-cols-2 gap-[1px] w-[22.1rem]"
+    class="
+      m-14
+      mr-0
+      grid grid-cols-2
+      gap-[1px]
+      w-[22.1rem]
+      rounded-2xl
+      overflow-hidden
+    "
   >
     <!-- Thumbnail -->
-    <div class="inline">
+    <div class="">
       <a :href="save.href">
         <img
-          class="inline h-[161px] w-[11rem] object-cover rounded-l-2xl"
-          :src="art.imageSrc[0]"
-          :alt="art.title[0]"
+          v-if="save.arts[0] !== undefined"
+          class="h-[161px] w-[11rem] object-cover rounded-l-2xl"
+          :src="save.arts[0].imageSrc"
+          :alt="save.arts[0].title"
+        />
+        <div
+          v-else
+          class="h-[161px] w-[11rem] object-cover rounded-l-2xl bg-light"
         />
       </a>
     </div>
 
-    <div class="inline grid grid-rows-2 gap-[1px] h-[10rem]">
+    <div class="grid grid-rows-2 gap-[1px] h-[10rem]">
       <a :href="save.href">
         <img
-          class="inline h-[5rem] w-[5rem] object-cover rounded-tr-2xl"
-          :src="art.imageSrc[1]"
-          :alt="art.title[1]"
+          v-if="save.arts[1] !== undefined"
+          class="h-[5rem] w-[5rem] object-cover rounded-tr-2xl"
+          :src="save.arts[1].imageSrc"
+          :alt="save.arts[1].title"
+        />
+        <div
+          v-else
+          class="h-[79.5px] w-[5rem] object-cover rounded-tr-2xl bg-light"
         />
       </a>
       <a :href="save.href">
         <img
-          class="inline h-[5rem] w-[5rem] object-cover rounded-br-2xl"
-          :src="art.imageSrc[2]"
-          :alt="art.title[2]"
+          v-if="save.arts[2] !== undefined"
+          class="h-[5rem] w-[5rem] object-cover rounded-br-2xl"
+          :src="save.arts[2].imageSrc"
+          :alt="save.arts[2].title"
+        />
+        <div
+          v-else
+          class="h-[79.5px] w-[5rem] object-cover rounded-br-2xl bg-light"
         />
       </a>
     </div>
 
     <!-- Title -->
-    <div class="mt-14 font-garamond">
-      <a :href="save.href" class="text-xl font-bold">
-        {{ save.title }}
-      </a>
+    <div class="mt-2 font-garamond">
+      <a :href="save.href" class="text-xl font-bold line-clamp-1">{{
+        save.title
+      }}</a>
       <br />
-      <h3 class="inline">{{ save.pinNo }}&nbsp;</h3>
-      <h4 class="inline text-sm text-gray-500 font-bold">
-        {{ save.updatedAt }}
-      </h4>
-      <button
-        @onclick="lastUpdated($event, save.updatedAt)"
-        class="block bg-accent"
-      >
-        {{ save.updatedAt }}
-      </button>
+      <h3 v-if="save.pinNo <= 1" class="inline">{{ save.pinNo }} art &nbsp;</h3>
+      <h3 v-else class="inline">{{ save.pinNo }} arts &nbsp;</h3>
+      <h4 class="inline text-sm text-gray-500">{{ save.updatedAt }}d</h4>
     </div>
   </div>
-
-  <!-- Title -->
-  <!-- <div class="m-14 font-garamond">
-    <strong class="text-xl">My saves</strong>
-    <br />
-    <h3 class="inline">12 Arts&nbsp;</h3>
-    <h4 class="inline text-sm text-gray-500 font-bold">9d</h4>
-  </div>
-
-  <div v-for="save in saves" :key="save.id" class="m-14 font-garamond">
-    <strong class="text-xl">
-      {{ save.title }}
-    </strong>
-    <br />
-    <h3 class="inline">{{ save.pinNo }}&nbsp;</h3>
-    <h4 class="inline text-sm text-gray-500 font-bold">{{ save.updatedAt }}</h4>
-    <button
-      @onclick="lastUpdated($event, save.updatedAt)"
-      class="block bg-accent"
-    >
-      {{ save.updatedAt }}
-    </button>
-  </div> -->
-  <!-- <button
-    v-for="save in saves"
-    :key="save.id"
-    lastUpdated($event,
-    save.updatedAt)
-  >
-    Last updated timestamp {{ save.updatedAt }}
-  </button> -->
 </template>
 
 <script lang="ts">
@@ -126,9 +80,7 @@ export default defineComponent({
     },
   },
   props: {
-    art: { type: Object as PropType<API.SaveArt>, required: true },
-    // title: { type: Array as PropType<string[]>, required: true },
-    saves: { type: Array as PropType<API.Save[]>, required: true },
+    save: { type: Object as PropType<API.Save>, required: true },
   },
   data() {
     return {};
