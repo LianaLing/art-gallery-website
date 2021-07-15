@@ -15,7 +15,7 @@
     @lianaling
   </h2>
   <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
-    10000 following
+    1 following
   </h2>
 
   <!-- Icons -->
@@ -24,10 +24,9 @@
   <!-- My saves -->
   <div class="border-b-2 w-full">
     <Save
-      v-for="art in arts"
-      :key="art.id"
-      :art="art.imageSrc"
-      :title="art.title"
+      v-for="save in saves"
+      :key="save.id"
+      :art="save.arts"
       :saves="saves"
     ></Save>
     <!-- <div class="m-14 mr-0 grid grid-cols-2 gap-[1px] w-[22.1rem]">
@@ -138,47 +137,53 @@ export default {
       //     avatarUrl: "/",
       //   },
       // ],
-      saves: [
+      saves: (<unknown>[
         {
-          id: "save_0001",
-          title: "My saves",
-          pinNo: 12,
-          updatedAt: 0,
-        },
+          id: <unknown>"save_0001",
+          title: <unknown>"My saves",
+          pinNo: <unknown>12,
+          updatedAt: <unknown>0,
+          href: "/",
+          arts: (<unknown>[
+            {
+              id: <unknown>"saveart_0001",
+              imageSrc: <unknown>[
+                "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg",
+                "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg",
+                "https://i.pinimg.com/564x/dc/c6/7e/dcc67ed0107da71b834615d48421efa4.jpg",
+              ],
+              title: <unknown>[
+                "Still Life with Flowers in a Glass Vase",
+                "The Weasleys",
+                "A Wheatfield, with Cypresses",
+              ],
+            },
+          ]) as API.SaveArt,
+        } as API.Save,
         {
-          id: "save_0002",
-          title: "Harry Potter",
-          pinNo: 9,
-          updatedAt: 0,
-        },
-      ],
+          id: <unknown>"save_0002",
+          title: <unknown>"Harry Potter",
+          pinNo: <unknown>12,
+          updatedAt: <unknown>0,
+          href: "/",
+          arts: (<unknown>[
+            {
+              id: <unknown>"saveart_0002",
+              imageSrc: <unknown>[
+                "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg",
+                "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg",
+                "https://i.pinimg.com/564x/dc/c6/7e/dcc67ed0107da71b834615d48421efa4.jpg",
+              ],
+              title: <unknown>[
+                "Still Life with Flowers in a Glass Vase",
+                "The Weasleys",
+                "A Wheatfield, with Cypresses",
+              ],
+            },
+          ]) as API.SaveArt,
+        } as API.Save,
+      ]) as API.Save[],
       arts: [
-        {
-          id: "save_0001",
-          imageSrc: [
-            "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg",
-            "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg",
-            "https://i.pinimg.com/564x/dc/c6/7e/dcc67ed0107da71b834615d48421efa4.jpg",
-          ],
-          title: [
-            "Still Life with Flowers in a Glass Vase",
-            "The Weasleys",
-            "A Wheatfield, with Cypresses",
-          ],
-        },
-        {
-          id: "save_0002",
-          imageSrc: [
-            "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg",
-            "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg",
-            "https://i.pinimg.com/564x/dc/c6/7e/dcc67ed0107da71b834615d48421efa4.jpg",
-          ],
-          title: [
-            "Still Life with Flowers in a Glass Vase",
-            "The Weasleys",
-            "A Wheatfield, with Cypresses",
-          ],
-        },
         //   id: "art_0001",
         //   imageSrc:
         //     "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg",

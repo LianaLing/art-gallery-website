@@ -24,4 +24,12 @@ export type Save = {
   title: string;
   pinNo: number;
   updatedAt: number;
+  href: string;
+  arts: SaveArt;
+}
+
+export type SaveArt = {
+  id: string;
+  imageSrc: string[];
+  title: string[];
 }

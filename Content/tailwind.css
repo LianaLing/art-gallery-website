@@ -741,6 +741,10 @@ video {
   margin-right: 0px;
 }
 
+.mt-14 {
+  margin-top: 3.5rem;
+}
+
 .mt-20 {
   margin-top: 5rem;
 }
@@ -775,10 +779,6 @@ video {
 
 .mr-2 {
   margin-right: 0.5rem;
-}
-
-.mt-14 {
-  margin-top: 3.5rem;
 }
 
 .block {

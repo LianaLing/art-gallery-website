@@ -35,37 +35,37 @@
   >
     <!-- Thumbnail -->
     <div class="inline">
-      <a href="/">
+      <a :href="save.href">
         <img
           class="inline h-[161px] w-[11rem] object-cover rounded-l-2xl"
-          :src="art[0]"
-          :alt="title[0]"
+          :src="art.imageSrc[0]"
+          :alt="art.title[0]"
         />
       </a>
     </div>
 
     <div class="inline grid grid-rows-2 gap-[1px] h-[10rem]">
-      <a href="/">
+      <a :href="save.href">
         <img
           class="inline h-[5rem] w-[5rem] object-cover rounded-tr-2xl"
-          :src="art[1]"
-          :alt="title[1]"
+          :src="art.imageSrc[1]"
+          :alt="art.title[1]"
         />
       </a>
-      <a href="/">
+      <a :href="save.href">
         <img
           class="inline h-[5rem] w-[5rem] object-cover rounded-br-2xl"
-          :src="art[2]"
-          :alt="title[2]"
+          :src="art.imageSrc[2]"
+          :alt="art.title[2]"
         />
       </a>
     </div>
 
     <!-- Title -->
     <div class="mt-14 font-garamond">
-      <strong class="text-xl">
+      <a :href="save.href" class="text-xl font-bold">
         {{ save.title }}
-      </strong>
+      </a>
       <br />
       <h3 class="inline">{{ save.pinNo }}&nbsp;</h3>
       <h4 class="inline text-sm text-gray-500 font-bold">
@@ -126,8 +126,8 @@ export default defineComponent({
     },
   },
   props: {
-    art: { type: Array as PropType<string[]>, required: true },
-    title: { type: Array as PropType<string[]>, required: true },
+    art: { type: Object as PropType<API.SaveArt>, required: true },
+    // title: { type: Array as PropType<string[]>, required: true },
     saves: { type: Array as PropType<API.Save[]>, required: true },
   },
   data() {
