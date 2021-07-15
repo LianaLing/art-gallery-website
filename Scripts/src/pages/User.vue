@@ -1,6 +1,7 @@
 <template>
   <!-- Profile Header -->
-  <div class="rounded-full justify-items-center mt-10">
+  <Profile></Profile>
+  <!-- <div class="rounded-full justify-items-center mt-10">
     <a href="/">
       <img
         class="rounded-full h-[130px] w-[130px] mx-auto block"
@@ -15,11 +16,11 @@
     @lianaling
   </h2>
   <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
-    1 following
-  </h2>
+    100 following
+  </h2> -->
 
   <!-- Icons -->
-  <Icon class="w-full">Test</Icon>
+  <Icon class="w-full"></Icon>
 
   <!-- My saves -->
   <div class="border-b-2 w-full">
@@ -109,6 +110,7 @@
 <script lang="ts">
 import Icon from "../components/Icon.vue";
 import Save from "../components/Save.vue";
+import Profile from "../components/Profile.vue";
 import { sliceIntoChunks } from "../utils/Helper";
 import * as API from "../types/api";
 
@@ -127,6 +129,7 @@ export default {
   components: {
     Icon,
     Save,
+    Profile,
   },
   data() {
     return {

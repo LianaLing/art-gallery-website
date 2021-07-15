@@ -33,3 +33,11 @@ export type SaveArt = {
   imageSrc: string[];
   title: string[];
 }
+
+export type User = {
+  name: string;
+  username: string;
+  following: number;
+  avatarUrl: string;
+  profileUrl: string;
+}
