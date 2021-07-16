@@ -110,6 +110,10 @@
   <ItemGroup>
     <None Include="Scripts\src\pages\Home.vue" />
     <None Include="Scripts\src\components\ArtCard.bak" />
+    <Content Include="App_Data\ArtGallery.mdf" />
+    <Content Include="App_Data\ArtGallery_log.ldf">
+      <DependentUpon>ArtGallery.mdf</DependentUpon>
+    </Content>
     <Content Include="Auth\Login.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
@@ -205,8 +209,8 @@
     <Compile Include="Utils\Helper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Scripts\dist\" />
+    <Folder Include="Sql\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
