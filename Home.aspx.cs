@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
+using ArtGalleryWebsite.Utils;
 
 namespace ArtGalleryWebsite
 {
@@ -47,12 +47,16 @@ namespace ArtGalleryWebsite
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Below are sample code for fetching an external API, just ignore for now
             // HttpResponseMessage res = client.GetAsync("http://jsonplaceholder.typicode.com/photos?_start=0&_limit=9").Result;
             // ViewState["state"] = res.Content.ReadAsStringAsync().Result.ToString();
             // System.Diagnostics.Debug.WriteLine("asdasdasd");
+
+            // Fake author data
             Author Liana = new Author("aut_0001", "Liana Ling", "https://avatars.githubusercontent.com/u/68136684?s=64&v=4");
             Author Marcus = new Author("aut_0002", "Marcus Lee", "https://avatars.githubusercontent.com/u/59773847?s=64&v=4");
 
+            // Fake artwork data
             Art[] arts =
             {
                 new Art("art_0001", "https://i.pinimg.com/564x/2b/af/63/2baf63ece32d100cec72010f60eab476.jpg", 19000.00, title: "Still Life with Flowers in a Glass Vase", author: Liana),
@@ -66,6 +70,7 @@ namespace ArtGalleryWebsite
                 new Art("art_0009", "https://i.pinimg.com/564x/b9/92/49/b99249c860d9b507251991d063a245b4.jpg", 33333.33, title: "A Wheatfield, with Cypresses", author: Liana),
             };
 
+            // Inject the fake data as a hidden field at client side
             Page.ClientScript.RegisterHiddenField("state", JsonConvert.SerializeObject(arts));
         }
     }
