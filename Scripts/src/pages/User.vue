@@ -8,12 +8,12 @@
   </div>
 
   <!-- My saves -->
-  <div class="flex w-full border-b-2">
+  <div class="flex mx-10 w-full border-b-2">
     <Save v-for="save in saves" :key="save.id" :save="save" />
   </div>
 
   <!-- Unorganised Saves -->
-  <div class="m-14 font-garamond border-b-2">
+  <div class="my-14 justify-around font-garamond border-b-2">
     <strong class="inline text-xl">Unorganised Saves</strong>
 
     <a
@@ -30,13 +30,13 @@
       href="/"
       >Organise</a
     >
-    <div class="flex justify-around w-full py-8 mx-auto max-w-7xl">
+    <div class="flex w-full my-14 max-w-7xl">
       <div
-        class="flex flex-col mx-4"
+        class="flex flex-col mx-24"
         v-for="arts in arts2D"
         :key="arts.toString()"
       >
-        <ArtCard v-for="art in arts" :key="art.id" :art="art" />
+        <ArtCard v-for="art in arts" :key="art.id" :art="art" :saved="true" />
       </div>
     </div>
   </div>

@@ -23,25 +23,27 @@
       "
       :class="transition"
     ></div>
-    <button
-      class="
-        absolute
-        px-4
-        py-2
-        font-bold
-        rounded-full
-        opacity-0
-        bg-red
-        hover:bg-red-hover
-        text-light
-        top-4
-        right-4
-        group-hover:opacity-100
-      "
-      :class="transition"
-    >
-      Save
-    </button>
+    <template v-if="!saved">
+      <button
+        class="
+          absolute
+          px-4
+          py-2
+          font-bold
+          rounded-full
+          opacity-0
+          bg-red
+          hover:bg-red-hover
+          text-light
+          top-4
+          right-4
+          group-hover:opacity-100
+        "
+        :class="transition"
+      >
+        Save
+      </button>
+    </template>
     <p
       class="
         absolute
@@ -171,6 +173,7 @@ export default defineComponent({
   },
   props: {
     art: { type: Object as PropType<API.Art>, required: true },
+    saved: { type: Object as PropType<boolean> },
   },
   data() {
     return {

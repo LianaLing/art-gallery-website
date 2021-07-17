@@ -2,7 +2,6 @@
   <div
     class="
       m-14
-      mr-0
       grid grid-cols-2
       gap-[1px]
       w-[22.1rem]
