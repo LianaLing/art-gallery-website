@@ -8,10 +8,11 @@
       w-[22.1rem]
       rounded-2xl
       overflow-hidden
+      group
     "
   >
     <!-- Thumbnail -->
-    <div class="">
+    <div class="relative">
       <a :href="save.href">
         <img
           v-if="save.arts[0] !== undefined"
@@ -24,9 +25,22 @@
           class="h-[161px] w-[11rem] object-cover rounded-l-2xl bg-light"
         />
       </a>
+      <a
+        :href="save.href"
+        class="
+          absolute
+          top-0
+          w-full
+          h-full
+          rounded-l-2xl
+          backdrop-filter backdrop-brightness-100
+          group-hover:backdrop-brightness-75
+        "
+        :class="transition"
+      />
     </div>
 
-    <div class="grid grid-rows-2 gap-[1px] h-[10rem]">
+    <div class="relative grid grid-rows-2 gap-[1px] h-[10rem]">
       <a :href="save.href">
         <img
           v-if="save.arts[1] !== undefined"
@@ -36,19 +50,47 @@
         />
         <div
           v-else
-          class="h-[79.5px] w-[5rem] object-cover rounded-tr-2xl bg-light"
+          class="h-[79px] w-[5rem] object-cover rounded-tr-2xl bg-light"
+        />
+        <a
+          :href="save.href"
+          class="
+            absolute
+            block
+            top-0
+            h-[5rem]
+            w-[5rem]
+            rounded-tr-2xl
+            backdrop-filter backdrop-brightness-100
+            group-hover:backdrop-brightness-75
+          "
+          :class="transition"
         />
       </a>
       <a :href="save.href">
         <img
           v-if="save.arts[2] !== undefined"
-          class="h-[5rem] w-[5rem] object-cover rounded-br-2xl"
+          class="h-[79px] w-[5rem] object-cover rounded-br-2xl"
           :src="save.arts[2].imageSrc"
           :alt="save.arts[2].title"
         />
         <div
           v-else
-          class="h-[79.5px] w-[5rem] object-cover rounded-br-2xl bg-light"
+          class="h-[79px] w-[5rem] object-cover rounded-br-2xl bg-light"
+        />
+        <a
+          :href="save.href"
+          class="
+            absolute
+            block
+            top-[81px]
+            h-[79px]
+            w-[5rem]
+            rounded-br-2xl
+            backdrop-filter backdrop-brightness-100
+            group-hover:backdrop-brightness-75
+          "
+          :class="transition"
         />
       </a>
     </div>
@@ -83,7 +125,9 @@ export default defineComponent({
     save: { type: Object as PropType<API.Save>, required: true },
   },
   data() {
-    return {};
+    return {
+      transition: "transition ease-in-out duration-200",
+    };
   },
 });
 </script>

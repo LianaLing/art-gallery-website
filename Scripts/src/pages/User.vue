@@ -52,6 +52,7 @@
       -&nbsp;{{ ref.alt }} by {{ ref.author }} -&nbsp;</a
     >
   </div>
+  <br />
 </template>
 
 <script lang="ts">

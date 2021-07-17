@@ -105,7 +105,7 @@ namespace ArtGalleryWebsite
             
             SavedArt[] savedArts2 =
             {
-                new SavedArt("svart_0001", "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg", "The Weasleys"),
+                // new SavedArt("svart_0001", "https://i.pinimg.com/originals/da/68/e7/da68e7f731bfd78e20dba0ead711ca99.jpg", "The Weasleys"),
             };
 
             Save[] saves =
