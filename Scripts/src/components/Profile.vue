@@ -19,10 +19,7 @@
   <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
     {{ profile.following }} following
   </h2>
-  <Popover
-    class="absolute opacity-0 bottom-4 right-4 group-hover:opacity-100"
-    :class="transition"
-  >
+  <Popover>
     <PopoverButton
       class="p-2 rounded-full bg-light focus:outline-none hover:bg-light-hover"
       :class="transition"
