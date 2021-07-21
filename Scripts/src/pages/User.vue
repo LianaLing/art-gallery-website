@@ -60,7 +60,7 @@ import Icon from "../components/Icon.vue";
 import Save from "../components/Save.vue";
 import Profile from "../components/Profile.vue";
 import ArtCard from "../components/ArtCard.vue";
-import { sliceIntoChunks } from "../utils/Helper";
+import { sliceIntoChunks } from "../utils/helper";
 import * as API from "../types/api";
 
 const icons = JSON.parse(
