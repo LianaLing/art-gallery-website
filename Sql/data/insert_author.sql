@@ -1,0 +1,12 @@
+-- Inserted data
+--INSERT INTO Author values('Liana Ling', '0');
+--INSERT INTO Author values('Marcus Lee', '0');
+--INSERT INTO Author values('François Boucher', '1');
+--INSERT INTO Author values('Vincent van Gogh', '1');
+--INSERT INTO Author values('Claude Monet', '1');
+--INSERT INTO Author values('Michelangelo', '1');
+--INSERT INTO Author values('Edvard Munch', '1');
+-- New data below (do not delete previous data, the id has been bound to user)
+
+-- Delete all records from table
+-- DELETE FROM Author;
