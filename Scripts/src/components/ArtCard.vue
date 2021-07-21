@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="relative group filter drop-shadow-none w-[300px]">
+  <div class="relative group filter drop-shadow-none w-[300px] font-garamond">
     <img
       :alt="art.title"
       class="
@@ -141,7 +141,7 @@
       </PopoverPanel>
     </Popover>
   </div>
-  <div class="w-[300px] mb-8">
+  <div class="w-[300px] mb-8 font-garamond">
     <p class="px-2 mt-1 font-bold line-clamp-2">{{ art.title }}</p>
     <div class="flex items-center px-2 mt-1">
       <img :src="art.author.avatarUrl" class="w-[24px] rounded-full" />
@@ -153,6 +153,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import { Art } from "../types/model";
 import Whatsapp from "../components/icons/Whatsapp.vue";
 import Facebook from "../components/icons/Facebook.vue";
 import Email from "../components/icons/Email.vue";

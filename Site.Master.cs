@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ArtGalleryWebsite.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,8 @@ namespace ArtGalleryWebsite
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
-
+			// Inject session state to client side
+			Helper.InjectSessionState(Page, Session);
 		}
 	}
 }

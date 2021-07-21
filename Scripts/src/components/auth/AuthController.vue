@@ -194,18 +194,18 @@
 </template>
 
 <script lang="ts">
+import * as Yup from "yup";
 import { defineComponent } from "vue";
 import { Dialog, DialogOverlay } from "@headlessui/vue";
 import { Form, Field, ErrorMessage, configure } from "vee-validate";
-import * as Yup from "yup";
 import { sleep } from "../../utils/Helper";
 import { useAuthView } from "../../stores/useAuthView";
 import { AuthView } from "../../types/state";
+import { post } from "../../utils/api";
 import Pinterest from "../icons/Pinterest.vue";
 import Spinner from "../Spinner.vue";
-import { post } from "../../utils/http";
-import { string } from "yup/lib/locale";
 
+// This is the structure of authentication request's body
 type AuthPayload = {
   email: string;
   password: string;
@@ -245,6 +245,7 @@ export default defineComponent({
     };
   },
   data() {
+    // This is the validaion schema for login/signup form
     const validationSchema = Yup.object({
       email: Yup.string()
         .email("That doesn't look like an email address")
@@ -270,7 +271,7 @@ export default defineComponent({
   },
   methods: {
     async handleAuth({ email, password }: AuthPayload) {
-      await sleep(2000);
+      await sleep(1000);
 
       const payload: AuthPayload = {
         email,
@@ -285,36 +286,45 @@ export default defineComponent({
 
       switch (this.authView.view) {
         case "login": {
-          const { data, ok } = await post<{
-            d: { email: string; password: string };
-          }>("UserAuth.asmx/Login", payload);
-          if (!ok || !data) {
-            alert("Something went wrong");
+          // Make a POST request to backend
+          const { data, error } = await post<{ redirectUrl: string }>(
+            "Api/UserAuth.asmx/Login",
+            payload
+          );
+
+          // If failed to authenticate user
+          if (error || !data) {
+            console.error(error);
+            alert(error?.message);
             return;
           }
-          alert(JSON.stringify(data.d, null, 2));
+
+          // If successfully authenticate user
+          this.authView.modalOpen = false; // close the modal
+          sleep(1000); // sleep 1s to allow state change
+          window.location.href = data.redirectUrl; // redirect to the page told by backend
           break;
         }
         case "signup": {
-          const { data, ok } = await post<{
-            d: { email: string; password: string; type: string };
-          }>("UserAuth.asmx/SignUp", payload);
-          if (!ok || !data) {
-            alert("Something went wrong");
-            return;
-          }
-          alert(JSON.stringify(data.d, null, 2));
+          // const { data, error } = await post<{
+          //   d: { email: string; password: string; type: string };
+          // }>("Api/UserAuth.asmx/SignUp", payload);
+          // if (!error || !data) {
+          //   alert("Something went wrong");
+          //   return;
+          // }
+          // alert(JSON.stringify(data.d, null, 2));
           break;
         }
         case "artist_signup": {
-          const { data, ok } = await post<{
-            d: { email: string; password: string; type: string };
-          }>("UserAuth.asmx/SignUp", payload);
-          if (!ok || !data) {
-            alert("Something went wrong");
-            return;
-          }
-          alert(JSON.stringify(data.d, null, 2));
+          // const { data, error } = await post<{
+          //   d: { email: string; password: string; type: string };
+          // }>("Api/UserAuth.asmx/SignUp", payload);
+          // if (!error || !data) {
+          //   alert("Something went wrong");
+          //   return;
+          // }
+          // alert(JSON.stringify(data.d, null, 2));
           break;
         }
         case "forgot_password":
