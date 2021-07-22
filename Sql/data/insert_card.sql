@@ -1,7 +1,7 @@
 ---- Inserted rows
---INSERT INTO [Card] VALUES ('Visa', 'Liana Ling', '12', '2024', '1111', '2020-10-11', '2020-10-11');
---INSERT INTO [Card] VALUES ('Visa', 'Marcus Lee', '12', '2024', '1111', '2020-10-11', '2020-10-11');
---INSERT INTO [Card] VALUES ('Mastercard', 'Yan Wen', '12', '2024', '1111', '2020-10-11', '2020-10-11');
---INSERT INTO [Card] VALUES ('UnionPay', 'Jing Pei', '12', '2024', '1111', '2020-10-11', '2020-10-11');
---INSERT INTO [Card] VALUES ('Mastercard', 'Jasmine', '12', '2024', '1111', '2020-10-11', '2020-10-11');
---INSERT INTO [Card] VALUES ('UnionPay', 'Ron Weasley', '12', '2024', '1111', '2020-10-11', '2020-10-11');
+--INSERT INTO [Card] VALUES ('visa', 'Liana Ling', '12', '2024', '1111', '2020-10-11', '2020-10-11');
+--INSERT INTO [Card] VALUES ('visa', 'Marcus Lee', '12', '2024', '1111', '2020-10-11', '2020-10-11');
+--INSERT INTO [Card] VALUES ('mastercard', 'Yan Wen', '12', '2024', '1111', '2020-10-11', '2020-10-11');
+--INSERT INTO [Card] VALUES ('unionpay', 'Jing Pei', '12', '2024', '1111', '2020-10-11', '2020-10-11');
+--INSERT INTO [Card] VALUES ('mastercard', 'Jasmine', '12', '2024', '1111', '2020-10-11', '2020-10-11');
+--INSERT INTO [Card] VALUES ('amex', 'Ron Weasley', '12', '2024', '1111', '2020-10-11', '2020-10-11');
