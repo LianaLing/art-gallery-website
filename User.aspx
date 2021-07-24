@@ -6,7 +6,6 @@
         <div id="app">
         </div>
 
-        <p>I am ASPX</p>
-
         <script src="Scripts/dist/UserPage.dist.js"></script>
+
     </asp:Content>

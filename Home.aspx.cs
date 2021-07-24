@@ -23,7 +23,7 @@ namespace ArtGalleryWebsite
         }
     }
 
-    public class Art 
+    public class Art
     {
         public string id;
         public string imageSrc;

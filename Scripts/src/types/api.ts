@@ -15,3 +15,35 @@ export type Error = {
   message: string;
   statusCode: number;
 };
+
+export type Icon = {
+  id: string;
+  src: string;
+  alt: string;
+  href: string;
+  creditRef: string;
+  author: string;
+}
+
+export type Save = {
+  id: string;
+  title: string;
+  pinNo: number;
+  updatedAt: number;
+  href: string;
+  arts: SavedArt[];
+}
+
+export type SavedArt = {
+  id: string;
+  imageSrc: string;
+  title: string;
+}
+
+export type Profile = {
+  name: string;
+  username: string;
+  following: number;
+  avatarUrl: string;
+  profileUrl: string;
+}

@@ -4,40 +4,19 @@
     @close="setAuthView({ ...authView, modalOpen: !authView.modalOpen })"
     class="font-garamond"
   >
-    <DialogOverlay class="fixed inset-0 bg-black opacity-50" />
+    <DialogOverlay class="bg-black opacity-50 inset-0 fixed" />
 
     <div
-      class="
-        bg-white
-        fixed
-        w-[95%]
-        sm:w-[484px]
-        top-[50%]
-        left-[50%]
-        transform
-        translate-x-[-50%] translate-y-[-50%]
-        rounded-2xl
-        shadow-2xl
-        flex flex-col
-        items-center
-      "
+      class="bg-white flex flex-col rounded-2xl transform top-[50%] left-[50%] shadow-2xl w-[95%] translate-x-[-50%] translate-y-[-50%] fixed items-center sm:w-[484px]"
       :class="authView.view === 'login' ? 'py-8' : 'pt-8'"
     >
       <Pinterest />
       <button
         @click="setAuthView({ ...authView, modalOpen: false })"
-        class="
-          absolute
-          p-2
-          rounded-full
-          focus:outline-none
-          right-6
-          top-6
-          hover:bg-light-hover
-        "
+        class="rounded-full p-2 top-6 right-6 absolute focus:outline-none hover:bg-light-hover"
       >
         <svg
-          class="w-6 h-6"
+          class="h-6 w-6"
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +28,7 @@
           />
         </svg>
       </button>
-      <h3 class="mt-6 px-8 text-4xl font-semibold text-center">
+      <h3 class="font-semibold mt-6 text-center px-8 text-4xl">
         Welcome to Art Gallery
       </h3>
       <p v-show="authView.view !== 'login'" class="mt-1">
@@ -63,7 +42,7 @@
         @submit="handleAuth"
         :validation-schema="validationSchema"
         v-slot="{ errors, isSubmitting }"
-        class="flex flex-col w-full px-24 mt-6"
+        class="flex flex-col mt-6 w-full px-24"
       >
         <Field
           name="email"
@@ -91,23 +70,13 @@
 
         <a
           v-show="authView.view === 'login'"
-          class="mt-2 text-sm font-bold text-gray-700"
+          class="font-bold mt-2 text-sm text-gray-700"
           href="/"
           >Forgotten your password?</a
         >
 
         <button
-          class="
-            px-4
-            py-2
-            mt-6
-            font-bold
-            text-white
-            rounded-3xl
-            bg-accent
-            focus:outline-none
-            hover:bg-accent-hover
-          "
+          class="bg-accent font-bold rounded-3xl mt-6 text-white py-2 px-4 focus:outline-none hover:bg-accent-hover"
         >
           <Spinner v-if="isSubmitting" :size="'medium'" :class="'mx-auto'" />
           <span v-else>
@@ -123,32 +92,23 @@
 
         <button
           v-show="authView.view === 'artist_signup'"
-          class="
-            px-4
-            py-2
-            mt-2
-            font-bold
-            rounded-3xl
-            bg-light
-            focus:outline-none
-            hover:bg-light-hover
-          "
+          class="bg-light font-bold rounded-3xl mt-2 py-2 px-4 focus:outline-none hover:bg-light-hover"
         >
           <span>Log in to existing account</span>
         </button>
       </Form>
-      <p class="text-xs text-center mt-6 text-gray-500 px-24">
+      <p class="mt-6 text-xs text-center px-24 text-gray-500">
         By continuing, you agree to Art Gallery's
-        <span class="text-black font-bold">Terms of Service</span> and
+        <span class="font-bold text-black">Terms of Service</span> and
         acknowledge that you've read our
-        <span class="text-black font-bold">Privacy Policy</span>
+        <span class="font-bold text-black">Privacy Policy</span>
       </p>
       <div
-        class="w-28 border-b-[1px] border-black my-4"
+        class="border-black border-b-[1px] my-4 w-28"
         style="-webkit-transform: scaleY(0.1)"
       />
       <button
-        class="text-xs text-center font-bold"
+        class="font-bold text-xs text-center"
         @click="
           setAuthView({
             ...authView,
@@ -162,20 +122,12 @@
             : "Already a member? Log in"
         }}
       </button>
-      <a class="text-xs text-center font-bold mt-2"
+      <a class="font-bold mt-2 text-xs text-center"
         >Are you an artist? Get started here!</a
       >
       <button
         v-show="authView.view === 'signup' || authView.view === 'artist_signup'"
-        class="
-          font-bold
-          w-full
-          mt-6
-          py-5
-          rounded-b-2xl
-          text-center
-          bg-light-hover
-        "
+        class="bg-light-hover font-bold rounded-b-2xl mt-6 text-center w-full py-5"
         @click="
           setAuthView({
             ...authView,

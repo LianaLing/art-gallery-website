@@ -1,88 +1,45 @@
 ﻿<template>
-  <div class="relative group filter drop-shadow-none w-[300px] font-garamond">
+  <div class="font-garamond w-[300px] relative group filter drop-shadow-none">
     <img
       :alt="art.title"
-      class="
-        w-[300px]
-        h-full
-        object-cover
-        rounded-3xl
-        backdrop-filter backdrop-brightness-50
-      "
+      class="h-full object-cover rounded-3xl w-[300px] backdrop-filter backdrop-brightness-50"
       :src="art.imageSrc"
     />
     <div
-      class="
-        absolute
-        top-0
-        w-full
-        h-full
-        rounded-3xl
-        backdrop-filter backdrop-brightness-100
-        group-hover:backdrop-brightness-75 group-hover:cursor-[zoom-in]
-      "
+      class="h-full rounded-3xl w-full top-0 absolute backdrop-filter group-hover:cursor-[zoom-in] backdrop-brightness-100 group-hover:backdrop-brightness-75"
       :class="transition"
     ></div>
-    <button
-      class="
-        absolute
-        px-4
-        py-2
-        font-bold
-        rounded-full
-        opacity-0
-        bg-accent
-        hover:bg-accent-hover
-        text-light
-        top-4
-        right-4
-        group-hover:opacity-100
-      "
-      :class="transition"
-    >
-      Save
-    </button>
+    <template v-if="!saved">
+      <button
+        class="bg-red rounded-full font-bold text-light opacity-0 py-2 px-4 top-4 right-4 absolute hover:bg-red-hover group-hover:opacity-100"
+        :class="transition"
+      >
+        Save
+      </button>
+    </template>
     <p
-      class="
-        absolute
-        px-4
-        py-2
-        font-semibold
-        rounded-full
-        opacity-0
-        bottom-4
-        left-4
-        group-hover:opacity-100
-        text-dark
-        bg-light
-      "
+      class="bg-light rounded-full font-semibold text-dark opacity-0 py-2 px-4 bottom-4 left-4 absolute group-hover:opacity-100"
       :class="transition"
     >
       RM {{ art.price.toFixed(2) }}
     </p>
     <Popover
-      class="absolute opacity-0 bottom-4 right-4 group-hover:opacity-100"
+      class="opacity-0 right-4 bottom-4 absolute group-hover:opacity-100"
       :class="transition"
     >
       <PopoverButton
-        class="
-          p-2
-          rounded-full
-          bg-light
-          focus:outline-none
-          hover:bg-light-hover
-        "
+        class="bg-light rounded-full p-2 focus:outline-none hover:bg-light-hover"
         :class="transition"
       >
         <Search />
       </PopoverButton>
 
-      <PopoverPanel class="absolute z-10 bottom-12 right-0 w-[300px] shadow-xl">
-        <div class="p-4 bg-white rounded-3xl">
-          <h3 class="w-full text-lg font-bold text-center">
+      <PopoverPanel class="shadow-xl right-0 bottom-12 w-[300px] z-10 absolute">
+        <div class="bg-white rounded-3xl p-4">
+          <h3 class="font-bold text-lg text-center w-full">
             Share this artwork
           </h3>
-          <div class="flex items-start justify-around mt-4">
+          <div class="flex mt-4 items-start justify-around">
             <button onclick="(() => alert('Share {{ id }} WhatsApp'))()">
               <Whatsapp />
               <span class="mt-1 text-xs">WhatsApp</span>
@@ -99,16 +56,7 @@
               onclick="(() => alert('Share to Email'))()"
             >
               <div
-                class="
-                  bg-light-hover
-                  rounded-full
-                  p-3
-                  w-[48px]
-                  h-[48px]
-                  flex
-                  justify-center
-                  items-center
-                "
+                class="bg-light-hover rounded-full flex h-[48px] p-3 w-[48px] justify-center items-center"
               >
                 <Email />
               </div>
@@ -119,16 +67,7 @@
               onclick="(() => alert('Copy Link'))()"
             >
               <div
-                class="
-                  bg-light-hover
-                  rounded-full
-                  p-3
-                  w-[48px]
-                  h-[48px]
-                  flex
-                  justify-center
-                  items-center
-                "
+                class="bg-light-hover rounded-full flex h-[48px] p-3 w-[48px] justify-center items-center"
               >
                 <Link />
               </div>
@@ -139,11 +78,11 @@
       </PopoverPanel>
     </Popover>
   </div>
-  <div class="w-[300px] mb-8 font-garamond">
-    <p class="px-2 mt-1 font-bold line-clamp-2">{{ art.title }}</p>
-    <div class="flex items-center px-2 mt-1">
-      <img :src="art.author.avatarUrl" class="w-[24px] rounded-full" />
-      <span class="ml-1 text-sm">{{ art.author.name }}</span>
+  <div class="font-garamond mb-8 w-[300px]">
+    <p class="font-bold mt-1 px-2 line-clamp-2">{{ art.title }}</p>
+    <div class="flex mt-1 px-2 items-center">
+      <img :src="art.author.avatarUrl" class="rounded-full w-[24px]" />
+      <span class="text-sm ml-1">{{ art.author.name }}</span>
     </div>
   </div>
 </template>
@@ -171,6 +110,7 @@ export default defineComponent({
   },
   props: {
     art: { type: Object as PropType<Art>, required: true },
+    saved: { type: Object as PropType<boolean> },
   },
   data() {
     return {

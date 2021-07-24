@@ -1,33 +1,100 @@
 <template>
-  <div class="rounded-fulljustify-items-center mt-10">
-    <img
-      class="rounded-full h-24 w-24 mx-auto block"
-      src="https://lumiere-a.akamaihd.net/v1/images/character_princess_jasmine_7da1e27a.jpeg?region=0%2C0%2C450%2C450"
-      alt="Jasmine profile picture"
-    />
+  <!-- Profile Header -->
+  <Profile :profile="inprofile" />
+
+  <!-- Icons -->
+  <div class="w-full">
+    <Icon v-for="i in icons" :key="i.id" :icon="i" />
+  </div>
+
+  <!-- My saves -->
+  <div class="flex mx-10 w-full border-b-2">
+    <Save v-for="save in saves" :key="save.id" :save="save" />
+  </div>
+
+  <!-- Unorganised Saves -->
+  <div class="my-14 justify-around font-garamond border-b-2">
+    <strong class="inline text-xl">Unorganised Saves</strong>
+
+    <a
+      class="
+        inline
+        float-right
+        px-3
+        py-2
+        font-bold
+        rounded-full
+        bg-light
+        hover:bg-light-hover
+      "
+      href="/"
+      >Organise</a
+    >
+    <div class="flex w-full my-14 max-w-7xl">
+      <div
+        class="flex flex-col mx-24"
+        v-for="arts in arts2D"
+        :key="arts.toString()"
+      >
+        <ArtCard v-for="art in arts" :key="art.id" :art="art" :saved="true" />
+      </div>
+    </div>
+  </div>
+
+  <div id="reference" class="text-sm font-garamond">
+    <h1>Credits to:</h1>
+    <a
+      v-for="ref in icons"
+      :key="ref.id"
+      :href="ref.creditRef"
+      class="text-gray-500"
+    >
+      -&nbsp;{{ ref.alt }} by {{ ref.author }} -&nbsp;</a
+    >
   </div>
   <br />
-  <h1 class="text-center text-3xl font-bold font-garamond">Liana Ling</h1>
-  <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
-    @lianalingliya
-  </h2>
-  <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
-    0 following
-  </h2>
-  <div class="w-full">
-    <div class="m-3 inline bg-red">
-      <img
-        class="inline"
-        src="https://img.icons8.com/material-sharp/24/000000/pencil--v2.png"
-        alt="Edit icon"
-      />
-    </div>
-    <div class="m-3 inline">
-      <img
-        class="inline"
-        src="https://img.icons8.com/material-rounded/24/000000/share.png"
-        alt="Edit icon"
-      />
-    </div>
-  </div>
 </template>
+
+<script lang="ts">
+import Icon from "../components/Icon.vue";
+import Save from "../components/Save.vue";
+import Profile from "../components/Profile.vue";
+import ArtCard from "../components/ArtCard.vue";
+import { sliceIntoChunks } from "../utils/Helper";
+import * as API from "../types/api";
+
+const icons = JSON.parse(
+  (<HTMLInputElement>document.getElementById("iconsState")).value
+);
+
+const saves = JSON.parse(
+  (<HTMLInputElement>document.getElementById("savesState")).value
+);
+
+const inprofile = JSON.parse(
+  (<HTMLInputElement>document.getElementById("profileState")).value
+);
+
+const artsState = JSON.parse(
+  (<HTMLInputElement>document.getElementById("artsState")).value
+);
+
+const arts2D = sliceIntoChunks<API.Art>(artsState, 3);
+
+export default {
+  components: {
+    Icon,
+    Save,
+    Profile,
+    ArtCard,
+  },
+  data() {
+    return {
+      icons,
+      saves,
+      inprofile,
+      arts2D,
+    };
+  },
+};
+</script>
