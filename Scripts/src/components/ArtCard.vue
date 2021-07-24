@@ -13,12 +13,16 @@
       <button
         class="bg-red rounded-full font-bold text-light opacity-0 py-2 px-4 top-4 right-4 absolute hover:bg-red-hover group-hover:opacity-100"
         :class="transition"
-      >Save</button>
+      >
+        Save
+      </button>
     </template>
     <p
       class="bg-light rounded-full font-semibold text-dark opacity-0 py-2 px-4 bottom-4 left-4 absolute group-hover:opacity-100"
       :class="transition"
-    >RM {{ art.price.toFixed(2) }}</p>
+    >
+      RM {{ art.price.toFixed(2) }}
+    </p>
     <Popover
       class="opacity-0 right-4 bottom-4 absolute group-hover:opacity-100"
       :class="transition"
@@ -32,7 +36,9 @@
 
       <PopoverPanel class="shadow-xl right-0 bottom-12 w-[300px] z-10 absolute">
         <div class="bg-white rounded-3xl p-4">
-          <h3 class="font-bold text-lg text-center w-full">Share this artwork</h3>
+          <h3 class="font-bold text-lg text-center w-full">
+            Share this artwork
+          </h3>
           <div class="flex mt-4 items-start justify-around">
             <button onclick="(() => alert('Share {{ id }} WhatsApp'))()">
               <Whatsapp />
@@ -45,7 +51,10 @@
               <Facebook />
               <span class="mt-1 text-xs">Facebook</span>
             </button>
-            <button class="flex flex-col items-center" onclick="(() => alert('Share to Email'))()">
+            <button
+              class="flex flex-col items-center"
+              onclick="(() => alert('Share to Email'))()"
+            >
               <div
                 class="bg-light-hover rounded-full flex h-[48px] p-3 w-[48px] justify-center items-center"
               >
@@ -53,7 +62,10 @@
               </div>
               <span class="mt-1 text-xs">Email</span>
             </button>
-            <button class="flex flex-col items-center" onclick="(() => alert('Copy Link'))()">
+            <button
+              class="flex flex-col items-center"
+              onclick="(() => alert('Copy Link'))()"
+            >
               <div
                 class="bg-light-hover rounded-full flex h-[48px] p-3 w-[48px] justify-center items-center"
               >
