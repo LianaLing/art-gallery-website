@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="flex justify-around w-full py-8 mx-auto max-w-7xl">
+  <div class="flex mx-auto w-full max-w-7xl py-8 justify-around">
     <div
       class="flex flex-col mx-4"
       v-for="arts in arts2D"
@@ -12,11 +12,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { getStateFromBackend, sliceIntoChunks } from "../utils/helper";
 import { Art } from "../types/model";
-import { getStateFromBackend } from "../utils/helper";
 import ArtCard from "../components/ArtCard.vue";
-import { sliceIntoChunks } from "../utils/helper";
-import * as API from "../types/api";
 
 // Getting the data from code-behind
 const arts = getStateFromBackend<Art[]>("state");
