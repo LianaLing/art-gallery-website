@@ -1,0 +1,7 @@
+-- Inserted data
+--INSERT INTO [BillingDetails] VALUES ('Liana Ling', 'liana@gmail.com', '0172801215', '2020-10-11', '2020-10-11', '1');
+--INSERT INTO [BillingDetails] VALUES ('Marcus Lee', 'marcus@gmail.com', '0172801215', '2020-10-11', '2020-10-11', '2');
+--INSERT INTO [BillingDetails] VALUES ('Yan Wen', 'yanwen@gmail.com', '0172801215', '2020-10-11', '2020-10-11', '3');
+--INSERT INTO [BillingDetails] VALUES ('Jing Pei', 'jingpei@gmail.com', '0172801215', '2020-10-11', '2020-10-11', '4');
+--INSERT INTO [BillingDetails] VALUES ('Jasmine', 'jasmine@gmail.com', '0172801215', '2020-10-11', '2020-10-11', '5');
+--INSERT INTO [BillingDetails] VALUES ('Ron Weasley', 'ron@gmail.com', '0172801215', '2020-10-11', '2020-10-11', '6');

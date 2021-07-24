@@ -12,8 +12,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Art } from "../types/model";
 import { getStateFromBackend, sliceIntoChunks } from "../utils/helper";
+import { Art } from "../types/model";
 import ArtCard from "../components/ArtCard.vue";
 
 // Getting the data from code-behind

@@ -1,0 +1,7 @@
+-- Inserted data
+--INSERT INTO [Order] VALUES ('succeeded', 'Bought an artwork', '1', '1', '1');
+--INSERT INTO [Order] VALUES ('succeeded', 'Bought four artworks', '2', '2', '2');
+--INSERT INTO [Order] VALUES ('processing', 'Processing', '3', '8', '3');
+--INSERT INTO [Order] VALUES ('succeeded', NULL, '5', '11', '6');
+--INSERT INTO [Order] VALUES ('canceled', 'Canceled', '7', '9', '4');
+--INSERT INTO [Order] VALUES ('canceled', NULL, '8', '10', '5');
