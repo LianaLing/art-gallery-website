@@ -20,3 +20,11 @@ export const sliceIntoChunks = <T>(arr: T[], chunkSize: number): T[][] => {
  */
 export const sleep = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Retrieve the state injected by .NET
+ * @param {string} id - the hidden field's id
+ * @returns {T} a typed state object
+ */
+export const getStateFromBackend = <T>(id: string) =>
+  JSON.parse((<HTMLInputElement>document.getElementById(id)).value) as T;

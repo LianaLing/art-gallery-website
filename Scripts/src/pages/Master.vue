@@ -14,46 +14,51 @@
         >
         <a class="px-3 py-2 hover:underline font-garamond" href="/">Blog</a>
       </div>
-      <button
-        class="
-          px-3
-          py-2
-          mr-4
-          text-white
-          rounded-full
-          bg-accent
-          hover:bg-accent-hover
-          font-garamond
-        "
-        @click="loginHandler"
-      >
-        Log in
-      </button>
-      <button
-        class="
-          px-3
-          py-2
-          rounded-full
-          bg-light
-          hover:bg-light-hover
-          font-garamond
-        "
-        @click="signupHandler"
-      >
-        Sign up
-      </button>
+      <template v-if="email === null">
+        <button
+          class="
+            px-3
+            py-2
+            mr-4
+            text-white
+            rounded-full
+            bg-accent
+            hover:bg-accent-hover
+            font-garamond
+          "
+          @click="loginHandler"
+        >
+          Log in
+        </button>
+        <button
+          class="
+            px-3
+            py-2
+            rounded-full
+            bg-light
+            hover:bg-light-hover
+            font-garamond
+          "
+          @click="signupHandler"
+        >
+          Sign up
+        </button>
+      </template>
+      <p v-else>You are logged in as: {{ email }}</p>
     </div>
   </div>
   <AuthController />
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import { useAuthView } from "../stores/useAuthView";
-import { AuthView } from "../types/state";
+import { AuthView, SessionData } from "../types/state";
+import { getStateFromBackend } from "../utils/helper";
 import AuthController from "../components/auth/AuthController.vue";
 import Pinterest from "../components/icons/Pinterest.vue";
 
-export default {
+export default defineComponent({
   components: { Pinterest, AuthController },
   setup() {
     const authView = useAuthView();
@@ -77,5 +82,17 @@ export default {
       signupHandler,
     };
   },
-};
+  data() {
+    const session = getStateFromBackend<SessionData[]>("session");
+
+    // TODO: Better define how the session data should look like
+    // and parse it accordingly, this below is just a temporary solution
+    const email =
+      session.length !== 0
+        ? session.filter((x) => x.Key === "email")[0].Value
+        : null;
+
+    return { email };
+  },
+});
 </script>
