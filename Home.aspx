@@ -5,7 +5,8 @@
 
         <div id="app">
         </div>
-    <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ArtGalleryDB %>" SelectCommand="SELECT * FROM [Art]"></asp:SqlDataSource>
+
+<%--        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ArtGalleryDB %>" SelectCommand="SELECT * FROM [Art]"></asp:SqlDataSource>
         <asp:DataList ID="DataList1" runat="server" DataKeyField="id" DataSourceID="SqlDataSource1">
             <ItemTemplate>
                 id:
@@ -29,9 +30,9 @@
                 author_id:
                 <asp:Label ID="author_idLabel" runat="server" Text='<%# Eval("author_id") %>' />
                 <br />
-<br />
+                <br />
             </ItemTemplate>
-        </asp:DataList>
+        </asp:DataList>--%>
 
         <script src="Scripts/dist/HomePage.dist.js"></script>
     </asp:Content>

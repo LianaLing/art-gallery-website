@@ -1,9 +1,9 @@
 ﻿<template>
   <div class="font-garamond w-[300px] relative group filter drop-shadow-none">
     <img
-      :alt="art.title"
+      :alt="art.description"
       class="h-full object-cover rounded-3xl w-[300px] backdrop-filter backdrop-brightness-50"
-      :src="art.imageSrc"
+      :src="art.url"
     />
     <div
       class="h-full rounded-3xl w-full top-0 absolute backdrop-filter group-hover:cursor-[zoom-in] backdrop-brightness-100 group-hover:backdrop-brightness-75"
@@ -79,10 +79,10 @@
     </Popover>
   </div>
   <div class="font-garamond mb-8 w-[300px]">
-    <p class="font-bold mt-1 px-2 line-clamp-2">{{ art.title }}</p>
+    <p class="font-bold mt-1 px-2 line-clamp-2">{{ art.description }}</p>
     <div class="flex mt-1 px-2 items-center">
-      <img :src="art.author.avatarUrl" class="rounded-full w-[24px]" />
-      <span class="text-sm ml-1">{{ art.author.name }}</span>
+      <img :src="art.author.avatarUrl" class="rounded-full h-7 w-7" />
+      <span class="text-sm ml-2">{{ art.author.name }}</span>
     </div>
   </div>
 </template>
@@ -90,7 +90,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import { Art } from "../types/model";
+import { ArtResponse } from "../types/api";
 import Whatsapp from "../components/icons/Whatsapp.vue";
 import Facebook from "../components/icons/Facebook.vue";
 import Email from "../components/icons/Email.vue";
@@ -109,7 +109,7 @@ export default defineComponent({
     Search,
   },
   props: {
-    art: { type: Object as PropType<Art>, required: true },
+    art: { type: Object as PropType<ArtResponse>, required: true },
     saved: { type: Object as PropType<boolean> },
   },
   data() {
