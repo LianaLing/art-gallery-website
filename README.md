@@ -42,7 +42,9 @@ It is a modifed from Visual Studio's ASP.NET Web Forms template. Most of the thi
 ### ASP.NET
 
 - `Api` - This folder stores all web services exposed by the backend
-- `Model` - All models (classes) should be under here eg. ApiResponse, Error
+- `Models` - All models (classes) should be under here eg. ApiResponse, Error
+- `Models/Entities` - All entities from the database should be under here
+- `Models/Queries` - All queries made should be under here
 - `Auth` - Here stores all auth redirect pages eg. Login
 - `Utils` - Here stores C# utilities for ASP.NET
 
