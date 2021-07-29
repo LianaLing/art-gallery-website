@@ -37,7 +37,7 @@ export type Icon = {
   href: string;
   creditRef: string;
   author: string;
-}
+};
 
 export type Save = {
   id: string;
@@ -46,13 +46,13 @@ export type Save = {
   updatedAt: number;
   href: string;
   arts: SavedArt[];
-}
+};
 
 export type SavedArt = {
   id: string;
   imageSrc: string;
   title: string;
-}
+};
 
 export type Profile = {
   name: string;
@@ -60,4 +60,27 @@ export type Profile = {
   following: number;
   avatarUrl: string;
   profileUrl: string;
-}
+};
+
+// This is the response of an Art that is returned from ASP.NET
+export type ArtResponse = {
+  id: number;
+  style: string;
+  description: string;
+  price: number;
+  stock: number;
+  likes: number;
+  url: string;
+  author: {
+    id: number;
+    description: string;
+    verified: boolean;
+    username: string;
+    name: string;
+    ic: string;
+    dob: string;
+    contactNo: string;
+    email: string;
+    avatarUrl: string;
+  };
+};

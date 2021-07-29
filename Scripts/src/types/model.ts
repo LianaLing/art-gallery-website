@@ -2,14 +2,17 @@
 
 export type Author = {
   id: string;
-  name: string;
-  avatarUrl: string;
+  description: string;
+  verified: boolean;
 };
 
 export type Art = {
-  id: string;
-  imageSrc: string;
-  title: string;
+  id: number;
+  style: string;
+  description: string;
   price: number;
-  author: Author;
+  stock: number;
+  likes: number;
+  url: string;
+  author_id: number;
 };
