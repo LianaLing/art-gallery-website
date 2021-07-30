@@ -44,7 +44,13 @@
           Sign up
         </button>
       </template>
-      <p v-else>You are logged in as: {{ email }}</p>
+      <button
+        class="hover:underline font-bold font-garamond"
+        @click="userPageHandler"
+        v-else
+      >
+        You are logged in as: {{ email }}
+      </button>
     </div>
   </div>
   <AuthController />
@@ -59,6 +65,18 @@ import AuthController from "../components/auth/AuthController.vue";
 import Pinterest from "../components/icons/Pinterest.vue";
 
 export default defineComponent({
+  methods: {
+    userPageHandler: (event: Event) => {
+      // prevent button triggers refresh
+      event.preventDefault();
+      var btn = document.getElementById("btnUserPage");
+      if (btn == null) {
+        alert("hi from javascript vue");
+        return;
+      }
+      btn.click();
+    },
+  },
   components: { Pinterest, AuthController },
   setup() {
     const authView = useAuthView();

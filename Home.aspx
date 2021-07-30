@@ -5,7 +5,6 @@
 
         <div id="app">
         </div>
-
 <%--        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ArtGalleryDB %>" SelectCommand="SELECT * FROM [Art]"></asp:SqlDataSource>
         <asp:DataList ID="DataList1" runat="server" DataKeyField="id" DataSourceID="SqlDataSource1">
             <ItemTemplate>

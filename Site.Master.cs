@@ -15,5 +15,10 @@ namespace ArtGalleryWebsite
 			// Inject session state to client side
 			Helper.InjectSessionState(Page, Session);
 		}
+
+		public void btnUserPage_click(object sender, EventArgs e)
+		{
+			//ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('btnUserPage clicked')", true);
+		}
 	}
 }
