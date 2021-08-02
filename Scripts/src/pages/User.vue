@@ -4,7 +4,12 @@
 
   <!-- Icons -->
   <div class="w-full">
-    <Icon v-for="i in icons" :key="i.id" :icon="i" />
+    <Icon
+      :class="toggleFloatRight(i.alt)"
+      v-for="i in icons"
+      :key="i.id"
+      :icon="i"
+    />
   </div>
 
   <!-- My saves -->
@@ -41,17 +46,8 @@
     </div>
   </div>
 
-  <div id="reference" class="text-sm font-garamond">
-    <h1>Credits to:</h1>
-    <a
-      v-for="ref in icons"
-      :key="ref.id"
-      :href="ref.creditRef"
-      class="text-gray-500"
-    >
-      -&nbsp;{{ ref.alt }} by {{ ref.author }} -&nbsp;</a
-    >
-  </div>
+  <Reference />
+
   <br />
 </template>
 
@@ -60,6 +56,7 @@ import Icon from "../components/Icon.vue";
 import Save from "../components/Save.vue";
 import Profile from "../components/Profile.vue";
 import ArtCard from "../components/ArtCard.vue";
+import Reference from "../components/Reference.vue";
 import { sliceIntoChunks } from "../utils/helper";
 import * as API from "../types/api";
 
@@ -82,11 +79,23 @@ const artsState = JSON.parse(
 const arts2D = sliceIntoChunks<API.Art>(artsState, 3);
 
 export default {
+  methods: {
+    toggleFloatRight(alt: string) {
+      switch (alt) {
+        case "Settings Icon":
+        case "Add Icon":
+          return "float-right";
+        default:
+          return "float-left";
+      }
+    },
+  },
   components: {
     Icon,
     Save,
     Profile,
     ArtCard,
+    Reference,
   },
   data() {
     return {

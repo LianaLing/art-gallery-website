@@ -1,16 +1,11 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ArtDetail.aspx.cs" Inherits="ArtGalleryWebsite.ArtDetail" %>
+﻿<%@ Page Title="ArtDetail" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ArtDetail.aspx.cs"
+    Inherits="ArtGalleryWebsite.ArtDetail" %>
 
-<!DOCTYPE html>
+    <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
-            art detail
+        <div id="app">
         </div>
-    </form>
-</body>
-</html>
+
+        <script src="Scripts/dist/ArtDetailPage.dist.js"></script>
+
+    </asp:Content>

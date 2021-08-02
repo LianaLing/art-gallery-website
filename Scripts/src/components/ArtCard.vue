@@ -1,8 +1,5 @@
 ﻿<template>
-  <div
-    class="font-garamond w-[300px] relative group filter drop-shadow-none"
-    @click="artDetailPageHandler"
-  >
+  <div class="font-garamond w-[300px] relative group filter drop-shadow-none">
     <img
       :alt="art.description"
       class="
@@ -26,6 +23,7 @@
         backdrop-brightness-100
         group-hover:backdrop-brightness-75
       "
+      @click="artDetailPageHandler"
       :class="transition"
     ></div>
     <template v-if="!saved">
