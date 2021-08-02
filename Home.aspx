@@ -3,6 +3,8 @@
 
     <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
+        <asp:Button ID="SaveArt" runat="server" OnClick="btnSaveArt" Text="TESTESTST" CssClass="hidden" />
+
         <div id="app">
         </div>
 

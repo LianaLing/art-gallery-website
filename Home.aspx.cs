@@ -37,5 +37,10 @@ namespace ArtGalleryWebsite
             // Close connection to db
             Database.CloseDbConnection();
         }
+
+        protected void btnSaveArt(object sender, EventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine("Hi from Vue button");
+        }
     }
 }
