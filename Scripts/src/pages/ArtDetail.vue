@@ -45,6 +45,7 @@
       </div>
     </div>
   </div>
+  <Reference />
 </template>
 
 <script lang="ts">
@@ -62,6 +63,7 @@ export default defineComponent({
   components: {
     Icon,
     Share,
+    Reference,
   },
   methods: {},
   data() {

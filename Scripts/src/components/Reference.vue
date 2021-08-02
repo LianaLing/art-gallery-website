@@ -1,5 +1,5 @@
 <template>
-  <div id="reference" class="text-sm font-garamond">
+  <div class="text-sm font-garamond">
     <h1>Credits to:</h1>
     <a
       v-for="ref in icons"
@@ -13,13 +13,15 @@
 </template>
 
   <script lang="ts">
+import { defineComponent, PropType } from "vue";
 import Icon from "../components/Icon.vue";
 
 const icons = JSON.parse(
   (<HTMLInputElement>document.getElementById("iconsState")).value
 );
 
-export default {
+export default defineComponent({
+  prop: {},
   components: {
     Icon,
   },
@@ -28,5 +30,5 @@ export default {
       icons,
     };
   },
-};
+});
 </script>
