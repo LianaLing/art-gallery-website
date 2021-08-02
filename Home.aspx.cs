@@ -37,5 +37,6 @@ namespace ArtGalleryWebsite
             // Close connection to db
             Database.CloseDbConnection();
         }
+
     }
 }

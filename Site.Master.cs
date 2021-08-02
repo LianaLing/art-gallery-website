@@ -20,5 +20,9 @@ namespace ArtGalleryWebsite
 		{
 			//ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('btnUserPage clicked')", true);
 		}
+		public void btnArtDetailPage_click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

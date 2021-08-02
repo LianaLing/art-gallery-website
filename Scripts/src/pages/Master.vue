@@ -63,18 +63,14 @@ import { AuthView, SessionData } from "../types/state";
 import { getStateFromBackend } from "../utils/helper";
 import AuthController from "../components/auth/AuthController.vue";
 import Pinterest from "../components/icons/Pinterest.vue";
+import * as helper from "../utils/helper";
 
 export default defineComponent({
   methods: {
-    userPageHandler: (event: Event) => {
-      // prevent button triggers refresh
-      event.preventDefault();
-      var btn = document.getElementById("btnUserPage");
-      if (btn == null) {
-        alert("hi from javascript vue");
-        return;
-      }
-      btn.click();
+    userPageHandler: (e: Event) => {
+      // Prevent button triggers refresh
+      e.preventDefault();
+      helper.triggerBackendControl(e, "btnUserPage");
     },
   },
   components: { Pinterest, AuthController },

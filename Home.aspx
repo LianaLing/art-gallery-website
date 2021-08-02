@@ -2,7 +2,6 @@
     Inherits="ArtGalleryWebsite.Home" %>
 
     <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
         <div id="app">
         </div>
 <%--        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:ArtGalleryDB %>" SelectCommand="SELECT * FROM [Art]"></asp:SqlDataSource>

@@ -1,24 +1,68 @@
 ﻿<template>
-  <div class="font-garamond w-[300px] relative group filter drop-shadow-none">
+  <div
+    class="font-garamond w-[300px] relative group filter drop-shadow-none"
+    @click="artDetailPageHandler"
+  >
     <img
       :alt="art.description"
-      class="h-full object-cover rounded-3xl w-[300px] backdrop-filter backdrop-brightness-50"
+      class="
+        h-full
+        object-cover
+        rounded-3xl
+        w-[300px]
+        backdrop-filter backdrop-brightness-50
+      "
       :src="art.url"
     />
     <div
-      class="h-full rounded-3xl w-full top-0 absolute backdrop-filter group-hover:cursor-[zoom-in] backdrop-brightness-100 group-hover:backdrop-brightness-75"
+      class="
+        h-full
+        rounded-3xl
+        w-full
+        top-0
+        absolute
+        backdrop-filter
+        group-hover:cursor-[zoom-in]
+        backdrop-brightness-100
+        group-hover:backdrop-brightness-75
+      "
       :class="transition"
     ></div>
     <template v-if="!saved">
       <button
-        class="bg-red rounded-full font-bold text-light opacity-0 py-2 px-4 top-4 right-4 absolute hover:bg-red-hover group-hover:opacity-100"
+        class="
+          bg-red
+          rounded-full
+          font-bold
+          text-light
+          opacity-0
+          py-2
+          px-4
+          top-4
+          right-4
+          absolute
+          hover:bg-red-hover
+          group-hover:opacity-100
+        "
         :class="transition"
       >
         Save
       </button>
     </template>
     <p
-      class="bg-light rounded-full font-semibold text-dark opacity-0 py-2 px-4 bottom-4 left-4 absolute group-hover:opacity-100"
+      class="
+        bg-light
+        rounded-full
+        font-semibold
+        text-dark
+        opacity-0
+        py-2
+        px-4
+        bottom-4
+        left-4
+        absolute
+        group-hover:opacity-100
+      "
       :class="transition"
     >
       RM {{ art.price.toFixed(2) }}
@@ -28,7 +72,13 @@
       :class="transition"
     >
       <PopoverButton
-        class="bg-light rounded-full p-2 focus:outline-none hover:bg-light-hover"
+        class="
+          bg-light
+          rounded-full
+          p-2
+          focus:outline-none
+          hover:bg-light-hover
+        "
         :class="transition"
       >
         <Search />
@@ -56,7 +106,16 @@
               onclick="(() => alert('Share to Email'))()"
             >
               <div
-                class="bg-light-hover rounded-full flex h-[48px] p-3 w-[48px] justify-center items-center"
+                class="
+                  bg-light-hover
+                  rounded-full
+                  flex
+                  h-[48px]
+                  p-3
+                  w-[48px]
+                  justify-center
+                  items-center
+                "
               >
                 <Email />
               </div>
@@ -67,7 +126,16 @@
               onclick="(() => alert('Copy Link'))()"
             >
               <div
-                class="bg-light-hover rounded-full flex h-[48px] p-3 w-[48px] justify-center items-center"
+                class="
+                  bg-light-hover
+                  rounded-full
+                  flex
+                  h-[48px]
+                  p-3
+                  w-[48px]
+                  justify-center
+                  items-center
+                "
               >
                 <Link />
               </div>
@@ -96,6 +164,7 @@ import Facebook from "../components/icons/Facebook.vue";
 import Email from "../components/icons/Email.vue";
 import Link from "../components/icons/Link.vue";
 import Search from "../components/icons/Search.vue";
+import * as helper from "../utils/helper";
 
 export default defineComponent({
   components: {
@@ -112,6 +181,15 @@ export default defineComponent({
     art: { type: Object as PropType<ArtResponse>, required: true },
     saved: { type: Object as PropType<boolean> },
   },
+  methods: {
+    artDetailPageHandler: (e: Event) => {
+      // Prevent button triggers refresh
+      e.preventDefault();
+      // alert("clicked on art card from artcard");
+      helper.triggerBackendControl(e, "btnArtDetailPage");
+    },
+  },
+  emits: ["detail"],
   data() {
     return {
       transition: "transition ease-in-out duration-200",
