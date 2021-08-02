@@ -3,12 +3,14 @@
   <div class="m-4 flex justify-center font-garamond">
     <div class="rounded-[30px] grid grid-cols-2" :class="artDivTransition">
       <img
-        :src="art.imageSrc"
-        :alt="art.title"
+        :src="art.url"
+        :alt="art.description"
         class="object-fill rounded-tl-[30px] rounded-bl-[30px]"
       />
       <div class="p-10">
         <Icon class="float-left" :icon="icons[1]" />
+        <Icon class="float-left" :icon="icons[3]" />
+        <span class="inline"> {{ art.likes }}</span>
         <Share class="inline-block" :shareIcon="icons[2]" />
         <button
           class="
@@ -26,22 +28,14 @@
           Purchase
         </button>
 
-        <p class="font-bold text-accent text-5xl my-4">{{ art.title }}</p>
+        <p class="font-bold text-accent text-5xl my-4">{{ art.description }}</p>
         <img
           :src="art.author.avatarUrl"
           :alt="art.author.name + '\'s photo'"
-          class="
-            h-[32px]
-            w-[32px]
-            rounded-full
-            object-contain
-            inline-block
-            mr-4
-          "
+          class="h-[32px] w-[32px] rounded-full object-fill inline-block mr-4"
         />
         <p class="text-xl inline">{{ art.author.name }}</p>
-        <p>art.description (not yet implement database)</p>
-        <p class="text-3xl">RM{{ art.price }}</p>
+        <p class="text-3xl py-4">RM{{ art.price }}</p>
       </div>
     </div>
   </div>
@@ -57,7 +51,8 @@ import { getStateFromBackend } from "../utils/helper";
 import * as API from "../types/api";
 
 const icons = getStateFromBackend<API.Icon[]>("iconsState");
-const art = getStateFromBackend<API.Art>("artState");
+const arts = getStateFromBackend<API.ArtDetailResponse[]>("artState");
+const art = arts[0];
 
 export default defineComponent({
   components: {

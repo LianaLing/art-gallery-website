@@ -23,13 +23,13 @@
         backdrop-brightness-100
         group-hover:backdrop-brightness-75
       "
-      @click="artDetailPageHandler"
+      @click="artDetailPageHandler($event, art.id)"
       :class="transition"
     ></div>
     <template v-if="!saved">
       <button
         class="
-          bg-red
+          bg-accent
           rounded-full
           font-bold
           text-light
@@ -39,7 +39,7 @@
           top-4
           right-4
           absolute
-          hover:bg-red-hover
+          hover:bg-accent-hover
           group-hover:opacity-100
         "
         :class="transition"
@@ -180,7 +180,7 @@ export default defineComponent({
     saved: { type: Object as PropType<boolean> },
   },
   methods: {
-    artDetailPageHandler: (e: Event) => {
+    artDetailPageHandler: (e: Event, id: number) => {
       // Prevent button triggers refresh
       e.preventDefault();
       // alert("clicked on art card from artcard");
