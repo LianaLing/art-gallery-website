@@ -1,9 +1,9 @@
 <template>
   <div class="flex items-center justify-between px-6 py-5">
-    <div class="flex items-center">
+    <button class="flex items-center" @click="homePageHandler">
       <Pinterest />
       <h1 class="text-xl font-bold font-garamond text-accent">Art Gallery</h1>
-    </div>
+    </button>
     <div class="flex items-center font-bold text-dark">
       <div class="mr-8">
         <a class="px-3 py-2 mr-1 hover:underline font-garamond" href="/"
@@ -71,6 +71,10 @@ export default defineComponent({
       // Prevent button triggers refresh
       e.preventDefault();
       helper.triggerBackendControl(e, "btnUserPage");
+    },
+    homePageHandler: (e: Event) => {
+      e.preventDefault();
+      helper.triggerBackendControl(e, "btnHomePage");
     },
   },
   components: { Pinterest, AuthController },

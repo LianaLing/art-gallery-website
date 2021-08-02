@@ -39,8 +39,12 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
+
+        <%-- Controls controlled by frontend --%>
         <asp:button ID="btnUserPage" runat="server" CssClass="hidden" OnClick="btnUserPage_click" PostBackUrl="~/User.aspx" />
         <asp:button ID="btnArtDetailPage" runat="server" OnClick="btnArtDetailPage_click" PostBackUrl="~/ArtDetail.aspx" />
+        <asp:button ID="btnHomePage" runat="server" OnClick="btnHomePage_click" PostBackUrl="~/Home.aspx" />
+        
         <div id="master"></div>
 
         <div class="px-6">
