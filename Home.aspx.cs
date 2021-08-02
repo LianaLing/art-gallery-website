@@ -22,9 +22,6 @@ namespace ArtGalleryWebsite
             // ViewState["state"] = res.Content.ReadAsStringAsync().Result.ToString();
             // System.Diagnostics.Debug.WriteLine("asdasdasd");
 
-            // Open db connection
-            Database.OpenDbConnection();
-
             // Fetch art responses from the database
             List<ArtQuery> data = Database.Query<ArtQuery>(ArtQuery.SqlQuery);
 
@@ -33,9 +30,6 @@ namespace ArtGalleryWebsite
                 "arts",
                 JsonConvert.SerializeObject(data)
             );
-
-            // Close connection to db
-            Database.CloseDbConnection();
         }
 
         protected void btnSaveArt(object sender, EventArgs e)

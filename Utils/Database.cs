@@ -25,6 +25,9 @@ namespace ArtGalleryWebsite.Utils
 
         public static List<T> Query<T>(string SqlQuery, Func<SqlDataReader, T> parser = null) where T : ISqlParser, new()
         {
+            // Open DB Connection
+            OpenDbConnection();
+
             // Sql command to execute
             SqlCommand command = new SqlCommand(SqlQuery, conn);
             SqlDataReader dataReader = command.ExecuteReader();
@@ -58,6 +61,9 @@ namespace ArtGalleryWebsite.Utils
                 // Add parsed data into the list
                 results.Add(data);
             }
+
+            // Close DB Connection
+            CloseDbConnection();
 
             // Return the list of data
             return results;

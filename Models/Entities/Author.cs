@@ -14,9 +14,23 @@ namespace ArtGalleryWebsite.Models.Entities
     // );
     public class Author : ISqlParser
     {
-        public int id;
-        public string description;
-        public bool verified;
+        public int id
+        {
+            get;
+            set;
+        }
+
+        public string description
+        {
+            get;
+            set;
+        }
+
+        public bool verified
+        {
+            get;
+            set;
+        }
 
         public Author() { }
     

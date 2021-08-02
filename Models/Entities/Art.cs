@@ -20,14 +20,53 @@ namespace ArtGalleryWebsite.Models.Entities
     // );
     public class Art : ISqlParser
     {
-        public int id;
-        public string style;
-        public string description;
-        public decimal price;
-        public int stock;
-        public int likes;
-        public string url;
-        public int author_id;
+        public int id
+        {
+            get;
+            set;
+        }
+
+        public string style
+        {
+            get;
+            set;
+        }
+
+        public string description
+        {
+            get;
+            set;
+        }
+
+        public decimal price
+        {
+            get;
+            set;
+        }
+
+        public int stock
+        {
+            get;
+            set;
+        }
+
+        public int likes
+        {
+            get;
+            set;
+        }
+
+        public string url
+        {
+            get;
+            set;
+        }
+
+        public int author_id
+        {
+            get;
+            set;
+        }
 
         public Art() { }
 
