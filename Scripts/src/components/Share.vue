@@ -4,7 +4,7 @@
       <img :src="shareIcon.src" :alt="shareIcon.alt" />
     </PopoverButton>
 
-    <PopoverPanel class="shadow-xl right-0 bottom-12 w-[300px] z-10 absolute">
+    <PopoverPanel class="shadow-xl w-[300px] z-10 absolute rounded-3xl">
       <div class="bg-white rounded-3xl p-4">
         <h3 class="font-bold text-lg text-center w-full">Share this artwork</h3>
         <div class="flex mt-4 items-start justify-around">
