@@ -28,3 +28,34 @@ export const sleep = (ms: number) =>
  */
 export const getStateFromBackend = <T>(id: string) =>
   JSON.parse((<HTMLInputElement>document.getElementById(id)).value) as T;
+
+/**
+ * Trigger ASP.NET server controls by simulating click
+ * @param {Event} e - the event object triggered by v-on events
+ * @param {string} id - the id of the control's to be invoked
+ */
+export const triggerBackendControl = (e: Event, id: string, val: string = "") => {
+  const ctrl = document.getElementById(id) as HTMLInputElement;
+
+  if (val !== "") {
+    ctrl.value = val;
+  }
+
+  if (ctrl !== null) {
+    ctrl.click();
+  }
+}
+
+// /**
+//  * Trigger ASP.NET server controls by simulating click
+//  * @param {Event} e - the event object triggered by v-on events
+//  * @param {string} id - the id of the control's to be invoked
+//  * @param {any} id - the id of the current element
+//  */
+// export const triggerBackendControlWithCurrentElement = (e: Event, id: string, arg: any) => {
+//   var ctrl = document.getElementById(id);
+
+//   if(ctrl != null) {
+//     ctrl.
+//   }
+// }

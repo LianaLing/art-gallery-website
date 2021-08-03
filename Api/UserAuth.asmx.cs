@@ -56,7 +56,7 @@ namespace ArtGalleryWebsite
         public string SignUp(string email, string password, string type)
         {
             // Check the account type
-            switch(type)
+            switch (type)
             {
                 case AccountType.Personal:
                     break;

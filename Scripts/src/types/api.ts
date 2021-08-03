@@ -84,3 +84,25 @@ export type ArtResponse = {
     avatarUrl: string;
   };
 };
+
+export type ArtDetailResponse = {
+  id: number;
+  style: string;
+  description: string;
+  price: number;
+  stock: number;
+  likes: number;
+  url: string;
+  author: {
+    id: number;
+    description: string;
+    verified: boolean;
+    username: string;
+    name: string;
+    ic: string;
+    dob: string;
+    contactNo: string;
+    email: string;
+    avatarUrl: string;
+  };
+}

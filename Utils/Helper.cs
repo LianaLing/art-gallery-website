@@ -30,7 +30,7 @@ namespace ArtGalleryWebsite.Utils
         // Helps to inject session state to client side
         public static void InjectSessionState(System.Web.UI.Page Page, System.Web.SessionState.HttpSessionState Session, string id = "session")
         {
-			Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(GetSessionDatas(Session)));
+            Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(GetSessionDatas(Session)));
         }
     }
 }
