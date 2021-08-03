@@ -166,5 +166,7 @@ namespace ArtGalleryWebsite
             Page.ClientScript.RegisterHiddenField("savesState", JsonConvert.SerializeObject(saves));
             Page.ClientScript.RegisterHiddenField("artsState", JsonConvert.SerializeObject(arts));
         }
+
     }
+
 }

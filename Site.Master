@@ -40,7 +40,6 @@
             </Scripts>
         </asp:ScriptManager>
         <asp:button ID="btnUserPage" runat="server" CssClass="hidden" OnClick="btnUserPage_click" PostBackUrl="~/User.aspx" />
-        <asp:button ID="btnArtDetailPage" runat="server" OnClick="btnArtDetailPage_click" PostBackUrl="~/ArtDetail.aspx" />
         <div id="master"></div>
 
         <div class="px-6">

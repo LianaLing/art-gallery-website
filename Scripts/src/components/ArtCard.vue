@@ -184,7 +184,7 @@ export default defineComponent({
       // Prevent button triggers refresh
       e.preventDefault();
       // alert("clicked on art card from artcard");
-      helper.triggerBackendControl(e, "btnArtDetailPage");
+      helper.triggerBackendControl(e, "MainContent_btnArtDetailPage", `${id}`);
     },
   },
   emits: ["detail"],

@@ -24,15 +24,6 @@ namespace ArtGalleryWebsite
         protected global::System.Web.UI.WebControls.Button btnUserPage;
 
         /// <summary>
-        /// btnArtDetailPage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnArtDetailPage;
-
-        /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>

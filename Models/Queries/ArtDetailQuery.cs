@@ -8,15 +8,7 @@ namespace ArtGalleryWebsite.Models.Queries
 {
     public class ArtDetailQuery : ISqlParser
     {
-        public static string SqlQuery = @"
-            SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
-                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
-            FROM [Art], [Author], [User]
-            WHERE [Art].author_id = [Author].id
-            AND [Author].id = [User].author_id
-            AND [Art].id = '4'
-            ORDER BY [Art].likes DESC;
-        ";
+        public static string SqlQuery = "";
 
         public int id;
         public string style;
@@ -67,6 +59,17 @@ namespace ArtGalleryWebsite.Models.Queries
             this.likes = likes;
             this.url = url;
             this.author = author;
+        }
+
+        public static void FetchCurrentArtDetail(int id)
+        {
+            SqlQuery = @"
+            SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
+                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+            FROM [Art], [Author], [User]
+            WHERE [Art].author_id = [Author].id
+            AND [Author].id = [User].author_id
+            AND [Art].id = '" + id + "'";
         }
 
         public ISqlParser ParseFromSqlReader(SqlDataReader reader)

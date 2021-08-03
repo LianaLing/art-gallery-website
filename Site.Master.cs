@@ -5,6 +5,10 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
+using ArtGalleryWebsite.Utils;
+using ArtGalleryWebsite.Models.Queries;
+using System.Collections.Generic;
 
 namespace ArtGalleryWebsite
 {
@@ -19,10 +23,6 @@ namespace ArtGalleryWebsite
 		public void btnUserPage_click(object sender, EventArgs e)
 		{
 			//ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('btnUserPage clicked')", true);
-		}
-		public void btnArtDetailPage_click(object sender, EventArgs e)
-		{
-
 		}
 	}
 }
