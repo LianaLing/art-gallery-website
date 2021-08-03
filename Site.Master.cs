@@ -20,9 +20,15 @@ namespace ArtGalleryWebsite
 			Helper.InjectSessionState(Page, Session);
 		}
 
+		// Control methods controlled by frontend
 		public void btnUserPage_click(object sender, EventArgs e)
 		{
 			//ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('btnUserPage clicked')", true);
 		}
+
+		public void btnHomePage_click(object sender, EventArgs e)
+        {
+
+        }
 	}
 }
