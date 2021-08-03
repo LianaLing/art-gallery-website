@@ -114,6 +114,7 @@
     <Content Include="App_Data\ArtGallery_log.ldf">
       <DependentUpon>ArtGallery.mdf</DependentUpon>
     </Content>
+    <Content Include="ArtDetail.aspx" />
     <Content Include="Auth\Login.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
@@ -160,6 +161,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="ArtDetail.aspx.cs">
+      <DependentUpon>ArtDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ArtDetail.aspx.designer.cs">
+      <DependentUpon>ArtDetail.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Auth\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -190,6 +198,7 @@
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Queries\ArtQuery.cs" />
     <Compile Include="Models\LoginResponse.cs" />
+    <Compile Include="Models\Queries\ArtDetailQuery.cs" />
     <Compile Include="Models\SessionData.cs" />
     <Compile Include="Models\ISqlParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -37,5 +37,11 @@ namespace ArtGalleryWebsite
             // Close connection to db
             Database.CloseDbConnection();
         }
+
+        public void btnArtDetailPage_click(object sender, EventArgs e)
+        {
+            string id = Request.Form[btnArtDetailPage.UniqueID];
+            Response.Redirect($"~/ArtDetail.aspx?id={id}");
+        }
     }
 }

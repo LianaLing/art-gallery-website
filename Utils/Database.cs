@@ -10,7 +10,7 @@ namespace ArtGalleryWebsite.Utils
     public static class Database
     {
         // SQL connection config
-        private static string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Marcus\Projects\art-gallery-website\App_Data\ArtGallery.mdf;Integrated Security=True";
+        private static string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\liana\source\repos\ArtGalleryWebsite\App_Data\ArtGallery.mdf;Integrated Security=True";
         private static SqlConnection conn = new SqlConnection(connString);
 
         public static void OpenDbConnection()
