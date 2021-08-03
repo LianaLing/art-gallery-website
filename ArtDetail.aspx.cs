@@ -15,10 +15,10 @@ namespace ArtGalleryWebsite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (PreviousPage != null && PreviousPage.IsCrossPagePostBack)
-            {
-                PreviousPage.FindControl("");
-            }
+            //if (PreviousPage != null && PreviousPage.IsCrossPagePostBack)
+            //{
+            //    PreviousPage.FindControl("");
+            //}
 
             Icon[] icons =
           {

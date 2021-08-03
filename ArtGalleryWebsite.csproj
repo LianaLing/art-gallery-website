@@ -199,6 +199,7 @@
     <Compile Include="Models\Queries\ArtQuery.cs" />
     <Compile Include="Models\LoginResponse.cs" />
     <Compile Include="Models\Queries\ArtDetailQuery.cs" />
+    <Compile Include="Models\Queries\UserQuery.cs" />
     <Compile Include="Models\SessionData.cs" />
     <Compile Include="Models\ISqlParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
