@@ -23,7 +23,7 @@ namespace ArtGalleryWebsite
         {
             try
             {
-                List<Models.Entities.Art> arts = Database.Query<Models.Entities.Art>("SELECT * FROM Art;");
+                List<Models.Entities.Art> arts = Database.Select<Models.Entities.Art>("SELECT * FROM Art;");
 
                 if (arts.Count > 0 && arts != null)
                 {
