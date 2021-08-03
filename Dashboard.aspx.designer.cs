@@ -11,19 +11,16 @@ namespace ArtGalleryWebsite
 {
 
 
-    public partial class Home
+    public partial class Dashboard
     {
 
         /// <summary>
-        /// SaveArt control.
-        /// btnArtDetailPage control.
-
+        /// ArtsGrid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SaveArt;
-        protected global::System.Web.UI.WebControls.Button btnArtDetailPage;
+        protected global::System.Web.UI.WebControls.GridView ArtsGrid;
     }
 }

@@ -11,8 +11,8 @@
     "build": "yarn webpack:build && yarn tailwind:build",
     "webpack:build": "webpack",
     "webpack:dev": "webpack --watch",
-    "tailwind:build": "tailwindcss -o Content/tailwind.css",
-    "tailwind:dev": "tailwindcss -o Content/tailwind.css -w"
+    "tailwind:build": "tailwindcss -i Content/Site.css -o Content/tailwind.css",
+    "tailwind:dev": "tailwindcss -i Content/Site.css -o Content/tailwind.css -w"
   },
   "dependencies": {
     "@headlessui/vue": "^1.3.0",
