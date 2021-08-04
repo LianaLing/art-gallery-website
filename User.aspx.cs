@@ -164,7 +164,9 @@ namespace ArtGalleryWebsite
             //};
 
             FavQuery.FetchCurrentUser(1);
+            UserQuery.FetchCurrentUser(1);
             List<FavQuery> data = Database.Select<FavQuery>(FavQuery.SqlQuery);
+            List<UserQuery> user = Database.Select<UserQuery>(UserQuery.SqlQuery);
 
             //Page.ClientScript.RegisterHiddenField("profileState", JsonConvert.SerializeObject(profile));
             //Page.ClientScript.RegisterHiddenField("savesState", JsonConvert.SerializeObject(saves));
@@ -172,6 +174,7 @@ namespace ArtGalleryWebsite
 
             Page.ClientScript.RegisterHiddenField("iconsState", JsonConvert.SerializeObject(icons));
             Page.ClientScript.RegisterHiddenField("state", JsonConvert.SerializeObject(data));
+            Page.ClientScript.RegisterHiddenField("userState", JsonConvert.SerializeObject(user));
         }
 
     }
