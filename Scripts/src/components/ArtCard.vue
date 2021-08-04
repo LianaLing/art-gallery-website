@@ -43,6 +43,7 @@
           group-hover:opacity-100
         "
         :class="transition"
+        @click="saveArtHandler($event, art.id)"
       >
         Save
       </button>
@@ -186,6 +187,10 @@ export default defineComponent({
       e.preventDefault();
       // alert("clicked on art card from artcard");
       helper.triggerBackendControl(e, "MainContent_btnArtDetailPage", `${id}`);
+    },
+    saveArtHandler: (e: Event, id: number) => {
+      e.preventDefault();
+      helper.triggerBackendControl(e, "MainContent_btnSaveArt", `${id}`);
     },
   },
   emits: ["detail"],

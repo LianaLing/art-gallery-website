@@ -32,9 +32,13 @@ namespace ArtGalleryWebsite
             );
         }
 
-        protected void btnSaveArt(object sender, EventArgs e)
+        protected void btnSaveArt_click(object sender, EventArgs e)
         {
-            System.Diagnostics.Trace.WriteLine("Hi from Vue button");
+            string id = Request.Form[btnSaveArt.Attributes["value"]];
+            //Button button = sender as Button;
+            //string id = button.Attributes["value"];
+            System.Diagnostics.Trace.WriteLine(id);
+
         }
 
         public void btnArtDetailPage_click(object sender, EventArgs e)
