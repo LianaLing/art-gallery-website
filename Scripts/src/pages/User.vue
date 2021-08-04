@@ -88,8 +88,8 @@ for (let i = 0; i < data.length; i++) {
   if (i !== 0) {
     // Check if favs is in the same group
     if (data[i].name !== data[i - 1].name) {
-      g++; //Change group and create new group
-      favGroup[g] = new Array<API.FavResponse>();
+      //Change group and create new group
+      favGroup[++g] = new Array<API.FavResponse>();
     }
   } else {
     // At first element, create a new group
