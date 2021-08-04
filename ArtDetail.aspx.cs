@@ -15,10 +15,6 @@ namespace ArtGalleryWebsite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (PreviousPage != null && PreviousPage.IsCrossPagePostBack)
-            //{
-            //    PreviousPage.FindControl("");
-            //}
 
             Icon[] icons =
           {
@@ -28,21 +24,19 @@ namespace ArtGalleryWebsite
                 new Icon("icon_0004", "https://img.icons8.com/windows/32/000000/facebook-like.png", "Facebook Like Icon", "", "https://icons8.com/icon/33481/facebook-like", "Icons8"),
             };
 
-            Author Liana = new Author("aut_0001", "Liana Ling", "https://avatars.githubusercontent.com/u/68136684?s=64&v=4");
-            Art art = new Art("art_0099", "https://i.pinimg.com/564x/2b/31/44/2b31440e87f6abe17fe71bb3533bc62e.jpg", 1299.99, "Niffler", Liana);
+            //Author Liana = new Author("aut_0001", "Liana Ling", "https://avatars.githubusercontent.com/u/68136684?s=64&v=4");
+            //Art art = new Art("art_0099", "https://i.pinimg.com/564x/2b/31/44/2b31440e87f6abe17fe71bb3533bc62e.jpg", 1299.99, "Niffler", Liana);
 
             Page.ClientScript.RegisterHiddenField("iconsState", JsonConvert.SerializeObject(icons));
             //Page.ClientScript.RegisterHiddenField("artState", JsonConvert.SerializeObject(art));
 
-            Database.OpenDbConnection();
             // Current art is set when button is clicked in Site.Master.cs
             int id = Convert.ToInt32(Request.QueryString.Get("id"));
-            ArtDetailQuery.FetchCurrentArtDetail(id);
-            List<ArtDetailQuery> data = Database.Query<ArtDetailQuery>(ArtDetailQuery.SqlQuery);
+            ArtQuery.FetchCurrentArtDetail(id);
+            List<ArtQuery> data = Database.Select<ArtQuery>(ArtQuery.SqlQuery);
 
             Page.ClientScript.RegisterHiddenField("artState", JsonConvert.SerializeObject(data));
 
-            Database.CloseDbConnection();
         }
 
     }

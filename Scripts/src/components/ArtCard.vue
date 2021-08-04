@@ -163,6 +163,7 @@ import Email from "../components/icons/Email.vue";
 import Link from "../components/icons/Link.vue";
 import Search from "../components/icons/Search.vue";
 import * as helper from "../utils/helper";
+import * as API from "../types/api";
 
 export default defineComponent({
   components: {
@@ -176,7 +177,7 @@ export default defineComponent({
     Search,
   },
   props: {
-    art: { type: Object as PropType<ArtResponse>, required: true },
+    art: { type: Object as PropType<ArtResponse | API.Art>, required: true },
     saved: { type: Object as PropType<boolean> },
   },
   methods: {

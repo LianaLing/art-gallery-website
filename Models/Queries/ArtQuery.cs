@@ -39,6 +39,14 @@ namespace ArtGalleryWebsite.Models.Queries
             public string email;
             public string avatarUrl;
 
+            public Author(int id, string description, bool verified)
+            {                
+                this.id = id;
+                this.description = description;
+                this.verified = verified;
+            }
+
+
             public Author(int id, string description, bool verified, string username, string name, string ic, DateTime? dob, string contactNo, string email, string avatarUrl)
             {
                 this.id = id;
@@ -54,7 +62,8 @@ namespace ArtGalleryWebsite.Models.Queries
             }
         }
 
-        public ArtQuery() { }
+        public ArtQuery() {
+    }
 
         public ArtQuery(int id, string style, string description, decimal price, int stock, int likes, string url, Author author)
         {
@@ -66,6 +75,29 @@ namespace ArtGalleryWebsite.Models.Queries
             this.likes = likes;
             this.url = url;
             this.author = author;
+        }
+        
+        public static void FetchAllArt()
+        {
+            SqlQuery = @"
+            SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
+                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+            FROM [Art], [Author], [User]
+            WHERE [Art].author_id = [Author].id
+            AND [Author].id = [User].author_id
+            ORDER BY [Art].likes DESC;
+        ";
+        }
+
+        public static void FetchCurrentArtDetail(int id)
+        {
+            SqlQuery = @"
+            SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
+                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+            FROM [Art], [Author], [User]
+            WHERE [Art].author_id = [Author].id
+            AND [Author].id = [User].author_id
+            AND [Art].id = '" + id + "'";
         }
 
         public ISqlParser ParseFromSqlReader(SqlDataReader reader)

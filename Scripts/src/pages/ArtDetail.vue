@@ -52,7 +52,7 @@ import { getStateFromBackend } from "../utils/helper";
 import * as API from "../types/api";
 
 const icons = getStateFromBackend<API.Icon[]>("iconsState");
-const arts = getStateFromBackend<API.ArtDetailResponse[]>("artState");
+const arts = getStateFromBackend<API.ArtResponse[]>("artState");
 const art = arts[0];
 
 export default defineComponent({

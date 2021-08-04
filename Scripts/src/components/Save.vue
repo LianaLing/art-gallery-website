@@ -12,12 +12,12 @@
   >
     <!-- Thumbnail -->
     <div class="relative">
-      <a :href="save.href">
+      <a :href="save[0].art.url">
         <img
-          v-if="save.arts[0] !== undefined"
+          v-if="save[0].art !== undefined"
           class="h-[161px] w-[11rem] object-cover rounded-l-2xl"
-          :src="save.arts[0].imageSrc"
-          :alt="save.arts[0].title"
+          :src="save[0].art.url"
+          :alt="save[0].art.description"
         />
         <div
           v-else
@@ -25,7 +25,7 @@
         />
       </a>
       <a
-        :href="save.href"
+        :href="save[0].art.url"
         class="
           absolute
           top-0
@@ -39,20 +39,20 @@
       />
     </div>
 
-    <div class="relative grid grid-rows-2 gap-[1px] h-[10rem]">
-      <a :href="save.href">
+    <div class="relative grid grid-rows-2 gap-[2px] h-[10rem]">
+      <a :href="save[1].art.url">
         <img
-          v-if="save.arts[1] !== undefined"
+          v-if="save[1].art !== undefined"
           class="h-[5rem] w-[5rem] object-cover rounded-tr-2xl"
-          :src="save.arts[1].imageSrc"
-          :alt="save.arts[1].title"
+          :src="save[1].art.url"
+          :alt="save[1].art.description"
         />
         <div
           v-else
           class="h-[79px] w-[5rem] object-cover rounded-tr-2xl bg-light"
         />
         <a
-          :href="save.href"
+          :href="save[1].art.url"
           class="
             absolute
             block
@@ -66,19 +66,19 @@
           :class="transition"
         />
       </a>
-      <a :href="save.href">
+      <a :href="save[2].art.url">
         <img
-          v-if="save.arts[2] !== undefined"
+          v-if="save[2].art !== undefined"
           class="h-[79px] w-[5rem] object-cover rounded-br-2xl"
-          :src="save.arts[2].imageSrc"
-          :alt="save.arts[2].title"
+          :src="save[2].art.url"
+          :alt="save[3].art.description"
         />
         <div
           v-else
           class="h-[79px] w-[5rem] object-cover rounded-br-2xl bg-light"
         />
         <a
-          :href="save.href"
+          :href="save[2].art.url"
           class="
             absolute
             block
@@ -96,13 +96,13 @@
 
     <!-- Title -->
     <div class="mt-2 font-garamond">
-      <a :href="save.href" class="text-xl font-bold line-clamp-1">{{
-        save.title
+      <a :href="save[0].art.url" class="text-xl font-bold line-clamp-1">{{
+        save[0].name
       }}</a>
       <br />
-      <h3 v-if="save.pinNo <= 1" class="inline">{{ save.pinNo }} art &nbsp;</h3>
-      <h3 v-else class="inline">{{ save.pinNo }} arts &nbsp;</h3>
-      <h4 class="inline text-sm text-gray-500">{{ save.updatedAt }}d</h4>
+      <h3 v-if="save[0].id <= 1" class="inline">{{ save[0].id }} art &nbsp;</h3>
+      <h3 v-else class="inline">{{ save[0].id }} arts &nbsp;</h3>
+      <h4 class="inline text-sm text-gray-500">{{}}</h4>
     </div>
   </div>
 </template>
@@ -121,7 +121,7 @@ export default defineComponent({
     },
   },
   props: {
-    save: { type: Object as PropType<API.Save>, required: true },
+    save: { type: Object as PropType<API.FavResponse[]>, required: true },
   },
   data() {
     return {

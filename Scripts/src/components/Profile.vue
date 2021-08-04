@@ -1,7 +1,7 @@
 <template>
   <!-- Profile Header -->
   <div class="rounded-full justify-items-center mt-10">
-    <a :href="profile.profileUrl">
+    <a href="">
       <img
         class="rounded-full h-[130px] w-[130px] mx-auto block"
         :src="profile.avatarUrl"
@@ -17,7 +17,7 @@
     @{{ profile.username }}
   </h2>
   <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
-    {{ profile.following }} following
+    {{ profile.email }}
   </h2>
   <Popover>
     <PopoverButton
@@ -48,7 +48,7 @@ export default defineComponent({
     PopoverPanel,
   },
   props: {
-    profile: { type: Object as PropType<API.Profile>, required: true },
+    profile: { type: Object as PropType<API.User>, required: true },
   },
   data() {
     return {
