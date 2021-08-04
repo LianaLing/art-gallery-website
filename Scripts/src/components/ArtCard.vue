@@ -23,13 +23,13 @@
         backdrop-brightness-100
         group-hover:backdrop-brightness-75
       "
+      @click="artDetailPageHandler($event, art.id)"
       :class="transition"
     ></div>
     <template v-if="!saved">
       <button
-        @click="saveArt"
         class="
-          bg-red
+          bg-accent
           rounded-full
           font-bold
           text-light
@@ -39,7 +39,7 @@
           top-4
           right-4
           absolute
-          hover:bg-red-hover
+          hover:bg-accent-hover
           group-hover:opacity-100
         "
         :class="transition"
@@ -162,6 +162,7 @@ import Facebook from "../components/icons/Facebook.vue";
 import Email from "../components/icons/Email.vue";
 import Link from "../components/icons/Link.vue";
 import Search from "../components/icons/Search.vue";
+import * as helper from "../utils/helper";
 
 export default defineComponent({
   components: {
@@ -179,18 +180,14 @@ export default defineComponent({
     saved: { type: Object as PropType<boolean> },
   },
   methods: {
-    saveArt(e: Event) {
+    artDetailPageHandler: (e: Event, id: number) => {
+      // Prevent button triggers refresh
       e.preventDefault();
-
-      const btn = document.querySelector(
-        "#MainContent_SaveArt"
-      ) as HTMLInputElement;
-
-      if (!btn) return;
-
-      btn.click();
+      // alert("clicked on art card from artcard");
+      helper.triggerBackendControl(e, "MainContent_btnArtDetailPage", `${id}`);
     },
   },
+  emits: ["detail"],
   data() {
     return {
       transition: "transition ease-in-out duration-200",

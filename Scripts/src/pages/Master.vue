@@ -1,9 +1,9 @@
 <template>
   <div class="flex items-center justify-between px-6 py-5">
-    <div class="flex items-center">
+    <button class="flex items-center" @click="homePageHandler">
       <Pinterest />
       <h1 class="text-xl font-bold font-garamond text-accent">Art Gallery</h1>
-    </div>
+    </button>
     <div class="flex items-center font-bold text-dark">
       <div class="mr-8">
         <a class="px-3 py-2 mr-1 hover:underline font-garamond" href="/"
@@ -44,7 +44,13 @@
           Sign up
         </button>
       </template>
-      <p v-else>You are logged in as: {{ email }}</p>
+      <button
+        class="hover:underline font-bold font-garamond"
+        @click="userPageHandler"
+        v-else
+      >
+        You are logged in as: {{ email }}
+      </button>
     </div>
   </div>
   <AuthController />
@@ -57,8 +63,20 @@ import { AuthView, SessionData } from "../types/state";
 import { getStateFromBackend } from "../utils/helper";
 import AuthController from "../components/auth/AuthController.vue";
 import Pinterest from "../components/icons/Pinterest.vue";
+import * as helper from "../utils/helper";
 
 export default defineComponent({
+  methods: {
+    userPageHandler: (e: Event) => {
+      // Prevent button triggers refresh
+      e.preventDefault();
+      helper.triggerBackendControl(e, "btnUserPage");
+    },
+    homePageHandler: (e: Event) => {
+      e.preventDefault();
+      helper.triggerBackendControl(e, "btnHomePage");
+    },
+  },
   components: { Pinterest, AuthController },
   setup() {
     const authView = useAuthView();

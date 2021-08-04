@@ -40,10 +40,15 @@
             </Scripts>
         </asp:ScriptManager>
 
+        <%-- Controls controlled by frontend --%>
+        <asp:button ID="btnUserPage" runat="server" CssClass="hidden" OnClick="btnUserPage_click" PostBackUrl="~/User.aspx" />
+        <asp:button ID="btnHomePage" runat="server" OnClick="btnHomePage_click" PostBackUrl="~/Home.aspx" />
+
         <div id="master"></div>
 
         <div class="px-6">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
+
             </asp:ContentPlaceHolder>
             <!--
             <footer>

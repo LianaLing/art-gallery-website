@@ -36,5 +36,11 @@ namespace ArtGalleryWebsite
         {
             System.Diagnostics.Trace.WriteLine("Hi from Vue button");
         }
+
+        public void btnArtDetailPage_click(object sender, EventArgs e)
+        {
+            string id = Request.Form[btnArtDetailPage.UniqueID];
+            Response.Redirect($"~/ArtDetail.aspx?id={id}");
+        }
     }
 }
