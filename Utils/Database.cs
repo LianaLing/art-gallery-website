@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+using System.Configuration;
 using ArtGalleryWebsite.Models;
 
 namespace ArtGalleryWebsite.Utils
@@ -10,7 +9,7 @@ namespace ArtGalleryWebsite.Utils
     public static class Database
     {
         // SQL connection config
-        private static string connString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Marcus\Projects\art-gallery-website\App_Data\ArtGallery.mdf;Integrated Security=True";
+        private static string connString = ConfigurationManager.ConnectionStrings["ArtGalleryDB"].ConnectionString;
 
         // Select rows from DB and parse them to type provided
         public static List<T> Select<T>(string SqlQuery, Func<SqlDataReader, T> parser = null) where T : ISqlParser, new()
