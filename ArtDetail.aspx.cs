@@ -34,15 +34,12 @@ namespace ArtGalleryWebsite
             Page.ClientScript.RegisterHiddenField("iconsState", JsonConvert.SerializeObject(icons));
             //Page.ClientScript.RegisterHiddenField("artState", JsonConvert.SerializeObject(art));
 
-            Database.OpenDbConnection();
             // Current art is set when button is clicked in Site.Master.cs
             int id = Convert.ToInt32(Request.QueryString.Get("id"));
             ArtDetailQuery.FetchCurrentArtDetail(id);
-            List<ArtDetailQuery> data = Database.Query<ArtDetailQuery>(ArtDetailQuery.SqlQuery);
+            List<ArtDetailQuery> data = Database.Select<ArtDetailQuery>(ArtDetailQuery.SqlQuery);
 
             Page.ClientScript.RegisterHiddenField("artState", JsonConvert.SerializeObject(data));
-
-            Database.CloseDbConnection();
         }
 
     }

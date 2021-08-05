@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Security;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ArtGalleryWebsite.Auth
 {
@@ -12,23 +9,42 @@ namespace ArtGalleryWebsite.Auth
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // TODO: Validate email and encrypt password (JWT or other hashing method)
-            string email = Request.QueryString.Get("email");
-            string password = Request.QueryString.Get("password");
+            //// TODO: Validate email and encrypt password (JWT or other hashing method)
+            //string email = Request.QueryString.Get("email");
+            //string password = Request.QueryString.Get("password");
 
-            // Check if email, password matches a valid user
-            if (FormsAuthentication.Authenticate(email, password))
+            //// Check if email, password matches a valid user
+            //if (FormsAuthentication.Authenticate(email, password))
+            //{
+            //    // if match then set the user's email as a session state 
+            //    Session["email"] = email;
+
+            //    // redirect the user to home page
+            //    FormsAuthentication.RedirectFromLoginPage(email, false);
+            //}
+            //else
+            //{
+            //    // else redirect back to landing page
+            //    Response.Redirect("/", true);
+            //}
+            CreateUser();
+        }
+
+        protected void CreateUser()
+        {
+            UserStore<IdentityUser> userStore = new UserStore<IdentityUser>();
+            UserManager<IdentityUser> manager = new UserManager<IdentityUser>(userStore);
+
+            IdentityUser user = new IdentityUser() { UserName = "marcustut" };
+            IdentityResult result = manager.Create(user, "test1234");
+
+            if (result.Succeeded)
             {
-                // if match then set the user's email as a session state 
-                Session["email"] = email;
-
-                // redirect the user to home page
-                FormsAuthentication.RedirectFromLoginPage(email, false);
+                System.Diagnostics.Trace.WriteLine("Successfully created user");
             }
             else
             {
-                // else redirect back to landing page
-                Response.Redirect("/", true);
+                System.Diagnostics.Trace.WriteLine(result.Errors.ToString());
             }
         }
     }
