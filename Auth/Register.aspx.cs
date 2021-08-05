@@ -1,13 +1,9 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using ArtGalleryWebsite.Models;
-using ArtGalleryWebsite.Models.Identity;
 
 namespace ArtGalleryWebsite.Auth
 {
@@ -20,13 +16,10 @@ namespace ArtGalleryWebsite.Auth
 
         protected void CreateUser_Click(object sender, EventArgs e)
         {
-            // Default UserStore constructor uses the default connection string named: DefaultConnection
-            var userStore = new UserStore<Models.Identity.User, Role, int, UserLogin, UserRole, UserClaim>(new ApplicationDbContext());
-            var manager = new UserManager<Models.Identity.User, int>(userStore);
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
 
-            System.Diagnostics.Trace.WriteLine(userStore.Context.Database.Connection.ConnectionString);
-
-            var user = new Models.Identity.User() 
+            var user = new ApplicationUser() 
             { 
                 UserName = UserName.Text,
                 Email = "test@test.com",
@@ -36,7 +29,8 @@ namespace ArtGalleryWebsite.Auth
 
             if (result.Succeeded)
             {
-                StatusMessage.Text = string.Format("User {0} was created successfully!", user.UserName);
+                signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             }
             else
             {

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Web;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ArtGalleryWebsite.Auth
 {
@@ -27,25 +29,35 @@ namespace ArtGalleryWebsite.Auth
             //    // else redirect back to landing page
             //    Response.Redirect("/", true);
             //}
-            CreateUser();
+            LogIn();
         }
 
-        protected void CreateUser()
+        //protected void CreateUser()
+        //{
+        //    UserStore<IdentityUser> userStore = new UserStore<IdentityUser>();
+        //    UserManager<IdentityUser> manager = new UserManager<IdentityUser>(userStore);
+
+        //    IdentityUser user = new IdentityUser() { UserName = "marcustut" };
+        //    IdentityResult result = manager.Create(user, "test1234");
+
+        //    if (result.Succeeded)
+        //    {
+        //        System.Diagnostics.Trace.WriteLine("Successfully created user");
+        //    }
+        //    else
+        //    {
+        //        System.Diagnostics.Trace.WriteLine(result.Errors.ToString());
+        //    }
+        //}
+
+        protected void LogIn()
         {
-            UserStore<IdentityUser> userStore = new UserStore<IdentityUser>();
-            UserManager<IdentityUser> manager = new UserManager<IdentityUser>(userStore);
+            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            var signinManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
 
-            IdentityUser user = new IdentityUser() { UserName = "marcustut" };
-            IdentityResult result = manager.Create(user, "test1234");
+            var result = signinManager.PasswordSignIn("test", "test1234", false, false);
 
-            if (result.Succeeded)
-            {
-                System.Diagnostics.Trace.WriteLine("Successfully created user");
-            }
-            else
-            {
-                System.Diagnostics.Trace.WriteLine(result.Errors.ToString());
-            }
+            System.Diagnostics.Trace.WriteLine(result.ToString());
         }
     }
 }

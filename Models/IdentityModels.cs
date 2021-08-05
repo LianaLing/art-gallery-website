@@ -13,7 +13,7 @@ using Microsoft.Owin.Security;
 namespace ArtGalleryWebsite.Models
 {
     // You can add User data for the user by adding more properties to your User class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser : Identity.User
     {
         public ClaimsIdentity GenerateUserIdentity(ApplicationUserManager manager)
         {
@@ -61,7 +61,7 @@ namespace ArtGalleryWebsite.Models
 }
 
 #region Helpers
-namespace IdentityExample
+namespace ArtGalleryWebsite
 {
     public static class IdentityHelper
     {
@@ -86,12 +86,14 @@ namespace IdentityExample
             return HttpUtility.UrlDecode(request.QueryString[UserIdKey]);
         }
 
+        // TODO: This has to change to our own Url
         public static string GetResetPasswordRedirectUrl(string code, HttpRequest request)
         {
             var absoluteUri = "/Account/ResetPassword?" + CodeKey + "=" + HttpUtility.UrlEncode(code);
             return new Uri(request.Url, absoluteUri).AbsoluteUri.ToString();
         }
 
+        // TODO: This has to change to our own url
         public static string GetUserConfirmationRedirectUrl(string code, string userId, HttpRequest request)
         {
             var absoluteUri = "/Account/Confirm?" + CodeKey + "=" + HttpUtility.UrlEncode(code) + "&" + UserIdKey + "=" + HttpUtility.UrlEncode(userId);

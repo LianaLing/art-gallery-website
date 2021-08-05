@@ -8,61 +8,74 @@ namespace ArtGalleryWebsite.Models.Entities
 {
     public class User : ISqlParser
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        public string username { get; set; }
+        public string Username { get; set; }
 
-        public string passwordhash { get; set; }
+        public string PasswordHash { get; set; }
 
-        public string name { get; set; }
+        public string Name { get; set; }
 
-        public string ic { get; set; }
+        public string Ic { get; set; }
 
-        public Nullable<DateTime> dob { get; set; }
+        public Nullable<DateTime> Dob { get; set; }
 
-        public string avatarUrl { get; set; }
+        public string AvatarUrl { get; set; }
 
-        public string phoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
 
-        public string email { get; set; }
+        public string Email { get; set; }
 
-        public int authorId { get; set; }
+        public Nullable<int> AuthorId { get; set; }
 
-        public string securityStamp { get; set; }
+        public string SecurityStamp { get; set; }
 
-        public bool phoneNumberConfirmed { get; set; }
+        public bool PhoneNumberConfirmed { get; set; }
 
-        public bool twoFactorEnabled { get; set; }
+        public bool TwoFactorEnabled { get; set; }
 
-        public Nullable<DateTime> lockoutEndDateUtc { get; set; }
+        public Nullable<DateTime> LockoutEndDateUtc { get; set; }
 
-        public bool lockoutEnabled { get; set; }
+        public bool LockoutEnabled { get; set; }
 
-        public int accessFailedCount { get; set; }
+        public int AccessFailedCount { get; set; }
 
         public User() { }
 
-        public User(int id, string username, string passwordhash, string name, string ic, DateTime? dob, string avatarUrl, string phoneNumber, string email, int authorId, string securityStamp, bool phoneNumberConfirmed, bool twoFactorEnabled, DateTime? lockoutEndDateUtc, bool lockoutEnabled, int accessFailedCount)
+        public User(int Id, string Username, string PasswordHash, string Name, string Ic, DateTime? Dob, string AvatarUrl, string PhoneNumber, string Email, int? AuthorId, string SecurityStamp, bool PhoneNumberConfirmed, bool TwoFactorEnabled, DateTime? LockoutEndDateUtc, bool LockoutEnabled, int AccessFailedCount)
         {
-            this.id = id;
-            this.username = username;
-            this.passwordhash = passwordhash;
-            this.name = name;
-            this.ic = ic;
-            this.dob = dob;
-            this.avatarUrl = avatarUrl;
-            this.phoneNumber = phoneNumber;
-            this.email = email;
-            this.authorId = authorId;
-            this.securityStamp = securityStamp;
-            this.phoneNumberConfirmed = phoneNumberConfirmed;
-            this.twoFactorEnabled = twoFactorEnabled;
-            this.lockoutEndDateUtc = lockoutEndDateUtc;
-            this.lockoutEnabled = lockoutEnabled;
-            this.accessFailedCount = accessFailedCount;
+            this.Id = Id;
+            this.Username = Username;
+            this.PasswordHash = PasswordHash;
+            this.Name = Name;
+            this.Ic = Ic;
+            this.Dob = Dob;
+            this.AvatarUrl = AvatarUrl;
+            this.PhoneNumber = PhoneNumber;
+            this.Email = Email;
+            this.AuthorId = AuthorId;
+            this.SecurityStamp = SecurityStamp;
+            this.PhoneNumberConfirmed = PhoneNumberConfirmed;
+            this.TwoFactorEnabled = TwoFactorEnabled;
+            this.LockoutEndDateUtc = LockoutEndDateUtc;
+            this.LockoutEnabled = LockoutEnabled;
+            this.AccessFailedCount = AccessFailedCount;
         }
 
-        public ISqlParser ParseFromSqlReader(SqlDataReader reader)
+        public User(int Id, string Username, string Name, string Ic, DateTime? Dob, string PhoneNumber, string Email, string AvatarUrl, int? AuthorId)
+        {
+            this.Id = Id;
+            this.Username = Username;
+            this.Name = Name;
+            this.Ic = Ic;
+            this.Dob = Dob;
+            this.PhoneNumber = PhoneNumber;
+            this.Email = Email;
+            this.AvatarUrl = AvatarUrl;
+            this.AuthorId = AuthorId;
+        }
+
+        public virtual ISqlParser ParseFromSqlReader(SqlDataReader reader)
         {
             return new User(
                 reader.GetInt32(0),

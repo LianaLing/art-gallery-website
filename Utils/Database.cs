@@ -52,7 +52,7 @@ namespace ArtGalleryWebsite.Utils
                 conn.Close();
             }
         }
-        
+
         /// <summary>
         /// Executes a SQL query that returns a single scalar value as the result
         /// </summary>
@@ -75,7 +75,7 @@ namespace ArtGalleryWebsite.Utils
                     result = command.ExecuteScalar();
                 }
             }
-            
+
             if (result is T)
             {
                 return (T)result;
@@ -117,7 +117,7 @@ namespace ArtGalleryWebsite.Utils
                     List<T> results = new List<T>();
 
                     // Read the query results
-                    while(dataReader.Read())
+                    while (dataReader.Read())
                     {
                         // If no rows are fetch return an empty list
                         if (!dataReader.HasRows) return new List<T>();
@@ -127,10 +127,10 @@ namespace ArtGalleryWebsite.Utils
 
                         // Use the parser provided if given
                         if (parser != null)
-                            data = (T) parser(dataReader);
+                            data = (T)parser(dataReader);
                         else
-                            data = (T) new T().ParseFromSqlReader(dataReader);
-                        
+                            data = (T)new T().ParseFromSqlReader(dataReader);
+
                         // Add parsed data into the list
                         results.Add(data);
                     }
@@ -220,6 +220,17 @@ namespace ArtGalleryWebsite.Utils
                     return rowsAffected;
                 }
             }
+        }
+
+        public static string GetStringOrNull(this IDataReader reader, int ordinal)
+        {
+            return reader.IsDBNull(ordinal) ? null : reader.GetString(ordinal);
+        }
+
+
+        public static DateTime? GetDateTimeOrNull(this IDataReader reader, int ordinal)
+        {
+            return reader.IsDBNull(ordinal) ? null : (DateTime?)reader.GetDateTime(ordinal);
         }
     }
 }
