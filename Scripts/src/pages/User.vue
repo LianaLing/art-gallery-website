@@ -1,6 +1,6 @@
 <template>
   <!-- Profile Header -->
-  <Profile :profile="inprofile" />
+  <Profile :profile="user[0]" />
 
   <!-- Icons -->
   <div class="w-full">
@@ -13,35 +13,34 @@
   </div>
 
   <!-- My saves -->
-  <div class="flex mx-10 w-full border-b-2">
-    <Save v-for="save in saves" :key="save.id" :save="save" />
+  <div class="flex border-b-2 mx-10 w-full">
+    <!-- Iterate through each group -->
+    <template v-for="favs in favGroup" :key="favs.id">
+      <Save :save="favs" />
+    </template>
   </div>
 
   <!-- Unorganised Saves -->
-  <div class="my-14 justify-around font-garamond border-b-2">
-    <strong class="inline text-xl">Unorganised Saves</strong>
+  <div class="font-garamond border-b-2 my-14 justify-around">
+    <strong class="text-xl inline">Unorganised Saves</strong>
 
     <a
       class="
+        bg-light
+        rounded-full
+        font-bold
+        py-2
+        px-3
         inline
         float-right
-        px-3
-        py-2
-        font-bold
-        rounded-full
-        bg-light
         hover:bg-light-hover
       "
       href="/"
       >Organise</a
     >
-    <div class="flex w-full my-14 max-w-7xl">
-      <div
-        class="flex flex-col mx-24"
-        v-for="arts in arts2D"
-        :key="arts.toString()"
-      >
-        <ArtCard v-for="art in arts" :key="art.id" :art="art" :saved="true" />
+    <div class="flex my-14 w-full max-w-7xl">
+      <div class="flex flex-col mx-24" v-for="fav in data" :key="fav.id">
+        <SaveCard :card="fav" />
       </div>
     </div>
   </div>
@@ -55,28 +54,59 @@
 import Icon from "../components/Icon.vue";
 import Save from "../components/Save.vue";
 import Profile from "../components/Profile.vue";
-import ArtCard from "../components/ArtCard.vue";
+import SaveCard from "../components/SaveCard.vue";
 import Reference from "../components/Reference.vue";
 import { sliceIntoChunks } from "../utils/helper";
 import * as API from "../types/api";
+import * as helper from "../utils/helper";
 
 const icons = JSON.parse(
   (<HTMLInputElement>document.getElementById("iconsState")).value
 );
 
-const saves = JSON.parse(
-  (<HTMLInputElement>document.getElementById("savesState")).value
-);
+const data = helper.getStateFromBackend<API.FavResponse[]>("state");
+const user = helper.getStateFromBackend<API.User[]>("userState");
+// alert(JSON.stringify(data,null,2));
+// const info = data[0];
 
-const inprofile = JSON.parse(
-  (<HTMLInputElement>document.getElementById("profileState")).value
-);
+// const saves = JSON.parse(
+//   (<HTMLInputElement>document.getElementById("savesState")).value
+// );
 
-const artsState = JSON.parse(
-  (<HTMLInputElement>document.getElementById("artsState")).value
-);
+// const inprofile = JSON.parse(
+//   (<HTMLInputElement>document.getElementById("profileState")).value
+// );
 
-const arts2D = sliceIntoChunks<API.Art>(artsState, 3);
+// const artsState = JSON.parse(
+//   (<HTMLInputElement>document.getElementById("artsState")).value
+// );
+
+// const arts2D = sliceIntoChunks<API.FavResponse>(data, 3);
+
+const names = [...new Set(data.map((d) => d.name))];
+
+const favGroup: Record<string, API.FavResponse[]> = {};
+
+names.forEach((name) => {
+  favGroup[name] = data.filter((d) => d.name === name);
+});
+
+// const favGroup = new Array<API.FavResponse[]>();
+// let g = 0;
+// // Returns a bunch of favs that is ungrouped
+// for (let i = 0; i < data.length; i++) {
+//   if (i !== 0) {
+//     // Check if favs is in the same group
+//     if (data[i].name !== data[i - 1].name) {
+//       //Change group and create new group
+//       favGroup[++g] = new Array<API.FavResponse>();
+//     }
+//   } else {
+//     // At first element, create a new group
+//     favGroup[g] = new Array<API.FavResponse>();
+//   }
+//   favGroup[g].push(data[i]);
+// }
 
 export default {
   methods: {
@@ -94,15 +124,18 @@ export default {
     Icon,
     Save,
     Profile,
-    ArtCard,
+    SaveCard,
     Reference,
   },
   data() {
     return {
       icons,
-      saves,
-      inprofile,
-      arts2D,
+      // saves,
+      // inprofile,
+      // arts2D,
+      data,
+      user,
+      favGroup,
     };
   },
 };

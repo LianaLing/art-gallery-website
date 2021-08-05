@@ -1,37 +1,38 @@
 <template>
   <div
     class="
-      m-14
-      grid grid-cols-2
-      gap-[1px]
-      w-[22.1rem]
       rounded-2xl
+      m-14
+      grid
+      w-[22.1rem]
+      gap-[1px]
+      grid-cols-2
       overflow-hidden
       group
     "
   >
     <!-- Thumbnail -->
     <div class="relative">
-      <a :href="save.href">
+      <a v-if="save.length !== 0" :href="save[0].art.url">
         <img
-          v-if="save.arts[0] !== undefined"
-          class="h-[161px] w-[11rem] object-cover rounded-l-2xl"
-          :src="save.arts[0].imageSrc"
-          :alt="save.arts[0].title"
-        />
-        <div
-          v-else
-          class="h-[161px] w-[11rem] object-cover rounded-l-2xl bg-light"
+          v-if="save[0].art !== undefined"
+          class="object-cover rounded-l-2xl h-[161px] w-[11rem]"
+          :src="save[0].art.url"
+          :alt="save[0].art.description"
         />
       </a>
+      <div
+        v-else
+        class="bg-light object-cover rounded-l-2xl h-[161px] w-[11rem]"
+      />
       <a
-        :href="save.href"
+        :href="save[0].art.url"
         class="
-          absolute
-          top-0
-          w-full
           h-full
           rounded-l-2xl
+          w-full
+          top-0
+          absolute
           backdrop-filter backdrop-brightness-100
           group-hover:backdrop-brightness-75
         "
@@ -39,71 +40,73 @@
       />
     </div>
 
-    <div class="relative grid grid-rows-2 gap-[1px] h-[10rem]">
-      <a :href="save.href">
+    <div class="h-[10rem] grid gap-[2px] grid-rows-2 relative">
+      <a v-if="save.length > 1" :href="save[1].art.url">
         <img
-          v-if="save.arts[1] !== undefined"
-          class="h-[5rem] w-[5rem] object-cover rounded-tr-2xl"
-          :src="save.arts[1].imageSrc"
-          :alt="save.arts[1].title"
-        />
-        <div
-          v-else
-          class="h-[79px] w-[5rem] object-cover rounded-tr-2xl bg-light"
+          v-if="save[1].art !== undefined"
+          class="object-cover rounded-tr-2xl h-[5rem] w-[5rem]"
+          :src="save[1].art.url"
+          :alt="save[1].art.description"
         />
         <a
-          :href="save.href"
+          :href="save[1].art.url"
           class="
-            absolute
-            block
-            top-0
-            h-[5rem]
-            w-[5rem]
             rounded-tr-2xl
-            backdrop-filter backdrop-brightness-100
-            group-hover:backdrop-brightness-75
-          "
-          :class="transition"
-        />
-      </a>
-      <a :href="save.href">
-        <img
-          v-if="save.arts[2] !== undefined"
-          class="h-[79px] w-[5rem] object-cover rounded-br-2xl"
-          :src="save.arts[2].imageSrc"
-          :alt="save.arts[2].title"
-        />
-        <div
-          v-else
-          class="h-[79px] w-[5rem] object-cover rounded-br-2xl bg-light"
-        />
-        <a
-          :href="save.href"
-          class="
+            h-[5rem]
+            top-0
+            w-[5rem]
             absolute
             block
-            top-[81px]
-            h-[79px]
-            w-[5rem]
-            rounded-br-2xl
             backdrop-filter backdrop-brightness-100
             group-hover:backdrop-brightness-75
           "
           :class="transition"
         />
       </a>
+      <div
+        v-else
+        class="bg-light object-cover rounded-tr-2xl h-[79px] w-[5rem]"
+      />
+
+      <a v-if="save.length > 2" :href="save[2].art.url">
+        <img
+          v-if="save[2].art !== undefined"
+          class="object-cover rounded-br-2xl h-[79px] w-[5rem]"
+          :src="save[2].art.url"
+          :alt="save[2].art.description"
+        />
+        <a
+          :href="save[2].art.url"
+          class="
+            rounded-br-2xl
+            h-[79px]
+            top-[81px]
+            w-[5rem]
+            absolute
+            block
+            backdrop-filter backdrop-brightness-100
+            group-hover:backdrop-brightness-75
+          "
+          :class="transition"
+        />
+      </a>
+      <div
+        v-else
+        class="bg-light object-cover rounded-br-2xl h-[79px] w-[5rem]"
+      />
     </div>
 
     <!-- Title -->
-    <div class="mt-2 font-garamond">
-      <a :href="save.href" class="text-xl font-bold line-clamp-1">{{
-        save.title
+    <div v-if="save.length > 0" class="font-garamond mt-2">
+      <a :href="save[0].art.url" class="font-bold text-xl line-clamp-1">{{
+        save[0].name
       }}</a>
       <br />
-      <h3 v-if="save.pinNo <= 1" class="inline">{{ save.pinNo }} art &nbsp;</h3>
-      <h3 v-else class="inline">{{ save.pinNo }} arts &nbsp;</h3>
-      <h4 class="inline text-sm text-gray-500">{{ save.updatedAt }}d</h4>
+      <h3 v-if="save[0].id <= 1" class="inline">{{ save[0].id }} art &nbsp;</h3>
+      <h3 v-else class="inline">{{ save[0].id }} arts &nbsp;</h3>
+      <h4 class="text-sm text-gray-500 inline">{{}}</h4>
     </div>
+    <div v-else>No element</div>
   </div>
 </template>
 
@@ -121,7 +124,10 @@ export default defineComponent({
     },
   },
   props: {
-    save: { type: Object as PropType<API.Save>, required: true },
+    save: { type: Array as PropType<API.FavResponse[]>, required: true },
+  },
+  setup(props) {
+    console.log(props.save);
   },
   data() {
     return {

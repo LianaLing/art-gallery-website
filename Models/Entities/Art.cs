@@ -70,6 +70,17 @@ namespace ArtGalleryWebsite.Models.Entities
 
         public Art() { }
 
+        public Art(int id, string style, string description, decimal price, int stock, int likes, string url)
+        {
+            this.id = id;
+            this.style = style;
+            this.description = description;
+            this.price = price;
+            this.stock = stock;
+            this.likes = likes;
+            this.url = url;
+        }
+
         public Art(int id, string style, string description, decimal price, int stock, int likes, string url, int author_id)
         {
             this.id = id;
@@ -82,7 +93,7 @@ namespace ArtGalleryWebsite.Models.Entities
             this.author_id = author_id;
         }
 
-        public ISqlParser ParseFromSqlReader(SqlDataReader reader)
+        public virtual ISqlParser ParseFromSqlReader(SqlDataReader reader)
         {
             return new Art(
                 reader.GetInt32(0),

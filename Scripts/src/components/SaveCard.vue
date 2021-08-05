@@ -1,7 +1,7 @@
-﻿<template>
+<template>
   <div class="font-garamond w-[300px] relative group filter drop-shadow-none">
     <img
-      :alt="art.description"
+      :alt="card.art.description"
       class="
         h-full
         object-cover
@@ -9,7 +9,7 @@
         w-[300px]
         backdrop-filter backdrop-brightness-50
       "
-      :src="art.url"
+      :src="card.art.url"
     />
     <div
       class="
@@ -23,31 +23,9 @@
         backdrop-brightness-100
         group-hover:backdrop-brightness-75
       "
-      @click="artDetailPageHandler($event, art.id)"
+      @click="artDetailPageHandler($event, card.art.id)"
       :class="transition"
     ></div>
-    <template v-if="!saved">
-      <button
-        class="
-          bg-accent
-          rounded-full
-          font-bold
-          text-light
-          opacity-0
-          py-2
-          px-4
-          top-4
-          right-4
-          absolute
-          hover:bg-accent-hover
-          group-hover:opacity-100
-        "
-        :class="transition"
-        @click="saveArtHandler($event, art.id)"
-      >
-        Save
-      </button>
-    </template>
     <p
       class="
         bg-light
@@ -64,7 +42,7 @@
       "
       :class="transition"
     >
-      RM {{ art.price.toFixed(2) }}
+      RM {{ card.art.price.toFixed(2) }}
     </p>
     <Popover
       class="opacity-0 right-4 bottom-4 absolute group-hover:opacity-100"
@@ -145,16 +123,9 @@
       </PopoverPanel>
     </Popover>
   </div>
-  <div class="font-garamond mb-8 w-[300px]">
-    <p class="font-bold mt-1 px-2 line-clamp-2">{{ art.description }}</p>
-    <div class="flex mt-1 px-2 items-center">
-      <img :src="art.author.avatarUrl" class="rounded-full h-7 w-7" />
-      <span class="text-sm ml-2">{{ art.author.name }}</span>
-    </div>
-  </div>
 </template>
 
-<script lang="ts">
+  <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { ArtResponse } from "../types/api";
@@ -178,8 +149,7 @@ export default defineComponent({
     Search,
   },
   props: {
-    art: { type: Object as PropType<ArtResponse>, required: true },
-    saved: { type: Object as PropType<boolean> },
+    card: { type: Object as PropType<API.FavResponse>, required: true },
   },
   methods: {
     artDetailPageHandler: (e: Event, id: number) => {
@@ -187,10 +157,6 @@ export default defineComponent({
       e.preventDefault();
       // alert("clicked on art card from artcard");
       helper.triggerBackendControl(e, "MainContent_btnArtDetailPage", `${id}`);
-    },
-    saveArtHandler: (e: Event, id: number) => {
-      e.preventDefault();
-      helper.triggerBackendControl(e, "MainContent_btnSaveArt", `${id}`);
     },
   },
   emits: ["detail"],
