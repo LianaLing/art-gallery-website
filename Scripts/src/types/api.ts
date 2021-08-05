@@ -16,18 +16,18 @@ export type Error = {
   statusCode: number;
 };
 
-export type Author = {
+export type AuthorTest = {
   id: string;
   name: string;
   avatarUrl: string;
 };
 
-export type Art = {
+export type ArtTest = {
   id: string;
   imageSrc: string;
   title: string;
   price: number;
-  author: Author;
+  author: AuthorTest;
 };
 
 export type Icon = {
@@ -85,7 +85,29 @@ export type ArtResponse = {
   };
 };
 
-export type ArtDetailResponse = {
+// export type ArtDetailResponse = {
+//   id: number;
+//   style: string;
+//   description: string;
+//   price: number;
+//   stock: number;
+//   likes: number;
+//   url: string;
+//   author: {
+//     id: number;
+//     description: string;
+//     verified: boolean;
+//     username: string;
+//     name: string;
+//     ic: string;
+//     dob: string;
+//     contactNo: string;
+//     email: string;
+//     avatarUrl: string;
+//   };
+// }
+
+export type Art = {
   id: number;
   style: string;
   description: string;
@@ -93,16 +115,29 @@ export type ArtDetailResponse = {
   stock: number;
   likes: number;
   url: string;
-  author: {
-    id: number;
-    description: string;
-    verified: boolean;
-    username: string;
-    name: string;
-    ic: string;
-    dob: string;
-    contactNo: string;
-    email: string;
-    avatarUrl: string;
-  };
+}
+
+export type Author = {
+  id: number;
+  description: string;
+  verified: boolean;
+}
+
+export type User = {
+  id: number;
+  username: string;
+  name: string;
+  ic: string;
+  dob: string;
+  contactNo: string;
+  email: string;
+  avatarUrl: string;
+}
+
+export type FavResponse = {
+  id: number;
+  name: string;
+  art: Art;
+  user: User;
+  author: Author;
 }

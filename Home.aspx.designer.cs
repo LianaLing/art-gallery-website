@@ -15,15 +15,21 @@ namespace ArtGalleryWebsite
     {
 
         /// <summary>
-        /// SaveArt control.
         /// btnArtDetailPage control.
-
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SaveArt;
         protected global::System.Web.UI.WebControls.Button btnArtDetailPage;
+
+        /// <summary>
+        /// btnSaveArt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSaveArt;
     }
 }

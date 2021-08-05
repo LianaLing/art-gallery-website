@@ -8,101 +8,37 @@ namespace ArtGalleryWebsite.Models.Entities
 {
     public class User : ISqlParser
     {
-        public int id
-        {
-            get;
-            set;
-        }
+        public int id { get; set; }
 
-        public string username
-        {
-            get;
-            set;
-        }
+        public string username { get; set; }
 
-        public string passwordhash
-        {
-            get;
-            set;
-        }
+        public string passwordhash { get; set; }
 
-        public string name
-        {
-            get;
-            set;
-        }
+        public string name { get; set; }
 
-        public string ic
-        {
-            get;
-            set;
-        }
+        public string ic { get; set; }
 
-        public Nullable<DateTime> dob
-        {
-            get;
-            set;
-        }
+        public Nullable<DateTime> dob { get; set; }
 
-        public string avatarUrl
-        {
-            get;
-            set;
-        }
+        public string avatarUrl { get; set; }
 
-        public string phoneNumber
-        {
-            get;
-            set;
-        }
+        public string phoneNumber { get; set; }
 
-        public string email
-        {
-            get;
-            set;
-        }
+        public string email { get; set; }
 
-        public int authorId
-        {
-            get;
-            set;
-        }
+        public int authorId { get; set; }
 
-        public string securityStamp
-        {
-            get;
-            set;
-        }
+        public string securityStamp { get; set; }
 
-        public bool phoneNumberConfirmed
-        {
-            get;
-            set;
-        }
+        public bool phoneNumberConfirmed { get; set; }
 
-        public bool twoFactorEnabled
-        {
-            get;
-            set;
-        }
+        public bool twoFactorEnabled { get; set; }
 
-        public Nullable<DateTime> lockoutEndDateUtc
-        {
-            get;
-            set;
-        }
+        public Nullable<DateTime> lockoutEndDateUtc { get; set; }
 
-        public bool lockoutEnabled
-        {
-            get;
-            set;
-        }
+        public bool lockoutEnabled { get; set; }
 
-        public int accessFailedCount
-        {
-            get;
-            set;
-        }
+        public int accessFailedCount { get; set; }
 
         public User() { }
 
