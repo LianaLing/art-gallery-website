@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using ArtGalleryWebsite.Models.Entities;
+using ArtGalleryWebsite.Utils;
 
 namespace ArtGalleryWebsite.Models.Queries
 {
@@ -15,21 +16,21 @@ namespace ArtGalleryWebsite.Models.Queries
         public static int fav_id;
 
         public Art art;
-        public ArtGalleryWebsite.Models.Entities.User user;
+        public Entities.User user;
         public Author author;
 
         public FavQuery()
         {
         }
 
-        public FavQuery(int id, string name, Art art, ArtGalleryWebsite.Models.Entities.User user, Author author) : base(id, name)
+        public FavQuery(int id, string name, Art art, Entities.User user, Author author) : base(id, name)
         {
             this.art = art;
             this.user = user;
             this.author = author;
         }
 
-        public FavQuery(int id, string name, int user_id, Art art, ArtGalleryWebsite.Models.Entities.User user, Author author) : base(id, name, user_id)
+        public FavQuery(int id, string name, int user_id, Art art, Entities.User user, Author author) : base(id, name, user_id)
         {
             this.art = art;
             this.user = user;
@@ -43,8 +44,8 @@ namespace ArtGalleryWebsite.Models.Queries
                        [Favourite].id, [Favourite].name,
                        [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock,  
                        [Art].likes, [Art].url,
-                       [User].Id, [User].Username, [User].Name, [User].Ic, [User].Dob, 
-                       [User].PhoneNumber, [User].Email, [User].AvatarUrl,
+                       [User].id, [User].username, [User].name, [User].ic, [User].dob, 
+                       [User].PhoneNumber, [User].Email, [User].AvatarUrl, [User].AuthorId,
                        [Author].id, [Author].description, [Author].verified 
                 FROM [Art], [Author], [User], [Favourite], [FavArt]
                 WHERE [Favourite].user_id = [User].Id
@@ -64,30 +65,31 @@ namespace ArtGalleryWebsite.Models.Queries
         {
             return new FavQuery(
                 reader.GetInt32(0),
-                reader.GetString(1),
+                reader.GetStringOrNull(1),
                 new Art(
                     reader.GetInt32(2),
-                    reader.GetString(3),
-                    reader.GetString(4),
+                    reader.GetStringOrNull(3),
+                    reader.GetStringOrNull(4),
                     reader.GetDecimal(5),
                     reader.GetInt32(6),
                     reader.GetInt32(7),
-                    reader.GetString(8)
+                    reader.GetStringOrNull(8)
                     ),
-                new ArtGalleryWebsite.Models.Entities.User (
+                new Entities.User (
                     reader.GetInt32(9),
-                    reader.GetString(10),
-                    reader.GetString(11),
-                    reader.GetString(12),
+                    reader.GetStringOrNull(10),
+                    reader.GetStringOrNull(11),
+                    reader.GetStringOrNull(12),
                     reader.GetDateTime(13),
-                    reader.GetString(14),
-                    reader.GetString(15),
-                    reader.GetString(16)
+                    reader.GetStringOrNull(14),
+                    reader.GetStringOrNull(15),
+                    reader.GetStringOrNull(16),
+                    reader.GetInt32(17)
                     ),
                 new Author(
-                    reader.GetInt32(17),
-                    reader.GetString(18),
-                    reader.GetBoolean(19)
+                    reader.GetInt32(18),
+                    reader.GetStringOrNull(19),
+                    reader.GetBoolean(20)
                     )
                 );
         }
