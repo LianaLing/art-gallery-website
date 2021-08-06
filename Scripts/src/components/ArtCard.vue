@@ -27,26 +27,47 @@
       :class="transition"
     ></div>
     <template v-if="!saved">
-      <button
-        class="
-          bg-accent
-          rounded-full
-          font-bold
-          text-light
-          opacity-0
-          py-2
-          px-4
-          top-4
-          right-4
-          absolute
-          hover:bg-accent-hover
-          group-hover:opacity-100
-        "
-        :class="transition"
-        @click="saveArtHandler($event, art.id)"
-      >
-        Save
-      </button>
+      <Popover>
+        <PopoverButton
+          class="
+            bg-accent
+            rounded-full
+            font-bold
+            text-light
+            opacity-0
+            py-2
+            px-4
+            top-4
+            right-4
+            absolute
+            hover:bg-accent-hover
+            group-hover:opacity-100
+          "
+          :class="transition"
+        >
+          Save
+        </PopoverButton>
+        <PopoverPanel class="shadow-xl right-0 top-14 w-[200px] z-10 absolute">
+          <div class="bg-white rounded-3xl p-4 items-center">
+            <p>Your Collection(s)</p>
+            <button
+              v-for="fav in favourites"
+              :key="fav.id"
+              class="
+                bg-light-hover
+                rounded-3xl
+                p-3
+                justify-center
+                items-center
+                block
+              "
+              @click="saveArtHandler($event, art.id, fav.id)"
+            >
+              {{ fav.name }}
+            </button>
+          </div>
+        </PopoverPanel>
+      </Popover>
     </template>
     <p
       class="
@@ -180,6 +201,9 @@ export default defineComponent({
   props: {
     art: { type: Object as PropType<ArtResponse>, required: true },
     saved: { type: Object as PropType<boolean> },
+    favourites: { type: Array as any, required: true },
+    // favNames: { type: Array as PropType<string[]>, required: true },
+    // favIds: { type: Array as PropType<number[]>, required: true },
   },
   methods: {
     artDetailPageHandler: (e: Event, id: number) => {
@@ -188,10 +212,19 @@ export default defineComponent({
       // alert("clicked on art card from artcard");
       helper.triggerBackendControl(e, "MainContent_btnArtDetailPage", `${id}`);
     },
-    saveArtHandler: (e: Event, id: number) => {
+    saveArtHandler: (e: Event, art_id: number, fav_id: number) => {
       e.preventDefault();
-      helper.triggerBackendControl(e, "MainContent_btnSaveArt", `${id}`);
+      const id = `${art_id}` + "," + `${fav_id}`;
+      helper.triggerBackendControl(e, "MainContent_btnSaveArt", id);
     },
+    // saveArtChooseCollectionHandler: (e: Event, id: number) => {
+    //   e.preventDefault();
+    //   helper.triggerBackendControl(
+    //     e,
+    //     "MainContent_btnSaveArtChooseCollection",
+    //     `${id}`
+    //   );
+    // },
   },
   emits: ["detail"],
   data() {

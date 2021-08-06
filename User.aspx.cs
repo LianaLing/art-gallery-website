@@ -163,8 +163,8 @@ namespace ArtGalleryWebsite
             //    new ArtTest("art_0009", "https://i.pinimg.com/564x/b9/92/49/b99249c860d9b507251991d063a245b4.jpg", 33333.33, "A Wheatfield, with Cypresses", author: Liana),
             //};
 
-            FavQuery.FetchCurrentUser(1);
-            UserQuery.FetchCurrentUser(1);
+            FavQuery.FetchCurrentUser(1); //Hardcoded
+            UserQuery.FetchCurrentUser(1); //Hardcoded
             List<FavQuery> data = Database.Select<FavQuery>(FavQuery.SqlQuery);
             List<UserQuery> user = Database.Select<UserQuery>(UserQuery.SqlQuery);
 

@@ -11,6 +11,8 @@ namespace ArtGalleryWebsite.Models.Queries
     {
 
         public static string SqlQuery;
+        public static int art_id;
+        public static int fav_id;
 
         public Art art;
         public ArtGalleryWebsite.Models.Entities.User user;
@@ -53,7 +55,7 @@ namespace ArtGalleryWebsite.Models.Queries
                 "' ORDER BY [Favourite].name ASC;";
         }
 
-        public static void InsertFavArt(int fav_id, int art_id)
+        public static void InsertFavArt()
         {
             SqlQuery = @"INSERT INTO [FavArt] VALUES (" + fav_id + ", " + art_id + ")";
         }
