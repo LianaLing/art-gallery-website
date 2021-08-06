@@ -53,6 +53,11 @@ namespace ArtGalleryWebsite.Models.Queries
                 "' ORDER BY [Favourite].name ASC;";
         }
 
+        public static void InsertFavArt(int fav_id, int art_id)
+        {
+            SqlQuery = @"INSERT INTO [FavArt] VALUES (" + fav_id + ", " + art_id + ")";
+        }
+
         public override ISqlParser ParseFromSqlReader(SqlDataReader reader)
         {
             return new FavQuery(

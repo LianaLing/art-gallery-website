@@ -35,11 +35,21 @@ namespace ArtGalleryWebsite
 
         protected void btnSaveArt_click(object sender, EventArgs e)
         {
-            string id = Request.Form[btnSaveArt.Attributes["value"]];
+            //string id = Request.Form[btnSaveArt.Attributes["value"]];
             //Button button = sender as Button;
             //string id = button.Attributes["value"];
-            System.Diagnostics.Trace.WriteLine(id);
-
+            //System.Diagnostics.Trace.WriteLine(id);
+            int id = Convert.ToInt32(Request.Form[btnSaveArt.UniqueID]);
+            System.Diagnostics.Trace.WriteLine("art_id: " + id);
+            try
+            {
+                FavQuery.InsertFavArt(1, id);
+            }
+            catch (System.Data.SqlClient.SqlException err)
+            {
+                System.Diagnostics.Trace.WriteLine(err + " [Artwork already saved in this collection.]");
+            }
+            System.Diagnostics.Trace.WriteLine(Database.Insert(FavQuery.SqlQuery));
         }
 
         public void btnArtDetailPage_click(object sender, EventArgs e)
