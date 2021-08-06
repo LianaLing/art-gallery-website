@@ -23,6 +23,7 @@ namespace ArtGalleryWebsite
             // System.Diagnostics.Debug.WriteLine("asdasdasd");
 
             // Fetch art responses from the database
+            ArtQuery.FetchAllArt();
             List<ArtQuery> data = Database.Select<ArtQuery>(ArtQuery.SqlQuery);
 
             // Inject the data (serialized as a JSON string) as a hidden field at client side

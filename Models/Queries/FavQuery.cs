@@ -46,11 +46,11 @@ namespace ArtGalleryWebsite.Models.Queries
                        [User].PhoneNumber, [User].Email, [User].AvatarUrl, [User].AuthorId,
                        [Author].id, [Author].description, [Author].verified 
                 FROM [Art], [Author], [User], [Favourite], [FavArt]
-                WHERE [Favourite].user_id = [User].id
+                WHERE [Favourite].user_id = [User].Id
                 AND [FavArt].art_id = [Art].id
                 AND [FavArt].fav_id = [Favourite].id
                 AND [Art].author_id = [Author].id
-                AND [User].id = '" + id + 
+                AND [User].Id = '" + id + 
                 "' ORDER BY [Favourite].name ASC;";
         }
 

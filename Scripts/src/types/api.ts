@@ -79,7 +79,7 @@ export type ArtResponse = {
     name: string;
     ic: string;
     dob: string;
-    contactNo: string;
+    phoneNumber: string;
     email: string;
     avatarUrl: string;
   };
