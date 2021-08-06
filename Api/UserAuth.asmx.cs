@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
+using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Security;
 using System.Web.Services;
@@ -31,8 +30,26 @@ namespace ArtGalleryWebsite
         [WebMethod]
         public string Login(string email, string password)
         {
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationSignInManager signInManager = Context.GetOwinContext().GetUserManager<ApplicationSignInManager>();
+
             // Create a login response object
             ApiResponse<LoginResponse> res = new ApiResponse<LoginResponse>(new LoginResponse());
+
+            SignInStatus result = signInManager.PasswordSignIn(email, password, isPersistent: false, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    break;
+                case SignInStatus.LockedOut:
+                    break;
+                case SignInStatus.RequiresVerification:
+                    break;
+                case SignInStatus.Failure:
+                    break;
+                default:
+                    break;
+            }
 
             // Check whether email and password given matches a valid user
             if (FormsAuthentication.Authenticate(email, password))

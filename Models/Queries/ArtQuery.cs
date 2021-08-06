@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+using ArtGalleryWebsite.Utils;
 
 namespace ArtGalleryWebsite.Models.Queries
 {
@@ -10,10 +8,10 @@ namespace ArtGalleryWebsite.Models.Queries
     {
         public static string SqlQuery = @"
             SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
-                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].PhoneNumber, [User].email, [User].AvatarUrl
             FROM [Art], [Author], [User]
             WHERE [Art].author_id = [Author].id
-            AND [Author].id = [User].author_id
+            AND [Author].id = [User].AuthorId
             ORDER BY [Art].likes DESC;
         ";
 
@@ -81,10 +79,10 @@ namespace ArtGalleryWebsite.Models.Queries
         {
             SqlQuery = @"
             SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
-                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].PhoneNumber, [User].email, [User].AvatarUrl
             FROM [Art], [Author], [User]
             WHERE [Art].author_id = [Author].id
-            AND [Author].id = [User].author_id
+            AND [Author].id = [User].AuthorId
             ORDER BY [Art].likes DESC;
         ";
         }
@@ -93,10 +91,10 @@ namespace ArtGalleryWebsite.Models.Queries
         {
             SqlQuery = @"
             SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
-                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].PhoneNumber, [User].email, [User].AvatarUrl
             FROM [Art], [Author], [User]
             WHERE [Art].author_id = [Author].id
-            AND [Author].id = [User].author_id
+            AND [Author].id = [User].AuthorId
             AND [Art].id = '" + id + "'";
         }
 
@@ -104,23 +102,23 @@ namespace ArtGalleryWebsite.Models.Queries
         {
             return new ArtQuery(
                 reader.GetInt32(0),
-                reader.GetString(1),
-                reader.GetString(2),
+                reader.GetStringOrNull(1),
+                reader.GetStringOrNull(2),
                 reader.GetDecimal(3),
                 reader.GetInt32(4),
                 reader.GetInt32(5),
-                reader.GetString(6),
+                reader.GetStringOrNull(6),
                 new Author(
                     reader.GetInt32(7),
-                    reader.GetString(8),
+                    reader.GetStringOrNull(8),
                     reader.GetBoolean(9),
-                    reader.GetString(10),
-                    reader.GetString(11),
-                    reader.GetString(12),
-                    reader.GetDateTime(13),
-                    reader.GetString(14),
-                    reader.GetString(15),
-                    reader.GetString(16)
+                    reader.GetStringOrNull(10),
+                    reader.GetStringOrNull(11),
+                    reader.GetStringOrNull(12),
+                    reader.GetDateTimeOrNull(13),
+                    reader.GetStringOrNull(14),
+                    reader.GetStringOrNull(15),
+                    reader.GetStringOrNull(16)
                 )
             );
         }
