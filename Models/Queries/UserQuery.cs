@@ -22,8 +22,8 @@ namespace ArtGalleryWebsite.Models.Queries
         public static void FetchCurrentUser(int id)
         {
             SqlQuery = @"
-            SELECT [User].id, [User].username, [User].name, [User].ic, [User].dob, 
-                   [User].contact_no, [User].email, [User].avatar_url
+            SELECT [User].Id, [User].Username, [User].Name, [User].Ic, [User].Dob, 
+                   [User].PhoneNumber, [User].Email, [User].AvatarUrl
             FROM [User]
             WHERE [User].id = '" + id + "';";
         }

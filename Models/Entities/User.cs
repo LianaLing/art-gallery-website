@@ -13,7 +13,7 @@ namespace ArtGalleryWebsite.Models.Entities
         public string name;
         public string ic;
         public Nullable<DateTime> dob;
-        public string contactNo;
+        public string phoneNumber;
         public string email;
         public string avatarUrl;
 
@@ -22,14 +22,14 @@ namespace ArtGalleryWebsite.Models.Entities
 
         }
 
-        public User(int id, string username, string name, string ic, DateTime? dob, string contactNo, string email, string avatarUrl)
+        public User(int id, string username, string name, string ic, DateTime? dob, string phoneNumber, string email, string avatarUrl)
         {
             this.id = id;
             this.username = username;
             this.name = name;
             this.ic = ic;
             this.dob = dob;
-            this.contactNo = contactNo;
+            this.phoneNumber = phoneNumber;
             this.email = email;
             this.avatarUrl = avatarUrl;
         }

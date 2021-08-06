@@ -1,13 +1,13 @@
-CREATE TABLE [dbo].[Address] (
-    [id]          INT           IDENTITY (1, 1) NOT NULL,
-    [country]     VARCHAR (255) NOT NULL,
-    [state]       VARCHAR (255) NOT NULL,
-    [city]        VARCHAR (255) NOT NULL,
-    [line1]       VARCHAR (255) NOT NULL,
-    [line2]       VARCHAR (255) NULL,
-    [postal_code] CHAR (5)      NOT NULL,
-    [created_at]  DATE          NOT NULL,
-    [updated_at]  DATE          NOT NULL,
+﻿CREATE TABLE [dbo].[Address] (
+    [Id]          INT           IDENTITY (1, 1) NOT NULL,
+    [Country]     VARCHAR (255) NOT NULL,
+    [State]       VARCHAR (255) NOT NULL,
+    [City]        VARCHAR (255) NOT NULL,
+    [Line1]       VARCHAR (255) NOT NULL,
+    [Line2]       VARCHAR (255) NULL,
+    [PostalCode] CHAR (5)      NOT NULL,
+    [CreatedAt]  DATE          NOT NULL,
+    [UpdatedAt]  DATE          NOT NULL,
     PRIMARY KEY CLUSTERED ([id] ASC)
 );
 

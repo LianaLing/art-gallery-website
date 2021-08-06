@@ -10,10 +10,10 @@ namespace ArtGalleryWebsite.Models.Queries
     {
         public static string SqlQuery = @"
             SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
-                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+                   [Author].id, [Author].description, [Author].verified, [User].Username, [User].Name, [User].Ic, [User].Dob, [User].PhoneNumber, [User].Email, [User].AvatarUrl
             FROM [Art], [Author], [User]
             WHERE [Art].author_id = [Author].id
-            AND [Author].id = [User].author_id
+            AND [Author].id = [User].AuthorId
             ORDER BY [Art].likes DESC;
         ";
 
@@ -81,10 +81,10 @@ namespace ArtGalleryWebsite.Models.Queries
         {
             SqlQuery = @"
             SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
-                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+                   [Author].id, [Author].description, [Author].verified, [User].Username, [User].Name, [User].Ic, [User].Dob, [User].PhoneNumber, [User].Email, [User].AvatarUrl
             FROM [Art], [Author], [User]
             WHERE [Art].author_id = [Author].id
-            AND [Author].id = [User].author_id
+            AND [Author].id = [User].AuthorId
             ORDER BY [Art].likes DESC;
         ";
         }
@@ -93,10 +93,10 @@ namespace ArtGalleryWebsite.Models.Queries
         {
             SqlQuery = @"
             SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
-                   [Author].id, [Author].description, [Author].verified, [User].username, [User].name, [User].ic, [User].dob, [User].contact_no, [User].email, [User].avatar_url
+                   [Author].id, [Author].description, [Author].verified, [User].Username, [User].Name, [User].Ic, [User].Dob, [User].PhoneNumber, [User].Email, [User].AvatarUrl
             FROM [Art], [Author], [User]
             WHERE [Art].author_id = [Author].id
-            AND [Author].id = [User].author_id
+            AND [Author].id = [User].AuthorId
             AND [Art].id = '" + id + "'";
         }
 

@@ -41,15 +41,15 @@ namespace ArtGalleryWebsite.Models.Queries
                        [Favourite].id, [Favourite].name,
                        [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock,  
                        [Art].likes, [Art].url,
-                       [User].id, [User].username, [User].name, [User].ic, [User].dob, 
-                       [User].contact_no, [User].email, [User].avatar_url,
+                       [User].Id, [User].Username, [User].Name, [User].Ic, [User].Dob, 
+                       [User].PhoneNumber, [User].Email, [User].AvatarUrl,
                        [Author].id, [Author].description, [Author].verified 
                 FROM [Art], [Author], [User], [Favourite], [FavArt]
-                WHERE [Favourite].user_id = [User].id
+                WHERE [Favourite].user_id = [User].Id
                 AND [FavArt].art_id = [Art].id
                 AND [FavArt].fav_id = [Favourite].id
                 AND [Art].author_id = [Author].id
-                AND [User].id = '" + id + 
+                AND [User].Id = '" + id + 
                 "' ORDER BY [Favourite].name ASC;";
         }
 
