@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+using ArtGalleryWebsite.Utils;
 
 namespace ArtGalleryWebsite.Models.Queries
 {
-    public class UserQuery : ArtGalleryWebsite.Models.Entities.User, ISqlParser
+    public class UserQuery : Entities.User, ISqlParser
     {
         public static string SqlQuery;
 
@@ -14,31 +12,33 @@ namespace ArtGalleryWebsite.Models.Queries
         {
         }
 
-        public UserQuery(int id, string username, string name, string ic, DateTime? dob, string contactNo, string email, string avatarUrl) : base (id, username, name, ic, dob, contactNo, email, avatarUrl)
+        public UserQuery(int id, string username, string name, string ic, DateTime? dob, string phoneNumber, string email, string avatarUrl, int? authorId)
+            : base (id, username, name, ic, dob, phoneNumber, email, avatarUrl, authorId)
         {
-
         }
 
         public static void FetchCurrentUser(int id)
         {
             SqlQuery = @"
-            SELECT [User].Id, [User].Username, [User].Name, [User].Ic, [User].Dob, 
-                   [User].PhoneNumber, [User].Email, [User].AvatarUrl
+            SELECT [User].[Id], [User].[Username], [User].[Name], [User].[Ic], [User].[Dob], 
+                   [User].[PhoneNumber], [User].[Email], [User].[AvatarUrl], [User].[AuthorId]
             FROM [User]
-            WHERE [User].id = '" + id + "';";
+            WHERE [User].[Id] = '" + id + "';";
         }
 
-        public virtual ISqlParser ParseFromSqlReader(SqlDataReader reader)
+        override
+        public ISqlParser ParseFromSqlReader(SqlDataReader reader)
         {
             return new UserQuery(
                 reader.GetInt32(0),
-                reader.GetString(1),
-                reader.GetString(2),
-                reader.GetString(3),
-                reader.GetDateTime(4),
-                reader.GetString(5),
-                reader.GetString(6),
-                reader.GetString(7)
+                reader.GetStringOrNull(1),
+                reader.GetStringOrNull(2),
+                reader.GetStringOrNull(3),
+                reader.GetDateTimeOrNull(4),
+                reader.GetStringOrNull(5),
+                reader.GetStringOrNull(6),
+                reader.GetStringOrNull(7),
+                reader.GetInt32(8)
             );
         }
     }
