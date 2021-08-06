@@ -12,6 +12,8 @@ namespace ArtGalleryWebsite.Models.Queries
     {
 
         public static string SqlQuery;
+        public static int art_id;
+        public static int fav_id;
 
         public Art art;
         public Entities.User user;
@@ -52,6 +54,11 @@ namespace ArtGalleryWebsite.Models.Queries
                 AND [Art].author_id = [Author].id
                 AND [User].Id = '" + id + 
                 "' ORDER BY [Favourite].name ASC;";
+        }
+
+        public static void InsertFavArt()
+        {
+            SqlQuery = @"INSERT INTO [FavArt] VALUES (" + fav_id + ", " + art_id + ")";
         }
 
         public override ISqlParser ParseFromSqlReader(SqlDataReader reader)

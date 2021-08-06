@@ -22,9 +22,9 @@
 
   <!-- Unorganised Saves -->
   <div class="font-garamond border-b-2 my-14 justify-around">
-    <strong class="text-xl inline">Unorganised Saves</strong>
+    <strong class="text-xl inline">All Saves</strong>
 
-    <a
+    <!-- <a
       class="
         bg-light
         rounded-full
@@ -37,10 +37,19 @@
       "
       href="/"
       >Organise</a
-    >
+    > -->
     <div class="flex my-14 w-full max-w-7xl">
-      <div class="flex flex-col mx-24" v-for="fav in data" :key="fav.id">
-        <SaveCard :card="fav" />
+      <div
+        class="flex flex-col mx-24"
+        v-for="saves in saves2D"
+        :key="saves.toString"
+      >
+        <SaveCard
+          class="mb-10"
+          v-for="fav in saves"
+          :key="fav.id"
+          :card="fav"
+        />
       </div>
     </div>
   </div>
@@ -81,7 +90,7 @@ const user = helper.getStateFromBackend<API.User[]>("userState");
 //   (<HTMLInputElement>document.getElementById("artsState")).value
 // );
 
-// const arts2D = sliceIntoChunks<API.FavResponse>(data, 3);
+const saves2D = sliceIntoChunks<API.FavResponse>(data, 2);
 
 const names = [...new Set(data.map((d) => d.name))];
 
@@ -132,7 +141,7 @@ export default {
       icons,
       // saves,
       // inprofile,
-      // arts2D,
+      saves2D,
       data,
       user,
       favGroup,

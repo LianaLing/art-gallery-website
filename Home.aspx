@@ -5,6 +5,7 @@
         <asp:button ID="btnArtDetailPage" runat="server" OnClick="btnArtDetailPage_click" CssClass="hidden" />
 
         <asp:Button ID="btnSaveArt" runat="server" OnClick="btnSaveArt_click" CssClass="hidden" />
+        <asp:Button ID="btnSaveArtChooseCollection" runat="server" OnClick="btnSaveArtChooseCollection_click" CssClass="hidden" />
 
         <div id="app">
         </div>

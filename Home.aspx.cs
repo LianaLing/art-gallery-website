@@ -25,21 +25,53 @@ namespace ArtGalleryWebsite
             // Fetch art responses from the database
             ArtQuery.FetchAllArt();
             List<ArtQuery> data = Database.Select<ArtQuery>(ArtQuery.SqlQuery);
+            FavQuery.FetchCurrentUser(1); //Hardcoded
+            List<FavQuery> favs = Database.Select<FavQuery>(FavQuery.SqlQuery);
 
             // Inject the data (serialized as a JSON string) as a hidden field at client side
             Page.ClientScript.RegisterHiddenField(
                 "arts",
                 JsonConvert.SerializeObject(data)
             );
+            Page.ClientScript.RegisterHiddenField(
+                "favs",
+                JsonConvert.SerializeObject(favs)
+            );
         }
 
-        protected void btnSaveArt_click(object sender, EventArgs e)
+        protected void btnSaveArtChooseCollection_click(object sender, EventArgs e)
         {
-            string id = Request.Form[btnSaveArt.Attributes["value"]];
+            //string id = Request.Form[btnSaveArt.Attributes["value"]];
             //Button button = sender as Button;
             //string id = button.Attributes["value"];
-            System.Diagnostics.Trace.WriteLine(id);
+            //System.Diagnostics.Trace.WriteLine(id);
+        }
 
+        public void btnSaveArt_click(object sender, EventArgs e)
+        {
+            string str = Request.Form[btnSaveArt.UniqueID];
+            string[] strArr = str.Split(',');
+            int art_id = Convert.ToInt32(strArr[0]);
+
+            FavQuery.art_id = 0;
+            FavQuery.art_id = art_id;
+            System.Diagnostics.Trace.WriteLine("art_id: " + FavQuery.art_id);
+
+            int fav_id = Convert.ToInt32(strArr[1]);
+            FavQuery.fav_id = 0;
+            FavQuery.fav_id = fav_id;
+            System.Diagnostics.Trace.WriteLine("fav_id: " + FavQuery.fav_id);
+
+            FavQuery.InsertFavArt();
+
+            try
+            {
+                System.Diagnostics.Trace.WriteLine("Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)");
+            }
+            catch (System.Data.SqlClient.SqlException err)
+            {
+                System.Diagnostics.Trace.WriteLine(err + " [Artwork already saved in this collection.]");
+            }
         }
 
         public void btnArtDetailPage_click(object sender, EventArgs e)
