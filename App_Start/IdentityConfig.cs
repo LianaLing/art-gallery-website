@@ -83,6 +83,11 @@ namespace ArtGalleryWebsite
             }
             return manager;
         }
+
+        internal void AddClaim(int id, Claim claim, string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class ApplicationSignInManager : SignInManager<ApplicationUser, int>

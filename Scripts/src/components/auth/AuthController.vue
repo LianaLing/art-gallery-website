@@ -13,7 +13,7 @@
       <Pinterest />
       <button
         @click="setAuthView({ ...authView, modalOpen: false })"
-        class="rounded-full p-2 top-6 right-6 absolute focus:outline-none hover:bg-light-hover"
+        class="rounded-full p-2 top-6 right-6 absolute hover:bg-light-hover focus:outline-none"
       >
         <svg
           class="h-6 w-6"
@@ -76,7 +76,7 @@
         >
 
         <button
-          class="bg-accent font-bold rounded-3xl mt-6 text-white py-2 px-4 focus:outline-none hover:bg-accent-hover"
+          class="bg-accent font-bold rounded-3xl mt-6 text-white py-2 px-4 hover:bg-accent-hover focus:outline-none"
         >
           <Spinner v-if="isSubmitting" :size="'medium'" :class="'mx-auto'" />
           <span v-else>
@@ -92,7 +92,7 @@
 
         <button
           v-show="authView.view === 'artist_signup'"
-          class="bg-light font-bold rounded-3xl mt-2 py-2 px-4 focus:outline-none hover:bg-light-hover"
+          class="bg-light font-bold rounded-3xl mt-2 py-2 px-4 hover:bg-light-hover focus:outline-none"
         >
           <span>Log in to existing account</span>
         </button>
@@ -240,8 +240,12 @@ export default defineComponent({
         case "login": {
           // Make a POST request to backend
           const { data, error } = await post<{ redirectUrl: string }>(
-            "Api/UserAuth.asmx/Login",
-            payload
+            "Api/Auth.aspx/Login",
+            {
+              email: email,
+              password: password,
+              remember: false,
+            }
           );
 
           // If failed to authenticate user

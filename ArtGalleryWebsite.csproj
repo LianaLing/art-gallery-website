@@ -143,13 +143,12 @@
   <ItemGroup>
     <None Include="Scripts\src\pages\Home.vue" />
     <None Include="Scripts\src\components\ArtCard.bak" />
+    <Content Include="Api\Auth.aspx" />
     <Content Include="App_Data\ArtGallery.mdf" />
     <Content Include="App_Data\ArtGallery_log.ldf">
       <DependentUpon>ArtGallery.mdf</DependentUpon>
     </Content>
     <Content Include="ArtDetail.aspx" />
-    <Content Include="Auth\Login.aspx" />
-    <Content Include="Auth\Register.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
@@ -161,7 +160,6 @@
     <TypeScriptCompile Include="shims-vue.d.ts" />
     <Content Include="Scripts\src\HomePage.js" />
     <Content Include="User.aspx" />
-    <Content Include="Api\UserAuth.asmx" />
     <Content Include="webpack.config.js" />
     <TypeScriptCompile Include="Scripts\src\utils\Helper.ts" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -195,6 +193,13 @@
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Auth.aspx.cs">
+      <DependentUpon>Auth.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Api\Auth.aspx.designer.cs">
+      <DependentUpon>Auth.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -204,20 +209,6 @@
     </Compile>
     <Compile Include="ArtDetail.aspx.designer.cs">
       <DependentUpon>ArtDetail.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Auth\Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Auth\Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Auth\Register.aspx.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Auth\Register.aspx.designer.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
@@ -258,11 +249,10 @@
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Queries\ArtQuery.cs" />
-    <Compile Include="Models\LoginResponse.cs" />
     <Compile Include="Models\Queries\FavQuery.cs" />
     <Compile Include="Models\Queries\UserQuery.cs" />
-    <Compile Include="Models\SessionData.cs" />
     <Compile Include="Models\ISqlParser.cs" />
+    <Compile Include="Models\AuthRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -279,12 +269,9 @@
     <Compile Include="User.aspx.designer.cs">
       <DependentUpon>User.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Api\UserAuth.asmx.cs">
-      <DependentUpon>UserAuth.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Utils\Database.cs" />
     <Compile Include="Utils\Helper.cs" />
+    <Compile Include="Utils\IdentityHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\dist\" />

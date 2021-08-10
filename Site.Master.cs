@@ -6,9 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
-using ArtGalleryWebsite.Utils;
 using ArtGalleryWebsite.Models.Queries;
-using System.Collections.Generic;
 
 namespace ArtGalleryWebsite
 {

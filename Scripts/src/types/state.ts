@@ -1,10 +1,32 @@
 /**
- * This is the structure of an ASP.NET Session state data,
- * essentially is just a key-value pair.
+ * This is the structure of user's session stored at
+ * ASP.NET
  */
-export type SessionData = {
-  Key: string;
-  Value: string;
+export type Session = {
+  user?: User;
+};
+
+export type User = {
+  accessFailedCount: number;
+  authorId: number | null;
+  avatarUrl: string | null;
+  claims: unknown[];
+  dob: string | null;
+  email: string;
+  emailConfirmed: boolean;
+  ic: string | null;
+  id: number;
+  lockoutEnabled: boolean;
+  lockoutEndDateUtc: string | null;
+  logins: unknown[];
+  name: string | null;
+  passwordHash: string;
+  phoneNumber: string | null;
+  phoneNumberConfirmed: boolean;
+  roles: unknown[];
+  securityStamp: string;
+  twoFactorEnabled: boolean;
+  userName: string;
 };
 
 // This is the possible state of an authentication view (Auth Modal)

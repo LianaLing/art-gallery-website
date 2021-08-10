@@ -1,51 +1,35 @@
 <template>
-  <div class="flex items-center justify-between px-6 py-5">
+  <div class="flex py-5 px-6 items-center justify-between">
     <button class="flex items-center" @click="homePageHandler">
       <Pinterest />
-      <h1 class="text-xl font-bold font-garamond text-accent">Art Gallery</h1>
+      <h1 class="font-bold font-garamond text-xl text-accent">Art Gallery</h1>
     </button>
-    <div class="flex items-center font-bold text-dark">
+    <div class="flex font-bold text-dark items-center">
       <div class="mr-8">
-        <a class="px-3 py-2 mr-1 hover:underline font-garamond" href="/"
+        <a class="font-garamond mr-1 py-2 px-3 hover:underline" href="/"
           >About</a
         >
-        <a class="px-3 py-2 mr-1 hover:underline font-garamond" href="/"
+        <a class="font-garamond mr-1 py-2 px-3 hover:underline" href="/"
           >Business</a
         >
-        <a class="px-3 py-2 hover:underline font-garamond" href="/">Blog</a>
+        <a class="font-garamond py-2 px-3 hover:underline" href="/">Blog</a>
       </div>
-      <template v-if="email === null">
+      <template v-if="!email">
         <button
-          class="
-            px-3
-            py-2
-            mr-4
-            text-white
-            rounded-full
-            bg-accent
-            hover:bg-accent-hover
-            font-garamond
-          "
+          class="bg-accent rounded-full font-garamond mr-4 text-white py-2 px-3 hover:bg-accent-hover"
           @click="loginHandler"
         >
           Log in
         </button>
         <button
-          class="
-            px-3
-            py-2
-            rounded-full
-            bg-light
-            hover:bg-light-hover
-            font-garamond
-          "
+          class="bg-light rounded-full font-garamond py-2 px-3 hover:bg-light-hover"
           @click="signupHandler"
         >
           Sign up
         </button>
       </template>
       <button
-        class="hover:underline font-bold font-garamond"
+        class="font-bold font-garamond hover:underline"
         @click="userPageHandler"
         v-else
       >
@@ -59,7 +43,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useAuthView } from "../stores/useAuthView";
-import { AuthView, SessionData } from "../types/state";
+import { AuthView, Session } from "../types/state";
 import { getStateFromBackend } from "../utils/helper";
 import AuthController from "../components/auth/AuthController.vue";
 import Pinterest from "../components/icons/Pinterest.vue";
@@ -101,14 +85,14 @@ export default defineComponent({
     };
   },
   data() {
-    const session = getStateFromBackend<SessionData[]>("session");
+    const session = getStateFromBackend<Session>("session");
 
-    // TODO: Better define how the session data should look like
-    // and parse it accordingly, this below is just a temporary solution
-    const email =
-      session.length !== 0
-        ? session.filter((x) => x.Key === "email")[0].Value
-        : null;
+    console.log(session);
+
+    if (!session.user) return { email: undefined };
+
+    const { user } = session;
+    const email = user.email ? user.email : undefined;
 
     return { email };
   },
