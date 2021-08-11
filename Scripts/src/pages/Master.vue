@@ -105,7 +105,6 @@ export default defineComponent({
   data() {
     const session = useSession();
     session.value = getStateFromBackend<Session>("session");
-    console.log(session.value);
     return { session };
   },
 });
