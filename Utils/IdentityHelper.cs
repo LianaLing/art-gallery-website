@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ArtGalleryWebsite.Models;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Web;
@@ -93,7 +95,34 @@ namespace ArtGalleryWebsite.Utils
                 foreach (KeyValuePair<string, string> param in extraParams)
                     queryString.Add(param.Key, param.Value);
 
-            return $"Api/Auth.aspx?{queryString.ToString()}";
+            return $"Api/Auth.aspx?{queryString}";
+        }
+
+        public static Dictionary<string, object> FilterUser(ApplicationUser user, Dictionary<string, object> overrideValues = null)
+        {
+            // If user is null
+            if (user == null)
+                return null;
+
+            // If no custom overrideValues is specified then initialize the default overrideValues
+            if (overrideValues == null)
+                overrideValues = new Dictionary<string, object>() 
+                { 
+                    { "passwordHash", null } 
+                };
+
+            // First we serialize the user as JSON
+            string json = Helper.SerializeObject(user);
+
+            // Then deserialize it back to a dictionary
+            Dictionary<string, object> dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+
+            // For each override value in the dictionary
+            // replace it accordingly
+            foreach (KeyValuePair<string, object> overrideValue in overrideValues)
+                dictionary[overrideValue.Key] = overrideValue.Value;
+
+            return dictionary;
         }
     }
 }
