@@ -50,7 +50,7 @@ namespace ArtGalleryWebsite
             // Configure validation logic for passwords
             manager.PasswordValidator = new PasswordValidator
             {
-                RequiredLength = 6,
+                RequiredLength = 8,
                 RequireNonLetterOrDigit = true,
                 RequireDigit = true,
                 RequireLowercase = true,
@@ -82,6 +82,11 @@ namespace ArtGalleryWebsite
                 manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser, int>(dataProtectionProvider.Create("ASP.NET Identity"));
             }
             return manager;
+        }
+
+        internal void AddClaim(int id, Claim claim, string v)
+        {
+            throw new NotImplementedException();
         }
     }
 

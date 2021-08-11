@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="ArtGalleryWebsite.Auth.Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="TestAuth.aspx.cs" Inherits="ArtGalleryWebsite.Api.Auth" %>
 
 <!DOCTYPE html>
 
@@ -9,7 +9,6 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            Redirecting to homepage...
         </div>
     </form>
 </body>

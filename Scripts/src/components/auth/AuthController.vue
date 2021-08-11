@@ -13,7 +13,7 @@
       <Pinterest />
       <button
         @click="setAuthView({ ...authView, modalOpen: false })"
-        class="rounded-full p-2 top-6 right-6 absolute focus:outline-none hover:bg-light-hover"
+        class="rounded-full p-2 top-6 right-6 absolute hover:bg-light-hover focus:outline-none"
       >
         <svg
           class="h-6 w-6"
@@ -76,7 +76,7 @@
         >
 
         <button
-          class="bg-accent font-bold rounded-3xl mt-6 text-white py-2 px-4 focus:outline-none hover:bg-accent-hover"
+          class="bg-accent font-bold rounded-3xl mt-6 text-white py-2 px-4 hover:bg-accent-hover focus:outline-none"
         >
           <Spinner v-if="isSubmitting" :size="'medium'" :class="'mx-auto'" />
           <span v-else>
@@ -92,7 +92,7 @@
 
         <button
           v-show="authView.view === 'artist_signup'"
-          class="bg-light font-bold rounded-3xl mt-2 py-2 px-4 focus:outline-none hover:bg-light-hover"
+          class="bg-light font-bold rounded-3xl mt-2 py-2 px-4 hover:bg-light-hover focus:outline-none"
         >
           <span>Log in to existing account</span>
         </button>
@@ -152,21 +152,15 @@ import { Dialog, DialogOverlay } from "@headlessui/vue";
 import { Form, Field, ErrorMessage, configure } from "vee-validate";
 import { useAuthView } from "../../stores/useAuthView";
 import { AuthView } from "../../types/state";
-import { post } from "../../utils/api";
-import { sleep } from "../../utils/helper";
+import { regex } from "../../utils/regex";
+import { BaseAuthParam, login, signup } from "../../utils/auth";
 import Pinterest from "../icons/Pinterest.vue";
 import Spinner from "../Spinner.vue";
-
-// This is the structure of authentication request's body
-type AuthPayload = {
-  email: string;
-  password: string;
-  type?: "personal" | "artist";
-};
 
 // Configure vee-validate params (form validation)
 configure({
   validateOnBlur: false, // will not validate when user clicks outside of input
+  validateOnChange: true,
 });
 
 export default defineComponent({
@@ -204,7 +198,11 @@ export default defineComponent({
         .required("Email cannot be empty"),
       password: Yup.string()
         .required("Password cannot be empty")
-        .min(8, "Password must be longer than 8 character"),
+        .min(8, "Password must be longer than 8 character")
+        .matches(
+          regex.password,
+          "Must have at least one uppercase letter, one lowercase letter, one number and one special character"
+        ),
     });
 
     const inputClass = `
@@ -222,27 +220,17 @@ export default defineComponent({
     return { validationSchema, inputClass };
   },
   methods: {
-    async handleAuth({ email, password }: AuthPayload) {
-      await sleep(1000);
-
-      const payload: AuthPayload = {
-        email,
-        password,
-        type:
-          this.authView.view === "signup"
-            ? "personal"
-            : this.authView.view === "artist_signup"
-            ? "artist"
-            : undefined,
-      };
+    async handleAuth({ email, password }: BaseAuthParam) {
+      const role =
+        this.authView.view === "artist_signup" ? "artist" : "personal";
 
       switch (this.authView.view) {
         case "login": {
-          // Make a POST request to backend
-          const { data, error } = await post<{ redirectUrl: string }>(
-            "Api/UserAuth.asmx/Login",
-            payload
-          );
+          const { data, error } = await login({
+            email,
+            password,
+            remember: false,
+          });
 
           // If failed to authenticate user
           if (error || !data) {
@@ -252,31 +240,22 @@ export default defineComponent({
           }
 
           // If successfully authenticate user
-          this.authView.modalOpen = false; // close the modal
-          sleep(1000); // sleep 1s to allow state change
+          this.setAuthView({ ...this.authView, modalOpen: false }); // close the modal
           window.location.href = data.redirectUrl; // redirect to the page told by backend
           break;
         }
-        case "signup": {
-          // const { data, error } = await post<{
-          //   d: { email: string; password: string; type: string };
-          // }>("Api/UserAuth.asmx/SignUp", payload);
-          // if (!error || !data) {
-          //   alert("Something went wrong");
-          //   return;
-          // }
-          // alert(JSON.stringify(data.d, null, 2));
-          break;
-        }
+        case "signup":
         case "artist_signup": {
-          // const { data, error } = await post<{
-          //   d: { email: string; password: string; type: string };
-          // }>("Api/UserAuth.asmx/SignUp", payload);
-          // if (!error || !data) {
-          //   alert("Something went wrong");
-          //   return;
-          // }
-          // alert(JSON.stringify(data.d, null, 2));
+          const { data, error } = await signup({ email, password, role });
+
+          if (error || !data) {
+            console.error(error);
+            alert(error?.message);
+            return;
+          }
+
+          this.setAuthView({ ...this.authView, modalOpen: false });
+          window.location.href = data.redirectUrl;
           break;
         }
         case "forgot_password":

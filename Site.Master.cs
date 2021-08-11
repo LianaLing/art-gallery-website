@@ -1,14 +1,10 @@
-﻿using ArtGalleryWebsite.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Newtonsoft.Json;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Utils;
-using ArtGalleryWebsite.Models.Queries;
-using System.Collections.Generic;
 
 namespace ArtGalleryWebsite
 {
@@ -16,6 +12,13 @@ namespace ArtGalleryWebsite
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			if (Page.User.Identity.IsAuthenticated)
+            {
+                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+				Session["user"] = user;
+            }
+			
 			// Inject session state to client side
 			Helper.InjectSessionState(Page, Session);
 		}

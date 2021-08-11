@@ -10,17 +10,17 @@ namespace ArtGalleryWebsite.Models
     // All response returned from our API should be an instance of this class
     public class ApiResponse<T>
     {
-        public T data;
-        public Error error;
+        public T Data;
+        public Error Error;
 
         public ApiResponse(T data)
         {
-            this.data = data;
+            this.Data = data;
         }
         public ApiResponse(T data, Error error)
         {
-            this.data = data;
-            this.error = error;
+            this.Data = data;
+            this.Error = error;
         }
     }
 }

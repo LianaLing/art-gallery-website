@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Utils;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace ArtGalleryWebsite
 {
@@ -13,10 +15,24 @@ namespace ArtGalleryWebsite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            HandleUserNotArtist();
+
             if (!IsPostBack)
-            {
                 _BindData();
-            }
+        }
+
+        protected void HandleUserNotArtist()
+        {
+            if (!User.Identity.IsAuthenticated)
+                Response.Redirect("/");
+
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(User.Identity.GetUserId<int>());
+
+            bool userIsArtist = ((System.Security.Claims.ClaimsIdentity)User.Identity).HasClaim(claim => claim.Value.Contains(AuthRole.Artist));
+
+            if (!userIsArtist)
+                Response.Redirect("/");
         }
 
         private void _BindData()

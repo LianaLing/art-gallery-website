@@ -8,9 +8,9 @@
 //------------------------------------------------------------------------------
 
 
-namespace ArtGalleryWebsite.Auth
+namespace ArtGalleryWebsite.Api
 {
-    public partial class Login
+    public partial class Auth
     {
 
         /// <summary>

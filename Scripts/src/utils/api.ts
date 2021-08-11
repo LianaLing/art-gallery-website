@@ -25,7 +25,7 @@ const http = async <T>(request: RequestInfo): Promise<ApiResponse<T>> => {
  */
 export async function post<T>(
   path: string,
-  body: any,
+  body?: any,
   args: RequestInit = {
     method: "post",
     headers: { "Content-Type": "application/json" },
