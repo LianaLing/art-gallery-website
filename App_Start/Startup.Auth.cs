@@ -24,7 +24,7 @@ namespace ArtGalleryWebsite
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Auth/Login"),
+                LoginPath = new PathString("/Default.aspx"),
                 Provider = new CookieAuthenticationProvider
                 {
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser, int>(
@@ -67,7 +67,7 @@ namespace ArtGalleryWebsite
 
         // This function is to prevent setting cookie of other type than int
         // see: https://github.com/TypecastException/AspNet-Identity-2-With-Integer-Keys/issues/2#issuecomment-128280883
-        public static int GrabUserId(System.Security.Claims.ClaimsIdentity claim)
+        private static int GrabUserId(System.Security.Claims.ClaimsIdentity claim)
         {
             if (!int.TryParse(claim.GetUserId(), out int id))
                 return 0;

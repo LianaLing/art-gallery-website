@@ -5,11 +5,11 @@
  */
 export type ApiResponse<T> = {
   data: T | null;
-  error: Error | null;
+  error: ApiError | null;
 };
 
 // This is the general structure of an error returned from backend
-export type Error = {
+export type ApiError = {
   errorType: string;
   errorCode: string;
   message: string;
@@ -115,13 +115,13 @@ export type Art = {
   stock: number;
   likes: number;
   url: string;
-}
+};
 
 export type Author = {
   id: number;
   description: string;
   verified: boolean;
-}
+};
 
 export type User = {
   id: number;
@@ -132,7 +132,7 @@ export type User = {
   contactNo: string;
   email: string;
   avatarUrl: string;
-}
+};
 
 export type FavResponse = {
   id: number;
@@ -140,4 +140,4 @@ export type FavResponse = {
   art: Art;
   user: User;
   author: Author;
-}
+};

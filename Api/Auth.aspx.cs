@@ -21,13 +21,17 @@ namespace ArtGalleryWebsite.Api
 
             switch (Request.QueryString["action"])
             {
-                case "login":
-                case "signup":
+                case AuthAction.Signup:
+                case AuthAction.Login:
                     Session["user"] = user;
                     break;
-                case "logout":
+                case AuthAction.Delete:
+                case AuthAction.Logout:
                     Session.Remove("user");
                     IdentityHelper.RedirectToReturnUrl("/", Response);
+                    break;
+                default:
+                    System.Diagnostics.Trace.WriteLine("Invalid auth action");
                     break;
             }
 
@@ -146,8 +150,7 @@ namespace ArtGalleryWebsite.Api
 
             if (result.Succeeded)
             {
-                res.Data["success"] = true;
-                res.Data["message"] = $"{username}'s account has been deleted";
+                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Logout);
             }
             else
             {

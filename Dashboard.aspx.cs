@@ -15,27 +15,24 @@ namespace ArtGalleryWebsite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            HandleUserNotArtist();
+
+            if (!IsPostBack)
+                _BindData();
+        }
+
+        protected void HandleUserNotArtist()
+        {
+            if (!User.Identity.IsAuthenticated)
+                Response.Redirect("/");
+
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(User.Identity.GetUserId<int>());
 
-            System.Diagnostics.Trace.WriteLine(Helper.SerializeObject(user));
-            bool userIsArtist = user.Claims.Where(claim => claim.ClaimValue == AuthRole.Artist).Count() == 0;
-            System.Diagnostics.Trace.WriteLine(user.Claims.Where(claim => claim.ClaimValue == AuthRole.Artist));
-
-            user.Claims.Select(claim => {
-                System.Diagnostics.Trace.WriteLine(claim.ClaimValue);
-                    return claim;
-                });
+            bool userIsArtist = ((System.Security.Claims.ClaimsIdentity)User.Identity).HasClaim(claim => claim.Value.Contains(AuthRole.Artist));
 
             if (!userIsArtist)
-            {
                 Response.Redirect("/");
-            }
-
-            if (!IsPostBack)
-            {
-                _BindData();
-            }
         }
 
         private void _BindData()
