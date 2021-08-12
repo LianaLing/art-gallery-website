@@ -23,21 +23,6 @@
   <!-- Unorganised Saves -->
   <div class="font-garamond border-b-2 my-14 justify-around">
     <strong class="text-xl inline">All Saves</strong>
-
-    <!-- <a
-      class="
-        bg-light
-        rounded-full
-        font-bold
-        py-2
-        px-3
-        inline
-        float-right
-        hover:bg-light-hover
-      "
-      href="/"
-      >Organise</a
-    > -->
     <div class="flex my-14 w-full max-w-7xl">
       <div
         class="flex flex-col mx-24"
@@ -60,6 +45,7 @@
 </template>
 
 <script lang="ts">
+import { useSession } from "../stores/useSession";
 import Icon from "../components/Icon.vue";
 import Save from "../components/Save.vue";
 import Profile from "../components/Profile.vue";
@@ -75,8 +61,7 @@ const icons = JSON.parse(
 );
 
 const data = helper.getStateFromBackend<API.FavResponse[]>("state");
-const session = helper.getStateFromBackend<Session>("session");
-const saves2D = sliceIntoChunks<API.FavResponse>(data, 2);
+const saves2D = helper.splitIntoNArrays<API.FavResponse>(data, 3);
 
 const names = [...new Set(data.map((d) => d.name))];
 
@@ -123,10 +108,9 @@ export default {
     Reference,
   },
   data() {
+    const session = useSession();
     return {
       icons,
-      // saves,
-      // inprofile,
       saves2D,
       data,
       session,

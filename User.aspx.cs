@@ -149,6 +149,12 @@ namespace ArtGalleryWebsite
             FavQuery.FetchCurrentUser(id);
             return Database.Select<FavQuery>(FavQuery.SqlQuery);
         }
+
+        public void btnSaveArtDetailPage_click(object sender, EventArgs e)
+        {
+            string id = Request.Form[btnSaveArtDetailPage.UniqueID];
+            Response.Redirect($"~/ArtDetail.aspx?id={id}");
+        }
     }
 
 }
