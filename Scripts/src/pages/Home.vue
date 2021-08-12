@@ -10,6 +10,7 @@
         :key="art.id"
         :art="art"
         :favourites="favs"
+        :savedState="savedState"
       />
     </div>
   </div>
@@ -19,12 +20,13 @@
 import { defineComponent, ref, watch } from "vue";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { getStateFromBackend, splitIntoNArrays } from "../utils/helper";
-import { ArtResponse, FavouriteResponse } from "../types/api";
+import { ArtResponse, FavouriteResponse, FavResponse } from "../types/api";
 import ArtCard from "../components/ArtCard.vue";
 
 // Getting the data from code-behind
 const arts = getStateFromBackend<ArtResponse[]>("arts");
 const favsState = getStateFromBackend<FavouriteResponse[]>("favs");
+const savedState = getStateFromBackend<FavResponse[]>("saves");
 
 // const favNames = [...new Set(favsState.map((f) => f.name)];
 // const favIds = [...new Set(favsState.map((f) => f.id))];
@@ -86,7 +88,7 @@ export default defineComponent({
       arts2D.value = splitIntoNArrays<ArtResponse>(arts, size);
     });
 
-    return { breakpoints, arts2D, favs };
+    return { breakpoints, arts2D, favs, savedState };
   },
 });
 </script>

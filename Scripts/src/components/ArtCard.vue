@@ -26,35 +26,34 @@
       @click="artDetailPageHandler($event, art.id)"
       :class="transition"
     ></div>
-    <template v-if="!saved">
-      <Popover>
-        <PopoverButton
-          class="
-            bg-accent
-            rounded-full
-            font-bold
-            text-light
-            opacity-0
-            py-2
-            px-4
-            top-4
-            right-4
-            absolute
-            hover:bg-accent-hover
-            group-hover:opacity-100
-          "
-          :class="transition"
-        >
-          Save
-        </PopoverButton>
-        <SavePopoverPanel
-          :favs="favourites"
-          :art="art"
-          transition="right-0 top-14"
-          btn="MainContent_btnSaveArt"
-        />
-      </Popover>
-    </template>
+    <Popover>
+      <PopoverButton
+        class="
+          bg-accent
+          rounded-full
+          font-bold
+          text-light
+          opacity-0
+          py-2
+          px-4
+          top-4
+          right-4
+          absolute
+          hover:bg-accent-hover
+          group-hover:opacity-100
+        "
+        :class="transition"
+      >
+        Save
+      </PopoverButton>
+      <SavePopoverPanel
+        :favs="favourites"
+        :art="art"
+        :saved="savedState"
+        transition="right-0 top-14"
+        btn="MainContent_btnSaveArt"
+      />
+    </Popover>
     <p
       class="
         bg-light
@@ -190,11 +189,11 @@ export default defineComponent({
   },
   props: {
     art: { type: Object as PropType<ArtResponse>, required: true },
-    saved: { type: Object as PropType<boolean> },
     favourites: {
       type: Array as PropType<API.FavouriteResponse[]>,
       required: true,
     },
+    savedState: { type: Array as PropType<API.FavResponse[]>, required: true },
     // favNames: { type: Array as PropType<string[]>, required: true },
     // favIds: { type: Array as PropType<number[]>, required: true },
   },

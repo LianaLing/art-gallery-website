@@ -35,8 +35,10 @@ namespace ArtGalleryWebsite
             // Current art is set when button is clicked in Home.cs
             List<ArtQuery> data = selectCurrentArtDetail();
             List <FavQuery> favs = selectAllFavourites(user.Id);
+            List <FavQuery> saved = checkIfArtIsInFav(user.Id);
             registerHiddenField("artState", data);
             registerHiddenField("favsState", favs);
+            registerHiddenField("savedState", saved);
         }
 
         private void registerHiddenField(string id, object obj)
@@ -53,6 +55,12 @@ namespace ArtGalleryWebsite
         private List<FavQuery> selectAllFavourites(int id)
         {
             FavQuery.FetchAllUserFavourites(id);
+            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+        }
+
+        private List<FavQuery> checkIfArtIsInFav(int id)
+        {
+            FavQuery.FetchCurrentUser(id);
             return Database.Select<FavQuery>(FavQuery.SqlQuery);
         }
 
@@ -86,7 +94,7 @@ namespace ArtGalleryWebsite
 
         private string insertIntoFavArt()
         {
-            FavQuery.InsertFavArt(); //Query
+            FavQuery.InsertFavArt();
             try
             {
                return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";

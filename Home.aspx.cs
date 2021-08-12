@@ -31,10 +31,12 @@ namespace ArtGalleryWebsite
 
             List<ArtQuery> data = selectAllArt();
             List<FavQuery> favs = selectAllFavourites(user.Id);
+            List<FavQuery> saved = checkIfArtIsInFav(user.Id);
 
             // Inject the data (serialized as a JSON string) as a hidden field at client side
             registerHiddenField("arts", data);
             registerHiddenField("favs", favs);
+            registerHiddenField("saves", saved);
         }
 
         private void registerHiddenField(string id, object obj)
@@ -51,6 +53,12 @@ namespace ArtGalleryWebsite
         private List<FavQuery> selectAllFavourites(int id)
         {
             FavQuery.FetchAllUserFavourites(id);
+            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+        }
+
+        private List<FavQuery> checkIfArtIsInFav(int id)
+        {
+            FavQuery.FetchCurrentUser(id);
             return Database.Select<FavQuery>(FavQuery.SqlQuery);
         }
 

@@ -15,6 +15,7 @@
           <SavePopoverPanel
             :favs="favs"
             :art="art"
+            :saved="saved"
             btn="MainContent_btnSaveStar"
           />
         </Popover>
@@ -71,6 +72,7 @@ import SavePopoverPanel from "../components/SavePopoverPanel.vue";
 const icons = getStateFromBackend<API.Icon[]>("iconsState");
 const arts = getStateFromBackend<API.ArtResponse[]>("artState");
 const favs = getStateFromBackend<API.FavouriteResponse[]>("favsState");
+const saved = getStateFromBackend<API.FavResponse[]>("savedState");
 const art = arts[0];
 
 const like = false;
@@ -93,6 +95,7 @@ export default defineComponent({
       art,
       favs,
       like,
+      saved,
     };
   },
 });
