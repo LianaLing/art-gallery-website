@@ -47,7 +47,12 @@
         >
           Save
         </PopoverButton>
-        <SavePopoverPanel :favs="favourites" :art="art" />
+        <SavePopoverPanel
+          :favs="favourites"
+          :art="art"
+          transition="right-0 top-14"
+          btn="MainContent_btnSaveArt"
+        />
       </Popover>
     </template>
     <p

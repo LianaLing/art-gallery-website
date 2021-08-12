@@ -29,19 +29,24 @@ namespace ArtGalleryWebsite
                 new Icon("icon_0004", "https://img.icons8.com/windows/32/000000/facebook-like.png", "Facebook Like Icon", "", "https://icons8.com/icon/33481/facebook-like", "Icons8"),
             };
 
-            //Author Liana = new Author("aut_0001", "Liana Ling", "https://avatars.githubusercontent.com/u/68136684?s=64&v=4");
-            //Art art = new Art("art_0099", "https://i.pinimg.com/564x/2b/31/44/2b31440e87f6abe17fe71bb3533bc62e.jpg", 1299.99, "Niffler", Liana);
-
-            Page.ClientScript.RegisterHiddenField("iconsState", JsonConvert.SerializeObject(icons));
-            //Page.ClientScript.RegisterHiddenField("artState", JsonConvert.SerializeObject(art));
-
+            registerHiddenField("iconsState", icons);
+  
             // Current art is set when button is clicked in Home.cs
-            ArtQuery.FetchCurrentArtDetail(getArtId());
-            List<ArtQuery> data = Database.Select<ArtQuery>(ArtQuery.SqlQuery);
-            List<FavQuery> favs = selectAllFavourites(user.Id);
-            Page.ClientScript.RegisterHiddenField("artState", JsonConvert.SerializeObject(data));
-            Page.ClientScript.RegisterHiddenField("favsState", JsonConvert.SerializeObject(favs));
+            List<ArtQuery> data = selectCurrentArtDetail();
+            List <FavQuery> favs = selectAllFavourites(user.Id);
+            registerHiddenField("artState", data);
+            registerHiddenField("favsState", favs);
+        }
 
+        private void registerHiddenField(string id, object obj)
+        {
+            Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(obj));
+        }
+
+        private List<ArtQuery> selectCurrentArtDetail()
+        {
+            ArtQuery.FetchCurrentArtDetail(getArtId());
+            return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
         }
 
         private List<FavQuery> selectAllFavourites(int id)
@@ -68,6 +73,7 @@ namespace ArtGalleryWebsite
             {
                 FavQuery.art_id = getArtId();
                 FavQuery.fav_id = getFavId();
+                System.Diagnostics.Trace.WriteLine($"fav_id: {FavQuery.fav_id}\nart_id: {FavQuery.art_id}");
             }
             catch (Exception e)
             {

@@ -8,8 +8,17 @@
         class="object-fill rounded-tl-[30px] rounded-bl-[30px]"
       />
       <div class="p-10">
-        <Icon class="float-left" :icon="icons[1]" />
-        <SavePopoverPanel :favs="favs" :art="art" />
+        <!-- <Icon class="float-left" :icon="icons[1]" /> -->
+        <Popover class="inline float-left">
+          <PopoverButton class="bg-transparent hover:bg-light-hover inline m-3">
+            <img :src="icons[1].src" :alt="icons[1].alt" />
+          </PopoverButton>
+          <SavePopoverPanel
+            :favs="favs"
+            :art="art"
+            btn="MainContent_btnSaveStar"
+          />
+        </Popover>
         <Icon class="float-left" :icon="icons[3]" />
         <span class="inline"> {{ art.likes }}</span>
         <Share class="inline-block" :shareIcon="icons[2]" />
