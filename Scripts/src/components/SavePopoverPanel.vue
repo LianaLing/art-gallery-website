@@ -6,40 +6,38 @@
     >
       <div class="bg-white rounded-3xl p-4 items-center">
         <p>Your Collection(s)</p>
-        <template v-if="isSaved(art, saved)">
-          <button
-            v-for="fav in favs"
-            :key="fav.id"
-            class="
-              bg-accent
-              rounded-3xl
-              p-3
-              justify-center
-              items-center
-              block
-              text-white
-            "
-            @click="removeArtHandler($event, art.id, fav.id, btn)"
-          >
-            {{ fav.name }}
-          </button>
-        </template>
-        <template v-else>
-          <button
-            v-for="fav in favs"
-            :key="fav.id"
-            class="
-              bg-light-hover
-              rounded-3xl
-              p-3
-              justify-center
-              items-center
-              block
-            "
-            @click="saveArtHandler($event, art.id, fav.id, btn)"
-          >
-            {{ fav.name }}
-          </button>
+        <template v-for="fav in favs" :key="fav.id">
+          <template v-if="isSaved(art, saved, fav.id)">
+            <button
+              class="
+                bg-accent
+                rounded-3xl
+                p-3
+                justify-center
+                items-center
+                block
+                text-white
+              "
+              @click="removeArtHandler($event, art.id, fav.id, btn)"
+            >
+              {{ fav.name }}
+            </button>
+          </template>
+          <template v-else>
+            <button
+              class="
+                bg-light-hover
+                rounded-3xl
+                p-3
+                justify-center
+                items-center
+                block
+              "
+              @click="saveArtHandler($event, art.id, fav.id, btn)"
+            >
+              {{ fav.name }}
+            </button>
+          </template>
         </template>
       </div>
     </PopoverPanel>
@@ -64,7 +62,6 @@ export default defineComponent({
       e.preventDefault();
       const id = `${art_id}` + "," + `${fav_id}`;
       helper.triggerBackendControl(e, btn, id);
-      alert("Artwork added to collection successfully!");
     },
     removeArtHandler: (
       e: Event,
@@ -76,11 +73,14 @@ export default defineComponent({
       btn = btn.replace("Save", "Remove");
       const id = `${art_id}` + "," + `${fav_id}`;
       helper.triggerBackendControl(e, btn, id);
-      alert("Artwork removed from collection successfully!");
     },
-    isSaved: (art: API.ArtResponse, saved: API.FavResponse[]): boolean => {
+    isSaved: (
+      art: API.ArtResponse,
+      saved: API.FavResponse[],
+      fav_id: number
+    ): boolean => {
       for (let i = 0; i < saved.length; i++) {
-        if (saved[i].art.id === art.id) {
+        if (saved[i].art.id === art.id && saved[i].id === fav_id) {
           return true;
         }
       }
