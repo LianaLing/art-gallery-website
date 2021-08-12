@@ -110,8 +110,17 @@ namespace ArtGalleryWebsite.Utils
                     // Open DB Connection
                     EnsureConnectionOpen(conn);
 
-                    // Execute sql query
-                    SqlDataReader dataReader = command.ExecuteReader();
+                    SqlDataReader dataReader;
+
+                    try
+                    {
+                        // Execute sql query
+                        dataReader = command.ExecuteReader();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
 
                     // Create an empty list
                     List<T> results = new List<T>();
@@ -159,8 +168,16 @@ namespace ArtGalleryWebsite.Utils
                     SqlDataAdapter adapter = new SqlDataAdapter();
                     adapter.InsertCommand = command;
 
-                    // Execute a transaction with the command
-                    int rowsAffected = adapter.InsertCommand.ExecuteNonQuery();
+                    int rowsAffected = -1;
+
+                    try
+                    {
+                        // Execute a transaction with the command
+                        rowsAffected = adapter.InsertCommand.ExecuteNonQuery();
+                    } catch (Exception)
+                    {
+                        throw;
+                    }
 
                     // Return the rows affected
                     return rowsAffected;
@@ -186,8 +203,17 @@ namespace ArtGalleryWebsite.Utils
                     SqlDataAdapter adapter = new SqlDataAdapter();
                     adapter.UpdateCommand = command;
 
-                    // Execute a transaction with the command
-                    int rowsAffected = adapter.UpdateCommand.ExecuteNonQuery();
+                    int rowsAffected = -1;
+
+                    try
+                    {
+                        // Execute a transaction with the command
+                        rowsAffected = adapter.UpdateCommand.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
 
                     // Return the rows affected
                     return rowsAffected;
@@ -213,8 +239,17 @@ namespace ArtGalleryWebsite.Utils
                     SqlDataAdapter adapter = new SqlDataAdapter();
                     adapter.DeleteCommand = command;
 
-                    // Execute a transaction with the command
-                    int rowsAffected = adapter.DeleteCommand.ExecuteNonQuery();
+                    int rowsAffected = -1;
+
+                    try
+                    {
+                        // Execute a transaction with the command
+                        rowsAffected = adapter.DeleteCommand.ExecuteNonQuery();
+                    }
+                    catch (Exception)
+                    {
+                        throw;
+                    }
 
                     // Return the rows affected
                     return rowsAffected;
@@ -236,7 +271,6 @@ namespace ArtGalleryWebsite.Utils
         {
             return reader.IsDBNull(ordinal) ? (bool?)null : reader.GetBoolean(ordinal);
         }
-
 
         public static DateTime? GetDateTimeOrNull(this IDataReader reader, int ordinal)
         {

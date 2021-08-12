@@ -22,31 +22,16 @@
           >
         </template>
       </div>
+
       <template v-if="Object.keys(session).length === 0">
         <button
-          class="
-            bg-accent
-            rounded-full
-            font-garamond
-            mr-4
-            text-white
-            py-2
-            px-3
-            hover:bg-accent-hover
-          "
+          class="bg-accent rounded-full font-garamond mr-4 text-white py-2 px-3 hover:bg-accent-hover"
           @click="loginHandler"
         >
           Log in
         </button>
         <button
-          class="
-            bg-light
-            rounded-full
-            font-garamond
-            py-2
-            px-3
-            hover:bg-light-hover
-          "
+          class="bg-light rounded-full font-garamond py-2 px-3 hover:bg-light-hover"
           @click="signupHandler"
         >
           Sign up
@@ -61,16 +46,7 @@
           You are logged in as: {{ session.user?.email }}
         </button>
         <button
-          class="
-            bg-accent
-            rounded-full
-            font-garamond
-            text-white
-            ml-4
-            py-2
-            px-3
-            hover:bg-accent-hover
-          "
+          class="bg-accent rounded-full font-garamond text-white ml-4 py-2 px-3 hover:bg-accent-hover"
           @click="logoutHandler"
         >
           Log out
@@ -85,13 +61,12 @@
 import { defineComponent } from "vue";
 import { useAuthView } from "../stores/useAuthView";
 import { AuthView, Session } from "../types/state";
-import { getStateFromBackend } from "../utils/helper";
-import AuthController from "../components/auth/AuthController.vue";
-import Pinterest from "../components/icons/Pinterest.vue";
-import * as helper from "../utils/helper";
+import { getStateFromBackend, triggerBackendControl } from "../utils/helper";
 import { logout } from "../utils/auth";
 import { useSession } from "../stores/useSession";
 import { Claims } from "../types/api";
+import AuthController from "../components/auth/AuthController.vue";
+import Pinterest from "../components/icons/Pinterest.vue";
 
 export default defineComponent({
   components: { Pinterest, AuthController },
@@ -99,11 +74,11 @@ export default defineComponent({
     userPageHandler: (e: Event) => {
       // Prevent button triggers refresh
       e.preventDefault();
-      helper.triggerBackendControl(e, "btnUserPage");
+      triggerBackendControl(e, "btnUserPage");
     },
     homePageHandler: (e: Event) => {
       e.preventDefault();
-      helper.triggerBackendControl(e, "btnHomePage");
+      triggerBackendControl(e, "btnHomePage");
     },
   },
   setup() {
