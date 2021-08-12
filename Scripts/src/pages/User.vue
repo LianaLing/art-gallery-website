@@ -25,16 +25,7 @@
     <strong class="text-xl inline">All Saves</strong>
 
     <!-- <a
-      class="
-        bg-light
-        rounded-full
-        font-bold
-        py-2
-        px-3
-        inline
-        float-right
-        hover:bg-light-hover
-      "
+      class="bg-light rounded-full font-bold py-2 px-3 inline float-right hover:bg-light-hover"
       href="/"
       >Organise</a
     > -->
@@ -60,6 +51,7 @@
 </template>
 
 <script lang="ts">
+import { useSession } from "../stores/useSession";
 import Icon from "../components/Icon.vue";
 import Save from "../components/Save.vue";
 import Profile from "../components/Profile.vue";
