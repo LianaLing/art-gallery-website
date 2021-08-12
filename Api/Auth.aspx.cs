@@ -42,7 +42,7 @@ namespace ArtGalleryWebsite.Api
             }
 
             // Redirect to path from [Redirect] or '/' if [Redirect] is not provided
-            IdentityHelper.RedirectToReturnUrl(Request.QueryString["Redirect"], Response);
+            IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
         }
 
         // This endpoint is for logging in user
@@ -69,7 +69,7 @@ namespace ArtGalleryWebsite.Api
             {
                 case SignInStatus.Success:
                     // Set a redirectUrl in the response
-                    res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Login);
+                    res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["ReturnUrl"], AuthAction.Login);
                     break;
                 case SignInStatus.Failure:
                     // Set an error in the response
@@ -131,7 +131,7 @@ namespace ArtGalleryWebsite.Api
                 // Add the claim (role) to the user
                 manager.AddClaim(user.Id, new Claim(ClaimTypes.Role, role));
                 // Set a redirectUrl in the response
-                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Signup);
+                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["ReturnUrl"], AuthAction.Signup);
             }
             else
             {
@@ -167,7 +167,7 @@ namespace ArtGalleryWebsite.Api
             authManager.SignOut();
 
             // Set a redirectUrl in the response
-            res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Logout);
+            res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["ReturnUrl"], AuthAction.Logout);
 
             // Return serialized JSON in camelCase
             return Helper.SerializeObject(res);
@@ -187,7 +187,7 @@ namespace ArtGalleryWebsite.Api
 
             if (result.Succeeded)
             {
-                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Logout);
+                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["ReturnUrl"], AuthAction.Logout);
             }
             else
             {

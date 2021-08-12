@@ -26,9 +26,6 @@ namespace ArtGalleryWebsite
             if (!User.Identity.IsAuthenticated)
                 Response.Redirect("/");
 
-            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser user = manager.FindById(User.Identity.GetUserId<int>());
-
             bool userIsArtist = ((System.Security.Claims.ClaimsIdentity)User.Identity).HasClaim(claim => claim.Value.Contains(AuthRole.Artist));
 
             if (!userIsArtist)
@@ -37,9 +34,12 @@ namespace ArtGalleryWebsite
 
         private void _BindData()
         {
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(User.Identity.GetUserId<int>());
+
             try
             {
-                List<Models.Entities.Art> arts = Database.Select<Models.Entities.Art>("SELECT * FROM Art;");
+                List<Models.Entities.Art> arts = Database.Select<Models.Entities.Art>($"SELECT * FROM Art WHERE author_id = {user.AuthorId};");
 
                 if (arts.Count > 0 && arts != null)
                 {
