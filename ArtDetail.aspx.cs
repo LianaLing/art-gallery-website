@@ -71,7 +71,16 @@ namespace ArtGalleryWebsite
 
         private int getFavId()
         {
-            string str = Request.Form[btnSaveStar.UniqueID];
+            string str = "";
+            if (Request.Form[btnSaveStar.UniqueID] != null)
+            {
+                str = Request.Form[btnSaveStar.UniqueID];
+            }
+            else
+            {
+                str = Request.Form[btnRemoveStar.UniqueID];
+            }
+
             string[] arr = str.Split(',');
             return Convert.ToInt32(arr[1]);
         }
@@ -105,11 +114,31 @@ namespace ArtGalleryWebsite
             }
         }
 
+        private string removeFromFavArt()
+        {
+            FavQuery.RemoveFromFavArt();
+            try
+            {
+                return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
+            }
+            catch (System.Data.SqlClient.SqlException e)
+            {
+                return e + " [Artwork already deleted from this collection.]";
+            }
+        }
+
         public void btnSaveStar_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
+            }
+        }
+        public void btnRemoveStar_click(object sender, EventArgs e)
+        {
+            if (setFavQueryIds())
+            {
+                System.Diagnostics.Trace.WriteLine(removeFromFavArt());
             }
         }
 

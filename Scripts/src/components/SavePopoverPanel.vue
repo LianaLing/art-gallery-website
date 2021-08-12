@@ -19,7 +19,7 @@
               block
               text-white
             "
-            @click="saveArtHandler($event, art.id, fav.id, btn)"
+            @click="removeArtHandler($event, art.id, fav.id, btn)"
           >
             {{ fav.name }}
           </button>
@@ -64,15 +64,26 @@ export default defineComponent({
       e.preventDefault();
       const id = `${art_id}` + "," + `${fav_id}`;
       helper.triggerBackendControl(e, btn, id);
+      alert("Artwork added to collection successfully!");
+    },
+    removeArtHandler: (
+      e: Event,
+      art_id: number,
+      fav_id: number,
+      btn: string
+    ) => {
+      e.preventDefault();
+      btn = btn.replace("Save", "Remove");
+      const id = `${art_id}` + "," + `${fav_id}`;
+      helper.triggerBackendControl(e, btn, id);
+      alert("Artwork removed from collection successfully!");
     },
     isSaved: (art: API.ArtResponse, saved: API.FavResponse[]): boolean => {
       for (let i = 0; i < saved.length; i++) {
         if (saved[i].art.id === art.id) {
-          console.log("trueeeeeeee");
           return true;
         }
       }
-      console.log("false");
       return false;
     },
   },

@@ -80,6 +80,11 @@ namespace ArtGalleryWebsite.Models.Queries
             SqlQuery = $@"INSERT INTO [FavArt] VALUES ('{fav_id}','{art_id}')";
         }
 
+        public static void RemoveFromFavArt()
+        {
+            SqlQuery = $@"DELETE FROM [FavArt] WHERE fav_id = {fav_id} AND art_id = {art_id};";
+        }
+
         public static void CountArtInFavourites(int id)
         {
             SqlQuery = $@"SELECT COUNT([FavArt].art_id) AS total_art, [FavArt].fav_id
