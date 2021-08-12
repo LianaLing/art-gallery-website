@@ -9,7 +9,12 @@
         <a class="font-garamond mr-1 py-2 px-3 hover:underline" href="/"
           >About</a
         >
-        <template v-if="Object.keys(session).length !== 0">
+        <template
+          v-if="
+            Object.keys(session).length !== 0 &&
+            claims[0].claimValue === 'artist'
+          "
+        >
           <a
             class="font-garamond mr-1 py-2 px-3 hover:underline"
             href="/Dashboard.aspx"
@@ -86,6 +91,7 @@ import Pinterest from "../components/icons/Pinterest.vue";
 import * as helper from "../utils/helper";
 import { logout } from "../utils/auth";
 import { useSession } from "../stores/useSession";
+import { Claims } from "../types/api";
 
 export default defineComponent({
   components: { Pinterest, AuthController },
@@ -133,7 +139,9 @@ export default defineComponent({
   data() {
     const session = useSession();
     session.value = getStateFromBackend<Session>("session");
-    return { session };
+    const claims = <Claims[]>session.value.user?.claims;
+    // const claims = claimsArr[0];
+    return { session, claims };
   },
 });
 </script>
