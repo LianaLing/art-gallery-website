@@ -19,12 +19,12 @@
 import { defineComponent, ref, watch } from "vue";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { getStateFromBackend, splitIntoNArrays } from "../utils/helper";
-import { ArtResponse, FavResponse } from "../types/api";
+import { ArtResponse, FavouriteResponse } from "../types/api";
 import ArtCard from "../components/ArtCard.vue";
 
 // Getting the data from code-behind
 const arts = getStateFromBackend<ArtResponse[]>("arts");
-const favsState = getStateFromBackend<FavResponse[]>("favs");
+const favsState = getStateFromBackend<FavouriteResponse[]>("favs");
 
 // const favNames = [...new Set(favsState.map((f) => f.name)];
 // const favIds = [...new Set(favsState.map((f) => f.id))];

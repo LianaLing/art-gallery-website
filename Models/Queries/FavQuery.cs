@@ -23,47 +23,61 @@ namespace ArtGalleryWebsite.Models.Queries
         {
         }
 
-        public FavQuery(int id, string name, Art art, Entities.User user, Author author) : base(id, name)
+        public FavQuery(int id, string name) : base (id, name)
+        {
+
+        }
+
+        public FavQuery(int id, string name, Art art, Author author) : base(id, name)
         {
             this.art = art;
-            this.user = user;
             this.author = author;
         }
 
-        public FavQuery(int id, string name, int user_id, Art art, Entities.User user, Author author) : base(id, name, user_id)
+        public FavQuery(int id, string name, int user_id, Art art, Author author) : base(id, name, user_id)
         {
             this.art = art;
-            this.user = user;
             this.author = author;
         }
 
         public static void FetchCurrentUser(int id)
         {
-            SqlQuery = @"
+            SqlQuery = $@"
                 SELECT 
                        [Favourite].id, [Favourite].name,
                        [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock,  
                        [Art].likes, [Art].url,
-                       [User].id, [User].username, [User].name, [User].ic, [User].dob, 
-                       [User].PhoneNumber, [User].Email, [User].AvatarUrl, [User].AuthorId,
                        [Author].id, [Author].description, [Author].verified 
                 FROM [Art], [Author], [User], [Favourite], [FavArt]
                 WHERE [Favourite].user_id = [User].Id
                 AND [FavArt].art_id = [Art].id
                 AND [FavArt].fav_id = [Favourite].id
                 AND [Art].author_id = [Author].id
-                AND [User].Id = '" + id + 
-                "' ORDER BY [Favourite].name ASC;";
+                AND [User].Id = {id} 
+                ORDER BY [Favourite].name ASC;";
+        }
+
+        public static void FetchAllUserFavourites(int id)
+        {
+            SqlQuery = $@"
+                SELECT 
+                        [Favourite].id, [Favourite].name
+                FROM [Favourite]
+                WHERE [Favourite].user_id = {id}
+                ORDER BY [Favourite].name ASC;
+            ";
         }
 
         public static void InsertFavArt()
         {
-            SqlQuery = @"INSERT INTO [FavArt] VALUES (" + fav_id + ", " + art_id + ")";
+            SqlQuery = $@"INSERT INTO [FavArt] VALUES ('{fav_id}','{art_id}')";
         }
 
         public override ISqlParser ParseFromSqlReader(SqlDataReader reader)
         {
-            return new FavQuery(
+            if(reader.FieldCount > 2)
+            {
+                return new FavQuery(
                 reader.GetInt32(0),
                 reader.GetStringOrNull(1),
                 new Art(
@@ -75,22 +89,16 @@ namespace ArtGalleryWebsite.Models.Queries
                     reader.GetInt32(7),
                     reader.GetStringOrNull(8)
                     ),
-                new Entities.User (
+                new Author(
                     reader.GetInt32(9),
                     reader.GetStringOrNull(10),
-                    reader.GetStringOrNull(11),
-                    reader.GetStringOrNull(12),
-                    reader.GetDateTime(13),
-                    reader.GetStringOrNull(14),
-                    reader.GetStringOrNull(15),
-                    reader.GetStringOrNull(16),
-                    reader.GetInt32(17)
-                    ),
-                new Author(
-                    reader.GetInt32(18),
-                    reader.GetStringOrNull(19),
-                    reader.GetBoolean(20)
+                    reader.GetBoolean(11)
                     )
+                );
+            }
+            return new FavQuery(
+                reader.GetInt32(0),
+                reader.GetStringOrNull(1)
                 );
         }
     }

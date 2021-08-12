@@ -74,7 +74,7 @@ namespace ArtGalleryWebsite.Api
                 case SignInStatus.Failure:
                     // Set an error in the response
                     res.Data = null;
-                    res.Error = new Error
+                    res.Error = new ArtGalleryWebsite.Models.Error
                     {
                         ErrorType = ErrorType.ErrorTypeRequest,
                         ErrorCode = ErrorCode.ErrorCodeEmailOrPasswordInvalid,

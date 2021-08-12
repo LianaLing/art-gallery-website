@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using ArtGalleryWebsite.Utils;
 using ArtGalleryWebsite.Models.Queries;
 using System.Collections.Generic;
+using ArtGalleryWebsite.Models;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace ArtGalleryWebsite
 {
@@ -23,20 +26,32 @@ namespace ArtGalleryWebsite
             // System.Diagnostics.Debug.WriteLine("asdasdasd");
 
             // Fetch art responses from the database
-            ArtQuery.FetchAllArt();
-            List<ArtQuery> data = Database.Select<ArtQuery>(ArtQuery.SqlQuery);
-            FavQuery.FetchCurrentUser(1); //Hardcoded
-            List<FavQuery> favs = Database.Select<FavQuery>(FavQuery.SqlQuery);
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+
+            List<ArtQuery> data = selectAllArt();
+            List<FavQuery> favs = selectAllFavourites(user.Id);
 
             // Inject the data (serialized as a JSON string) as a hidden field at client side
-            Page.ClientScript.RegisterHiddenField(
-                "arts",
-                JsonConvert.SerializeObject(data)
-            );
-            Page.ClientScript.RegisterHiddenField(
-                "favs",
-                JsonConvert.SerializeObject(favs)
-            );
+            registerHiddenField("arts", data);
+            registerHiddenField("favs", favs);
+        }
+
+        private void registerHiddenField(string id, object obj)
+        {
+            Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(obj));
+        }
+
+        private List<ArtQuery> selectAllArt()
+        {
+            ArtQuery.FetchAllArt();
+            return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
+        }
+
+        private List<FavQuery> selectAllFavourites(int id)
+        {
+            FavQuery.FetchAllUserFavourites(id);
+            return Database.Select<FavQuery>(FavQuery.SqlQuery);
         }
 
         protected void btnSaveArtChooseCollection_click(object sender, EventArgs e)
@@ -47,30 +62,63 @@ namespace ArtGalleryWebsite
             //System.Diagnostics.Trace.WriteLine(id);
         }
 
-        public void btnSaveArt_click(object sender, EventArgs e)
+        private string[] splitId()
         {
             string str = Request.Form[btnSaveArt.UniqueID];
-            string[] strArr = str.Split(',');
-            int art_id = Convert.ToInt32(strArr[0]);
+            string[] arr = str.Split(',');
+            return arr;
+        }
 
-            FavQuery.art_id = 0;
-            FavQuery.art_id = art_id;
-            System.Diagnostics.Trace.WriteLine("art_id: " + FavQuery.art_id);
+        private int getSomeId(int which)
+        {
+            string[] arr = splitId();
+            return Convert.ToInt32(arr[which]);
+        }
 
-            int fav_id = Convert.ToInt32(strArr[1]);
-            FavQuery.fav_id = 0;
-            FavQuery.fav_id = fav_id;
-            System.Diagnostics.Trace.WriteLine("fav_id: " + FavQuery.fav_id);
+        private int getArtId()
+        {
+            return getSomeId(0);
+        }
+        
+        private int getFavId()
+        {
+            return getSomeId(1);
+        }
 
-            FavQuery.InsertFavArt();
-
+        private bool setFavQueryIds()
+        {
             try
             {
-                System.Diagnostics.Trace.WriteLine("Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)");
+                FavQuery.art_id = getArtId();
+                FavQuery.fav_id = getFavId();
+                System.Diagnostics.Trace.WriteLine($"fav_id: {FavQuery.fav_id}\nart_id: {FavQuery.art_id}");
             }
-            catch (System.Data.SqlClient.SqlException err)
+            catch (Exception e)
             {
-                System.Diagnostics.Trace.WriteLine(err + " [Artwork already saved in this collection.]");
+                System.Diagnostics.Trace.WriteLine("ERROR: " + e);
+                return false;
+            }
+            return true;
+        }
+
+        private string insertIntoFavArt()
+        {
+            FavQuery.InsertFavArt(); //Query
+            try
+            {
+                return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";
+            }
+            catch (System.Data.SqlClient.SqlException e)
+            {
+                return e + " [Artwork already saved in this collection.]";
+            }
+        }
+
+        public void btnSaveArt_click(object sender, EventArgs e)
+        {
+            if (setFavQueryIds())
+            {
+                System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
             }
         }
 

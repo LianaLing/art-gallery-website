@@ -8,7 +8,17 @@
         class="object-fill rounded-tl-[30px] rounded-bl-[30px]"
       />
       <div class="p-10">
-        <Icon class="float-left" :icon="icons[1]" />
+        <!-- <Icon class="float-left" :icon="icons[1]" /> -->
+        <Popover class="inline float-left">
+          <PopoverButton class="bg-transparent hover:bg-light-hover inline m-3">
+            <img :src="icons[1].src" :alt="icons[1].alt" />
+          </PopoverButton>
+          <SavePopoverPanel
+            :favs="favs"
+            :art="art"
+            btn="MainContent_btnSaveStar"
+          />
+        </Popover>
         <Icon class="float-left" :icon="icons[3]" />
         <span class="inline"> {{ art.likes }}</span>
         <Share class="inline-block" :shareIcon="icons[2]" />
@@ -50,13 +60,20 @@ import Reference from "../components/Reference.vue";
 import Share from "../components/Share.vue";
 import { getStateFromBackend } from "../utils/helper";
 import * as API from "../types/api";
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import SavePopoverPanel from "../components/SavePopoverPanel.vue";
 
 const icons = getStateFromBackend<API.Icon[]>("iconsState");
 const arts = getStateFromBackend<API.ArtResponse[]>("artState");
+const favs = getStateFromBackend<API.FavouriteResponse[]>("favsState");
 const art = arts[0];
 
 export default defineComponent({
   components: {
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+    SavePopoverPanel,
     Icon,
     Share,
     Reference,
@@ -67,6 +84,7 @@ export default defineComponent({
       artDivTransition: "h[900px] w-[1000px] shadow-2xl",
       icons,
       art,
+      favs,
     };
   },
 });

@@ -227,6 +227,16 @@ namespace ArtGalleryWebsite.Utils
             return reader.IsDBNull(ordinal) ? null : reader.GetString(ordinal);
         }
 
+        public static int? GetInt32OrNull(this IDataReader reader, int ordinal)
+        {
+            return reader.IsDBNull(ordinal) ? (int?)null : reader.GetInt32(ordinal);
+        }
+
+        public static bool? GetBooleanOrNull(this IDataReader reader, int ordinal)
+        {
+            return reader.IsDBNull(ordinal) ? (bool?)null : reader.GetBoolean(ordinal);
+        }
+
 
         public static DateTime? GetDateTimeOrNull(this IDataReader reader, int ordinal)
         {
