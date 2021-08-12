@@ -18,13 +18,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { getStateFromBackend, sliceIntoChunks } from "../utils/helper";
-import { ArtResponse, FavResponse } from "../types/api";
+import * as API from "../types/api";
 import ArtCard from "../components/ArtCard.vue";
 import { Field } from "vee-validate";
 
 // Getting the data from code-behind
-const arts = getStateFromBackend<ArtResponse[]>("arts");
-const favsState = getStateFromBackend<FavResponse[]>("favs");
+const arts = getStateFromBackend<API.ArtResponse[]>("arts");
+const favsState = getStateFromBackend<API.FavouriteResponse[]>("favs");
 
 // const favNames = [...new Set(favsState.map((f) => f.name)];
 // const favIds = [...new Set(favsState.map((f) => f.id))];
@@ -60,7 +60,7 @@ favState.map((f) =>
 
 // Slice the data from 1D array to 2D array
 // eg. [1, 2, 3, 4, 5, 6] -> [[1, 2, 3], [4, 5, 6]]
-const arts2D = sliceIntoChunks<ArtResponse>(arts, 3);
+const arts2D = sliceIntoChunks<API.ArtResponse>(arts, 3);
 
 export default defineComponent({
   components: { ArtCard },

@@ -189,7 +189,10 @@ export default defineComponent({
   props: {
     art: { type: Object as PropType<ArtResponse>, required: true },
     saved: { type: Object as PropType<boolean> },
-    favourites: { type: Array as any, required: true },
+    favourites: {
+      type: Array as PropType<API.FavouriteResponse[]>,
+      required: true,
+    },
     // favNames: { type: Array as PropType<string[]>, required: true },
     // favIds: { type: Array as PropType<number[]>, required: true },
   },

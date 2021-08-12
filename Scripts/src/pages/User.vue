@@ -68,7 +68,7 @@ import Reference from "../components/Reference.vue";
 import { sliceIntoChunks } from "../utils/helper";
 import * as API from "../types/api";
 import * as helper from "../utils/helper";
-import { Session } from '../types/state';
+import { Session } from "../types/state";
 
 const icons = JSON.parse(
   (<HTMLInputElement>document.getElementById("iconsState")).value
@@ -76,22 +76,6 @@ const icons = JSON.parse(
 
 const data = helper.getStateFromBackend<API.FavResponse[]>("state");
 const session = helper.getStateFromBackend<Session>("session");
-
-// alert(JSON.stringify(data,null,2));
-// const info = data[0];
-
-// const saves = JSON.parse(
-//   (<HTMLInputElement>document.getElementById("savesState")).value
-// );
-
-// const inprofile = JSON.parse(
-//   (<HTMLInputElement>document.getElementById("profileState")).value
-// );
-
-// const artsState = JSON.parse(
-//   (<HTMLInputElement>document.getElementById("artsState")).value
-// );
-
 const saves2D = sliceIntoChunks<API.FavResponse>(data, 2);
 
 const names = [...new Set(data.map((d) => d.name))];
