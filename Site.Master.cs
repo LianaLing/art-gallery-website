@@ -12,11 +12,16 @@ namespace ArtGalleryWebsite
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			// If current user is logged in
 			if (Page.User.Identity.IsAuthenticated)
             {
                 ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+
+				// Get the current user
                 ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
-				Session["user"] = user;
+
+				// Set the user as a session state (filtered out 'PasswordHash')
+				Session["user"] = IdentityHelper.FilterUser(user);
             }
 			
 			// Inject session state to client side

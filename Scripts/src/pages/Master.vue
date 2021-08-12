@@ -57,8 +57,10 @@ import AuthController from "../components/auth/AuthController.vue";
 import Pinterest from "../components/icons/Pinterest.vue";
 import * as helper from "../utils/helper";
 import { logout } from "../utils/auth";
+import { useSession } from "../stores/useSession";
 
 export default defineComponent({
+  components: { Pinterest, AuthController },
   methods: {
     userPageHandler: (e: Event) => {
       // Prevent button triggers refresh
@@ -70,7 +72,6 @@ export default defineComponent({
       helper.triggerBackendControl(e, "btnHomePage");
     },
   },
-  components: { Pinterest, AuthController },
   setup() {
     const authView = useAuthView();
 
@@ -99,17 +100,11 @@ export default defineComponent({
       window.location.href = data.redirectUrl;
     };
 
-    return {
-      loginHandler,
-      signupHandler,
-      logoutHandler,
-    };
+    return { loginHandler, signupHandler, logoutHandler };
   },
   data() {
-    const session = getStateFromBackend<Session>("session");
-
-    console.log(session);
-
+    const session = useSession();
+    session.value = getStateFromBackend<Session>("session");
     return { session };
   },
 });

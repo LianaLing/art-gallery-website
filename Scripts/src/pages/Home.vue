@@ -2,8 +2,8 @@
   <div class="flex mx-auto w-full max-w-7xl py-8 justify-around">
     <div
       class="flex flex-col mx-4"
-      v-for="arts in arts2D"
-      :key="arts.toString()"
+      v-for="(arts, index) in arts2D"
+      :key="index"
     >
       <ArtCard
         v-for="art in arts"
@@ -16,15 +16,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import { getStateFromBackend, sliceIntoChunks } from "../utils/helper";
-import * as API from "../types/api";
+import { defineComponent, ref, watch } from "vue";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import { getStateFromBackend, splitIntoNArrays } from "../utils/helper";
+import { ArtResponse, FavouriteResponse } from "../types/api";
 import ArtCard from "../components/ArtCard.vue";
-import { Field } from "vee-validate";
 
 // Getting the data from code-behind
-const arts = getStateFromBackend<API.ArtResponse[]>("arts");
-const favsState = getStateFromBackend<API.FavouriteResponse[]>("favs");
+const arts = getStateFromBackend<ArtResponse[]>("arts");
+const favsState = getStateFromBackend<FavouriteResponse[]>("favs");
 
 // const favNames = [...new Set(favsState.map((f) => f.name)];
 // const favIds = [...new Set(favsState.map((f) => f.id))];
@@ -58,14 +58,35 @@ favState.map((f) =>
 
 // console.log(favs);
 
-// Slice the data from 1D array to 2D array
-// eg. [1, 2, 3, 4, 5, 6] -> [[1, 2, 3], [4, 5, 6]]
-const arts2D = sliceIntoChunks<API.ArtResponse>(arts, 3);
-
 export default defineComponent({
   components: { ArtCard },
-  data() {
-    return { arts2D, favs };
+  setup() {
+    // Helpers to check current viewport width
+    const breakpoints = useBreakpoints(breakpointsTailwind);
+    const greaterThanLg = breakpoints.greater("lg");
+    const sm = breakpoints.smaller("sm");
+
+    // Define the size based on first load's viewport width
+    const initialSize = greaterThanLg.value ? 3 : sm.value ? 1 : 2;
+
+    // Define the arts array as a Ref so that it can be manipulated
+    // to trigger component re-render
+    const arts2D = ref<ArtResponse[][]>(
+      splitIntoNArrays<ArtResponse>(arts, initialSize)
+    );
+
+    // Watch both viewport width, change the
+    // size when moving through breakpoints
+    watch([greaterThanLg, sm], () => {
+      let size = 3;
+
+      if (!greaterThanLg.value) size = 2;
+      if (sm.value) size = 1;
+
+      arts2D.value = splitIntoNArrays<ArtResponse>(arts, size);
+    });
+
+    return { breakpoints, arts2D, favs };
   },
 });
 </script>

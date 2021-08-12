@@ -20,7 +20,7 @@ export type User = {
   lockoutEndDateUtc: string | null;
   logins: unknown[];
   name: string | null;
-  passwordHash: string;
+  passwordHash: string | null;
   phoneNumber: string | null;
   phoneNumberConfirmed: boolean;
   roles: unknown[];
