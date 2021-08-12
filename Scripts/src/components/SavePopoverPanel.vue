@@ -5,7 +5,7 @@
       class="w-[200px] z-10 absolute shadow-xl rounded-3xl"
     >
       <div class="bg-white rounded-3xl p-4 items-center">
-        <p>Your Collection(s)</p>
+        <p>Your Favourite(s)</p>
         <template v-for="fav in favs" :key="fav.id">
           <template v-if="isSaved(art, saved, fav.id)">
             <button
