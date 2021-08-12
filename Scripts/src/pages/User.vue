@@ -15,8 +15,8 @@
   <!-- My saves -->
   <div class="flex border-b-2 mx-10 w-full">
     <!-- Iterate through each group -->
-    <template v-for="favs in favGroup" :key="favs.id">
-      <Save :save="favs" />
+    <template v-for="(favs, key, i) in favGroup" :key="favs.id">
+      <Save :save="favs" :count="counts[i]" />
     </template>
   </div>
 
@@ -62,6 +62,7 @@ const icons = JSON.parse(
 
 const data = helper.getStateFromBackend<API.FavResponse[]>("state");
 const saves2D = helper.splitIntoNArrays<API.FavResponse>(data, 3);
+const counts = helper.getStateFromBackend<API.FavArtCount[]>("countState");
 
 const names = [...new Set(data.map((d) => d.name))];
 
@@ -115,6 +116,7 @@ export default {
       data,
       session,
       favGroup,
+      counts,
     };
   },
 };

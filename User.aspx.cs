@@ -134,9 +134,11 @@ namespace ArtGalleryWebsite
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
             List<FavQuery> data = selectNonEmptyFavourites(user.Id);
-
+            List<FavQuery> count = countArtInFavourites(user.Id);
+                
             registerHiddenField("iconsState", icons);
             registerHiddenField("state", data);
+            registerHiddenField("countState", count);
         }
 
         private void registerHiddenField(string id, object obj)
@@ -144,10 +146,21 @@ namespace ArtGalleryWebsite
             Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(obj));
         }
 
+        private List<FavQuery> callFavQueryDatabase()
+        {
+            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+        }
+
         private List<FavQuery> selectNonEmptyFavourites(int id)
         {
             FavQuery.FetchCurrentUser(id);
-            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+            return callFavQueryDatabase();
+        }
+
+        private List<FavQuery> countArtInFavourites(int id)
+        {
+            FavQuery.CountArtInFavourites(id);
+            return callFavQueryDatabase();
         }
 
         public void btnSaveArtDetailPage_click(object sender, EventArgs e)

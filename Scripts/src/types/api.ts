@@ -146,3 +146,15 @@ export type FavouriteResponse = {
   id: number;
   name: string;
 }
+
+export type Claims = {
+  id: number;
+  userId: number;
+  claimType: string;
+  claimValue: string;
+};
+
+export type FavArtCount = {
+  total_art: number;
+  id: number;
+}
