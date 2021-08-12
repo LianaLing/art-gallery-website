@@ -1,15 +1,6 @@
 <template>
   <div
-    class="
-      rounded-2xl
-      m-14
-      grid
-      w-[22.1rem]
-      gap-[1px]
-      grid-cols-2
-      overflow-hidden
-      group
-    "
+    class="m-14 grid w-[22.1rem] gap-[1px] grid-cols-2 overflow-hidden group"
   >
     <!-- Thumbnail -->
     <div class="relative">
@@ -102,9 +93,11 @@
         save[0].name
       }}</a>
       <br />
-      <h3 v-if="save[0].id <= 1" class="inline">{{ save[0].id }} art &nbsp;</h3>
-      <h3 v-else class="inline">{{ save[0].id }} arts &nbsp;</h3>
-      <h4 class="text-sm text-gray-500 inline">{{}}</h4>
+      <h3 v-if="count.total_art <= 1" class="inline">
+        {{ count.total_art }} art &nbsp;
+      </h3>
+      <h3 v-else class="inline">{{ count.total_art }} arts &nbsp;</h3>
+      <!-- <h4 class="text-sm text-gray-500 inline">{{}}</h4> -->
     </div>
     <div v-else>No element</div>
   </div>
@@ -115,16 +108,10 @@ import { defineComponent, PropType } from "vue";
 import * as API from "../types/api";
 
 export default defineComponent({
-  methods: {
-    // parseWithTitle() {},
-    lastUpdated(e: Event, updatedAt: number) {
-      // Not working for some reason
-      updatedAt = updatedAt + e.timeStamp;
-      console.log(JSON.parse(JSON.stringify(e)));
-    },
-  },
+  methods: {},
   props: {
     save: { type: Array as PropType<API.FavResponse[]>, required: true },
+    count: { type: Object as PropType<API.FavArtCount>, required: true },
   },
   setup(props) {
     console.log(props.save);

@@ -15,20 +15,14 @@
   <!-- My saves -->
   <div class="flex border-b-2 mx-10 w-full">
     <!-- Iterate through each group -->
-    <template v-for="favs in favGroup" :key="favs.id">
-      <Save :save="favs" />
+    <template v-for="(favs, key, i) in favGroup" :key="favs.id">
+      <Save :save="favs" :count="counts[i]" />
     </template>
   </div>
 
   <!-- Unorganised Saves -->
   <div class="font-garamond border-b-2 my-14 justify-around">
     <strong class="text-xl inline">All Saves</strong>
-
-    <!-- <a
-      class="bg-light rounded-full font-bold py-2 px-3 inline float-right hover:bg-light-hover"
-      href="/"
-      >Organise</a
-    > -->
     <div class="flex my-14 w-full max-w-7xl">
       <div
         class="flex flex-col mx-24"
@@ -67,8 +61,8 @@ const icons = JSON.parse(
 );
 
 const data = helper.getStateFromBackend<API.FavResponse[]>("state");
-const session = helper.getStateFromBackend<Session>("session");
-const saves2D = sliceIntoChunks<API.FavResponse>(data, 2);
+const saves2D = helper.splitIntoNArrays<API.FavResponse>(data, 3);
+const counts = helper.getStateFromBackend<API.FavArtCount[]>("countState");
 
 const names = [...new Set(data.map((d) => d.name))];
 
@@ -115,14 +109,14 @@ export default {
     Reference,
   },
   data() {
+    const session = useSession();
     return {
       icons,
-      // saves,
-      // inprofile,
       saves2D,
       data,
       session,
       favGroup,
+      counts,
     };
   },
 };

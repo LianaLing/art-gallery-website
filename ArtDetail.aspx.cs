@@ -27,6 +27,7 @@ namespace ArtGalleryWebsite
                 new Icon("icon_0002", "https://img.icons8.com/ios-glyphs/30/000000/star--v2.png", "Animated Star Icon", "", "https://icons8.com/icon/hmAU0m6F6i0C/star", "Icons8"),
                 new Icon("icon_0003", "https://img.icons8.com/windows/32/000000/share-rounded.png", "Share Rounded Icon", "", "https://icons8.com/icon/FupVmEePjs1T/share-rounded", "Icons8"),
                 new Icon("icon_0004", "https://img.icons8.com/windows/32/000000/facebook-like.png", "Facebook Like Icon", "", "https://icons8.com/icon/33481/facebook-like", "Icons8"),
+                new Icon("icon_0005", "https://img.icons8.com/ios-filled/32/000000/facebook-like.png", "Facebook Like Icon Filled", "", "https://icons8.com/icon/33479/facebook-like", "Icons8"),
             };
 
             registerHiddenField("iconsState", icons);

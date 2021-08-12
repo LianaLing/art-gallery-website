@@ -67,20 +67,22 @@
             Share this artwork
           </h3>
           <div class="flex mt-4 items-start justify-around">
-            <button onclick="(() => alert('Share {{ id }} WhatsApp'))()">
+            <button
+              onclick="(() => {window.open('https://api.whatsapp.com/send?phone=60163066883&text=Check%20out%20this%20artwork!%0D%0Dhttps://github.com/lianaling/art-gallery-website', '_blank');})()"
+            >
               <Whatsapp />
               <span class="mt-1 text-xs">WhatsApp</span>
             </button>
             <button
               class="flex flex-col items-center"
-              onclick="(() => alert('Share to Facebook'))()"
+              onclick="(() => {window.open('https://www.facebook.com/sharer/sharer.php?u=https://GitHub.com/lianaling/art-gallery-website', '_blank');})()"
             >
               <Facebook />
               <span class="mt-1 text-xs">Facebook</span>
             </button>
             <button
               class="flex flex-col items-center"
-              onclick="(() => alert('Share to Email'))()"
+              onclick="(() => {window.open('https://mail.google.com/mail/u/0/?fs=1&to=lianalingliya@gmail.com&su=Greetings%20from%20Art%20Gallery!&body=BODY&bcc=leeky-wp18@student.tarc.edu.my&tf=cm', '_blank');})()"
             >
               <div
                 class="
@@ -100,7 +102,7 @@
             </button>
             <button
               class="flex flex-col items-center"
-              onclick="(() => alert('Copy Link'))()"
+              onclick="(() =>{ const el = document.createElement('textarea'); el.value = 'https://github.com/lianaling/art-gallery-website'; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el); alert('Copied share link')})()"
             >
               <div
                 class="
@@ -156,7 +158,11 @@ export default defineComponent({
       // Prevent button triggers refresh
       e.preventDefault();
       // alert("clicked on art card from artcard");
-      helper.triggerBackendControl(e, "MainContent_btnArtDetailPage", `${id}`);
+      helper.triggerBackendControl(
+        e,
+        "MainContent_btnSaveArtDetailPage",
+        `${id}`
+      );
     },
   },
   emits: ["detail"],

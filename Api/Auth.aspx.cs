@@ -156,7 +156,7 @@ namespace ArtGalleryWebsite.Api
         {
             // Get current http context
             HttpContext Context = new Auth().Context;
-            
+
             // Define the response object
             ApiResponse<Dictionary<string, object>> res = new ApiResponse<Dictionary<string, object>>(new Dictionary<string, object>());
 

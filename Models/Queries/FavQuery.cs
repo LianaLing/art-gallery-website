@@ -14,6 +14,7 @@ namespace ArtGalleryWebsite.Models.Queries
         public static string SqlQuery;
         public static int art_id;
         public static int fav_id;
+        public int total_art = 0;
 
         public Art art;
         public Entities.User user;
@@ -26,6 +27,12 @@ namespace ArtGalleryWebsite.Models.Queries
         public FavQuery(int id, string name) : base (id, name)
         {
 
+        }
+
+        public FavQuery(int total_art, int id)
+        {
+            this.total_art = total_art;
+            this.id = id;
         }
 
         public FavQuery(int id, string name, Art art, Author author) : base(id, name)
@@ -54,7 +61,7 @@ namespace ArtGalleryWebsite.Models.Queries
                 AND [FavArt].fav_id = [Favourite].id
                 AND [Art].author_id = [Author].id
                 AND [User].Id = {id} 
-                ORDER BY [Favourite].name ASC;";
+                ORDER BY [Favourite].id ASC;";
         }
 
         public static void FetchAllUserFavourites(int id)
@@ -64,13 +71,24 @@ namespace ArtGalleryWebsite.Models.Queries
                         [Favourite].id, [Favourite].name
                 FROM [Favourite]
                 WHERE [Favourite].user_id = {id}
-                ORDER BY [Favourite].name ASC;
+                ORDER BY [Favourite].id ASC;
             ";
         }
 
         public static void InsertFavArt()
         {
             SqlQuery = $@"INSERT INTO [FavArt] VALUES ('{fav_id}','{art_id}')";
+        }
+
+        public static void CountArtInFavourites(int id)
+        {
+            SqlQuery = $@"SELECT COUNT([FavArt].art_id) AS total_art, [FavArt].fav_id
+                            FROM [FavArt], [Favourite], [User]
+                            WHERE [FavArt].fav_id = [Favourite].id
+                            AND [User].Id = [Favourite].user_id
+                            AND [User].Id = {id}
+                            GROUP BY [FavArt].fav_id
+                            ORDER BY [FavArt].fav_id ASC;";
         }
 
         public override ISqlParser ParseFromSqlReader(SqlDataReader reader)
@@ -96,10 +114,20 @@ namespace ArtGalleryWebsite.Models.Queries
                     )
                 );
             }
-            return new FavQuery(
+            try
+            {
+                return new FavQuery(
                 reader.GetInt32(0),
-                reader.GetStringOrNull(1)
+                reader.GetInt32(1)
                 );
+            }
+            catch
+            {
+                return new FavQuery(
+                    reader.GetInt32(0),
+                    reader.GetStringOrNull(1)
+                    );
+            }
         }
     }
 }

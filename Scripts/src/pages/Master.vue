@@ -9,20 +9,44 @@
         <a class="font-garamond mr-1 py-2 px-3 hover:underline" href="/"
           >About</a
         >
-        <a class="font-garamond mr-1 py-2 px-3 hover:underline" href="/"
-          >Business</a
+        <template
+          v-if="
+            Object.keys(session).length !== 0 &&
+            claims[0].claimValue === 'artist'
+          "
         >
-        <a class="font-garamond py-2 px-3 hover:underline" href="/">Blog</a>
+          <a
+            class="font-garamond mr-1 py-2 px-3 hover:underline"
+            href="/Dashboard.aspx"
+            >Dashboard</a
+          >
+        </template>
       </div>
       <template v-if="Object.keys(session).length === 0">
         <button
-          class="bg-accent rounded-full font-garamond mr-4 text-white py-2 px-3 hover:bg-accent-hover"
+          class="
+            bg-accent
+            rounded-full
+            font-garamond
+            mr-4
+            text-white
+            py-2
+            px-3
+            hover:bg-accent-hover
+          "
           @click="loginHandler"
         >
           Log in
         </button>
         <button
-          class="bg-light rounded-full font-garamond py-2 px-3 hover:bg-light-hover"
+          class="
+            bg-light
+            rounded-full
+            font-garamond
+            py-2
+            px-3
+            hover:bg-light-hover
+          "
           @click="signupHandler"
         >
           Sign up
@@ -37,7 +61,16 @@
           You are logged in as: {{ session.user?.email }}
         </button>
         <button
-          class="bg-accent rounded-full font-garamond text-white ml-4 py-2 px-3 hover:bg-accent-hover"
+          class="
+            bg-accent
+            rounded-full
+            font-garamond
+            text-white
+            ml-4
+            py-2
+            px-3
+            hover:bg-accent-hover
+          "
           @click="logoutHandler"
         >
           Log out
@@ -58,6 +91,7 @@ import Pinterest from "../components/icons/Pinterest.vue";
 import * as helper from "../utils/helper";
 import { logout } from "../utils/auth";
 import { useSession } from "../stores/useSession";
+import { Claims } from "../types/api";
 
 export default defineComponent({
   components: { Pinterest, AuthController },
@@ -105,7 +139,9 @@ export default defineComponent({
   data() {
     const session = useSession();
     session.value = getStateFromBackend<Session>("session");
-    return { session };
+    const claims = <Claims[]>session.value.user?.claims;
+    // const claims = claimsArr[0];
+    return { session, claims };
   },
 });
 </script>
