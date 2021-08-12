@@ -20,7 +20,7 @@
         </Popover>
         <template v-if="!like">
           <Icon class="float-left" :icon="icons[3]" @onclick="like = true" />
-          <span class="inline"> {{ art.likes }}</span>
+          <span class="inline"> {{ art.likes }} </span>
         </template>
         <template v-else>
           <Icon class="float-left" :icon="icons[4]" @onclick="like = false" />

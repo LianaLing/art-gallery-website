@@ -10,7 +10,7 @@
         OnRowEditing="ArtsGrid_RowEditing"
         OnRowUpdating="ArtsGrid_RowUpdating"
         OnRowCancelingEdit="ArtsGrid_RowCancelingEdit"
-        CssClass="w-full"
+        CssClass="w-full font-garamond"
         HeaderStyle-CssClass="border-b bg-[#fafafa]"
         RowStyle-CssClass="border-b hover:bg-[#fafafa] font-medium transition-colors duration-200 ease-in-out"
     >
@@ -26,7 +26,7 @@
             </asp:TemplateField>
 
             <asp:TemplateField
-                HeaderText="Image" 
+                HeaderText="Image"
                 HeaderStyle-CssClass="table-header-cell"
                 ItemStyle-CssClass="table-cell w-[82px]"
             >
