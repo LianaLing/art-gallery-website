@@ -89,13 +89,13 @@ namespace ArtGalleryWebsite.Models.Queries
 
         public static void FetchCurrentArtDetail(int id)
         {
-            SqlQuery = @"
+            SqlQuery = $@"
             SELECT [Art].id, [Art].style, [Art].description, [Art].price, [Art].stock, [Art].likes, [Art].url,
                    [Author].id, [Author].description, [Author].verified, [User].Username, [User].Name, [User].Ic, [User].Dob, [User].PhoneNumber, [User].Email, [User].AvatarUrl
             FROM [Art], [Author], [User]
             WHERE [Art].author_id = [Author].id
             AND [Author].id = [User].AuthorId
-            AND [Art].id = '" + id + "'";
+            AND [Art].id = {id};";
         }
 
         public ISqlParser ParseFromSqlReader(SqlDataReader reader)

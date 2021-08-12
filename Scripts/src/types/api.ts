@@ -141,3 +141,8 @@ export type FavResponse = {
   user: User;
   author: Author;
 };
+
+export type FavouriteResponse = {
+  id: number;
+  name: string;
+}

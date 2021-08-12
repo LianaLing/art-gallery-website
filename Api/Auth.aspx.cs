@@ -57,7 +57,7 @@ namespace ArtGalleryWebsite.Api
                     break;
                 case SignInStatus.Failure:
                     res.Data = null;
-                    res.Error = new Error
+                    res.Error = new ArtGalleryWebsite.Models.Error
                     {
                         ErrorType = ErrorType.ErrorTypeRequest,
                         ErrorCode = ErrorCode.ErrorCodeEmailOrPasswordInvalid,
@@ -125,7 +125,7 @@ namespace ArtGalleryWebsite.Api
         public static string Logout()
         {
             HttpContext Context = new Auth().Context;
-            
+
             ApiResponse<Dictionary<string, object>> res = new ApiResponse<Dictionary<string, object>>(new Dictionary<string, object>());
 
             IAuthenticationManager authManager = Context.GetOwinContext().Authentication;

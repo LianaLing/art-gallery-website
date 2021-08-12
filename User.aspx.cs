@@ -5,8 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Models.Queries;
 using ArtGalleryWebsite.Utils;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Newtonsoft.Json;
 
 namespace ArtGalleryWebsite
@@ -163,10 +166,14 @@ namespace ArtGalleryWebsite
             //    new ArtTest("art_0009", "https://i.pinimg.com/564x/b9/92/49/b99249c860d9b507251991d063a245b4.jpg", 33333.33, "A Wheatfield, with Cypresses", author: Liana),
             //};
 
-            FavQuery.FetchCurrentUser(1); //Hardcoded
-            UserQuery.FetchCurrentUser(1); //Hardcoded
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+            FavQuery.FetchCurrentUser(user.Id);
+            System.Diagnostics.Trace.WriteLine(JsonConvert.SerializeObject(user.Id));
+
             List<FavQuery> data = Database.Select<FavQuery>(FavQuery.SqlQuery);
-            List<UserQuery> user = Database.Select<UserQuery>(UserQuery.SqlQuery);
+
+            //List<UserQuery> user = Database.Select<UserQuery>(UserQuery.SqlQuery);
 
             //Page.ClientScript.RegisterHiddenField("profileState", JsonConvert.SerializeObject(profile));
             //Page.ClientScript.RegisterHiddenField("savesState", JsonConvert.SerializeObject(saves));
@@ -174,7 +181,7 @@ namespace ArtGalleryWebsite
 
             Page.ClientScript.RegisterHiddenField("iconsState", JsonConvert.SerializeObject(icons));
             Page.ClientScript.RegisterHiddenField("state", JsonConvert.SerializeObject(data));
-            Page.ClientScript.RegisterHiddenField("userState", JsonConvert.SerializeObject(user));
+            //Page.ClientScript.RegisterHiddenField("userState", JsonConvert.SerializeObject(user));
         }
 
     }

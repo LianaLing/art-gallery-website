@@ -1,6 +1,6 @@
 <template>
   <!-- Profile Header -->
-  <Profile :profile="user[0]" />
+  <Profile :profile="session.user" />
 
   <!-- Icons -->
   <div class="w-full">
@@ -68,13 +68,15 @@ import Reference from "../components/Reference.vue";
 import { sliceIntoChunks } from "../utils/helper";
 import * as API from "../types/api";
 import * as helper from "../utils/helper";
+import { Session } from '../types/state';
 
 const icons = JSON.parse(
   (<HTMLInputElement>document.getElementById("iconsState")).value
 );
 
 const data = helper.getStateFromBackend<API.FavResponse[]>("state");
-const user = helper.getStateFromBackend<API.User[]>("userState");
+const session = helper.getStateFromBackend<Session>("session");
+
 // alert(JSON.stringify(data,null,2));
 // const info = data[0];
 
@@ -143,7 +145,7 @@ export default {
       // inprofile,
       saves2D,
       data,
-      user,
+      session,
       favGroup,
     };
   },

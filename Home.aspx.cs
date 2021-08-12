@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using ArtGalleryWebsite.Utils;
 using ArtGalleryWebsite.Models.Queries;
 using System.Collections.Generic;
+using ArtGalleryWebsite.Models;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace ArtGalleryWebsite
 {
@@ -23,9 +26,12 @@ namespace ArtGalleryWebsite
             // System.Diagnostics.Debug.WriteLine("asdasdasd");
 
             // Fetch art responses from the database
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+
             ArtQuery.FetchAllArt();
             List<ArtQuery> data = Database.Select<ArtQuery>(ArtQuery.SqlQuery);
-            FavQuery.FetchCurrentUser(1); //Hardcoded
+            FavQuery.FetchCurrentUser(user.Id); //Hardcoded
             List<FavQuery> favs = Database.Select<FavQuery>(FavQuery.SqlQuery);
 
             // Inject the data (serialized as a JSON string) as a hidden field at client side

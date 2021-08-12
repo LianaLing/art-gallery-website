@@ -47,26 +47,7 @@
         >
           Save
         </PopoverButton>
-        <PopoverPanel class="shadow-xl right-0 top-14 w-[200px] z-10 absolute">
-          <div class="bg-white rounded-3xl p-4 items-center">
-            <p>Your Collection(s)</p>
-            <button
-              v-for="fav in favourites"
-              :key="fav.id"
-              class="
-                bg-light-hover
-                rounded-3xl
-                p-3
-                justify-center
-                items-center
-                block
-              "
-              @click="saveArtHandler($event, art.id, fav.id)"
-            >
-              {{ fav.name }}
-            </button>
-          </div>
-        </PopoverPanel>
+        <SavePopoverPanel :favs="favourites" :art="art" />
       </Popover>
     </template>
     <p
@@ -186,12 +167,14 @@ import Link from "../components/icons/Link.vue";
 import Search from "../components/icons/Search.vue";
 import * as helper from "../utils/helper";
 import * as API from "../types/api";
+import SavePopoverPanel from "../components/SavePopoverPanel.vue";
 
 export default defineComponent({
   components: {
     Popover,
     PopoverButton,
     PopoverPanel,
+    SavePopoverPanel,
     Whatsapp,
     Facebook,
     Email,
@@ -211,11 +194,6 @@ export default defineComponent({
       e.preventDefault();
       // alert("clicked on art card from artcard");
       helper.triggerBackendControl(e, "MainContent_btnArtDetailPage", `${id}`);
-    },
-    saveArtHandler: (e: Event, art_id: number, fav_id: number) => {
-      e.preventDefault();
-      const id = `${art_id}` + "," + `${fav_id}`;
-      helper.triggerBackendControl(e, "MainContent_btnSaveArt", id);
     },
     // saveArtChooseCollectionHandler: (e: Event, id: number) => {
     //   e.preventDefault();
