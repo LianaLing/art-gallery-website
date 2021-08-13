@@ -26,6 +26,27 @@
       @click="artDetailPageHandler($event, card.art.id)"
       :class="transition"
     ></div>
+
+    <Button
+      class="
+        bg-accent
+        rounded-full
+        font-bold
+        text-light
+        opacity-0
+        py-2
+        px-4
+        top-4
+        right-4
+        absolute
+        hover:bg-accent-hover
+        group-hover:opacity-100
+      "
+      :class="transition"
+      onclick=""
+    >
+      {{ card.name }}
+    </Button>
     <p
       class="
         bg-light

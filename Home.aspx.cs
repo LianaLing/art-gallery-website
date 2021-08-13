@@ -31,10 +31,12 @@ namespace ArtGalleryWebsite
 
             List<ArtQuery> data = selectAllArt();
             List<FavQuery> favs = selectAllFavourites(user.Id);
+            List<FavQuery> saved = checkIfArtIsInFav(user.Id);
 
             // Inject the data (serialized as a JSON string) as a hidden field at client side
             registerHiddenField("arts", data);
             registerHiddenField("favs", favs);
+            registerHiddenField("saves", saved);
         }
 
         private void registerHiddenField(string id, object obj)
@@ -54,6 +56,12 @@ namespace ArtGalleryWebsite
             return Database.Select<FavQuery>(FavQuery.SqlQuery);
         }
 
+        private List<FavQuery> checkIfArtIsInFav(int id)
+        {
+            FavQuery.FetchCurrentUser(id);
+            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+        }
+
         protected void btnSaveArtChooseCollection_click(object sender, EventArgs e)
         {
             //string id = Request.Form[btnSaveArt.Attributes["value"]];
@@ -64,7 +72,15 @@ namespace ArtGalleryWebsite
 
         private string[] splitId()
         {
-            string str = Request.Form[btnSaveArt.UniqueID];
+            string str = "";
+            if (Request.Form[btnSaveArt.UniqueID] != null)
+            {
+                str = Request.Form[btnSaveArt.UniqueID];
+            } else
+            {
+                str = Request.Form[btnRemoveArt.UniqueID];
+            }
+
             string[] arr = str.Split(',');
             return arr;
         }
@@ -113,12 +129,34 @@ namespace ArtGalleryWebsite
                 return e + " [Artwork already saved in this collection.]";
             }
         }
+        
+
+        private string removeFromFavArt()
+        {
+            FavQuery.RemoveFromFavArt();
+            try
+            {
+                return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
+            }
+            catch (System.Data.SqlClient.SqlException e)
+            {
+                return e + " [Artwork already deleted from this collection.]";
+            }
+        }
 
         public void btnSaveArt_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
+            }
+        }
+        
+        public void btnRemoveArt_click(object sender, EventArgs e)
+        {
+            if (setFavQueryIds())
+            {
+                System.Diagnostics.Trace.WriteLine(removeFromFavArt());
             }
         }
 
