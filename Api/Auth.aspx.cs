@@ -42,7 +42,7 @@ namespace ArtGalleryWebsite.Api
             }
 
             // Redirect to path from [Redirect] or '/' if [Redirect] is not provided
-            IdentityHelper.RedirectToReturnUrl(Request.QueryString["Redirect"], Response);
+            IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
         }
 
         // This endpoint is for logging in user
@@ -69,7 +69,7 @@ namespace ArtGalleryWebsite.Api
             {
                 case SignInStatus.Success:
                     // Set a redirectUrl in the response
-                    res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Login);
+                    res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["ReturnUrl"], AuthAction.Login);
                     break;
                 case SignInStatus.Failure:
                     // Set an error in the response
@@ -105,7 +105,7 @@ namespace ArtGalleryWebsite.Api
                 res.Error = new Error
                 {
                     ErrorType = ErrorType.ErrorTypeRequest,
-                    ErrorCode = ErrorCode.ErrorUserRoleInvalid,
+                    ErrorCode = ErrorCode.ErrorCodeUserRoleInvalid,
                     Message = $"{role} is not one of '{AuthRole.Personal}' or '{AuthRole.Artist}'",
                     HTTPStatusCode = 404
                 };
@@ -128,10 +128,36 @@ namespace ArtGalleryWebsite.Api
             {
                 // Sign in the user
                 signInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+
                 // Add the claim (role) to the user
                 manager.AddClaim(user.Id, new Claim(ClaimTypes.Role, role));
+
+                // If user is an artist
+                if (role == AuthRole.Artist)
+                {
+                    try
+                    {
+                        // Create the user as an author 
+                        Database.Insert($"INSERT INTO [Author] ([description]) VALUES ('{email}');");
+                        int authorId = Database.QueryValue<int>($"SELECT [id] FROM [Author] WHERE [description] LIKE '{email}'");
+                        Database.Update($"UPDATE [User] SET [AuthorId] = {authorId} WHERE [Id] = {user.Id}");
+                    }
+                    catch (Exception)
+                    {
+                        res.Error = new Error
+                        {
+                            ErrorType = ErrorType.ErrorTypeAuth,
+                            ErrorCode = ErrorCode.ErrorCodeDBTransactionFailed,
+                            Message = new Exception().Message,
+                            HTTPStatusCode = 500
+                        };
+                        Context.Response.StatusCode = 500;
+                        return Helper.SerializeObject(res);
+                    }
+                }
+
                 // Set a redirectUrl in the response
-                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Signup);
+                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["ReturnUrl"], AuthAction.Signup);
             }
             else
             {
@@ -167,7 +193,7 @@ namespace ArtGalleryWebsite.Api
             authManager.SignOut();
 
             // Set a redirectUrl in the response
-            res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Logout);
+            res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["ReturnUrl"], AuthAction.Logout);
 
             // Return serialized JSON in camelCase
             return Helper.SerializeObject(res);
@@ -187,7 +213,7 @@ namespace ArtGalleryWebsite.Api
 
             if (result.Succeeded)
             {
-                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["Redirect"], AuthAction.Logout);
+                res.Data["redirectUrl"] = IdentityHelper.GetAuthRedirectUrl(Context.Request.QueryString["ReturnUrl"], AuthAction.Logout);
             }
             else
             {

@@ -22,6 +22,7 @@
           >
         </template>
       </div>
+
       <template v-if="Object.keys(session).length === 0">
         <button
           class="
@@ -85,13 +86,12 @@
 import { defineComponent } from "vue";
 import { useAuthView } from "../stores/useAuthView";
 import { AuthView, Session } from "../types/state";
-import { getStateFromBackend } from "../utils/helper";
-import AuthController from "../components/auth/AuthController.vue";
-import Pinterest from "../components/icons/Pinterest.vue";
-import * as helper from "../utils/helper";
+import { getStateFromBackend, triggerBackendControl } from "../utils/helper";
 import { logout } from "../utils/auth";
 import { useSession } from "../stores/useSession";
 import { Claims } from "../types/api";
+import AuthController from "../components/auth/AuthController.vue";
+import Pinterest from "../components/icons/Pinterest.vue";
 
 export default defineComponent({
   components: { Pinterest, AuthController },
@@ -99,11 +99,11 @@ export default defineComponent({
     userPageHandler: (e: Event) => {
       // Prevent button triggers refresh
       e.preventDefault();
-      helper.triggerBackendControl(e, "btnUserPage");
+      triggerBackendControl(e, "btnUserPage");
     },
     homePageHandler: (e: Event) => {
       e.preventDefault();
-      helper.triggerBackendControl(e, "btnHomePage");
+      triggerBackendControl(e, "btnHomePage");
     },
   },
   setup() {

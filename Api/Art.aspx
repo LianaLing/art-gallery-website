@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Auth.aspx.cs" Inherits="ArtGalleryWebsite.Api.Auth" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Art.aspx.cs" Inherits="ArtGalleryWebsite.Api.Art" %>
 
 <!DOCTYPE html>
 

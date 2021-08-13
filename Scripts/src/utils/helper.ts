@@ -50,7 +50,7 @@ export const getStateFromBackend = <T>(id: string) =>
  * @param {string} val - the value to be passed into the control
  */
 export const triggerBackendControl = (
-  e: Event,
+  e: Event | undefined,
   id: string,
   val: string = ""
 ) => {
@@ -60,7 +60,7 @@ export const triggerBackendControl = (
     ctrl.value = val;
   }
 
-  if (ctrl !== null) {
+  if (ctrl) {
     ctrl.click();
   }
 };

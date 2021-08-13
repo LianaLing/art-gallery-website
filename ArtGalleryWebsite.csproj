@@ -144,6 +144,7 @@
   <ItemGroup>
     <None Include="Scripts\src\pages\Home.vue" />
     <None Include="Scripts\src\components\ArtCard.bak" />
+    <Content Include="Api\Art.aspx" />
     <Content Include="Api\Auth.aspx" />
     <Content Include="App_Data\ArtGallery.mdf" />
     <Content Include="App_Data\ArtGallery_log.ldf">
@@ -194,6 +195,13 @@
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Art.aspx.cs">
+      <DependentUpon>Art.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Api\Art.aspx.designer.cs">
+      <DependentUpon>Art.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Api\Auth.aspx.cs">
       <DependentUpon>Auth.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

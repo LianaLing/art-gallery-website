@@ -10,6 +10,7 @@ namespace ArtGalleryWebsite.Models
     {
         public const string ErrorTypePermission = "permission_error";
         public const string ErrorTypeRequest = "request_error";
+        public const string ErrorTypeAuth = "auth_error";
     }
 
     // This struct specifies the list possible error codes
@@ -18,7 +19,8 @@ namespace ArtGalleryWebsite.Models
         public const string ErrorCodeRequestBodyInvalid = "request_body_invalid";
         public const string ErrorCodeEmailOrPasswordInvalid = "email_or_password_invalid";
         public const string ErrorCodeEmailTaken = "email_taken";
-        public const string ErrorUserRoleInvalid = "user_role_invalid";
+        public const string ErrorCodeUserRoleInvalid = "user_role_invalid";
+        public const string ErrorCodeDBTransactionFailed = "db_transaction_failed";
     }
 
     // This class defines the shape of an Error
