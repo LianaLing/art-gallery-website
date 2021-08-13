@@ -1,5 +1,3 @@
-<template>
-  <div>HHAHAHAH</div>
-</template>
+<template></template>
 
 <script lang="ts"></script>

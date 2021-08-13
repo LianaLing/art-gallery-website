@@ -8,6 +8,9 @@ using Newtonsoft.Json;
 using ArtGalleryWebsite.Utils;
 using ArtGalleryWebsite.Models.Queries;
 using System.Collections.Generic;
+using ArtGalleryWebsite.Models;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 
 namespace ArtGalleryWebsite
 {
@@ -15,6 +18,8 @@ namespace ArtGalleryWebsite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
             Icon[] icons =
           {
@@ -22,21 +27,119 @@ namespace ArtGalleryWebsite
                 new Icon("icon_0002", "https://img.icons8.com/ios-glyphs/30/000000/star--v2.png", "Animated Star Icon", "", "https://icons8.com/icon/hmAU0m6F6i0C/star", "Icons8"),
                 new Icon("icon_0003", "https://img.icons8.com/windows/32/000000/share-rounded.png", "Share Rounded Icon", "", "https://icons8.com/icon/FupVmEePjs1T/share-rounded", "Icons8"),
                 new Icon("icon_0004", "https://img.icons8.com/windows/32/000000/facebook-like.png", "Facebook Like Icon", "", "https://icons8.com/icon/33481/facebook-like", "Icons8"),
+                new Icon("icon_0005", "https://img.icons8.com/ios-filled/32/000000/facebook-like.png", "Facebook Like Icon Filled", "", "https://icons8.com/icon/33479/facebook-like", "Icons8"),
             };
 
-            //Author Liana = new Author("aut_0001", "Liana Ling", "https://avatars.githubusercontent.com/u/68136684?s=64&v=4");
-            //Art art = new Art("art_0099", "https://i.pinimg.com/564x/2b/31/44/2b31440e87f6abe17fe71bb3533bc62e.jpg", 1299.99, "Niffler", Liana);
+            registerHiddenField("iconsState", icons);
+  
+            // Current art is set when button is clicked in Home.cs
+            List<ArtQuery> data = selectCurrentArtDetail();
+            List <FavQuery> favs = selectAllFavourites(user.Id);
+            List <FavQuery> saved = checkIfArtIsInFav(user.Id);
+            registerHiddenField("artState", data);
+            registerHiddenField("favsState", favs);
+            registerHiddenField("savedState", saved);
+        }
 
-            Page.ClientScript.RegisterHiddenField("iconsState", JsonConvert.SerializeObject(icons));
-            //Page.ClientScript.RegisterHiddenField("artState", JsonConvert.SerializeObject(art));
+        private void registerHiddenField(string id, object obj)
+        {
+            Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(obj));
+        }
 
-            // Current art is set when button is clicked in Site.Master.cs
-            int id = Convert.ToInt32(Request.QueryString.Get("id"));
-            ArtQuery.FetchCurrentArtDetail(id);
-            List<ArtQuery> data = Database.Select<ArtQuery>(ArtQuery.SqlQuery);
+        private List<ArtQuery> selectCurrentArtDetail()
+        {
+            ArtQuery.FetchCurrentArtDetail(getArtId());
+            return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
+        }
 
-            Page.ClientScript.RegisterHiddenField("artState", JsonConvert.SerializeObject(data));
+        private List<FavQuery> selectAllFavourites(int id)
+        {
+            FavQuery.FetchAllUserFavourites(id);
+            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+        }
 
+        private List<FavQuery> checkIfArtIsInFav(int id)
+        {
+            FavQuery.FetchCurrentUser(id);
+            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+        }
+
+        private int getArtId()
+        {
+            return Convert.ToInt32(Request.QueryString.Get("id"));
+        }
+
+        private int getFavId()
+        {
+            string str = "";
+            if (Request.Form[btnSaveStar.UniqueID] != null)
+            {
+                str = Request.Form[btnSaveStar.UniqueID];
+            }
+            else
+            {
+                str = Request.Form[btnRemoveStar.UniqueID];
+            }
+
+            string[] arr = str.Split(',');
+            return Convert.ToInt32(arr[1]);
+        }
+
+        private bool setFavQueryIds()
+        {
+            try
+            {
+                FavQuery.art_id = getArtId();
+                FavQuery.fav_id = getFavId();
+                System.Diagnostics.Trace.WriteLine($"fav_id: {FavQuery.fav_id}\nart_id: {FavQuery.art_id}");
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Trace.WriteLine("ERROR: " + e);
+                return false;
+            }
+            return true;
+        }
+
+        private string insertIntoFavArt()
+        {
+            FavQuery.InsertFavArt();
+            try
+            {
+               return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";
+            }
+            catch (System.Data.SqlClient.SqlException e)
+            {
+                return e + " [Artwork already saved in this collection.]";
+            }
+        }
+
+        private string removeFromFavArt()
+        {
+            FavQuery.RemoveFromFavArt();
+            try
+            {
+                return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
+            }
+            catch (System.Data.SqlClient.SqlException e)
+            {
+                return e + " [Artwork already deleted from this collection.]";
+            }
+        }
+
+        public void btnSaveStar_click(object sender, EventArgs e)
+        {
+            if (setFavQueryIds())
+            {
+                System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
+            }
+        }
+        public void btnRemoveStar_click(object sender, EventArgs e)
+        {
+            if (setFavQueryIds())
+            {
+                System.Diagnostics.Trace.WriteLine(removeFromFavArt());
+            }
         }
 
     }

@@ -7,13 +7,34 @@
     <DialogOverlay class="bg-black opacity-50 inset-0 fixed" />
 
     <div
-      class="bg-white flex flex-col rounded-2xl transform top-[50%] left-[50%] shadow-2xl w-[95%] translate-x-[-50%] translate-y-[-50%] fixed items-center sm:w-[484px]"
+      class="
+        bg-white
+        flex flex-col
+        rounded-2xl
+        transform
+        top-[50%]
+        left-[50%]
+        shadow-2xl
+        w-[95%]
+        translate-x-[-50%] translate-y-[-50%]
+        fixed
+        items-center
+        sm:w-[484px]
+      "
       :class="authView.view === 'login' ? 'py-8' : 'pt-8'"
     >
       <Pinterest />
       <button
         @click="setAuthView({ ...authView, modalOpen: false })"
-        class="rounded-full p-2 top-6 right-6 absolute hover:bg-light-hover focus:outline-none"
+        class="
+          rounded-full
+          p-2
+          top-6
+          right-6
+          absolute
+          hover:bg-light-hover
+          focus:outline-none
+        "
       >
         <svg
           class="h-6 w-6"
@@ -76,7 +97,17 @@
         >
 
         <button
-          class="bg-accent font-bold rounded-3xl mt-6 text-white py-2 px-4 hover:bg-accent-hover focus:outline-none"
+          class="
+            bg-accent
+            font-bold
+            rounded-3xl
+            mt-6
+            text-white
+            py-2
+            px-4
+            hover:bg-accent-hover
+            focus:outline-none
+          "
         >
           <Spinner v-if="isSubmitting" :size="'medium'" :class="'mx-auto'" />
           <span v-else>
@@ -92,7 +123,16 @@
 
         <button
           v-show="authView.view === 'artist_signup'"
-          class="bg-light font-bold rounded-3xl mt-2 py-2 px-4 hover:bg-light-hover focus:outline-none"
+          class="
+            bg-light
+            font-bold
+            rounded-3xl
+            mt-2
+            py-2
+            px-4
+            hover:bg-light-hover
+            focus:outline-none
+          "
         >
           <span>Log in to existing account</span>
         </button>
@@ -127,7 +167,15 @@
       >
       <button
         v-show="authView.view === 'signup' || authView.view === 'artist_signup'"
-        class="bg-light-hover font-bold rounded-b-2xl mt-6 text-center w-full py-5"
+        class="
+          bg-light-hover
+          font-bold
+          rounded-b-2xl
+          mt-6
+          text-center
+          w-full
+          py-5
+        "
         @click="
           setAuthView({
             ...authView,

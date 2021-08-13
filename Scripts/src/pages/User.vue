@@ -1,6 +1,6 @@
 <template>
   <!-- Profile Header -->
-  <Profile :profile="user[0]" />
+  <Profile :profile="session.user" />
 
   <!-- Icons -->
   <div class="w-full">
@@ -15,29 +15,14 @@
   <!-- My saves -->
   <div class="flex border-b-2 mx-10 w-full">
     <!-- Iterate through each group -->
-    <template v-for="favs in favGroup" :key="favs.id">
-      <Save :save="favs" />
+    <template v-for="(favs, key, i) in favGroup" :key="favs.id">
+      <Save :save="favs" :count="counts[i]" />
     </template>
   </div>
 
   <!-- Unorganised Saves -->
   <div class="font-garamond border-b-2 my-14 justify-around">
     <strong class="text-xl inline">All Saves</strong>
-
-    <!-- <a
-      class="
-        bg-light
-        rounded-full
-        font-bold
-        py-2
-        px-3
-        inline
-        float-right
-        hover:bg-light-hover
-      "
-      href="/"
-      >Organise</a
-    > -->
     <div class="flex my-14 w-full max-w-7xl">
       <div
         class="flex flex-col mx-24"
@@ -60,6 +45,7 @@
 </template>
 
 <script lang="ts">
+import { useSession } from "../stores/useSession";
 import Icon from "../components/Icon.vue";
 import Save from "../components/Save.vue";
 import Profile from "../components/Profile.vue";
@@ -68,29 +54,15 @@ import Reference from "../components/Reference.vue";
 import { sliceIntoChunks } from "../utils/helper";
 import * as API from "../types/api";
 import * as helper from "../utils/helper";
+import { Session } from "../types/state";
 
 const icons = JSON.parse(
   (<HTMLInputElement>document.getElementById("iconsState")).value
 );
 
 const data = helper.getStateFromBackend<API.FavResponse[]>("state");
-const user = helper.getStateFromBackend<API.User[]>("userState");
-// alert(JSON.stringify(data,null,2));
-// const info = data[0];
-
-// const saves = JSON.parse(
-//   (<HTMLInputElement>document.getElementById("savesState")).value
-// );
-
-// const inprofile = JSON.parse(
-//   (<HTMLInputElement>document.getElementById("profileState")).value
-// );
-
-// const artsState = JSON.parse(
-//   (<HTMLInputElement>document.getElementById("artsState")).value
-// );
-
-const saves2D = sliceIntoChunks<API.FavResponse>(data, 2);
+const saves2D = helper.splitIntoNArrays<API.FavResponse>(data, 3);
+const counts = helper.getStateFromBackend<API.FavArtCount[]>("countState");
 
 const names = [...new Set(data.map((d) => d.name))];
 
@@ -137,14 +109,14 @@ export default {
     Reference,
   },
   data() {
+    const session = useSession();
     return {
       icons,
-      // saves,
-      // inprofile,
       saves2D,
       data,
-      user,
+      session,
       favGroup,
+      counts,
     };
   },
 };

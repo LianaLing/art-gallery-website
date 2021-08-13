@@ -2,7 +2,7 @@
     Inherits="ArtGalleryWebsite.User" %>
 
     <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
+        <asp:Button ID="btnSaveArtDetailPage" runat="server" OnClick="btnSaveArtDetailPage_click" CssClass="hidden"/>
         <div id="app">
         </div>
 

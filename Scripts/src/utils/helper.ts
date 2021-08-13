@@ -13,6 +13,20 @@ export const sliceIntoChunks = <T>(arr: T[], chunkSize: number): T[][] => {
   return res;
 };
 
+export const splitIntoNArrays = <T>(arr: T[], n: number): T[][] => {
+  if (n <= 1) return [arr];
+
+  const res: T[][] = [];
+  const chunkSize = arr.length / n;
+
+  for (let i = 0; i < arr.length; i += chunkSize) {
+    const chunk = arr.slice(i, i + chunkSize);
+    res.push(chunk);
+  }
+
+  return res;
+};
+
 /**
  * Pause execution for specified duration
  * @param {number} ms - sleep duration in milliseconds
@@ -35,7 +49,11 @@ export const getStateFromBackend = <T>(id: string) =>
  * @param {string} id - the id of the control to be invoked
  * @param {string} val - the value to be passed into the control
  */
-export const triggerBackendControl = (e: Event, id: string, val: string = "") => {
+export const triggerBackendControl = (
+  e: Event,
+  id: string,
+  val: string = ""
+) => {
   const ctrl = document.getElementById(id) as HTMLInputElement;
 
   if (val !== "") {
@@ -45,7 +63,7 @@ export const triggerBackendControl = (e: Event, id: string, val: string = "") =>
   if (ctrl !== null) {
     ctrl.click();
   }
-}
+};
 
 // /**
 //  * Trigger ASP.NET server controls by simulating click
