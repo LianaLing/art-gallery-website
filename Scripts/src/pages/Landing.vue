@@ -76,7 +76,15 @@
 
     <!-- Gradient-to-transparent div towards the edge with a floating down-arrow button -->
     <div
-      class="absolute -bottom-1.5 bg-gradient-to-t from-white h-3/6 w-full"
+      class="
+        absolute
+        -bottom-1.5
+        bg-gradient-to-t
+        from-white
+        h-3/6
+        w-full
+        animate-pulse
+      "
     ></div>
   </div>
 </template>
