@@ -17,15 +17,6 @@ namespace ArtGalleryWebsite.Models.Queries
         {
         }
 
-        public static void FetchCurrentUser(int id)
-        {
-            SqlQuery = @"
-            SELECT [User].[Id], [User].[Username], [User].[Name], [User].[Ic], [User].[Dob], 
-                   [User].[PhoneNumber], [User].[Email], [User].[AvatarUrl], [User].[AuthorId]
-            FROM [User]
-            WHERE [User].[Id] = '" + id + "';";
-        }
-
         override
         public ISqlParser ParseFromSqlReader(SqlDataReader reader)
         {

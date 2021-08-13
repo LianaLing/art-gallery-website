@@ -3,6 +3,7 @@
 
     <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
+        <%-- Frontend code --%>
         <div id="app"></div>
 
         <script src="Scripts/dist/LandingPage.dist.js"></script>

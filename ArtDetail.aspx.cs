@@ -18,6 +18,7 @@ namespace ArtGalleryWebsite
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Get current session user
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
@@ -32,10 +33,12 @@ namespace ArtGalleryWebsite
 
             registerHiddenField("iconsState", icons);
   
-            // Current art is set when button is clicked in Home.cs
+            // Get data for the page
             List<ArtQuery> data = selectCurrentArtDetail();
             List <FavQuery> favs = selectAllFavourites(user.Id);
             List <FavQuery> saved = checkIfArtIsInFav(user.Id);
+
+            // Register hidden field to pass data from backend to frontend
             registerHiddenField("artState", data);
             registerHiddenField("favsState", favs);
             registerHiddenField("savedState", saved);
@@ -46,29 +49,36 @@ namespace ArtGalleryWebsite
             Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(obj));
         }
 
+        // Get the art which is clicked on
         private List<ArtQuery> selectCurrentArtDetail()
         {
             ArtQuery.FetchCurrentArtDetail(getArtId());
             return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
         }
 
+        // Get all [Favourite]s of the current session user regardles whether it is empty
         private List<FavQuery> selectAllFavourites(int id)
         {
             FavQuery.FetchAllUserFavourites(id);
             return Database.Select<FavQuery>(FavQuery.SqlQuery);
         }
 
+        // Check if this art is saved in the user's [Favourite]s
         private List<FavQuery> checkIfArtIsInFav(int id)
         {
             FavQuery.FetchCurrentUser(id);
             return Database.Select<FavQuery>(FavQuery.SqlQuery);
         }
 
+        // Get art_id from this page's query string, redirected from `Home.aspx.cs`
         private int getArtId()
         {
             return Convert.ToInt32(Request.QueryString.Get("id"));
         }
 
+        // Get fav_id from the value of the button, which is passed to backend from frontend
+        // Button value is in the form of "{art_id},{fav_id}"
+        // e.g. value="1,2"
         private int getFavId()
         {
             string str = "";
@@ -85,6 +95,7 @@ namespace ArtGalleryWebsite
             return Convert.ToInt32(arr[1]);
         }
 
+        // Set the value of static variables in FavQuery class for query building
         private bool setFavQueryIds()
         {
             try
@@ -101,6 +112,7 @@ namespace ArtGalleryWebsite
             return true;
         }
 
+        // Insert into database
         private string insertIntoFavArt()
         {
             FavQuery.InsertFavArt();
@@ -114,6 +126,7 @@ namespace ArtGalleryWebsite
             }
         }
 
+        // Insert into database
         private string removeFromFavArt()
         {
             FavQuery.RemoveFromFavArt();
@@ -134,6 +147,7 @@ namespace ArtGalleryWebsite
                 System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
             }
         }
+
         public void btnRemoveStar_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())

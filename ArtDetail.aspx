@@ -2,8 +2,11 @@
     Inherits="ArtGalleryWebsite.ArtDetail" %>
 
     <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+        <%-- Hidden buttons to receive and process simulated clicks from frontend --%>
         <asp:Button ID="btnSaveStar" runat="server" OnClick="btnSaveStar_click" CssClass="hidden"/>
         <asp:Button ID="btnRemoveStar" runat="server" OnClick="btnRemoveStar_click" CssClass="hidden"/>
+        
+        <%-- Frontend code --%>
         <div id="app">
         </div>
 
