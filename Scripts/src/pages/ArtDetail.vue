@@ -51,7 +51,7 @@
           class="h-[32px] w-[32px] rounded-full object-fill inline-block mr-4"
         />
         <p class="text-xl inline py-4">{{ art.author.name }}</p>
-        <p class="text-3xl py-4">RM{{ art.price }}</p>
+        <p class="text-3xl py-4">RM {{ art.price }}</p>
         <p class="">Stock: {{ art.stock }}</p>
       </div>
     </div>
