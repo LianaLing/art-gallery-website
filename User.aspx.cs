@@ -85,38 +85,6 @@ namespace ArtGalleryWebsite
             this.profileUrl = profileUrl;
         }
     }
-    //Stub class
-    public class AuthorTest
-    {
-        public string id;
-        public string name;
-        public string avatarUrl;
-
-        public AuthorTest(string id, string name, string avatarUrl)
-        {
-            this.id = id;
-            this.name = name;
-            this.avatarUrl = avatarUrl;
-        }
-    }
-
-    public class ArtTest
-    {
-        public string id;
-        public string imageSrc;
-        public double price;
-        public string title;
-        public AuthorTest author;
-
-        public ArtTest(string id, string imageSrc, double price, string title, AuthorTest author)
-        {
-            this.id = id;
-            this.imageSrc = imageSrc;
-            this.price = price;
-            this.title = title;
-            this.author = author;
-        }
-    }
 
     public partial class User : System.Web.UI.Page
     {
@@ -130,12 +98,15 @@ namespace ArtGalleryWebsite
                 new Icon("icon_0004", "https://img.icons8.com/material-rounded/24/000000/add.png", "Add Icon", "", "https://icons8.com/icon/85096/add", "Icons8"),
             };
 
+            // Get session user
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
+            // Get data for the page
             List<FavQuery> data = selectNonEmptyFavourites(user.Id);
             List<FavQuery> count = countArtInFavourites(user.Id);
-                
+            
+            // Pass data into hidden field for frontend to parse
             registerHiddenField("iconsState", icons);
             registerHiddenField("state", data);
             registerHiddenField("countState", count);
@@ -151,12 +122,15 @@ namespace ArtGalleryWebsite
             return Database.Select<FavQuery>(FavQuery.SqlQuery);
         }
 
+        // Will only return favourites in [Favourite] that have >= 1 row of data
+        // Empty favourites will not be returned
         private List<FavQuery> selectNonEmptyFavourites(int id)
         {
             FavQuery.FetchCurrentUser(id);
             return callFavQueryDatabase();
         }
 
+        // Return the total number of rows in [FavArt] for each [Favourite]
         private List<FavQuery> countArtInFavourites(int id)
         {
             FavQuery.CountArtInFavourites(id);
@@ -165,7 +139,10 @@ namespace ArtGalleryWebsite
 
         public void btnSaveArtDetailPage_click(object sender, EventArgs e)
         {
+            // Get button `value` field where frontend data is passed into backend
             string id = Request.Form[btnSaveArtDetailPage.UniqueID];
+
+            // Pass frontend data into query string and redirect to the page
             Response.Redirect($"~/ArtDetail.aspx?id={id}");
         }
     }

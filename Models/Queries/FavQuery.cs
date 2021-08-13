@@ -47,6 +47,10 @@ namespace ArtGalleryWebsite.Models.Queries
             this.author = author;
         }
 
+        // Fetch [Favourite] rows that belongs to the logged in user in the current session
+        // [Favourite]s wil empty [FavArt] rows will not be fetched
+        // Ordered by [Favourite].id because the COUNT query is ordered by [FavArt].id
+        // Keeping the same order will ease frontend parsing so please do not change this
         public static void FetchCurrentUser(int id)
         {
             SqlQuery = $@"
@@ -64,6 +68,9 @@ namespace ArtGalleryWebsite.Models.Queries
                 ORDER BY [Favourite].id ASC;";
         }
 
+        // Fetch all [Favourite]s of the user of the current session, regardless of whether it has rows in [FavArt]
+        // [Favourite]s with empty [FavArt] rows will be displayed
+        // Useful for finding out all [Favourite]s that belong to a particular user
         public static void FetchAllUserFavourites(int id)
         {
             SqlQuery = $@"
@@ -74,17 +81,23 @@ namespace ArtGalleryWebsite.Models.Queries
                 ORDER BY [Favourite].id ASC;
             ";
         }
-
+        
+        // Insert into [FavArt] table
+        // {fav_id} and {art_id} are static variables
         public static void InsertFavArt()
         {
             SqlQuery = $@"INSERT INTO [FavArt] VALUES ('{fav_id}','{art_id}')";
         }
 
+        // Delete from [FavArt] table
+        // {fav_id} and {art_id} are static variables
         public static void RemoveFromFavArt()
         {
             SqlQuery = $@"DELETE FROM [FavArt] WHERE fav_id = {fav_id} AND art_id = {art_id};";
         }
 
+        // Count the number of rows in [FavArt] for each [Favourite]
+        // The [Favourite]s belong to the user of the current session
         public static void CountArtInFavourites(int id)
         {
             SqlQuery = $@"SELECT COUNT([FavArt].art_id) AS total_art, [FavArt].fav_id
@@ -96,6 +109,8 @@ namespace ArtGalleryWebsite.Models.Queries
                             ORDER BY [FavArt].fav_id ASC;";
         }
 
+        // These fields orrespond to the constructors that also correspond to the value in SqlQuery
+        // Create a FavQuery object for the SqlQuery
         public override ISqlParser ParseFromSqlReader(SqlDataReader reader)
         {
             if(reader.FieldCount > 2)
