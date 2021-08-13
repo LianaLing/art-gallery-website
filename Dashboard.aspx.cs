@@ -55,7 +55,7 @@ namespace ArtGalleryWebsite
                 } else
                 {
                     DashboardLabel.Visible = true;
-                    DashboardLabel.Text = "You haven't uploaded any artwork yet <img src='https://api.iconify.design/twemoji:lying-face.svg' class='w-8 h-8 ml-3' />";
+                    DashboardLabel.Text = "You haven't uploaded any artwork yet <img src='https://api.iconify.design/twemoji:lying-face.svg' style='width: 2rem; margin-left: 0.5rem;' />";
                 }
             }
             catch (Exception)
@@ -103,7 +103,7 @@ namespace ArtGalleryWebsite
             {
                 // Set the error message
                 ErrorLabel.Visible = true;
-                ErrorLabel.Text = $"Error updating art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' class='w-8 h-8 ml-3' />, please try again.";
+                ErrorLabel.Text = $"Error updating art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' style='width: 2rem; margin-left: 0.5rem;' />, please try again.";
             }
 
             ArtsGrid.EditIndex = -1;
@@ -129,7 +129,7 @@ namespace ArtGalleryWebsite
             catch (Exception)
             {
                 ErrorLabel.Visible = true;
-                ErrorLabel.Text = $"Error deleting art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' class='w-8 h-8 ml-3' />, please try again.";
+                ErrorLabel.Text = $"Error deleting art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' style='width: 2rem; margin-left: 0.5rem;' />, please try again.";
             }
 
             _BindData();
