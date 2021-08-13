@@ -25,13 +25,29 @@
 
       <template v-if="Object.keys(session).length === 0">
         <button
-          class="bg-accent rounded-full font-garamond mr-4 text-white py-2 px-3 hover:bg-accent-hover"
+          class="
+            bg-accent
+            rounded-full
+            font-garamond
+            mr-4
+            text-white
+            py-2
+            px-3
+            hover:bg-accent-hover
+          "
           @click="loginHandler"
         >
           Log in
         </button>
         <button
-          class="bg-light rounded-full font-garamond py-2 px-3 hover:bg-light-hover"
+          class="
+            bg-light
+            rounded-full
+            font-garamond
+            py-2
+            px-3
+            hover:bg-light-hover
+          "
           @click="signupHandler"
         >
           Sign up
@@ -46,7 +62,16 @@
           You are logged in as: {{ session.user?.email }}
         </button>
         <button
-          class="bg-accent rounded-full font-garamond text-white ml-4 py-2 px-3 hover:bg-accent-hover"
+          class="
+            bg-accent
+            rounded-full
+            font-garamond
+            text-white
+            ml-4
+            py-2
+            px-3
+            hover:bg-accent-hover
+          "
           @click="logoutHandler"
         >
           Log out

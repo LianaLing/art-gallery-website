@@ -38,9 +38,11 @@ namespace ArtGalleryWebsite
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(User.Identity.GetUserId<int>());
 
-            // TODO: Handle this error by returning
-            // some state to frontend
-            if (user.AuthorId == null) return;
+            if (user.AuthorId == null)
+            {
+                ErrorLabel.Visible = true;
+                ErrorLabel.Text = "Your user is not registered correctly, please contact support";
+            }
 
             try
             {
@@ -58,7 +60,8 @@ namespace ArtGalleryWebsite
             }
             catch (Exception)
             {
-                throw;
+                ErrorLabel.Visible = true;
+                ErrorLabel.Text = "Error finding arts, this is probably a system bug";
             }
         }
 
@@ -77,43 +80,64 @@ namespace ArtGalleryWebsite
 
         protected void ArtsGrid_RowUpdating(object sender, GridViewUpdateEventArgs e)
         {
+            // Get the data from controls
+            int id = Convert.ToInt32(((Label)ArtsGrid.Rows[e.RowIndex].FindControl("ArtId")).Text);
+            string url = ((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ImageUrlEdit")).Text;
+            string description = ((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ArtDescriptionEdit")).Text;
+            decimal price = Convert.ToDecimal(((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ArtPriceEdit")).Text);
+            int stock = Convert.ToInt32(((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ArtStockEdit")).Text);
+            string style = ((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ArtStyleEdit")).Text;
+
             try
             {
-                int id = Convert.ToInt32(((Label)ArtsGrid.Rows[e.RowIndex].FindControl("ArtId")).Text);
-                string url = ((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ImageUrlEdit")).Text;
-                string description = ((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ArtDescriptionEdit")).Text;
-                decimal price = Convert.ToDecimal(((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ArtPriceEdit")).Text);
-                int stock = Convert.ToInt32(((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ArtStockEdit")).Text);
-                string style = ((TextBox)ArtsGrid.Rows[e.RowIndex].FindControl("ArtStyleEdit")).Text;
-
-                try
-                {
-                    Database.Update($@"UPDATE [Art]
+                // Update the art in database
+                Database.Update($@"UPDATE [Art]
                                        SET [url] = '{url}',
                                            [description] = '{description}',
                                            [price] = {price},
                                            [stock] = {stock},
                                            [style] = '{style}'
                                        WHERE [id] = {id}");
-                }
-                catch (Exception)
-                {
-                    ErrorLabel.Visible = true;
-                    ErrorLabel.Text = $"Error updating art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' class='w-8 h-8 ml-3' />, please try again.";
-                }
-
-                ArtsGrid.EditIndex = -1;
-                _BindData();
             }
             catch (Exception)
             {
-                throw;
+                // Set the error message
+                ErrorLabel.Visible = true;
+                ErrorLabel.Text = $"Error updating art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' class='w-8 h-8 ml-3' />, please try again.";
             }
+
+            ArtsGrid.EditIndex = -1;
+            _BindData();
         }
 
         protected void ArtsGrid_RowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             ArtsGrid.EditIndex = -1;
+            _BindData();
+        }
+
+        protected void ArtsGrid_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            int id = Convert.ToInt32(((Label) ArtsGrid.Rows[e.RowIndex].FindControl("ArtId")).Text);
+
+            try
+            {
+                // Delete the art in database
+                Database.Delete($@"DELETE FROM [Art]
+                                    WHERE [id] = {id}");
+            }
+            catch (Exception)
+            {
+                ErrorLabel.Visible = true;
+                ErrorLabel.Text = $"Error deleting art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' class='w-8 h-8 ml-3' />, please try again.";
+            }
+
+            _BindData();
+        }
+
+        protected void RefreshData_Click(Object sender, EventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine("I am Called");
             _BindData();
         }
     }

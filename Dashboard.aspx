@@ -12,6 +12,7 @@
         OnRowEditing="ArtsGrid_RowEditing"
         OnRowUpdating="ArtsGrid_RowUpdating"
         OnRowCancelingEdit="ArtsGrid_RowCancelingEdit"
+        OnRowDeleting="ArtsGrid_RowDeleting"
         CssClass="w-full font-garamond"
         HeaderStyle-CssClass="border-b bg-[#fafafa]"
         RowStyle-CssClass="border-b hover:bg-[#fafafa] font-medium transition-colors duration-200 ease-in-out"
@@ -33,11 +34,13 @@
                 ItemStyle-CssClass="table-cell w-[82px]"
             >
                 <ItemTemplate>
-                    <img
-                        src='<%# Eval("url")%>'
-                        alt='<%# Eval("description")%>'
-                        class="rounded-lg mx-auto object-cover h-[50px] w-[50px]"
-                    />
+                    <a href='<%# Eval("url") %>' target="_blank">
+                        <img
+                            src='<%# Eval("url")%>'
+                            alt='<%# Eval("description")%>'
+                            class="rounded-lg mx-auto object-cover h-[50px] w-[50px]"
+                        />
+                    </a>
                 </ItemTemplate>
                 <EditItemTemplate>
                     <img 
@@ -161,13 +164,15 @@
 
             <asp:CommandField
                 ShowEditButton="True"
+                ShowDeleteButton="True"
                 HeaderText="Controls"
                 HeaderStyle-CssClass="table-header-cell"
                 ItemStyle-CssClass="w-[50px] table-cell text-center edit-link"
-                EditText="Edit"
             />
         </Columns>
     </asp:GridView>
+
+    <asp:Button ID="RefreshData" runat="server" OnClick="RefreshData_Click" />
 
     <div id="app"></div>
 

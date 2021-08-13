@@ -13,7 +13,6 @@ module.exports = {
         publicPath: 'Scripts/dist',
         path: path.resolve(__dirname, './Scripts/dist'),
         filename: '[name].dist.js',
-        libraryTarget: 'commonjs2',
     },
     // resolve: {
     //     alias: {
