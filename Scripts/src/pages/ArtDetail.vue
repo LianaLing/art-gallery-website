@@ -13,12 +13,7 @@
           <PopoverButton class="bg-transparent hover:bg-light-hover inline m-3">
             <img :src="icons[1].src" :alt="icons[1].alt" />
           </PopoverButton>
-          <SavePopoverPanel
-            :favs="favs"
-            :art="art"
-            :saved="saved"
-            btn="MainContent_btnSaveStar"
-          />
+          <SavePopoverPanel :favs="favs" :art="art" :saved="saved" />
         </Popover>
         <!-- Like button which is not working -->
         <template v-if="!like">
@@ -74,6 +69,7 @@
                     block
                     text-white
                   "
+                  @click="addToCartHandler($event, art.id)"
                 >
                   Add to Cart
                 </button>
@@ -91,6 +87,7 @@
                     items-center
                     block
                   "
+                  @click="addToCartHandler($event, art.id)"
                 >
                   Add to Cart
                 </button>
@@ -114,21 +111,6 @@
             </div>
           </PopoverPanel>
         </Popover>
-        <!-- <button
-          class="
-            bg-accent
-            float-right
-            rounded-full
-            font-bold
-            text-light
-            py-2
-            px-4
-            m-2
-            hover:bg-accent-hover
-          "
-        >
-          Purchase
-        </button> -->
 
         <!-- Art Detail -->
         <p class="font-bold text-accent text-5xl py-4">{{ art.description }}</p>
@@ -180,6 +162,12 @@ export default defineComponent({
       // Prevent button triggers refresh
       e.preventDefault();
       triggerBackendControl(e, "MainContent_btnCartPage");
+    },
+    addToCartHandler(e: Event, id: number) {
+      // Prevent button triggers refresh
+      e.preventDefault();
+      alert("Clicked on add to cart button");
+      triggerBackendControl(e, "MainContent_btnAddToCart", `${id}`);
     },
   },
   data() {

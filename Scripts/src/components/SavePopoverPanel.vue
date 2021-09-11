@@ -1,3 +1,4 @@
+<!-- Popover Panel for Save Button -->
 <template>
   <template v-if="favs !== undefined">
     <PopoverPanel
@@ -29,7 +30,7 @@
                 block
                 text-white
               "
-              @click="removeArtHandler($event, art.id, fav.id, btn)"
+              @click="removeArtHandler($event, art.id, fav.id)"
             >
               {{ fav.name }}
             </button>
@@ -47,7 +48,7 @@
                 items-center
                 block
               "
-              @click="saveArtHandler($event, art.id, fav.id, btn)"
+              @click="saveArtHandler($event, art.id, fav.id)"
             >
               {{ fav.name }}
             </button>
@@ -72,21 +73,15 @@ export default defineComponent({
     PopoverPanel,
   },
   methods: {
-    saveArtHandler: (e: Event, art_id: number, fav_id: number, btn: string) => {
+    saveArtHandler: (e: Event, art_id: number, fav_id: number) => {
       e.preventDefault();
       const id = `${art_id}` + "," + `${fav_id}`;
-      helper.triggerBackendControl(e, btn, id);
+      helper.triggerBackendControl(e, "MainContent_btnSaveStar", id);
     },
-    removeArtHandler: (
-      e: Event,
-      art_id: number,
-      fav_id: number,
-      btn: string
-    ) => {
+    removeArtHandler: (e: Event, art_id: number, fav_id: number) => {
       e.preventDefault();
-      btn = btn.replace("Save", "Remove");
       const id = `${art_id}` + "," + `${fav_id}`;
-      helper.triggerBackendControl(e, btn, id);
+      helper.triggerBackendControl(e, "MainContent_btnRemoveStar", id);
     },
     isSaved: (
       art: API.ArtResponse,
@@ -106,7 +101,6 @@ export default defineComponent({
     art: { type: Object as PropType<API.ArtResponse>, required: true },
     transition: { type: String as PropType<string> },
     saved: { type: Array as PropType<API.FavResponse[]>, required: true },
-    btn: { type: String as PropType<string>, required: true },
   },
   data() {
     return {};
