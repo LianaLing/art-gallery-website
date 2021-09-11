@@ -151,6 +151,7 @@
       <DependentUpon>ArtGallery.mdf</DependentUpon>
     </Content>
     <Content Include="ArtDetail.aspx" />
+    <Content Include="Cart.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
@@ -218,6 +219,13 @@
     </Compile>
     <Compile Include="ArtDetail.aspx.designer.cs">
       <DependentUpon>ArtDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
