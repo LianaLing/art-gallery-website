@@ -143,6 +143,8 @@ const icons = getStateFromBackend<API.Icon[]>("iconsState");
 const arts = getStateFromBackend<API.ArtResponse[]>("artState");
 const favs = getStateFromBackend<API.FavouriteResponse[]>("favsState");
 const saved = getStateFromBackend<API.FavResponse[]>("savedState");
+
+// All valid data is in the first response
 const art = arts[0];
 
 const like = false;
