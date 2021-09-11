@@ -156,5 +156,9 @@ namespace ArtGalleryWebsite
             }
         }
 
+        public void btnCartPage_click (object sender, EventArgs e)
+        {
+
+        }
     }
 }

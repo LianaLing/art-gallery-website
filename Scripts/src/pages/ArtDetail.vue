@@ -107,6 +107,7 @@
                   block
                   text-white
                 "
+                @click="cartPageHandler"
               >
                 Purchase Now
               </button>
@@ -151,7 +152,7 @@ import { defineComponent } from "vue";
 import Icon from "../components/Icon.vue";
 import Reference from "../components/Reference.vue";
 import Share from "../components/Share.vue";
-import { getStateFromBackend } from "../utils/helper";
+import { getStateFromBackend, triggerBackendControl } from "../utils/helper";
 import * as API from "../types/api";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import SavePopoverPanel from "../components/SavePopoverPanel.vue";
@@ -174,7 +175,13 @@ export default defineComponent({
     Share,
     Reference,
   },
-  methods: {},
+  methods: {
+    cartPageHandler(e: Event) {
+      // Prevent button triggers refresh
+      e.preventDefault();
+      triggerBackendControl(e, "MainContent_btnCartPage");
+    },
+  },
   data() {
     return {
       artDivTransition: "h[900px] w-[1000px] shadow-2xl",

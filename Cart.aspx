@@ -1,15 +1,12 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="ArtGalleryWebsite.Cart" %>
+﻿<%@ Page Title="Home" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Cart.aspx.cs"
+    Inherits="ArtGalleryWebsite.Cart" %>
 
-<!DOCTYPE html>
+    <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+        <%-- Hidden buttons to receive and process simulated clicks from frontend --%>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
-        <div>
+        <%-- Frontend code --%>
+        <div id="app">
         </div>
-    </form>
-</body>
-</html>
+
+        <script src="Scripts/dist/CartPage.dist.js"></script>
+    </asp:Content>
