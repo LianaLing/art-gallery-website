@@ -28,7 +28,7 @@
           class="
             bg-accent
             rounded-full
-            font-garamond
+            font-garamond font-bold
             mr-4
             text-white
             py-2
@@ -43,7 +43,7 @@
           class="
             bg-light
             rounded-full
-            font-garamond
+            font-garamond font-bold
             py-2
             px-3
             hover:bg-light-hover
@@ -63,6 +63,7 @@
         </button>
         <button
           class="
+            font-bold
             bg-accent
             rounded-full
             font-garamond

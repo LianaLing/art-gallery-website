@@ -9,7 +9,7 @@
         <h3 class="font-bold text-lg text-center w-full">Share this artwork</h3>
         <div class="flex mt-4 items-start justify-around">
           <button
-            onclick="(() => {window.open('https://api.whatsapp.com/send?phone=60163066883&text=Check%20out%20this%20artwork!%0D%0Dhttps://github.com/lianaling/art-gallery-website', '_blank');})()"
+            onclick="(() =>  {window.open('https://api.whatsapp.com/send?phone=60163066883&text=Check%20out%20this%20artwork!%0D%0Dhttps://github.com/lianaling/art-gallery-website', '_blank');})()"
           >
             <Whatsapp />
             <span class="mt-1 text-xs">WhatsApp</span>

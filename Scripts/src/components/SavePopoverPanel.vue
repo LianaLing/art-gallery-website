@@ -2,17 +2,28 @@
   <template v-if="favs !== undefined">
     <PopoverPanel
       :class="transition"
-      class="w-[200px] z-10 absolute shadow-xl rounded-3xl"
+      class="
+        w-[200px]
+        z-10
+        absolute
+        shadow-xl
+        rounded-3xl
+        font-bold
+        items-center
+      "
     >
-      <div class="bg-white rounded-3xl p-4 items-center">
-        <p>Your Favourite(s)</p>
+      <div class="bg-white rounded-3xl p-4">
+        <p class="text-center">Your Favourite(s)</p>
         <template v-for="fav in favs" :key="fav.id">
           <template v-if="isSaved(art, saved, fav.id)">
             <button
               class="
+                font-bold
                 bg-accent
-                rounded-3xl
-                p-3
+                rounded-full
+                py-2
+                px-4
+                m-2
                 justify-center
                 items-center
                 block
@@ -26,9 +37,12 @@
           <template v-else>
             <button
               class="
+                font-bold
                 bg-light-hover
-                rounded-3xl
-                p-3
+                rounded-full
+                py-2
+                px-4
+                m-2
                 justify-center
                 items-center
                 block

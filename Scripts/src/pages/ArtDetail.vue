@@ -7,6 +7,7 @@
         :alt="art.description"
         class="object-fill rounded-tl-[30px] rounded-bl-[30px]"
       />
+      <!-- Star -->
       <div class="p-10">
         <Popover class="inline float-left">
           <PopoverButton class="bg-transparent hover:bg-light-hover inline m-3">
@@ -19,6 +20,7 @@
             btn="MainContent_btnSaveStar"
           />
         </Popover>
+        <!-- Like button which is not working -->
         <template v-if="!like">
           <Icon class="float-left" :icon="icons[3]" @onclick="like = true" />
           <span class="inline"> {{ art.likes }} </span>
@@ -27,8 +29,91 @@
           <Icon class="float-left" :icon="icons[4]" @onclick="like = false" />
           <span class="inline"> {{ art.likes + 1 }}</span>
         </template>
+        <!-- Share -->
         <Share class="inline-block" :shareIcon="icons[2]" />
-        <button
+        <!-- Purchase -->
+        <Popover class="inline float-right">
+          <PopoverButton
+            class="
+              bg-accent
+              float-right
+              rounded-full
+              font-bold
+              text-light
+              py-2
+              px-4
+              hover:bg-accent-hover
+            "
+          >
+            Purchase
+          </PopoverButton>
+          <!-- Add to Cart, Purchase Now -->
+          <PopoverPanel
+            class="
+              w-[160px]
+              top-[210px]
+              right-[445px]
+              z-10
+              absolute
+              shadow-xl
+              rounded-3xl
+            "
+          >
+            <div class="bg-white rounded-3xl p-4 items-center">
+              <template v-if="false">
+                <button
+                  class="
+                    font-bold
+                    bg-accent
+                    rounded-full
+                    py-2
+                    px-4
+                    m-2
+                    justify-center
+                    items-center
+                    block
+                    text-white
+                  "
+                >
+                  Add to Cart
+                </button>
+              </template>
+              <template v-else>
+                <button
+                  class="
+                    font-bold
+                    bg-light-hover
+                    rounded-full
+                    py-2
+                    px-4
+                    m-2
+                    justify-center
+                    items-center
+                    block
+                  "
+                >
+                  Add to Cart
+                </button>
+              </template>
+              <button
+                class="
+                  font-bold
+                  bg-accent
+                  rounded-full
+                  py-2
+                  px-4
+                  justify-center
+                  items-center
+                  block
+                  text-white
+                "
+              >
+                Purchase Now
+              </button>
+            </div>
+          </PopoverPanel>
+        </Popover>
+        <!-- <button
           class="
             bg-accent
             float-right
@@ -42,8 +127,9 @@
           "
         >
           Purchase
-        </button>
+        </button> -->
 
+        <!-- Art Detail -->
         <p class="font-bold text-accent text-5xl py-4">{{ art.description }}</p>
         <img
           :src="art.author.avatarUrl"
@@ -56,6 +142,7 @@
       </div>
     </div>
   </div>
+  <!-- Reference -->
   <Reference />
 </template>
 
