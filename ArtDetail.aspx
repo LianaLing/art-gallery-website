@@ -6,9 +6,23 @@
         <asp:Button ID="btnSaveStar" runat="server" OnClick="btnSaveStar_click" CssClass="hidden"/>
         <asp:Button ID="btnRemoveStar" runat="server" OnClick="btnRemoveStar_click" CssClass="hidden"/>
         <asp:Button ID="btnCartPage" runat="server" OnClick="btnCartPage_click" CssClass="hidden" PostBackUrl="~/Cart.aspx"/>
-        
+
         <%-- Frontend code --%>
         <div id="app">
+        </div>
+
+        <%-- User Control --%>
+        <div class="text-sm font-garamond w-screen bg-accent text-white text-center p-10 bottom-0 -mx-6 mt-40">
+            <p class="text-lg">Credits to:</p>
+            <uc:References ID="ArtDetailRef1" runat="server" CreditRef="https://icons8.com/icon/99996/left-arrow" Alt="Left Arrow Icon" Author="Icons8" />
+            <br/>
+            <uc:References ID="ArtDetailRef2" runat="server" CreditRef="https://icons8.com/icon/hmAU0m6F6i0C/star" Alt="Animated Star Icon" Author = "Icon8"/>
+            <br/>
+            <uc:References ID="ArtDetailRef3" runat="server" CreditRef="https://icons8.com/icon/FupVmEePjs1T/share-rounded" Alt="Share Rounded Icon" Author = "Icon8"/>
+            <br/>
+            <uc:References ID="ArtDetailRef4" runat="server" CreditRef="https://icons8.com/icon/33481/facebook-like" Alt="Facebook Like Icon" Author = "Icon8"/>
+            <br/>
+            <uc:References ID="ArtDetailRef5" runat="server" CreditRef="https://icons8.com/icon/33479/facebook-like" Alt="Facebook Like Icon Filled" Author = "Icon8"/>
         </div>
 
         <script src="Scripts/dist/ArtDetailPage.dist.js"></script>

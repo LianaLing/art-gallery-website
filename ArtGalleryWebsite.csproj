@@ -161,6 +161,7 @@
     <Content Include="Home.aspx" />
     <None Include="Scripts\src\components\ArtCard.vue" />
     <TypeScriptCompile Include="shims-vue.d.ts" />
+    <Content Include="User_Control\References.ascx" />
     <Content Include="Scripts\src\HomePage.js" />
     <Content Include="User.aspx" />
     <Content Include="webpack.config.js" />
@@ -271,6 +272,13 @@
     <Compile Include="Models\ISqlParser.cs" />
     <Compile Include="Models\AuthRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User_Control\References.ascx.cs">
+      <DependentUpon>References.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User_Control\References.ascx.designer.cs">
+      <DependentUpon>References.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
