@@ -44,6 +44,8 @@ namespace ArtGalleryWebsite
             setLblSubtotal(subtotal);
             setLblShipping(shipping);
             setTotal(total);
+
+            setDefault(user);
         }
 
         private void registerHiddenField(string id, object obj)
@@ -68,7 +70,7 @@ namespace ArtGalleryWebsite
 
             return subtotal;
         }
-        
+
         private decimal calculateTotal(decimal subtotal, decimal shipping)
         {
             return subtotal + shipping;
@@ -78,7 +80,7 @@ namespace ArtGalleryWebsite
         {
             lblSubtotal.Text = decimal.Round(subtotal, 2) + "";
         }
-        
+
         private void setLblShipping(decimal shipping)
         {
             string str = (decimal.Round(shipping, 2) + "");
@@ -88,10 +90,17 @@ namespace ArtGalleryWebsite
             }
             lblShipping.Text = str;
         }
-        
+
         private void setTotal(decimal total)
         {
             lblTotal.Text = decimal.Round(total, 2) + "";
+        }
+
+        private void setDefault(ApplicationUser user)
+        {
+            txtFullName.Text = user.Name;
+            txtEmail.Text = user.Email;
+            txtPhone.Text = user.PhoneNumber;
         }
 
         protected void btnShowItems_click(object sender, EventArgs e)
@@ -111,23 +120,29 @@ namespace ArtGalleryWebsite
             {
                 // Do something
                 alertContent += "card";
-            } else if (rdbtnTng.Checked) {
+            }
+            else if (rdbtnTng.Checked)
+            {
                 alertContent += "Touch and Go";
-            } else if (rdbtnGrab.Checked) {
+            }
+            else if (rdbtnGrab.Checked)
+            {
                 alertContent += "Grab Pay";
-            } else if (rdbtnFpx.Checked) {
+            }
+            else if (rdbtnFpx.Checked)
+            {
                 alertContent += "FPX";
-            } else
+            }
+            else
             {
                 alertContent = "Please select a payment method";
             }
 
+            alertContent += "\nFull Name: " + txtFullName.Text;
+            alertContent += "\nEmail: " + txtEmail.Text;
+            alertContent += "\nAddress: " + txtAddr.Text;
+            alertContent += "\nPhone: " + txtPhone.Text;
             System.Diagnostics.Trace.WriteLine(alertContent);
-        }
-
-        protected void btnSubmitShipBill_click(object sender, EventArgs e)
-        {
-
         }
     }
 }
