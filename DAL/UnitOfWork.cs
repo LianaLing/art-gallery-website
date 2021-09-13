@@ -1,5 +1,4 @@
 ﻿using System;
-using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite.DAL
@@ -9,16 +8,16 @@ namespace ArtGalleryWebsite.DAL
         private ArtGalleryDbContext context = new ArtGalleryDbContext();
         private GenericRepository<Art> artRepository;
         private GenericRepository<Author> authorRepository;
+        private GenericRepository<Models.Identity.User> userRepository;
+        private GenericRepository<Favourite> favouriteRepository;
+        private GenericRepository<FavArt> favArtRepository;
         private bool disposed = false;
 
         public GenericRepository<Art> ArtRepository
         {
             get
             {
-                if (this.artRepository == null)
-                {
-                    this.artRepository = new GenericRepository<Art>(context);
-                }
+                if (artRepository == null) artRepository = new GenericRepository<Art>(context);
                 return artRepository;
             }
         }
@@ -27,12 +26,41 @@ namespace ArtGalleryWebsite.DAL
         {
             get
             {
-                if (this.authorRepository == null)
-                {
-                    this.authorRepository = new GenericRepository<Author>(context);
-                }
+                if (authorRepository == null) authorRepository = new GenericRepository<Author>(context);
                 return authorRepository;
             }
+        }
+
+        public GenericRepository<Models.Identity.User> UserRepository
+        {
+            get
+            {
+                if (userRepository == null) userRepository = new GenericRepository<Models.Identity.User>(context);
+                return userRepository;
+            }
+        }
+
+        public GenericRepository<Favourite> FavouriteRepository
+        {
+            get
+            {
+                if (favouriteRepository == null) favouriteRepository = new GenericRepository<Favourite>(context);
+                return favouriteRepository;
+            }
+        }
+
+        public GenericRepository<FavArt> FavArtRepository
+        {
+            get
+            {
+                if (favArtRepository == null) favArtRepository = new GenericRepository<FavArt>(context);
+                return favArtRepository;
+            }
+        }
+
+        public ArtGalleryDbContext GetContext()
+        {
+            return context;
         }
 
         public void Save()
@@ -48,14 +76,12 @@ namespace ArtGalleryWebsite.DAL
 
         protected virtual void Dispose(bool dispoing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
-                if (dispoing)
-                {
-                    context.Dispose();
-                }
+                if (dispoing) context.Dispose();
             }
-            this.disposed = true;
+
+            disposed = true;
         }
     }
 }

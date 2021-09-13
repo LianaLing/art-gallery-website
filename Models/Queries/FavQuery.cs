@@ -17,7 +17,7 @@ namespace ArtGalleryWebsite.Models.Queries
         public int total_art = 0;
 
         public Art art;
-        public Entities.User user;
+        public Identity.User user;
         public Author author;
 
         public FavQuery()

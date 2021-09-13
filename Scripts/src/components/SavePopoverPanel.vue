@@ -95,6 +95,7 @@ export default defineComponent({
     btn: { type: String as PropType<string>, required: true },
   },
   data() {
+    console.log(this.favs);
     return {};
   },
 });

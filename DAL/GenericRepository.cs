@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
-using ArtGalleryWebsite.Models;
 
 namespace ArtGalleryWebsite.DAL
 {
@@ -11,7 +10,6 @@ namespace ArtGalleryWebsite.DAL
     {
         internal ArtGalleryDbContext context;
         internal DbSet<TEntity> dbSet;
-
 
         public GenericRepository(ArtGalleryDbContext context)
         {
@@ -48,24 +46,24 @@ namespace ArtGalleryWebsite.DAL
             return dbSet.Find(id);
         }
 
-        public virtual void Insert(TEntity entity)
+        public virtual TEntity Insert(TEntity entity)
         {
-            dbSet.Add(entity);
+            return dbSet.Add(entity);
         }
 
-        public virtual void Delete(object id)
+        public virtual TEntity Delete(params object[] keyValues)
         {
-            TEntity entityToDelete = dbSet.Find(id);
-            Delete(entityToDelete);
+            TEntity entityToDelete = dbSet.Find(keyValues);
+            return Delete(entityToDelete);
         }
 
-        private void Delete(TEntity entityToDelete)
+        private TEntity Delete(TEntity entityToDelete)
         {
             if (context.Entry(entityToDelete).State == EntityState.Detached)
             {
                 dbSet.Attach(entityToDelete);
             }
-            dbSet.Remove(entityToDelete);
+            return dbSet.Remove(entityToDelete);
         }
 
         public virtual void Update(TEntity entityToUpdate)
