@@ -1,47 +1,51 @@
 <template>
-  <!-- Profile Header -->
-  <Profile :profile="session.user" />
+  <div class="">
+    <!-- Profile Header -->
+    <Profile :profile="session.user" />
 
-  <!-- Icons -->
-  <div class="w-full">
-    <Icon
-      :class="toggleFloatRight(i.alt)"
-      v-for="i in icons"
-      :key="i.id"
-      :icon="i"
-    />
-  </div>
+    <!-- Icons -->
+    <div class="w-full">
+      <Icon
+        :class="toggleFloatRight(i.alt)"
+        v-for="i in icons"
+        :key="i.id"
+        :icon="i"
+      />
+    </div>
 
-  <!-- My saves -->
-  <div class="flex border-b-2 mx-10 w-full">
-    <!-- Iterate through each group -->
-    <template v-for="(favs, key, i) in favGroup" :key="favs.id">
-      <Save :save="favs" :count="counts[i]" />
-    </template>
-  </div>
-
-  <!-- Unorganised Saves -->
-  <div class="font-garamond border-b-2 my-14 justify-around">
-    <strong class="text-xl inline">All Saves</strong>
-    <div class="flex my-14 w-full max-w-7xl">
-      <div
-        class="flex flex-col mx-24"
-        v-for="saves in saves2D"
-        :key="saves.toString"
-      >
-        <SaveCard
-          class="mb-10"
-          v-for="fav in saves"
-          :key="fav.id"
-          :card="fav"
-        />
+    <!-- My saves -->
+    <div class="flex mx-auto w-full max-w-7xl py-8 justify-around">
+      <div class="flex flex-row mx-4">
+        <!-- Iterate through each group -->
+        <template v-for="(favs, key, i) in favGroup" :key="favs.id">
+          <Save :save="favs" :count="counts[i]" />
+        </template>
       </div>
     </div>
+
+    <!-- Unorganised Saves -->
+    <div class="font-garamond border-b-2 border-t-2 pt-24 mt-14">
+      <strong class="text-xl inline">All Saves</strong>
+      <div class="flex mx-auto w-full max-w-7xl py-8 justify-around">
+        <div
+          class="flex flex-col mx-4"
+          v-for="saves in saves2D"
+          :key="saves.toString"
+        >
+          <SaveCard
+            class="mb-10"
+            v-for="fav in saves"
+            :key="fav.id"
+            :card="fav"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- <Reference /> -->
+
+    <br />
   </div>
-
-  <!-- <Reference /> -->
-
-  <br />
 </template>
 
 <script lang="ts">
