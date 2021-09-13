@@ -89,35 +89,102 @@
           <!-- Shipping Address -->
           <div>
             <p class="font-bold">Shipping Address</p>
-            <label for="txtFullName" class="p-2 block"> Full Name </label>
+            <label for="txtFullName" class="p-2"> Full Name </label>
+            <asp:RequiredFieldValidator runat="server" ID="ReqFullName"
+                ErrorMessage="* Required"
+                ControlToValidate="txtFullName"
+                CssClass="text-red text-sm"
+                >
+                </asp:RequiredFieldValidator>
             <asp:TextBox
               runat="server"
-              CssClass="form-input rounded-full block w-full"
+              CssClass="form-input block rounded-full block w-full"
               ID="txtFullName"
               placeholder="John M. Doe"
             />
-            <label for="txtEmail" class="p-2 block"> Email</label>
+            <asp:RegularExpressionValidator runat="server" ID="RegexFullName"
+                ErrorMessage="Please enter alphabets and spaces only."
+                ControlToValidate="txtFullName"
+                ValidationExpression="[a-zA-Z]+([\s][a-zA-Z]+)*"
+                CssClass="text-red text-sm block"
+                >
+                </asp:RegularExpressionValidator>
+
+            <label for="txtEmail" class="p-2"> Email</label>
+            <asp:RequiredFieldValidator runat="server" ID="ReqEmail"
+                ErrorMessage="* Required"
+                ControlToValidate="txtEmail"
+                CssClass="text-red text-sm"
+                >
+                </asp:RequiredFieldValidator>
             <asp:TextBox
               runat="server"
               CssClass="form-input rounded-full block w-full"
               ID="txtEmail"
               placeholder="john@example.com"
             />
-            <label for="txtAdr" class="p-2 block"> Address</label>
+            <asp:RegularExpressionValidator runat="server" ID="RegexEmail"
+                ErrorMessage="Please enter a valid email."
+                ControlToValidate="txtEmail"
+                ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                CssClass="text-red text-sm block"
+                >
+                </asp:RegularExpressionValidator>
+
+            <label for="txtAddr" class="p-2"> Address</label>
+            <asp:RequiredFieldValidator runat="server" ID="ReqAddr"
+                ErrorMessage="* Required"
+                ControlToValidate="txtAddr"
+                CssClass="text-red text-sm"
+                >
+                </asp:RequiredFieldValidator>
             <asp:TextBox
               runat="server"
               CssClass="form-input rounded-full block w-full"
-              ID="txtAdr"
+              ID="txtAddr"
               placeholder="542 W. 15th Street"
             />
-            <label for="txtPhone" class="p-2 block">Phone</label>
+            <br/>
+
+            <label for="txtPhone" class="p-2">Phone</label>
+            <asp:RequiredFieldValidator runat="server" ID="ReqPhone"
+                ErrorMessage="* Required"
+                ControlToValidate="txtPhone"
+                CssClass="text-red text-sm"
+                >
+                </asp:RequiredFieldValidator>
             <asp:TextBox
               runat="server"
               CssClass="form-input rounded-full block w-full"
               id="txtPhone"
-              placeholder="012-3456 789"
+              placeholder="+6012-3456 789"
             />
+            <asp:RegularExpressionValidator runat="server" ID="RegexPhone"
+                ErrorMessage="Please enter a valid phone number."
+                ControlToValidate="txtPhone"
+                ValidationExpression="^(00|\+)[1-9]{1}([0-9][\s]*){9,16}$"
+                CssClass="text-red text-sm block"
+                >
+                </asp:RegularExpressionValidator>
+
           </div>
+        <!-- Submit Button -->
+        <div class="py-5 flex justify-center">
+          <asp:Button
+            runat="server"
+            ID="btnSubmitShipBill"
+            OnCLick="btnSubmitShipBill_click"
+            CssClass="
+              bg-accent
+              text-white
+              px-5
+              py-2
+              rounded-full
+              hover:bg-accent-hover
+            "
+            Text="Submit Shipping Details"
+          />
+        </div>
         </asp:Panel>
       </div>
     </div>
@@ -203,4 +270,13 @@
   </div>
 
         <script src="Scripts/dist/CartPage.dist.js"></script>
+        <script>
+            function DisableHiddenValidators() {
+                for (var i = 0; i < Page_Validators.length; i++) {
+                  var visible = $('#' + Page_Validators[i].controltovalidate).is(':visible');
+                  ValidatorEnable(Page_Validators[i], visible)
+                }
+                return Page_ClientValidate();
+              }
+            </script>
     </asp:Content>

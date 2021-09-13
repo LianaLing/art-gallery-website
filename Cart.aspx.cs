@@ -124,5 +124,10 @@ namespace ArtGalleryWebsite
 
             System.Diagnostics.Trace.WriteLine(alertContent);
         }
+
+        protected void btnSubmitShipBill_click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
