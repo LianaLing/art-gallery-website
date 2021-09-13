@@ -177,7 +177,7 @@
               hover:bg-accent-hover
             "
           >
-            Enter Payment Information
+            Pay With This Method
           </button>
         </div>
       </div>
