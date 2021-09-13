@@ -7,13 +7,17 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Utils;
+using ArtGalleryWebsite.Models.Entities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using ArtGalleryWebsite.DAL;
 
 namespace ArtGalleryWebsite
 {
     public partial class Dashboard : System.Web.UI.Page
     {
+        private UnitOfWork unitOfWork = new UnitOfWork();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             HandleUserNotArtist();
@@ -46,9 +50,9 @@ namespace ArtGalleryWebsite
 
             try
             {
-                List<Models.Entities.Art> arts = Database.Select<Models.Entities.Art>($"SELECT * FROM Art WHERE author_id = {user.AuthorId};");
+                IEnumerable<Art> arts = unitOfWork.ArtRepository.Get(filter: art => art.AuthorID == user.AuthorId);
 
-                if (arts.Count > 0 && arts != null)
+                if (arts.Count() > 0 && arts != null)
                 {
                     ArtsGrid.DataSource = arts;
                     ArtsGrid.DataBind();
@@ -58,8 +62,9 @@ namespace ArtGalleryWebsite
                     DashboardLabel.Text = "You haven't uploaded any artwork yet <img src='https://api.iconify.design/twemoji:lying-face.svg' style='width: 2rem; margin-left: 0.5rem;' />";
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                System.Diagnostics.Trace.WriteLine(ex);
                 ErrorLabel.Visible = true;
                 ErrorLabel.Text = "Error finding arts, this is probably a system bug";
             }

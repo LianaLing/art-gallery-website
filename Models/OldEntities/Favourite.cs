@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace ArtGalleryWebsite.Models.Entities
+namespace ArtGalleryWebsite.Models.OldEntities
 {
     public class Favourite : ISqlParser
     {
