@@ -221,6 +221,7 @@
     <Compile Include="ArtDetail.aspx.designer.cs">
       <DependentUpon>ArtDetail.aspx</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -228,6 +229,11 @@
     <Compile Include="Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
+=======
+    <Compile Include="DAL\ArtGalleryDbContext.cs" />
+    <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
+>>>>>>> database
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -255,20 +261,23 @@
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\Entities\Art.cs" />
     <Compile Include="Models\Entities\Author.cs" />
+    <Compile Include="Models\Entities\FavArt.cs" />
+    <Compile Include="Models\Entities\Favourite.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Identity\Role.cs" />
     <Compile Include="Models\Identity\UserClaim.cs" />
     <Compile Include="Models\Identity\UserLogin.cs" />
     <Compile Include="Models\Identity\User.cs" />
-    <Compile Include="Models\Entities\User.cs" />
     <Compile Include="Models\Identity\UserRole.cs" />
     <Compile Include="Models\Identity\UserTable.cs" />
-    <Compile Include="Models\Entities\FavArt.cs" />
-    <Compile Include="Models\Entities\Favourite.cs" />
+    <Compile Include="Models\OldEntities\Art.cs" />
+    <Compile Include="Models\OldEntities\Author.cs" />
+    <Compile Include="Models\OldEntities\FavArt.cs" />
+    <Compile Include="Models\OldEntities\Favourite.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\OldEntities\User.cs" />
     <Compile Include="Models\Queries\ArtQuery.cs" />
     <Compile Include="Models\Queries\FavQuery.cs" />
-    <Compile Include="Models\Queries\UserQuery.cs" />
     <Compile Include="Models\ISqlParser.cs" />
     <Compile Include="Models\AuthRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

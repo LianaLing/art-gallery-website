@@ -1,21 +1,27 @@
 ﻿using System;
-using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Newtonsoft.Json;
-using ArtGalleryWebsite.Utils;
-using ArtGalleryWebsite.Models.Queries;
 using System.Collections.Generic;
-using ArtGalleryWebsite.Models;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
+using ArtGalleryWebsite.DAL;
+using ArtGalleryWebsite.Utils;
+using ArtGalleryWebsite.Models;
+using ArtGalleryWebsite.Models.Queries;
+using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite
 {
     public partial class ArtDetail : System.Web.UI.Page
     {
+        private static UnitOfWork unitOfWork = new UnitOfWork();
+        private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
+
+        protected int artId;
+        protected int favId;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             // Get current session user
@@ -32,11 +38,11 @@ namespace ArtGalleryWebsite
             };
 
             registerHiddenField("iconsState", icons);
-  
+
             // Get data for the page
-            List<ArtQuery> data = selectCurrentArtDetail();
-            List <FavQuery> favs = selectAllFavourites(user.Id);
-            List <FavQuery> saved = checkIfArtIsInFav(user.Id);
+            var data = selectCurrentArtDetail();
+            var favs = selectAllFavourites(user.Id);
+            var saved = checkIfArtIsInFav(user.Id);
 
             // Register hidden field to pass data from backend to frontend
             registerHiddenField("artState", data);
@@ -46,28 +52,90 @@ namespace ArtGalleryWebsite
 
         private void registerHiddenField(string id, object obj)
         {
-            Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(obj));
+            Page.ClientScript.RegisterHiddenField(id, Helper.SerializeObject(obj));
         }
 
         // Get the art which is clicked on
-        private List<ArtQuery> selectCurrentArtDetail()
+        private IQueryable selectCurrentArtDetail()
         {
-            ArtQuery.FetchCurrentArtDetail(getArtId());
-            return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
+            //ArtQuery.FetchCurrentArtDetail(getArtId());
+            //return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
+            artId = getArtId();
+
+            return dbContext.Arts
+                .Where(art => art.Id == artId)
+                .Join(
+                    dbContext.Users,
+                    art => art.AuthorID,
+                    user => user.AuthorId,
+                    (art, user) => new
+                    {
+                        id = art.Id,
+                        style = art.Style,
+                        description = art.Description,
+                        price = art.Price,
+                        stock = art.Stock,
+                        likes = art.Likes,
+                        url = art.Url,
+                        author = new
+                        {
+                            id = art.Author.Id,
+                            description = art.Author.Description,
+                            verified = art.Author.Verified,
+                            username = user.UserName,
+                            name = user.Name,
+                            ic = user.Ic,
+                            dob = user.Dob,
+                            contactNo = user.PhoneNumber,
+                            email = user.Email,
+                            avatarUrl = user.AvatarUrl
+                        }
+                    }
+                );
         }
 
         // Get all [Favourite]s of the current session user regardles whether it is empty
-        private List<FavQuery> selectAllFavourites(int id)
+        private IEnumerable<Favourite> selectAllFavourites(int id)
         {
-            FavQuery.FetchAllUserFavourites(id);
-            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+            //FavQuery.FetchAllUserFavourites(id);
+            //return Database.Select<FavQuery>(FavQuery.SqlQuery);
+            return unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == id, orderBy: fav => fav.OrderBy(f => f.UserId));
         }
 
         // Check if this art is saved in the user's [Favourite]s
-        private List<FavQuery> checkIfArtIsInFav(int id)
+        private IQueryable checkIfArtIsInFav(int id)
         {
-            FavQuery.FetchCurrentUser(id);
-            return Database.Select<FavQuery>(FavQuery.SqlQuery);
+            //FavQuery.FetchCurrentUser(id);
+            //return Database.Select<FavQuery>(FavQuery.SqlQuery);
+
+            return (from art in dbContext.Arts
+                        join author in dbContext.Authors on art.AuthorID equals author.Id
+                        join favArt in dbContext.FavArts on art.Id equals favArt.ArtId
+                        join fav in dbContext.Favourites on favArt.FavId equals fav.Id
+                        join user in dbContext.Users on fav.UserId equals user.Id
+                        where user.Id == id
+                        orderby fav.Id ascending
+                        select new
+                        {
+                            id = fav.Id,
+                            name = fav.Name,
+                            art = new
+                            {
+                                id = art.Id,
+                                style = art.Style,
+                                description = art.Description,
+                                price = art.Price,
+                                stock = art.Stock,
+                                likes = art.Likes,
+                                url = art.Url
+                            },
+                            author = new
+                            {
+                                id = author.Id,
+                                description = author.Description,
+                                verified = author.Verified
+                            }
+                        });
         }
 
         // Get art_id from this page's query string, redirected from `Home.aspx.cs`
@@ -100,9 +168,9 @@ namespace ArtGalleryWebsite
         {
             try
             {
-                FavQuery.art_id = getArtId();
-                FavQuery.fav_id = getFavId();
-                System.Diagnostics.Trace.WriteLine($"fav_id: {FavQuery.fav_id}\nart_id: {FavQuery.art_id}");
+                artId = getArtId();
+                favId = getFavId();
+                System.Diagnostics.Trace.WriteLine($"fav_id: {favId}\nart_id: {artId}");
             }
             catch (Exception e)
             {
@@ -115,10 +183,15 @@ namespace ArtGalleryWebsite
         // Insert into database
         private string insertIntoFavArt()
         {
-            FavQuery.InsertFavArt();
+            //FavQuery.InsertFavArt();
             try
             {
-               return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";
+                //return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";
+                FavArt favArt = new FavArt { ArtId = artId, FavId = favId };
+                unitOfWork.FavArtRepository.Insert(favArt);
+                unitOfWork.Save();
+
+                return $"Successful insertion of FavArt {{ fav_id: {favArt.FavId}, art_id: {favArt.ArtId} }}";
             }
             catch (System.Data.SqlClient.SqlException e)
             {
@@ -129,10 +202,18 @@ namespace ArtGalleryWebsite
         // Insert into database
         private string removeFromFavArt()
         {
-            FavQuery.RemoveFromFavArt();
+            //FavQuery.RemoveFromFavArt();
             try
             {
-                return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
+                //return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
+                FavArt deleted = unitOfWork.FavArtRepository.Delete(favId, artId);
+
+                if (deleted == null) 
+                    throw new Exception($"Unable to delete FavArt {{ fav_id: {favId}, art_id: {artId} }}");
+                else
+                    unitOfWork.Save();
+
+                return $"Successful insertion of FavArt {{ fav_id: {favId}, art_id: {artId} }}";
             }
             catch (System.Data.SqlClient.SqlException e)
             {

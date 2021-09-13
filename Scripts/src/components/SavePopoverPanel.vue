@@ -103,6 +103,7 @@ export default defineComponent({
     saved: { type: Array as PropType<API.FavResponse[]>, required: true },
   },
   data() {
+    console.log(this.favs);
     return {};
   },
 });

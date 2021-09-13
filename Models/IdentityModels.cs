@@ -30,6 +30,7 @@ namespace ArtGalleryWebsite.Models
         public ApplicationDbContext()
             : base("ArtGalleryDB")
         {
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public static ApplicationDbContext Create()

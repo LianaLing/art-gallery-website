@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ArtGalleryWebsite.Models.Entities
 {
-    public class FavArt : ISqlParser
+    //CREATE TABLE [dbo].[FavArt] (
+    //    [fav_id] INT NOT NULL,
+    //    [art_id] INT NOT NULL,
+    //    PRIMARY KEY CLUSTERED ([fav_id] ASC, [art_id] ASC),
+    //    FOREIGN KEY ([fav_id]) REFERENCES [dbo].[Favourite] ([id]),
+    //    FOREIGN KEY ([art_id]) REFERENCES [dbo].[Art] ([id])
+    //);
+
+    [Table("FavArt")]
+    public class FavArt
     {
+        [Key]
+        [Column("fav_id", Order = 1)]
+        public int FavId { get; set; }
 
-        public int fav_id;
-        public int art_id;
-
-        public FavArt(int fav_id, int art_id)
-        {
-            this.fav_id = fav_id;
-            this.art_id = art_id;
-        }
-
-        public virtual ISqlParser ParseFromSqlReader(SqlDataReader reader)
-        {
-            return new FavArt(
-                reader.GetInt32(0),
-                reader.GetInt32(1)
-                );
-        }
+        [Key]
+        [Column("art_id", Order = 2)]
+        public int ArtId { get; set; }
     }
 }
