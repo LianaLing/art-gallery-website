@@ -221,7 +221,6 @@
     <Compile Include="ArtDetail.aspx.designer.cs">
       <DependentUpon>ArtDetail.aspx</DependentUpon>
     </Compile>
-<<<<<<< HEAD
     <Compile Include="Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -229,11 +228,9 @@
     <Compile Include="Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
-=======
     <Compile Include="DAL\ArtGalleryDbContext.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
->>>>>>> database
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
