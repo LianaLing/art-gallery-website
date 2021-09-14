@@ -3,12 +3,103 @@
 
     <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
         <asp:Button ID="btnSaveArtDetailPage" runat="server" OnClick="btnSaveArtDetailPage_click" CssClass="hidden"/>
+        <asp:Button ID="btnUserDetailPage" runat="server" OnClick="btnUserDetailPage_click"
+        PostBackUrl="~/UserDetail.aspx"
+        CssClass="hidden"/>
+        <asp:Button ID="btnFavDetailPage" runat="server" OnClick="btnFavDetailPage_click" CssClass="hidden"/>
+        <asp:Button ID="btnShowCreateFav" runat="server" OnClick="btnShowCreateFav_click" CssClass="hidden"/>
         <div id="app">
         </div>
 
         <script src="Scripts/dist/UserPage.dist.js"></script>
+
+        <asp:Panel runat="server" ID="CreateFav" CssClass="absolute z-10 font-garamond">
+            <div
+                class="bg-white
+                        flex flex-col
+                        rounded-2xl
+                        transform
+                        top-[50%]
+                        left-[50%]
+                        shadow-2xl
+                        w-[95%]
+                        translate-x-[-50%] translate-y-[-50%]
+                        fixed
+                        items-center
+                        sm:w-[484px]
+                        p-10
+                ">
+                <p class="text-center text-3xl font-bold pb-5">Create New Fav</p>
+                <div class="grid grid-col-2 gap-2 w-full">
+                    <label for="txtFavName" class="p-2"> Name </label>
+                    <asp:RequiredFieldValidator runat="server" ID="ReqFavName"
+                        ErrorMessage="* Required"
+                        ControlToValidate="txtFavName"
+                        CssClass="text-red text-sm text-right"
+                        ValidationGroup="VGFav"
+                        >
+                        </asp:RequiredFieldValidator>
+                    <asp:TextBox
+                        runat="server"
+                        CssClass="form-input rounded-full block w-full col-span-2"
+                        ID="txtFavName"
+                        placeholder="Light Academia"
+                    />
+                    <asp:RegularExpressionValidator runat="server" ID="RegexFavName"
+                        ControlToValidate="txtFavName"
+                        ErrorMessage="Please enter less than 50 characters."
+                        ValidationExpression="^.{1,50}$"
+                        CssClass="text-red text-sm col-span-2"
+                        ValidationGroup="VGFav"
+                        >
+                        </asp:RegularExpressionValidator>
+                    </div> <!-- Input Div -->
+
+                <div class="flex justify-center gap-10">
+                    <!-- Cancel Button -->
+                    <asp:Button
+                        runat="server"
+                        ID="btnCancelFav"
+                        OnClick="btnCancelFav_click"
+                        CssClass="
+                            bg-light
+                            text-lg
+                            font-bold
+                            font-garamond
+                            justify-center
+                            px-5
+                            py-2
+                            rounded-full
+                            hover:bg-light-hover
+                            "
+                        Text="Cancel Create"
+                    />
+
+                    <!-- Create Button -->
+                    <asp:Button
+                        runat="server"
+                        ID="btnCreateFav"
+                        OnClick="btnCreateFav_click"
+                        CssClass="
+                            bg-accent
+                            text-white
+                            text-lg
+                            font-bold
+                            font-garamond
+                            justify-center
+                            px-5
+                            py-2
+                            rounded-full
+                            hover:bg-accent-hover
+                            "
+                        Text="Create Fav"
+                    />
+                    </div> <!-- Button Div -->
+            </div> <!-- Modal Div -->
+        </asp:Panel>
+
         <%-- User Control --%>
-        <div class="text-sm font-garamond w-screen bg-accent text-white text-center p-10 bottom-0 -mx-6">
+        <div class="text-sm font-garamond  bg-accent text-white text-center p-10 bottom-0">
             <p class="text-lg">Credits to:</p>
             <uc:References ID="UserRef1" runat="server" CreditRef="https://icons8.com/icon/5824/pencil" Alt="Edit Icon" Author="Icons8" />
             <br/>

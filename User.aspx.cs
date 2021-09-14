@@ -109,11 +109,16 @@ namespace ArtGalleryWebsite
             // Get data for the page
             var data = selectNonEmptyFavourites(user.Id);
             var count = countArtInFavourites(user.Id);
-            
+
             // Pass data into hidden field for frontend to parse
             registerHiddenField("iconsState", icons);
             registerHiddenField("state", data);
             registerHiddenField("countState", count);
+
+            if (!IsPostBack)
+            {
+                CreateFav.Visible = false;
+            }
         }
 
         private void registerHiddenField(string id, object obj)
@@ -194,13 +199,56 @@ namespace ArtGalleryWebsite
             //    );
         }
 
-        public void btnSaveArtDetailPage_click(object sender, EventArgs e)
+        protected void btnSaveArtDetailPage_click(object sender, EventArgs e)
         {
             // Get button `value` field where frontend data is passed into backend
             string id = Request.Form[btnSaveArtDetailPage.UniqueID];
 
             // Pass frontend data into query string and redirect to the page
             Response.Redirect($"~/ArtDetail.aspx?id={id}");
+        }
+
+        protected void btnUserDetailPage_click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnFavDetailPage_click(object sender, EventArgs e)
+        {
+            // Get button `value` field where frontend data is passed into backend
+            string id = Request.Form[btnFavDetailPage.UniqueID];
+
+            // Pass frontend data into query string and redirect to the page
+            Response.Redirect($"~/FavDetail.aspx?id={id}");
+        }
+
+        protected void btnShowCreateFav_click(object sender, EventArgs e)
+        {
+            CreateFav.Visible = true;
+            validateCreateFav();
+            System.Diagnostics.Trace.WriteLine("Clicked on show");
+        }
+
+        protected void btnCancelFav_click(object sender, EventArgs e)
+        {
+            CreateFav.Visible = false;
+            System.Diagnostics.Trace.WriteLine("Clicked on cancel");
+        }
+
+        protected void btnCreateFav_click(object sender, EventArgs e)
+        {
+            validateCreateFav();
+            System.Diagnostics.Trace.WriteLine("Clicked on create, Fav Name: " + txtFavName.Text);
+            CreateFav.Visible = false;
+            // Insert into database, will display one more new save
+        }
+
+        private void validateCreateFav()
+        {
+            if (CreateFav.Visible)
+            {
+                Validate("VGFav");
+            }
         }
     }
 
