@@ -11,16 +11,16 @@ namespace ArtGalleryWebsite.Error_Pages
 {
 
 
-    public partial class Oops
+    public partial class Internal
     {
 
         /// <summary>
-        /// OopsErr control.
+        /// InternalErr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::ArtGalleryWebsite.User_Control.ErrorTemplate OopsErr;
+        protected global::ArtGalleryWebsite.User_Control.ErrorTemplate InternalErr;
     }
 }

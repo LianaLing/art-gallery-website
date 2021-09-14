@@ -20,20 +20,6 @@ namespace ArtGalleryWebsite
     {
         protected List<ArtQuery> Arts = new List<ArtQuery> { };
 
-        private void Page_Error(object sender, EventArgs e)
-        {
-            Exception exc = Server.GetLastError();
-
-            // Handle specific exception.
-            if (exc is HttpUnhandledException)
-            {
-                //Response.Write("An error occurred on this page. Please verify your information to resolve the issue.");
-                //ErrorMsgTextBox.Text = "An error occurred on this page. Please verify your information to resolve the issue.";
-            }
-            // Clear the error from the server.
-            Server.ClearError();
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             // Get current session user
@@ -61,11 +47,14 @@ namespace ArtGalleryWebsite
 
             setDefault(user);
 
-            if (!IsPostBack)
+            if (!IsPostBack) // First time loading page
             {
                 ShipBill.Visible = false;
                 btnContinue.Visible = true;
                 btnPayWith.Visible = false;
+                lblPayConfirmHeader.Text = "";
+                lblPayConfirmBody.Text = "";
+                PaymentIndicator.Visible = false;
             }
 
             validateShipBill();
@@ -153,6 +142,8 @@ namespace ArtGalleryWebsite
             validateShipBill();
             string alertContent = "";
 
+            PaymentIndicator.Visible = true;
+
             //System.Diagnostics.Trace.WriteLine(txtFullName.Text);
             //System.Diagnostics.Trace.WriteLine(txtEmail.Text);
             //System.Diagnostics.Trace.WriteLine(txtAddrL1.Text);
@@ -161,7 +152,6 @@ namespace ArtGalleryWebsite
             //System.Diagnostics.Trace.WriteLine(txtAddrPC.Text);
             //System.Diagnostics.Trace.WriteLine(txtAddrState.Text);
             //System.Diagnostics.Trace.WriteLine(txtAddrCountry.Text);
-            System.Diagnostics.Trace.WriteLine(txtAddr.Text);
 
             if (txtFullName != null
                 && txtEmail != null
@@ -170,7 +160,16 @@ namespace ArtGalleryWebsite
                 && txtAddrPC != null
                 && txtAddrState != null
                 && txtAddrCountry != null
-                && txtPhone != null)
+                && txtPhone != null
+
+                && txtFullName.Text != ""
+                && txtEmail.Text != ""
+                && txtAddrL1.Text != ""
+                && txtAddrCity.Text != ""
+                && txtAddrPC.Text != ""
+                && txtAddrState.Text != ""
+                && txtAddrCountry.Text != ""
+                && txtPhone.Text != "")
             {
                 alertContent += "Full Name: " + txtFullName.Text;
                 alertContent += "\nEmail: " + txtEmail.Text;
@@ -201,16 +200,20 @@ namespace ArtGalleryWebsite
                 }
                 else
                 {
-                    alertContent = "Please select a payment method";
+                    alertContent = "Please select a payment method.";
                 }
+
+                lblPayConfirmHeader.Text = "Payment Successful";
+                lblPayConfirmBody.Text = alertContent;
 
                 System.Diagnostics.Trace.WriteLine(alertContent);
             }
             else
             {
-                System.Diagnostics.Trace.WriteLine("PLease fill up details");
+                lblPayConfirmHeader.Text = "Payment Failed";
+                lblPayConfirmBody.Text = "Please fill up the necessary details.";
+                System.Diagnostics.Trace.WriteLine("Please fill up shipping details.");
             }
-
         }
     }
 }

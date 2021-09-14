@@ -91,7 +91,7 @@
 
     <!-- Title -->
     <div v-if="save.length > 0" class="font-garamond mt-2">
-      <a :href="save[0].art.url" class="font-bold text-xl line-clamp-1">{{
+      <a href="Construction.aspx" class="font-bold text-xl line-clamp-1">{{
         save[0].name
       }}</a>
       <br />

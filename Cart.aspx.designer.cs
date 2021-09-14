@@ -16,6 +16,8 @@ namespace ArtGalleryWebsite
         protected global::System.Web.UI.WebControls.Label lblSubtotal;
         protected global::System.Web.UI.WebControls.Label lblShipping;
         protected global::System.Web.UI.WebControls.Label lblTotal;
+        protected global::System.Web.UI.WebControls.Label lblPayConfirmHeader;
+        protected global::System.Web.UI.WebControls.Label lblPayConfirmBody;
 
         /// <summary>
         /// hdrItems control.
@@ -34,6 +36,7 @@ namespace ArtGalleryWebsite
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel ItemsList;
+        protected global::System.Web.UI.WebControls.Panel PaymentIndicator;
 
         /// <summary>
         /// hdrShipBill control.

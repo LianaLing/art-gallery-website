@@ -19,15 +19,27 @@ namespace ArtGalleryWebsite
 
         void Application_Error(object sender, EventArgs e)
         {
-            Exception exc = Server.GetLastError();
+            //Exception exc = Server.GetLastError();
+            //Response.Clear();
 
-            if (exc is HttpUnhandledException)
-            {
-                //// Pass the error on to the error page.
-                //Response.TrySkipIisCustomErrors = true;
-                ////Response.Redirect("Error_Pages/Oops.aspx");
-                //Server.ClearError();
-            }
+            //HttpException httpException = exc as HttpException;
+
+            //if (httpException != null)
+            //{
+            //    switch (httpException.GetHttpCode())
+            //    {
+            //        case 404:
+            //            // Page not found
+            //            Response.Redirect("Error_Pages/Oops.aspx");
+            //            break;
+            //        //case 500:
+            //        //    RouteData.Values.Add("action", "HttpError500");
+            //        //    break;
+            //        //default:
+            //        //    RouteData.Values.Add("action", "General");
+            //        //    break;
+            //    }
+            //}
         }
     }
 }

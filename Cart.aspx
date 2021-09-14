@@ -391,6 +391,11 @@
           />
         </div>
       </div>
+      <!-- Confirmation Message -->
+      <asp:Panel runat="server" ID="PaymentIndicator" CssClass="p-10 border-accent border-dashed border-2 display">
+        <asp:Label runat="server" ID="lblPayConfirmHeader" class="text-xl block font-bold text-accent"/>
+        <asp:Label runat="server" ID="lblPayConfirmBody" class="text-lg block"/>
+      </asp:Panel>
     </div>
   </div>
 

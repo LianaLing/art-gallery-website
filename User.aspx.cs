@@ -98,7 +98,7 @@ namespace ArtGalleryWebsite
            {
                 new Icon("icon_0001", "https://img.icons8.com/material/24/000000/pencil--v1.png", "Edit Icon", "", "https://icons8.com/icon/5824/pencil", "Icons8"),
                 new Icon("icon_0002", "https://img.icons8.com/material-rounded/24/000000/share.png", "Share Icon", "", "https://icons8.com/icon/83213/share", "Icons8"),
-                new Icon("icon_0003", "https://img.icons8.com/material-outlined/24/000000/settings--v1.png", "Settings Icon", "", "https://icons8.com/icon/82535/settings", "Icons8"),
+                new Icon("icon_0003", "https://img.icons8.com/material-outlined/24/000000/settings--v1.png", "Settings Icon", "UserDetail.aspx", "https://icons8.com/icon/82535/settings", "Icons8"),
                 new Icon("icon_0004", "https://img.icons8.com/material-rounded/24/000000/add.png", "Add Icon", "", "https://icons8.com/icon/85096/add", "Icons8"),
             };
 
