@@ -90,7 +90,7 @@ namespace ArtGalleryWebsite
     public partial class User : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
+        private static ApplicationDbContext dbContext = (ApplicationDbContext) unitOfWork.GetContext();
 
         protected void Page_Load(object sender, EventArgs e)
         {

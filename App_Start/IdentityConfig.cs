@@ -8,6 +8,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Models.Identity;
+using ArtGalleryWebsite.DAL;
 
 namespace ArtGalleryWebsite
 {

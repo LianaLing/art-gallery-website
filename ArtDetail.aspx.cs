@@ -16,7 +16,7 @@ namespace ArtGalleryWebsite
     public partial class ArtDetail : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
+        private static ApplicationDbContext dbContext = (ApplicationDbContext) unitOfWork.GetContext();
 
         protected int artId;
         protected int favId;

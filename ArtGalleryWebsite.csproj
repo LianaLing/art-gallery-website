@@ -248,7 +248,7 @@
     <Compile Include="Construction.aspx.designer.cs">
       <DependentUpon>Construction.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DAL\ArtGalleryDbContext.cs" />
+    <Compile Include="DAL\ApplicationDbContext.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="DAL\UserLikesExtension.cs" />
@@ -293,6 +293,8 @@
     <Compile Include="Models\ApiResponse.cs" />
     <Compile Include="Models\Entities\Art.cs" />
     <Compile Include="Models\Entities\Author.cs" />
+    <Compile Include="Models\Entities\ShoppingCart.cs" />
+    <Compile Include="Models\Entities\CartItem.cs" />
     <Compile Include="Models\Entities\FavArt.cs" />
     <Compile Include="Models\Entities\Favourite.cs" />
     <Compile Include="Models\Entities\UserLikes.cs" />
@@ -357,6 +359,7 @@
   <ItemGroup>
     <Folder Include="Scripts\dist\" />
     <Folder Include="Sql\data\" />
+    <Folder Include="Sql\tables\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

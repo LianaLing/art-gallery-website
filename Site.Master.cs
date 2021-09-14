@@ -5,15 +5,20 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Utils;
+using ArtGalleryWebsite.DAL;
+using ArtGalleryWebsite.Models.Entities;
+using System.Collections.Generic;
 
 namespace ArtGalleryWebsite
 {
 	public partial class SiteMaster : MasterPage
 	{
-		protected void Page_Load(object sender, EventArgs e)
+		private static UnitOfWork unitOfWork = new UnitOfWork();
+
+        protected void Page_Load(object sender, EventArgs e)
 		{
-			// If current user is logged in
-			if (Page.User.Identity.IsAuthenticated)
+            // If current user is logged in
+            if (Page.User.Identity.IsAuthenticated)
             {
                 ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
@@ -22,6 +27,12 @@ namespace ArtGalleryWebsite
 
 				// Set the user as a session state (filtered out 'PasswordHash')
 				Session["user"] = IdentityHelper.FilterUser(user);
+
+				// User's shopping cart
+				List<ShoppingCart> found = unitOfWork.ShoppingCartRepository.Get(cart => cart.UserId == user.Id);
+
+				// Set the user's shopping cart as a session state
+				Session["cart"] = found.Count != 0 ? found[0] : null;
             }
 			
 			// Inject session state to client side

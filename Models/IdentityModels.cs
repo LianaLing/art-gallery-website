@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ArtGalleryWebsite.Models.Identity;
+using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite.Models
 {
@@ -25,17 +26,11 @@ namespace ArtGalleryWebsite.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<Identity.User, Role, int, UserLogin, UserRole, UserClaim>
+    public class IdentityDbContext : IdentityDbContext<Identity.User, Role, int, UserLogin, UserRole, UserClaim>
     {
-        public ApplicationDbContext()
-            : base("ArtGalleryDB")
+        public IdentityDbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString)
         {
-            Configuration.LazyLoadingEnabled = false;
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

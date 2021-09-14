@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System;
 using System.Collections;
 using System.Linq;
 using System.Web;
@@ -19,7 +18,7 @@ namespace ArtGalleryWebsite
     public partial class Cart : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
+        private static ApplicationDbContext dbContext = (ApplicationDbContext) unitOfWork.GetContext();
 
         protected IEnumerable<ArtQuery> Arts;
 
