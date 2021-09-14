@@ -21,6 +21,8 @@ namespace ArtGalleryWebsite
         private static UnitOfWork unitOfWork = new UnitOfWork();
         private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
 
+        protected IEnumerable<ArtQuery> Arts;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             // Get current session user
@@ -33,14 +35,14 @@ namespace ArtGalleryWebsite
             // Register hidden field to pass data from backend to frontend
             //registerHiddenField("arts", data);
 
-            data = data.Select(d =>
+            Arts = data.Select(d =>
             {
                 d.price = decimal.Round(d.price, 2, MidpointRounding.AwayFromZero);
                 return d;
             });
 
             // Calculate
-            decimal subtotal = data.Sum(d => d.price);
+            decimal subtotal = Arts.Sum(d => d.price);
             decimal shipping = 20;
             decimal total = subtotal + shipping;
 

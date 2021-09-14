@@ -13,7 +13,7 @@
         </div>
 
         <%-- User Control --%>
-        <div class="text-sm font-garamond w-screen bg-accent text-white text-center p-10 bottom-0 -mx-6 mt-40">
+        <div class="text-sm font-garamond bg-accent text-white text-center p-10 bottom-0 mt-40">
             <p class="text-lg">Credits to:</p>
             <uc:References ID="ArtDetailRef1" runat="server" CreditRef="https://icons8.com/icon/99996/left-arrow" Alt="Left Arrow Icon" Author="Icons8" />
             <br/>
