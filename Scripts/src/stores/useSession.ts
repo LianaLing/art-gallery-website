@@ -6,5 +6,5 @@ import { Session } from "../types/state";
  * this is achieved using browser's local storage.
  */
 export const useSession = createGlobalState(() =>
-  useStorage<Session>("art-gallery-session", {})
+  useStorage<Session>("art-gallery-session", { user: null, cart: null })
 );

@@ -69,7 +69,7 @@
                     block
                     text-white
                   "
-                  @click="addToCartHandler($event, art.id)"
+                  @click="addToCartHandler($event)"
                 >
                   Add to Cart
                 </button>
@@ -87,7 +87,7 @@
                     items-center
                     block
                   "
-                  @click="addToCartHandler($event, art.id)"
+                  @click="addToCartHandler($event)"
                 >
                   Add to Cart
                 </button>
@@ -130,7 +130,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import Icon from "../components/Icon.vue";
 import Reference from "../components/Reference.vue";
 import Share from "../components/Share.vue";
@@ -163,11 +163,11 @@ export default defineComponent({
       e.preventDefault();
       triggerBackendControl(e, "MainContent_btnCartPage");
     },
-    addToCartHandler(e: Event, id: number) {
+    addToCartHandler(e: Event) {
       // Prevent button triggers refresh
       e.preventDefault();
-      alert("Clicked on add to cart button");
-      triggerBackendControl(e, "MainContent_btnAddToCart", `${id}`);
+      // alert("Clicked on add to cart button");
+      triggerBackendControl(e, "MainContent_btnAddToCart");
     },
     likeArtHandler(e: Event) {
       e.preventDefault();

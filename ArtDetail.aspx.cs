@@ -39,7 +39,7 @@ namespace ArtGalleryWebsite
 
             // Get data for the page
             ArtDetailDTO data = unitOfWork.GetArtDetailById(getArtId());
-            List<Favourite> favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
+            IEnumerable<Favourite> favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
             IEnumerable<FavDTO> saved = unitOfWork.GetUserFavourites(user.Id);
             bool liked = unitOfWork.isArtLiked(user.Id, getArtId());
 
@@ -151,34 +151,59 @@ namespace ArtGalleryWebsite
 
         protected void btnLikeHandler_click(object sender, EventArgs e)
         {
-            if (getArtId() != 0)
+            // Check if art id exists in query string
+            if (getArtId() == 0) throw new Exception("Invalid Art Id");
+
+            // Get current session user
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+
+            try
             {
-                // Get current session user
-                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+                int art_id = getArtId();
 
-                try
+                // Check if is art not liked
+                if (!unitOfWork.isArtLiked(user.Id, art_id))
                 {
-                    int art_id = getArtId();
-
-                    // Check if is art not liked
-                    if (!unitOfWork.isArtLiked(user.Id, art_id))
-                    {
-                        unitOfWork.addLikeToArt(user.Id, art_id);
-                    }
-                    else
-                    {
-                        unitOfWork.removeLikeFromArt(user.Id, art_id);
-                    }
-
-                    // Refresh the page
-                    Server.TransferRequest(Request.Url.AbsolutePath, false);
+                    unitOfWork.addLikeToArt(user.Id, art_id);
                 }
-                catch (Exception ex)
+                else
                 {
-                    System.Diagnostics.Trace.WriteLine($"btnLikeHandler_click: {ex}");
+                    unitOfWork.removeLikeFromArt(user.Id, art_id);
                 }
+
+                // Refresh the page
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
             }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"btnLikeHandler_click: {ex}");
+            }
+        }
+
+        protected void btnAddToCart_click(object sender, EventArgs e)
+        {
+            // Check if art id exists in query string
+            if (getArtId() == 0) throw new Exception("Invalid Art Id");
+
+            // Get current session user
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+
+            ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
+
+            // If the user does not have a shopping cart
+            if (cart == null)
+                cart = unitOfWork.CreateShoppingCart(user.Id);
+
+            // Add one art the the shopping cart
+            cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
+
+            // Update session state
+            Session["cart"] = cart;
+
+            // Refresh page
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
         protected void btnCartPage_click(object sender, EventArgs e)

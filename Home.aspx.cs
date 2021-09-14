@@ -31,12 +31,18 @@ namespace ArtGalleryWebsite
 
             // Get current session user
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser currentUser = manager.FindById(Page.User.Identity.GetUserId<int>());
+            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+
+            // User's shopping cart
+            List<ShoppingCart> found = (List<ShoppingCart>)unitOfWork.ShoppingCartRepository.Get(cart => cart.UserId == user.Id);
+
+            // Set the user's shopping cart as a session state
+            Session["cart"] = found.Count != 0 ? found[0] : null;
 
             // Get data for the page
             var data = unitOfWork.GetArtDetails();
-            var favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == currentUser.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
-            var saved = unitOfWork.GetUserFavourites(currentUser.Id);
+            var favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
+            var saved = unitOfWork.GetUserFavourites(user.Id);
 
             // Get data for the page
             // Inject the data (serialized as a JSON string) as a hidden field at client side

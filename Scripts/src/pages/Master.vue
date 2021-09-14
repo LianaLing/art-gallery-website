@@ -149,7 +149,10 @@ export default defineComponent({
   data() {
     const session = useSession();
     session.value = getStateFromBackend<Session>("session");
+
     const claims = <Claims[]>session.value.user?.claims;
+
+    console.log(session.value);
 
     // const claims = claimsArr[0];
     return { session, claims };

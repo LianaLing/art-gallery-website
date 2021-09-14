@@ -17,24 +17,6 @@ namespace ArtGalleryWebsite
 
         protected void Page_Load(object sender, EventArgs e)
 		{
-            // If current user is logged in
-            if (Page.User.Identity.IsAuthenticated)
-            {
-                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
-				// Get the current user
-                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
-
-				// Set the user as a session state (filtered out 'PasswordHash')
-				Session["user"] = IdentityHelper.FilterUser(user);
-
-				// User's shopping cart
-				List<ShoppingCart> found = unitOfWork.ShoppingCartRepository.Get(cart => cart.UserId == user.Id);
-
-				// Set the user's shopping cart as a session state
-				Session["cart"] = found.Count != 0 ? found[0] : null;
-            }
-			
 			// Inject session state to client side
 			Helper.InjectSessionState(Page, Session);
 		}

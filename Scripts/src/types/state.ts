@@ -3,7 +3,8 @@
  * ASP.NET
  */
 export type Session = {
-  user?: User;
+  user: User | null;
+  cart: Cart | null;
 };
 
 export type User = {
@@ -27,6 +28,12 @@ export type User = {
   securityStamp: string;
   twoFactorEnabled: boolean;
   userName: string;
+};
+
+export type Cart = {
+  id: number;
+  total: number;
+  userId: number;
 };
 
 // This is the possible state of an authentication view (Auth Modal)
