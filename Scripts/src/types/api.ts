@@ -145,7 +145,7 @@ export type FavResponse = {
 export type FavouriteResponse = {
   id: number;
   name: string;
-}
+};
 
 export type Claims = {
   id: number;
@@ -155,6 +155,6 @@ export type Claims = {
 };
 
 export type FavArtCount = {
-  total_art: number;
-  id: number;
-}
+  totalArt: number;
+  favId: number;
+};

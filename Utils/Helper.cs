@@ -1,10 +1,9 @@
-﻿using ArtGalleryWebsite.Models;
+﻿using System.Web;
+using System.Web.UI;
+using System.Web.SessionState;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.SessionState;
-using System.Web.UI;
 
 namespace ArtGalleryWebsite.Utils
 {
@@ -28,12 +27,19 @@ namespace ArtGalleryWebsite.Utils
             return values;
         }
 
-        // Helps to inject session state to client side
-        public static void InjectSessionState(System.Web.UI.Page page, HttpSessionState session, string id = "session")
+        // Helps to register hidden state to client side
+        public static void RegisterHiddenField(Page page, string id, object data)
         {
-            page.ClientScript.RegisterHiddenField(id, SerializeObject(GetSessionDatas(session)));
+            page.ClientScript.RegisterHiddenField(id, SerializeObject(data));
         }
 
+        // Helps to inject session state to client side
+        public static void InjectSessionState(Page page, HttpSessionState session, string id = "session")
+        {
+            RegisterHiddenField(page, id, GetSessionDatas(session));
+        }
+
+        // Serialize object to JSON string (using CamelCase)
         public static string SerializeObject(object value, bool camelCase = true, bool formatIndent = false)
         {
             DefaultContractResolver contractResolver = new DefaultContractResolver

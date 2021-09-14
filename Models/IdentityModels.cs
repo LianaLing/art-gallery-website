@@ -32,22 +32,5 @@ namespace ArtGalleryWebsite.Models
             : base(nameOrConnectionString)
         {
         }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            // Map entities to respective tables
-            modelBuilder.Entity<Identity.User>().ToTable("User");
-            modelBuilder.Entity<Role>().ToTable("Role");
-            modelBuilder.Entity<UserRole>().ToTable("UserRole");
-            modelBuilder.Entity<UserClaim>().ToTable("UserClaim");
-            modelBuilder.Entity<UserLogin>().ToTable("UserLogin");
-
-            // Set auto-increment properties
-            modelBuilder.Entity<Identity.User>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            modelBuilder.Entity<UserClaim>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            modelBuilder.Entity<Role>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-        }
     }
 }

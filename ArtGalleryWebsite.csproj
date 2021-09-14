@@ -249,9 +249,11 @@
       <DependentUpon>Construction.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\ApplicationDbContext.cs" />
+    <Compile Include="DAL\Extensions\ArtsExtension.cs" />
+    <Compile Include="DAL\Extensions\FavouriteExtension.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
-    <Compile Include="DAL\UserLikesExtension.cs" />
+    <Compile Include="DAL\Extensions\UserLikesExtension.cs" />
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -311,8 +313,9 @@
     <Compile Include="Models\OldEntities\Favourite.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\OldEntities\User.cs" />
-    <Compile Include="Models\Queries\ArtQuery.cs" />
-    <Compile Include="Models\Queries\FavQuery.cs" />
+    <Compile Include="Models\ArtCountInFavDTO.cs" />
+    <Compile Include="Models\ArtDetailDTO.cs" />
+    <Compile Include="Models\FavDTO.cs" />
     <Compile Include="Models\ISqlParser.cs" />
     <Compile Include="Models\AuthRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -357,6 +360,7 @@
     <Compile Include="Utils\IdentityHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\Queries\" />
     <Folder Include="Scripts\dist\" />
     <Folder Include="Sql\data\" />
     <Folder Include="Sql\tables\" />

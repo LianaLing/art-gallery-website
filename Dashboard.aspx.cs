@@ -52,7 +52,7 @@ namespace ArtGalleryWebsite
       {
         //List<Models.Entities.Art> arts = Database.Select<Models.Entities.Art>($"SELECT * FROM Art WHERE author_id = {user.AuthorId};");
 
-        IEnumerable<Art> arts = unitOfWork.ArtRepository.Get(filter: art => art.AuthorID == user.AuthorId, orderBy: art => art.OrderBy(a => a.Likes));
+        IEnumerable<Art> arts = unitOfWork.ArtRepository.Get(filter: art => art.AuthorId == user.AuthorId, orderBy: art => art.OrderBy(a => a.Likes));
 
         if (arts.Count() > 0 && arts != null)
         {

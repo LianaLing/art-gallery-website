@@ -41,14 +41,14 @@ namespace ArtGalleryWebsite.Models.Entities
         public string Url { get; set; }
 
         [Column("author_id")]
-        public int? AuthorID { get; set; }
+        public int? AuthorId { get; set; }
 
         public virtual Author Author { get; set; }
 
         override
         public string ToString()
         {
-            return $"id: {Id}\nstyle: {Style}\ndescription: {Description}\nprice: {Price}\nstock: {Stock}\nlikes: {Likes}\nurl: {Url}\nauthor_id: {AuthorID}\nauthor: {Author}";
+            return $"id: {Id}\nstyle: {Style}\ndescription: {Description}\nprice: {Price}\nstock: {Stock}\nlikes: {Likes}\nurl: {Url}\nauthor_id: {AuthorId}\nauthor: {Author}";
         }
     }
 

@@ -140,15 +140,12 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import SavePopoverPanel from "../components/SavePopoverPanel.vue";
 
 const icons = getStateFromBackend<API.Icon[]>("iconsState");
-const arts = getStateFromBackend<API.ArtResponse[]>("artState");
+const art = getStateFromBackend<API.ArtResponse>("artState");
 const favs = getStateFromBackend<API.FavouriteResponse[]>("favsState");
 const saved = getStateFromBackend<API.FavResponse[]>("savedState");
 const liked = getStateFromBackend<boolean>("likedState");
 
-// All valid data is in the first response
-const art = arts[0];
-
-console.log(liked);
+console.log(art);
 
 export default defineComponent({
   components: {
