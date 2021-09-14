@@ -89,102 +89,209 @@
           <!-- Shipping Address -->
           <div>
             <p class="font-bold">Shipping Address</p>
-            <label for="txtFullName" class="p-2"> Full Name </label>
-            <asp:RequiredFieldValidator runat="server" ID="ReqFullName"
-                ErrorMessage="* Required"
-                ControlToValidate="txtFullName"
-                CssClass="text-red text-sm"
-                >
-                </asp:RequiredFieldValidator>
-            <asp:TextBox
-              runat="server"
-              CssClass="form-input block rounded-full block w-full"
-              ID="txtFullName"
-              placeholder="John M. Doe"
-            />
-            <asp:RegularExpressionValidator runat="server" ID="RegexFullName"
-                ErrorMessage="Please enter alphabets and spaces only."
-                ControlToValidate="txtFullName"
-                ValidationExpression="[a-zA-Z]+([\s][a-zA-Z]+)*"
-                CssClass="text-red text-sm block"
+            <div class="grid grid-cols-2 grid-auto-rows">
+              <label for="txtFullName" class="p-2"> Full Name </label>
+              <asp:RequiredFieldValidator runat="server" ID="ReqFullName"
+                  ErrorMessage="* Required"
+                  ControlToValidate="txtFullName"
+                  CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RequiredFieldValidator>
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input block rounded-full block w-full col-span-2"
+                ID="txtFullName"
+                placeholder="John M. Doe"
+              />
+              <asp:RegularExpressionValidator runat="server" ID="RegexFullName"
+                  ErrorMessage="Please enter alphabets and spaces only."
+                  ControlToValidate="txtFullName"
+                  ValidationExpression="[a-zA-Z]+([\s][a-zA-Z]+)*"
+                  CssClass="text-red text-sm col-span-2"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RegularExpressionValidator>
+
+              <label for="txtEmail" class="p-2"> Email</label>
+              <asp:RequiredFieldValidator runat="server" ID="ReqEmail"
+                  ErrorMessage="* Required"
+                  ControlToValidate="txtEmail"
+                  CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RequiredFieldValidator>
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input rounded-full block w-full col-span-2"
+                ID="txtEmail"
+                placeholder="john@example.com"
+              />
+              <asp:RegularExpressionValidator runat="server" ID="RegexEmail"
+                  ErrorMessage="Please enter a valid email."
+                  ControlToValidate="txtEmail"
+                  ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+                  CssClass="text-red text-sm col-span-2"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RegularExpressionValidator>
+
+              <label for="txtAddrL1" class="p-2"> Address Line 1 </label>
+              <asp:RequiredFieldValidator runat="server" ID="ReqAddrL1"
+                  ErrorMessage="* Required"
+                  ControlToValidate="txtAddrL1"
+                  CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RequiredFieldValidator>
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input rounded-full block w-full col-span-2"
+                ID="txtAddrL1"
+                placeholder="542 W. 15th Street"
+              />
+              <asp:RegularExpressionValidator runat="server" ID="RangeAddrL1"
+                ControlToValidate="txtAddrL1"
+                ErrorMessage="Please enter less than 256 characters."
+                ValidationExpression="^.{1,255}$"
+                CssClass="text-red text-sm col-span-2"
+                ValidationGroup="VGShipBill"
                 >
                 </asp:RegularExpressionValidator>
-
-            <label for="txtEmail" class="p-2"> Email</label>
-            <asp:RequiredFieldValidator runat="server" ID="ReqEmail"
-                ErrorMessage="* Required"
-                ControlToValidate="txtEmail"
+              <label for="txtAddrL2" class="p-2"> Address Line 2 </label>
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input rounded-full block w-full col-span-2"
+                ID="txtAddrL2"
+                placeholder="Apartment 1, Suite 2"
+              />
+              <asp:RegularExpressionValidator runat="server" ID="RangeAddrL2"
+                ControlToValidate="txtAddrL2"
+                ErrorMessage="Please enter less than 256 characters."
+                ValidationExpression="^.{1,255}$"
                 CssClass="text-red text-sm"
-                >
-                </asp:RequiredFieldValidator>
-            <asp:TextBox
-              runat="server"
-              CssClass="form-input rounded-full block w-full"
-              ID="txtEmail"
-              placeholder="john@example.com"
-            />
-            <asp:RegularExpressionValidator runat="server" ID="RegexEmail"
-                ErrorMessage="Please enter a valid email."
-                ControlToValidate="txtEmail"
-                ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-                CssClass="text-red text-sm block"
+                ValidationGroup="VGShipBill"
                 >
                 </asp:RegularExpressionValidator>
+              </div>
 
-            <label for="txtAddr" class="p-2"> Address</label>
-            <asp:RequiredFieldValidator runat="server" ID="ReqAddr"
-                ErrorMessage="* Required"
-                ControlToValidate="txtAddr"
-                CssClass="text-red text-sm"
-                >
-                </asp:RequiredFieldValidator>
-            <asp:TextBox
-              runat="server"
-              CssClass="form-input rounded-full block w-full"
-              ID="txtAddr"
-              placeholder="542 W. 15th Street"
-            />
-            <br/>
-
-            <label for="txtPhone" class="p-2">Phone</label>
-            <asp:RequiredFieldValidator runat="server" ID="ReqPhone"
-                ErrorMessage="* Required"
-                ControlToValidate="txtPhone"
-                CssClass="text-red text-sm"
-                >
-                </asp:RequiredFieldValidator>
-            <asp:TextBox
-              runat="server"
-              CssClass="form-input rounded-full block w-full"
-              id="txtPhone"
-              placeholder="+6012-3456 789"
-            />
-            <asp:RegularExpressionValidator runat="server" ID="RegexPhone"
-                ErrorMessage="Please enter a valid phone number."
-                ControlToValidate="txtPhone"
-                ValidationExpression="^(00|\+)[1-9]{1}([0-9][\s]*){9,16}$"
-                CssClass="text-red text-sm block"
+            <div class="grid grid-cols-4 grid-auto-rows row-auto gap-x-2">
+              <label for="txtAddrCity" class="p-2"> City </label>
+              <asp:RequiredFieldValidator runat="server" ID="ReqAddrCity"
+                  ErrorMessage="* Required"
+                  ControlToValidate="txtAddrCity"
+                  CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RequiredFieldValidator>
+              <label for="txtAddrPC" class="p-2"> Postal Code </label>
+              <asp:RequiredFieldValidator runat="server" ID="ReqAddrPC"
+                  ErrorMessage="* Required"
+                  ControlToValidate="txtAddrPC"
+                  CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RequiredFieldValidator>
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input rounded-full col-start-1 col-end-3"
+                ID="txtAddrCity"
+                placeholder="Shah Alam"
+              />
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input rounded-full col-start-3 col-end-5"
+                ID="txtAddrPC"
+                placeholder="40000"
+              />
+              <asp:RegularExpressionValidator runat="server" ID="RangeAddrCity"
+                ControlToValidate="txtAddrCity"
+                ErrorMessage="Please enter a valid city."
+                ValidationExpression="[a-zA-Z ]{2,255}"
+                ValidationGroup="VGShipBill"
+                CssClass="text-red text-sm col-start-1 col-end-3"
                 >
                 </asp:RegularExpressionValidator>
+              <asp:RegularExpressionValidator runat="server" ID="RangeAddrPC"
+                ControlToValidate="txtAddrPC"
+                ErrorMessage="Please enter a valid postal code."
+                ValidationExpression="^([0-9A-Za-z]{5}|[0-9A-Za-z]{9}|(([0-9a-zA-Z]{5}-){1}[0-9a-zA-Z]{4}))$"
+                ValidationGroup="VGShipBill"
+                CssClass="text-red text-sm col-start-3 col-end-5"
+                >
+                </asp:RegularExpressionValidator>
+              <label for="txtAddrState" class="p-2"> State </label>
+              <asp:RequiredFieldValidator runat="server" ID="ReqAddrState"
+                  ErrorMessage="* Required"
+                  ControlToValidate="txtAddrState"
+                  CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RequiredFieldValidator>
+              <label for="txtAddrCountry" class="p-2"> Country </label>
+              <asp:RequiredFieldValidator runat="server" ID="ReqAddrCountry"
+                  ErrorMessage="* Required"
+                  ControlToValidate="txtAddrCountry"
+                  CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RequiredFieldValidator>
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input rounded-full col-start-1 col-end-3"
+                ID="txtAddrState"
+                placeholder="Selangor"
+              />
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input rounded-full col-start-3 col-end-5"
+                ID="txtAddrCountry"
+                placeholder="Malaysia"
+              />
+              <asp:RegularExpressionValidator runat="server" ID="RangeAddrState"
+                ControlToValidate="txtAddrState"
+                ErrorMessage="Please enter a valid state."
+                ValidationExpression="[a-zA-Z ]{2,255}"
+                ValidationGroup="VGShipBill col-start-1 col-end-3"
+                CssClass="text-red text-sm"
+                >
+                </asp:RegularExpressionValidator>
+              <asp:RegularExpressionValidator runat="server" ID="RangeAddrCountry"
+                ControlToValidate="txtAddrCountry"
+                ErrorMessage="Please enter a valid country."
+                ValidationExpression="[a-zA-Z ]{2,255}"
+                ValidationGroup="VGShipBill"
+                CssClass="text-red text-sm col-start-3 col-end-5"
+                >
+                </asp:RegularExpressionValidator>
+              </div>
+
+            <div class="grid grid-cols-2 grid-auto-rows grid-rows-auto">
+              <label for="txtPhone" class="p-2">Phone</label>
+              <asp:RequiredFieldValidator runat="server" ID="ReqPhone"
+                  ErrorMessage="* Required"
+                  ControlToValidate="txtPhone"
+                  CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RequiredFieldValidator>
+              <asp:TextBox
+                runat="server"
+                CssClass="form-input rounded-full block w-full col-span-2"
+                id="txtPhone"
+                placeholder="+6012-3456 789"
+              />
+              <asp:RegularExpressionValidator runat="server" ID="RegexPhone"
+                  ErrorMessage="Please enter a valid phone number."
+                  ControlToValidate="txtPhone"
+                  ValidationExpression="^(00|\+)[1-9]{1}([0-9-][\s]*){9,20}$"
+                  CssClass="text-red text-sm col-span-2"
+                  ValidationGroup="VGShipBill"
+                  >
+                  </asp:RegularExpressionValidator>
+            </div>
 
           </div>
-        <!-- Submit Button -->
-        <div class="py-5 flex justify-center">
-          <asp:Button
-            runat="server"
-            ID="btnSubmitShipBill"
-            OnCLick="btnSubmitShipBill_click"
-            CssClass="
-              bg-accent
-              text-white
-              px-5
-              py-2
-              rounded-full
-              hover:bg-accent-hover
-            "
-            Text="Submit Shipping Details"
-          />
-        </div>
         </asp:Panel>
       </div>
     </div>
@@ -218,6 +325,7 @@
           <asp:RadioButton
             runat="server"
             CssClass="form-radio text-accent mr-2"
+            Checked="True"
             ID="rdbtnCard"
             value="card"
             GroupName="PayType"
@@ -235,7 +343,7 @@
             runat="server"
             CssClass="form-radio text-accent mr-2"
             ID="rdbtnGrab"
-            value="grab"
+            value="grabpay"
             GroupName="PayType"
           />
           <label for="rdbtnGrab" class=""> GrabPay </label><br/>
@@ -248,15 +356,32 @@
           />
           <label for="rdbtnFpx" class=""> FPX </label><br/>
         </div>
-        <!-- Pay Button -->
+        <!-- Continue Button -->
         <div class="py-5 flex justify-center">
           <asp:Button
             runat="server"
-            ID="btnPayWith"
-            OnCLick="btnPayWith_click"
+            ID="btnContinue"
+            OnClick="btnContinue_click"
             CssClass="
               bg-accent
               text-white
+              font-bold
+              px-5
+              py-2
+              rounded-full
+              hover:bg-accent-hover
+            "
+            Text="Continue With Transaction"
+          />
+        <!-- Pay Button -->
+          <asp:Button
+            runat="server"
+            ID="btnPayWith"
+            OnClick="btnPayWith_click"
+            CssClass="
+              bg-accent
+              text-white
+              font-bold
               px-5
               py-2
               rounded-full
@@ -266,6 +391,11 @@
           />
         </div>
       </div>
+      <!-- Confirmation Message -->
+      <asp:Panel runat="server" ID="PaymentIndicator" CssClass="p-10 border-accent border-dashed border-2 display">
+        <asp:Label runat="server" ID="lblPayConfirmHeader" class="text-xl block font-bold text-accent"/>
+        <asp:Label runat="server" ID="lblPayConfirmBody" class="text-lg block"/>
+      </asp:Panel>
     </div>
   </div>
 

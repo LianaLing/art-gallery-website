@@ -48,6 +48,20 @@ namespace ArtGalleryWebsite
             setLblSubtotal(subtotal);
             setLblShipping(shipping);
             setTotal(total);
+
+            setDefault(user);
+
+            if (!IsPostBack) // First time loading page
+            {
+                ShipBill.Visible = false;
+                btnContinue.Visible = true;
+                btnPayWith.Visible = false;
+                lblPayConfirmHeader.Text = "";
+                lblPayConfirmBody.Text = "";
+                PaymentIndicator.Visible = false;
+            }
+
+            validateShipBill();
         }
 
         // Fetch all [Art]s in the database
@@ -119,6 +133,13 @@ namespace ArtGalleryWebsite
             lblTotal.Text = decimal.Round(total, 2) + "";
         }
 
+        private void setDefault(ApplicationUser user)
+        {
+            txtFullName.Text = user.Name;
+            txtEmail.Text = user.Email;
+            txtPhone.Text = user.PhoneNumber;
+        }
+
         protected void btnShowItems_click(object sender, EventArgs e)
         {
             ItemsList.Visible = !ItemsList.Visible;
@@ -127,39 +148,102 @@ namespace ArtGalleryWebsite
         protected void btnShowShipBill_click(object sender, EventArgs e)
         {
             ShipBill.Visible = !ShipBill.Visible;
+            btnPayWith.Visible = !btnPayWith.Visible;
+            btnContinue.Visible = !btnContinue.Visible;
+            validateShipBill();
+        }
+
+        protected void btnContinue_click(object sender, EventArgs e)
+        {
+            ShipBill.Visible = true;
+            btnPayWith.Visible = true;
+            btnContinue.Visible = false;
+            validateShipBill();
+        }
+
+        private void validateShipBill()
+        {
+            if (ShipBill.Visible)
+                Validate("VGShipBill");
         }
 
         protected void btnPayWith_click(object sender, EventArgs e)
         {
-            string alertContent = "Paid with ";
-            if (rdbtnCard.Checked)
+            validateShipBill();
+            string alertContent = "";
+
+            PaymentIndicator.Visible = true;
+
+            //System.Diagnostics.Trace.WriteLine(txtFullName.Text);
+            //System.Diagnostics.Trace.WriteLine(txtEmail.Text);
+            //System.Diagnostics.Trace.WriteLine(txtAddrL1.Text);
+            //System.Diagnostics.Trace.WriteLine(txtAddrL2.Text);
+            //System.Diagnostics.Trace.WriteLine(txtAddrCity.Text);
+            //System.Diagnostics.Trace.WriteLine(txtAddrPC.Text);
+            //System.Diagnostics.Trace.WriteLine(txtAddrState.Text);
+            //System.Diagnostics.Trace.WriteLine(txtAddrCountry.Text);
+
+            if (txtFullName != null
+                && txtEmail != null
+                && txtAddrL1 != null
+                && txtAddrCity != null
+                && txtAddrPC != null
+                && txtAddrState != null
+                && txtAddrCountry != null
+                && txtPhone != null
+
+                && txtFullName.Text != ""
+                && txtEmail.Text != ""
+                && txtAddrL1.Text != ""
+                && txtAddrCity.Text != ""
+                && txtAddrPC.Text != ""
+                && txtAddrState.Text != ""
+                && txtAddrCountry.Text != ""
+                && txtPhone.Text != "")
             {
-                // Do something
-                alertContent += "card";
-            }
-            else if (rdbtnTng.Checked)
-            {
-                alertContent += "Touch and Go";
-            }
-            else if (rdbtnGrab.Checked)
-            {
-                alertContent += "Grab Pay";
-            }
-            else if (rdbtnFpx.Checked)
-            {
-                alertContent += "FPX";
+                alertContent += "Full Name: " + txtFullName.Text;
+                alertContent += "\nEmail: " + txtEmail.Text;
+                if (txtAddrL2 != null)
+                {
+                    alertContent += $"\nAddress: {txtAddrL1.Text}, {txtAddrL2.Text}, {txtAddrCity.Text}, {txtAddrPC.Text}, {txtAddrState.Text}, {txtAddrCountry.Text}.";
+                }
+                alertContent += $"\nAddress: {txtAddrL1.Text}, {txtAddrCity.Text}, {txtAddrPC.Text}, {txtAddrState.Text}, {txtAddrCountry.Text}.";
+                alertContent += "\nPhone: " + txtPhone.Text;
+                alertContent += "\nPaid with ";
+
+                if (rdbtnCard.Checked)
+                {
+                    // Do something
+                    alertContent += "card";
+                }
+                else if (rdbtnTng.Checked)
+                {
+                    alertContent += "Touch and Go";
+                }
+                else if (rdbtnGrab.Checked)
+                {
+                    alertContent += "Grab Pay";
+                }
+                else if (rdbtnFpx.Checked)
+                {
+                    alertContent += "FPX";
+                }
+                else
+                {
+                    alertContent = "Please select a payment method.";
+                }
+
+                lblPayConfirmHeader.Text = "Payment Successful";
+                lblPayConfirmBody.Text = alertContent;
+
+                System.Diagnostics.Trace.WriteLine(alertContent);
             }
             else
             {
-                alertContent = "Please select a payment method";
+                lblPayConfirmHeader.Text = "Payment Failed";
+                lblPayConfirmBody.Text = "Please fill up the necessary details.";
+                System.Diagnostics.Trace.WriteLine("Please fill up shipping details.");
             }
-
-            System.Diagnostics.Trace.WriteLine(alertContent);
-        }
-
-        protected void btnSubmitShipBill_click(object sender, EventArgs e)
-        {
-
         }
     }
 }

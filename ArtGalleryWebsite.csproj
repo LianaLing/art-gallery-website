@@ -144,6 +144,7 @@
   <ItemGroup>
     <None Include="Scripts\src\pages\Home.vue" />
     <None Include="Scripts\src\components\ArtCard.bak" />
+    <Content Include="About.aspx" />
     <Content Include="Api\Art.aspx" />
     <Content Include="Api\Auth.aspx" />
     <Content Include="App_Data\ArtGallery.mdf" />
@@ -152,15 +153,20 @@
     </Content>
     <Content Include="ArtDetail.aspx" />
     <Content Include="Cart.aspx" />
+    <Content Include="Construction.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Default.aspx" />
+    <Content Include="Error_Pages\Internal.aspx" />
+    <Content Include="Error_Pages\Oops.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Home.aspx" />
     <None Include="Scripts\src\components\ArtCard.vue" />
     <TypeScriptCompile Include="shims-vue.d.ts" />
+    <Content Include="UserDetail.aspx" />
+    <Content Include="User_Control\ErrorTemplate.ascx" />
     <Content Include="User_Control\References.ascx" />
     <Content Include="Scripts\src\HomePage.js" />
     <Content Include="User.aspx" />
@@ -197,6 +203,13 @@
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Api\Art.aspx.cs">
       <DependentUpon>Art.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -228,6 +241,13 @@
     <Compile Include="Cart.aspx.designer.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Construction.aspx.cs">
+      <DependentUpon>Construction.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Construction.aspx.designer.cs">
+      <DependentUpon>Construction.aspx</DependentUpon>
+    </Compile>
     <Compile Include="DAL\ArtGalleryDbContext.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
@@ -245,6 +265,20 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error_Pages\Internal.aspx.cs">
+      <DependentUpon>Internal.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error_Pages\Internal.aspx.designer.cs">
+      <DependentUpon>Internal.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error_Pages\Oops.aspx.cs">
+      <DependentUpon>Oops.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error_Pages\Oops.aspx.designer.cs">
+      <DependentUpon>Oops.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -280,6 +314,20 @@
     <Compile Include="Models\ISqlParser.cs" />
     <Compile Include="Models\AuthRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserDetail.aspx.cs">
+      <DependentUpon>UserDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserDetail.aspx.designer.cs">
+      <DependentUpon>UserDetail.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="User_Control\ErrorTemplate.ascx.cs">
+      <DependentUpon>ErrorTemplate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="User_Control\ErrorTemplate.ascx.designer.cs">
+      <DependentUpon>ErrorTemplate.ascx</DependentUpon>
+    </Compile>
     <Compile Include="User_Control\References.ascx.cs">
       <DependentUpon>References.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
