@@ -6,9 +6,18 @@
     </button>
     <div class="flex font-bold text-dark items-center">
       <div class="mr-8">
-        <a class="font-garamond mr-1 py-2 px-3 hover:underline" href="/"
+        <a
+          class="font-garamond mr-1 py-2 px-3 hover:underline"
+          href="About.aspx"
           >About</a
         >
+        <template v-if="Object.keys(session).length !== 0">
+          <a
+            class="font-garamond mr-1 py-2 px-3 hover:underline"
+            href="Cart.aspx"
+            >Cart</a
+          >
+        </template>
         <template
           v-if="
             Object.keys(session).length !== 0 &&
@@ -59,7 +68,7 @@
           class="font-bold font-garamond hover:underline"
           @click="userPageHandler"
         >
-          You are logged in as: {{ session.user?.email }}
+          You are logged in as: {{ session.user?.userName }}
         </button>
         <button
           class="

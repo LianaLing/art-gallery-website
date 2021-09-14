@@ -95,6 +95,7 @@
                   ErrorMessage="* Required"
                   ControlToValidate="txtFullName"
                   CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RequiredFieldValidator>
               <asp:TextBox
@@ -108,6 +109,7 @@
                   ControlToValidate="txtFullName"
                   ValidationExpression="[a-zA-Z]+([\s][a-zA-Z]+)*"
                   CssClass="text-red text-sm col-span-2"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RegularExpressionValidator>
 
@@ -116,6 +118,7 @@
                   ErrorMessage="* Required"
                   ControlToValidate="txtEmail"
                   CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RequiredFieldValidator>
               <asp:TextBox
@@ -129,6 +132,7 @@
                   ControlToValidate="txtEmail"
                   ValidationExpression="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
                   CssClass="text-red text-sm col-span-2"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RegularExpressionValidator>
 
@@ -137,6 +141,7 @@
                   ErrorMessage="* Required"
                   ControlToValidate="txtAddrL1"
                   CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RequiredFieldValidator>
               <asp:TextBox
@@ -149,8 +154,8 @@
                 ControlToValidate="txtAddrL1"
                 ErrorMessage="Please enter less than 256 characters."
                 ValidationExpression="^.{1,255}$"
-                ValidationGroup="VGAddress"
                 CssClass="text-red text-sm col-span-2"
+                ValidationGroup="VGShipBill"
                 >
                 </asp:RegularExpressionValidator>
               <label for="txtAddrL2" class="p-2"> Address Line 2 </label>
@@ -164,8 +169,8 @@
                 ControlToValidate="txtAddrL2"
                 ErrorMessage="Please enter less than 256 characters."
                 ValidationExpression="^.{1,255}$"
-                ValidationGroup="VGAddress"
                 CssClass="text-red text-sm"
+                ValidationGroup="VGShipBill"
                 >
                 </asp:RegularExpressionValidator>
               </div>
@@ -176,6 +181,7 @@
                   ErrorMessage="* Required"
                   ControlToValidate="txtAddrCity"
                   CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RequiredFieldValidator>
               <label for="txtAddrPC" class="p-2"> Postal Code </label>
@@ -183,6 +189,7 @@
                   ErrorMessage="* Required"
                   ControlToValidate="txtAddrPC"
                   CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RequiredFieldValidator>
               <asp:TextBox
@@ -201,7 +208,7 @@
                 ControlToValidate="txtAddrCity"
                 ErrorMessage="Please enter a valid city."
                 ValidationExpression="[a-zA-Z ]{2,255}"
-                ValidationGroup="VGAddress"
+                ValidationGroup="VGShipBill"
                 CssClass="text-red text-sm col-start-1 col-end-3"
                 >
                 </asp:RegularExpressionValidator>
@@ -209,7 +216,7 @@
                 ControlToValidate="txtAddrPC"
                 ErrorMessage="Please enter a valid postal code."
                 ValidationExpression="^([0-9A-Za-z]{5}|[0-9A-Za-z]{9}|(([0-9a-zA-Z]{5}-){1}[0-9a-zA-Z]{4}))$"
-                ValidationGroup="VGAddress"
+                ValidationGroup="VGShipBill"
                 CssClass="text-red text-sm col-start-3 col-end-5"
                 >
                 </asp:RegularExpressionValidator>
@@ -218,6 +225,7 @@
                   ErrorMessage="* Required"
                   ControlToValidate="txtAddrState"
                   CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RequiredFieldValidator>
               <label for="txtAddrCountry" class="p-2"> Country </label>
@@ -225,6 +233,7 @@
                   ErrorMessage="* Required"
                   ControlToValidate="txtAddrCountry"
                   CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RequiredFieldValidator>
               <asp:TextBox
@@ -243,7 +252,7 @@
                 ControlToValidate="txtAddrState"
                 ErrorMessage="Please enter a valid state."
                 ValidationExpression="[a-zA-Z ]{2,255}"
-                ValidationGroup="VGAddress col-start-1 col-end-3"
+                ValidationGroup="VGShipBill col-start-1 col-end-3"
                 CssClass="text-red text-sm"
                 >
                 </asp:RegularExpressionValidator>
@@ -251,7 +260,7 @@
                 ControlToValidate="txtAddrCountry"
                 ErrorMessage="Please enter a valid country."
                 ValidationExpression="[a-zA-Z ]{2,255}"
-                ValidationGroup="VGAddress"
+                ValidationGroup="VGShipBill"
                 CssClass="text-red text-sm col-start-3 col-end-5"
                 >
                 </asp:RegularExpressionValidator>
@@ -263,6 +272,7 @@
                   ErrorMessage="* Required"
                   ControlToValidate="txtPhone"
                   CssClass="text-red text-sm text-right"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RequiredFieldValidator>
               <asp:TextBox
@@ -276,6 +286,7 @@
                   ControlToValidate="txtPhone"
                   ValidationExpression="^(00|\+)[1-9]{1}([0-9-][\s]*){9,20}$"
                   CssClass="text-red text-sm col-span-2"
+                  ValidationGroup="VGShipBill"
                   >
                   </asp:RegularExpressionValidator>
             </div>
@@ -345,15 +356,32 @@
           />
           <label for="rdbtnFpx" class=""> FPX </label><br/>
         </div>
-        <!-- Pay Button -->
+        <!-- Continue Button -->
         <div class="py-5 flex justify-center">
           <asp:Button
             runat="server"
-            ID="btnPayWith"
-            OnCLick="btnPayWith_click"
+            ID="btnContinue"
+            OnClick="btnContinue_click"
             CssClass="
               bg-accent
               text-white
+              font-bold
+              px-5
+              py-2
+              rounded-full
+              hover:bg-accent-hover
+            "
+            Text="Continue With Transaction"
+          />
+        <!-- Pay Button -->
+          <asp:Button
+            runat="server"
+            ID="btnPayWith"
+            OnClick="btnPayWith_click"
+            CssClass="
+              bg-accent
+              text-white
+              font-bold
               px-5
               py-2
               rounded-full

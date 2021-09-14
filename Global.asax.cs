@@ -16,5 +16,18 @@ namespace ArtGalleryWebsite
             // Code that runs on application startup
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Application_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+
+            if (exc is HttpUnhandledException)
+            {
+                //// Pass the error on to the error page.
+                //Response.TrySkipIisCustomErrors = true;
+                ////Response.Redirect("Error_Pages/Oops.aspx");
+                //Server.ClearError();
+            }
+        }
     }
 }

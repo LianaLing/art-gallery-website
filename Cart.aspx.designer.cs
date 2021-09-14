@@ -79,6 +79,12 @@ namespace ArtGalleryWebsite
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAddr;
+        protected global::System.Web.UI.WebControls.TextBox txtAddrL1;
+        protected global::System.Web.UI.WebControls.TextBox txtAddrL2;
+        protected global::System.Web.UI.WebControls.TextBox txtAddrCity;
+        protected global::System.Web.UI.WebControls.TextBox txtAddrPC;
+        protected global::System.Web.UI.WebControls.TextBox txtAddrState;
+        protected global::System.Web.UI.WebControls.TextBox txtAddrCountry;
 
         /// <summary>
         /// txtPhone control.
@@ -133,5 +139,6 @@ namespace ArtGalleryWebsite
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPayWith;
+        protected global::System.Web.UI.WebControls.Button btnContinue;
     }
 }
