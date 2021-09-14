@@ -5,7 +5,6 @@ using System.Web.UI;
 using System.Collections.Generic;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
-using Newtonsoft.Json;
 using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.Utils;
 using ArtGalleryWebsite.Models;
@@ -43,11 +42,13 @@ namespace ArtGalleryWebsite
             var data = selectCurrentArtDetail();
             var favs = selectAllFavourites(user.Id);
             var saved = checkIfArtIsInFav(user.Id);
+            var liked = unitOfWork.isArtLiked(user.Id, getArtId());
 
             // Register hidden field to pass data from backend to frontend
             registerHiddenField("artState", data);
             registerHiddenField("favsState", favs);
             registerHiddenField("savedState", saved);
+            registerHiddenField("likedState", liked);
         }
 
         private void registerHiddenField(string id, object obj)
@@ -56,7 +57,7 @@ namespace ArtGalleryWebsite
         }
 
         // Get the art which is clicked on
-        private IQueryable selectCurrentArtDetail()
+        private IQueryable<ArtQuery> selectCurrentArtDetail()
         {
             //ArtQuery.FetchCurrentArtDetail(getArtId());
             //return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
@@ -68,7 +69,7 @@ namespace ArtGalleryWebsite
                     dbContext.Users,
                     art => art.AuthorID,
                     user => user.AuthorId,
-                    (art, user) => new
+                    (art, user) => new ArtQuery
                     {
                         id = art.Id,
                         style = art.Style,
@@ -77,7 +78,7 @@ namespace ArtGalleryWebsite
                         stock = art.Stock,
                         likes = art.Likes,
                         url = art.Url,
-                        author = new
+                        author = new ArtQuery.Author
                         {
                             id = art.Author.Id,
                             description = art.Author.Description,
@@ -109,33 +110,33 @@ namespace ArtGalleryWebsite
             //return Database.Select<FavQuery>(FavQuery.SqlQuery);
 
             return (from art in dbContext.Arts
-                        join author in dbContext.Authors on art.AuthorID equals author.Id
-                        join favArt in dbContext.FavArts on art.Id equals favArt.ArtId
-                        join fav in dbContext.Favourites on favArt.FavId equals fav.Id
-                        join user in dbContext.Users on fav.UserId equals user.Id
-                        where user.Id == id
-                        orderby fav.Id ascending
-                        select new
+                    join author in dbContext.Authors on art.AuthorID equals author.Id
+                    join favArt in dbContext.FavArts on art.Id equals favArt.ArtId
+                    join fav in dbContext.Favourites on favArt.FavId equals fav.Id
+                    join user in dbContext.Users on fav.UserId equals user.Id
+                    where user.Id == id
+                    orderby fav.Id ascending
+                    select new
+                    {
+                        id = fav.Id,
+                        name = fav.Name,
+                        art = new
                         {
-                            id = fav.Id,
-                            name = fav.Name,
-                            art = new
-                            {
-                                id = art.Id,
-                                style = art.Style,
-                                description = art.Description,
-                                price = art.Price,
-                                stock = art.Stock,
-                                likes = art.Likes,
-                                url = art.Url
-                            },
-                            author = new
-                            {
-                                id = author.Id,
-                                description = author.Description,
-                                verified = author.Verified
-                            }
-                        });
+                            id = art.Id,
+                            style = art.Style,
+                            description = art.Description,
+                            price = art.Price,
+                            stock = art.Stock,
+                            likes = art.Likes,
+                            url = art.Url
+                        },
+                        author = new
+                        {
+                            id = author.Id,
+                            description = author.Description,
+                            verified = author.Verified
+                        }
+                    });
         }
 
         // Get art_id from this page's query string, redirected from `Home.aspx.cs`
@@ -193,13 +194,13 @@ namespace ArtGalleryWebsite
 
                 return $"Successful insertion of FavArt {{ fav_id: {favArt.FavId}, art_id: {favArt.ArtId} }}";
             }
-            catch (System.Data.SqlClient.SqlException e)
+            catch (Exception e)
             {
                 return e + " [Artwork already saved in this collection.]";
             }
         }
 
-        // Insert into database
+        // Remove FavArt from database
         private string removeFromFavArt()
         {
             //FavQuery.RemoveFromFavArt();
@@ -208,14 +209,14 @@ namespace ArtGalleryWebsite
                 //return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
                 FavArt deleted = unitOfWork.FavArtRepository.Delete(favId, artId);
 
-                if (deleted == null) 
+                if (deleted == null)
                     throw new Exception($"Unable to delete FavArt {{ fav_id: {favId}, art_id: {artId} }}");
                 else
                     unitOfWork.Save();
 
                 return $"Successful insertion of FavArt {{ fav_id: {favId}, art_id: {artId} }}";
             }
-            catch (System.Data.SqlClient.SqlException e)
+            catch (Exception e)
             {
                 return e + " [Artwork already deleted from this collection.]";
             }
@@ -237,7 +238,39 @@ namespace ArtGalleryWebsite
             }
         }
 
-        public void btnCartPage_click (object sender, EventArgs e)
+        public void btnLikeHandler_click(object sender, EventArgs e)
+        {
+            if (getArtId() != 0)
+            {
+                // Get current session user
+                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+
+                try
+                {
+                    int art_id = getArtId();
+
+                    // Check if is art not liked
+                    if (!unitOfWork.isArtLiked(user.Id, art_id))
+                    {
+                        unitOfWork.addLikeToArt(user.Id, art_id);
+                    }
+                    else
+                    {
+                        unitOfWork.removeLikeFromArt(user.Id, art_id);
+                    }
+
+                    // Refresh the page
+                    Server.TransferRequest(Request.Url.AbsolutePath, false);
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Trace.WriteLine($"btnLikeHandler_click: {ex}");
+                }
+            }
+        }
+
+        public void btnCartPage_click(object sender, EventArgs e)
         {
 
         }

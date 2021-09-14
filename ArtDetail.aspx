@@ -5,6 +5,7 @@
         <%-- Hidden buttons to receive and process simulated clicks from frontend --%>
         <asp:Button ID="btnSaveStar" runat="server" OnClick="btnSaveStar_click" CssClass="hidden"/>
         <asp:Button ID="btnRemoveStar" runat="server" OnClick="btnRemoveStar_click" CssClass="hidden"/>
+        <asp:Button ID="btnLikeHandler" runat="server" OnClick="btnLikeHandler_click" CssClass="hidden"/>
         <asp:Button ID="btnCartPage" runat="server" OnClick="btnCartPage_click" CssClass="hidden" PostBackUrl="~/Cart.aspx"/>
 
         <%-- Frontend code --%>

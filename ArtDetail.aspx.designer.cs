@@ -33,6 +33,15 @@ namespace ArtGalleryWebsite
         protected global::System.Web.UI.WebControls.Button btnRemoveStar;
 
         /// <summary>
+        /// btnLikeHandler control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLikeHandler;
+
+        /// <summary>
         /// btnCartPage control.
         /// </summary>
         /// <remarks>
@@ -40,5 +49,50 @@ namespace ArtGalleryWebsite
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCartPage;
+
+        /// <summary>
+        /// ArtDetailRef1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ArtGalleryWebsite.References ArtDetailRef1;
+
+        /// <summary>
+        /// ArtDetailRef2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ArtGalleryWebsite.References ArtDetailRef2;
+
+        /// <summary>
+        /// ArtDetailRef3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ArtGalleryWebsite.References ArtDetailRef3;
+
+        /// <summary>
+        /// ArtDetailRef4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ArtGalleryWebsite.References ArtDetailRef4;
+
+        /// <summary>
+        /// ArtDetailRef5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::ArtGalleryWebsite.References ArtDetailRef5;
     }
 }

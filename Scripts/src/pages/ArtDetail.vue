@@ -16,13 +16,13 @@
           <SavePopoverPanel :favs="favs" :art="art" :saved="saved" />
         </Popover>
         <!-- Like button which is not working -->
-        <template v-if="!like">
-          <Icon class="float-left" :icon="icons[3]" @onclick="like = true" />
+        <template v-if="!liked">
+          <Icon class="float-left" :icon="icons[3]" @click="likeArtHandler" />
           <span class="inline"> {{ art.likes }} </span>
         </template>
         <template v-else>
-          <Icon class="float-left" :icon="icons[4]" @onclick="like = false" />
-          <span class="inline"> {{ art.likes + 1 }}</span>
+          <Icon class="float-left" :icon="icons[4]" @click="likeArtHandler" />
+          <span class="inline"> {{ art.likes }}</span>
         </template>
         <!-- Share -->
         <Share class="inline-block" :shareIcon="icons[2]" />
@@ -130,7 +130,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import Icon from "../components/Icon.vue";
 import Reference from "../components/Reference.vue";
 import Share from "../components/Share.vue";
@@ -143,11 +143,12 @@ const icons = getStateFromBackend<API.Icon[]>("iconsState");
 const arts = getStateFromBackend<API.ArtResponse[]>("artState");
 const favs = getStateFromBackend<API.FavouriteResponse[]>("favsState");
 const saved = getStateFromBackend<API.FavResponse[]>("savedState");
+const liked = getStateFromBackend<boolean>("likedState");
 
 // All valid data is in the first response
 const art = arts[0];
 
-const like = false;
+console.log(liked);
 
 export default defineComponent({
   components: {
@@ -171,6 +172,10 @@ export default defineComponent({
       alert("Clicked on add to cart button");
       triggerBackendControl(e, "MainContent_btnAddToCart", `${id}`);
     },
+    likeArtHandler(e: Event) {
+      e.preventDefault();
+      triggerBackendControl(e, "MainContent_btnLikeHandler");
+    },
   },
   data() {
     return {
@@ -178,8 +183,8 @@ export default defineComponent({
       icons,
       art,
       favs,
-      like,
       saved,
+      liked,
     };
   },
 });

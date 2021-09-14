@@ -11,6 +11,7 @@ namespace ArtGalleryWebsite.DAL
         private GenericRepository<Models.Identity.User> userRepository;
         private GenericRepository<Favourite> favouriteRepository;
         private GenericRepository<FavArt> favArtRepository;
+        private GenericRepository<UserLikes> userLikesRepository;
         private bool disposed = false;
 
         public GenericRepository<Art> ArtRepository
@@ -55,6 +56,14 @@ namespace ArtGalleryWebsite.DAL
             {
                 if (favArtRepository == null) favArtRepository = new GenericRepository<FavArt>(context);
                 return favArtRepository;
+            }
+        }
+        public GenericRepository<UserLikes> UserLikesRepository
+        {
+            get
+            {
+                if (userLikesRepository == null) userLikesRepository = new GenericRepository<UserLikes>(context);
+                return userLikesRepository;
             }
         }
 

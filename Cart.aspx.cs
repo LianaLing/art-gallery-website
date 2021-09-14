@@ -7,19 +7,20 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft.Json;
-using ArtGalleryWebsite.Utils;
-using ArtGalleryWebsite.Models.Queries;
-using System.Collections.Generic;
-using ArtGalleryWebsite.Models;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
+using ArtGalleryWebsite.Utils;
+using ArtGalleryWebsite.Models.Queries;
+using ArtGalleryWebsite.Models;
+using ArtGalleryWebsite.DAL;
 
 namespace ArtGalleryWebsite
 {
     public partial class Cart : System.Web.UI.Page
     {
-        protected List<ArtQuery> Arts = new List<ArtQuery> { };
-        protected int[] array = { 1, 2, 3, 4, 5 };
+        private static UnitOfWork unitOfWork = new UnitOfWork();
+        private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             // Get current session user
@@ -27,18 +28,21 @@ namespace ArtGalleryWebsite
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
             // Get data for the page
-            List<ArtQuery> data = selectAllArt();
+            IEnumerable<ArtQuery> data = selectAllArt();
 
             // Register hidden field to pass data from backend to frontend
             //registerHiddenField("arts", data);
 
-            // Update variable
-            Arts = data;
+            data = data.Select(d =>
+            {
+                d.price = decimal.Round(d.price, 2, MidpointRounding.AwayFromZero);
+                return d;
+            });
 
             // Calculate
-            decimal subtotal = calculateSubtotal();
+            decimal subtotal = data.Sum(d => d.price);
             decimal shipping = 20;
-            decimal total = calculateTotal(subtotal, shipping);
+            decimal total = subtotal + shipping;
 
             // Set labels
             setLblSubtotal(subtotal);
@@ -46,39 +50,60 @@ namespace ArtGalleryWebsite
             setTotal(total);
         }
 
-        private void registerHiddenField(string id, object obj)
-        {
-            Page.ClientScript.RegisterHiddenField(id, JsonConvert.SerializeObject(obj));
-        }
-
         // Fetch all [Art]s in the database
-        private List<ArtQuery> selectAllArt()
+        private IEnumerable<ArtQuery> selectAllArt()
         {
-            ArtQuery.FetchAllArt();
-            return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
+            // Return the result
+            return (from art in dbContext.Arts
+                    join author in dbContext.Authors on art.AuthorID equals author.Id
+                    join user in dbContext.Users on author.Id equals user.AuthorId
+                    orderby art.Likes descending
+                    select new ArtQuery
+                    {
+                        id = art.Id,
+                        style = art.Style,
+                        description = art.Description,
+                        price = art.Price,
+                        stock = art.Stock,
+                        likes = art.Likes,
+                        url = art.Url,
+                        author = new ArtQuery.Author
+                        {
+                            id = author.Id,
+                            description = author.Description,
+                            verified = author.Verified,
+                            username = user.UserName,
+                            name = user.Name,
+                            ic = user.Ic,
+                            dob = user.Dob,
+                            contactNo = user.PhoneNumber,
+                            email = user.Email,
+                            avatarUrl = user.AvatarUrl
+                        }
+                    }).AsEnumerable<ArtQuery>();
         }
 
-        private decimal calculateSubtotal()
-        {
-            decimal subtotal = 0;
-            foreach (ArtQuery art in Arts)
-            {
-                subtotal += art.price;
-            }
+        //private decimal calculateSubtotal()
+        //{
+        //    decimal subtotal = 0;
+        //    foreach (ArtQuery art in Arts)
+        //    {
+        //        subtotal += art.price;
+        //    }
 
-            return subtotal;
-        }
-        
-        private decimal calculateTotal(decimal subtotal, decimal shipping)
-        {
-            return subtotal + shipping;
-        }
+        //    return subtotal;
+        //}
+
+        //private decimal calculateTotal(decimal subtotal, decimal shipping)
+        //{
+        //    return subtotal + shipping;
+        //}
 
         private void setLblSubtotal(decimal subtotal)
         {
             lblSubtotal.Text = decimal.Round(subtotal, 2) + "";
         }
-        
+
         private void setLblShipping(decimal shipping)
         {
             string str = (decimal.Round(shipping, 2) + "");
@@ -88,7 +113,7 @@ namespace ArtGalleryWebsite
             }
             lblShipping.Text = str;
         }
-        
+
         private void setTotal(decimal total)
         {
             lblTotal.Text = decimal.Round(total, 2) + "";
@@ -111,13 +136,20 @@ namespace ArtGalleryWebsite
             {
                 // Do something
                 alertContent += "card";
-            } else if (rdbtnTng.Checked) {
+            }
+            else if (rdbtnTng.Checked)
+            {
                 alertContent += "Touch and Go";
-            } else if (rdbtnGrab.Checked) {
+            }
+            else if (rdbtnGrab.Checked)
+            {
                 alertContent += "Grab Pay";
-            } else if (rdbtnFpx.Checked) {
+            }
+            else if (rdbtnFpx.Checked)
+            {
                 alertContent += "FPX";
-            } else
+            }
+            else
             {
                 alertContent = "Please select a payment method";
             }

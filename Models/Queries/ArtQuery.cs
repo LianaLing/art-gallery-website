@@ -15,27 +15,29 @@ namespace ArtGalleryWebsite.Models.Queries
             ORDER BY [Art].likes DESC;
         ";
 
-        public int id;
-        public string style;
-        public string description;
-        public decimal price;
-        public int stock;
-        public int likes;
-        public string url;
-        public Author author;
+        public int id { get; set; }
+        public string style { get; set; }
+        public string description { get; set; }
+        public decimal price { get; set; }
+        public int stock { get; set; }
+        public int likes { get; set; }
+        public string url { get; set; }
+        public Author author { get; set; }
 
         public class Author
         {
-            public int id;
-            public string description;
-            public bool verified;
-            public string username;
-            public string name;
-            public string ic;
-            public Nullable<DateTime> dob;
-            public string contactNo;
-            public string email;
-            public string avatarUrl;
+            public int id { get; set; }
+            public string description { get; set; }
+            public bool verified { get; set; }
+            public string username { get; set; }
+            public string name { get; set; }
+            public string ic { get; set; }
+            public Nullable<DateTime> dob { get; set; }
+            public string contactNo { get; set; }
+            public string email { get; set; }
+            public string avatarUrl { get; set; }
+
+            public Author() { }
 
             public Author(int id, string description, bool verified)
             {                
@@ -60,8 +62,7 @@ namespace ArtGalleryWebsite.Models.Queries
             }
         }
 
-        public ArtQuery() {
-    }
+        public ArtQuery() {}
 
         public ArtQuery(int id, string style, string description, decimal price, int stock, int likes, string url, Author author)
         {

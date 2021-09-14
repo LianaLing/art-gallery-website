@@ -9,7 +9,6 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import * as API from "../types/api";
-import FavouriteController from "./FavouriteController.vue";
 
 export default defineComponent({
   methods: {},

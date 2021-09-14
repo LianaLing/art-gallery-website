@@ -12,5 +12,6 @@ namespace ArtGalleryWebsite.DAL
     public DbSet<Author> Authors { get; set; }
     public DbSet<Favourite> Favourites { get; set; }
     public DbSet<FavArt> FavArts { get; set; }
+    public DbSet<UserLikes> UserLikes { get; set; }
   }
 }

@@ -231,6 +231,7 @@
     <Compile Include="DAL\ArtGalleryDbContext.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="DAL\UserLikesExtension.cs" />
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -260,6 +261,7 @@
     <Compile Include="Models\Entities\Author.cs" />
     <Compile Include="Models\Entities\FavArt.cs" />
     <Compile Include="Models\Entities\Favourite.cs" />
+    <Compile Include="Models\Entities\UserLikes.cs" />
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Identity\Role.cs" />
     <Compile Include="Models\Identity\UserClaim.cs" />

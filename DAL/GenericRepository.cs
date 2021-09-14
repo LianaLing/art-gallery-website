@@ -41,9 +41,9 @@ namespace ArtGalleryWebsite.DAL
             }
         }
 
-        public virtual TEntity GetById(object id)
+        public virtual TEntity GetById(params object[] keyValues)
         {
-            return dbSet.Find(id);
+            return dbSet.Find(keyValues);
         }
 
         public virtual TEntity Insert(TEntity entity)
