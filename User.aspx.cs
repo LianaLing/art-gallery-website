@@ -219,7 +219,10 @@ namespace ArtGalleryWebsite
             string id = Request.Form[btnFavDetailPage.UniqueID];
 
             // Pass frontend data into query string and redirect to the page
-            Response.Redirect($"~/FavDetail.aspx?id={id}");
+            // Only display if user owns the fav
+            // Query string might not be appropriate if users can change the id in the address bar
+            //Response.Redirect($"~/FavDetail.aspx?id={id}");
+            Response.Redirect($"~/FavDetail.aspx");
         }
 
         protected void btnShowCreateFav_click(object sender, EventArgs e)

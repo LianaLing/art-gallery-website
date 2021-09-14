@@ -94,7 +94,7 @@
                             "
                         Text="Create Fav"
                     />
-                    </div> <!-- Button Div -->
+                </div> <!-- Button Div -->
             </div> <!-- Modal Div -->
         </asp:Panel>
 
