@@ -3,7 +3,8 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Label ID="DashboardLabel" runat="server" Visible="false" CssClass="mt-8 flex justify-center items-center font-medium text-3xl" />
 
-    <asp:Label ID="ErrorLabel" runat="server" Visible="false" CssClass="mb-4 flex justify-center items-center font-medium text-2xl text-red" />
+    <%--<asp:Label ID="ErrorLabel" runat="server" Visible="false" CssClass="mb-4 flex justify-center items-center font-medium text-2xl text-red" />--%>
+    <uc:ErrorLabel ID="lblErr" runat="server" />
 
     <asp:GridView
         ID="ArtsGrid"

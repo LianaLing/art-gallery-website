@@ -221,7 +221,7 @@ namespace ArtGalleryWebsite
             // Handle specific exception.
             if (exc is HttpUnhandledException)
             {
-                ErrorLabel.Text = "An error occurred on this page. Please verify your " +
+                lblErr.Text = "An error occurred on this page. Please verify your " +
                 "information to resolve the issue.";
             }
             // Clear the error from the server.

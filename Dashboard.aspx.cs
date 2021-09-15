@@ -44,8 +44,8 @@ namespace ArtGalleryWebsite
 
       if (user.AuthorId == null)
       {
-        ErrorLabel.Visible = true;
-        ErrorLabel.Text = "Your user is not registered correctly, please contact support";
+        lblErr.Visible = true;
+        lblErr.Text = "Your user is not registered correctly, please contact support";
       }
 
       try
@@ -68,8 +68,8 @@ namespace ArtGalleryWebsite
       catch (Exception ex)
       {
         System.Diagnostics.Trace.WriteLine(ex);
-        ErrorLabel.Visible = true;
-        ErrorLabel.Text = "Error finding arts, this is probably a system bug";
+        lblErr.Visible = true;
+        lblErr.Text = "Error finding arts, this is probably a system bug";
       }
     }
 
@@ -110,8 +110,8 @@ namespace ArtGalleryWebsite
       catch (Exception)
       {
         // Set the error message
-        ErrorLabel.Visible = true;
-        ErrorLabel.Text = $"Error updating art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' style='width: 2rem; margin-left: 0.5rem;' />, please try again.";
+        lblErr.Visible = true;
+        lblErr.Text = $"Error updating art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' style='width: 2rem; margin-left: 0.5rem;' />, please try again.";
       }
 
       ArtsGrid.EditIndex = -1;
@@ -136,8 +136,8 @@ namespace ArtGalleryWebsite
       }
       catch (Exception)
       {
-        ErrorLabel.Visible = true;
-        ErrorLabel.Text = $"Error deleting art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' style='width: 2rem; margin-left: 0.5rem;' />, please try again.";
+        lblErr.Visible = true;
+        lblErr.Text = $"Error deleting art with id {id}<img src='https://api.iconify.design/twemoji:crying-face.svg' style='width: 2rem; margin-left: 0.5rem;' />, please try again.";
       }
 
       _BindData();
