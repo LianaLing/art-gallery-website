@@ -17,8 +17,11 @@ namespace ArtGalleryWebsite
 
         protected void Page_Load(object sender, EventArgs e)
 		{
-			// Inject session state to client side
-			Helper.InjectSessionState(Page, Session);
+            // Inject session state to client side
+   //         if (Page.User.Identity.IsAuthenticated)
+   //         {
+			//	Helper.InjectSessionState(Page, Session);
+			//}
 		}
 
 		// Control methods controlled by frontend
