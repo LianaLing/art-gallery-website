@@ -256,8 +256,10 @@
       <DependentUpon>Construction.aspx</DependentUpon>
     </Compile>
     <Compile Include="DAL\ApplicationDbContext.cs" />
-    <Compile Include="DAL\Extensions\ArtsExtension.cs" />
+    <Compile Include="DAL\Extensions\ArtExtension.cs" />
     <Compile Include="DAL\Extensions\FavouriteExtension.cs" />
+    <Compile Include="DAL\Extensions\OrderExtenstion.cs" />
+    <Compile Include="DAL\Extensions\PaymentExtension.cs" />
     <Compile Include="DAL\Extensions\ShoppingCartExtension.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
@@ -301,9 +303,21 @@
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiResponse.cs" />
+    <Compile Include="Models\DTO\Address.cs" />
+    <Compile Include="Models\DTO\BillingDetailsDTO.cs" />
+    <Compile Include="Models\DTO\CardDTO.cs" />
     <Compile Include="Models\DTO\CartItemDTO.cs" />
+    <Compile Include="Models\DTO\OrderDetailDTO.cs" />
+    <Compile Include="Models\DTO\PaymentMethodDTO.cs" />
+    <Compile Include="Models\Entities\Address.cs" />
     <Compile Include="Models\Entities\Art.cs" />
     <Compile Include="Models\Entities\Author.cs" />
+    <Compile Include="Models\Entities\BillingDetails.cs" />
+    <Compile Include="Models\Entities\Card.cs" />
+    <Compile Include="Models\Entities\Order.cs" />
+    <Compile Include="Models\Entities\OrderArt.cs" />
+    <Compile Include="Models\Entities\Payment.cs" />
+    <Compile Include="Models\Entities\PaymentMethod.cs" />
     <Compile Include="Models\Entities\ShoppingCart.cs" />
     <Compile Include="Models\Entities\CartItem.cs" />
     <Compile Include="Models\Entities\FavArt.cs" />
@@ -385,6 +399,7 @@
       <DependentUpon>User.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Utils\Pair.cs" />
     <Compile Include="Utils\Database.cs" />
     <Compile Include="Utils\Helper.cs" />
     <Compile Include="Utils\IdentityHelper.cs" />

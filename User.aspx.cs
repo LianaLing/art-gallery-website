@@ -5,14 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.DAL.Extensions;
 using ArtGalleryWebsite.Models;
+using ArtGalleryWebsite.Models.Entities;
 using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.Utils;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Newtonsoft.Json;
 
 namespace ArtGalleryWebsite
 {
@@ -91,9 +91,9 @@ namespace ArtGalleryWebsite
     public partial class User : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
-        protected IEnumerable<ArtDetailDTO> PHis = new List<ArtDetailDTO>();
+        protected List<OrderDetailDTO> PHis = new List<OrderDetailDTO>();
+        protected ApplicationUser user = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -107,24 +107,15 @@ namespace ArtGalleryWebsite
 
             // Get session user
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
-
-            // Get data for the page
-
+            ApplicationUser currentUser = manager.FindById(Page.User.Identity.GetUserId<int>());
+            user = currentUser;
 
             // Will only return favourites in [Favourite] that have >= 1 row of data
             // Empty favourites will not be returned
-            var data = unitOfWork.GetUserFavourites(user.Id);
-
-            System.Diagnostics.Trace.WriteLine(data);
-
-            foreach (var d in data)
-            {
-                System.Diagnostics.Trace.WriteLine(d);
-            }
+            List<FavDTO> data = unitOfWork.GetUserFavourites(user.Id);
 
             // Return the total number of rows in [FavArt] for each [Favourite]
-            var counts = unitOfWork.ArtCountInUserFavourites(user.Id);
+            List<ArtCountInFavDTO> counts = unitOfWork.ArtCountInUserFavourites(user.Id);
 
             // Pass data into hidden field for frontend to parse
             Helper.RegisterHiddenField(Page, "iconsState", icons);
@@ -132,7 +123,7 @@ namespace ArtGalleryWebsite
             Helper.RegisterHiddenField(Page, "countsState", counts);
 
             // Purchase history
-            PHis = unitOfWork.GetArtDetails();
+            PHis = unitOfWork.GetOrderDetailsByUserId(user.Id);
 
             if (!IsPostBack)
             {
@@ -185,7 +176,19 @@ namespace ArtGalleryWebsite
             validateCreateFav();
             System.Diagnostics.Trace.WriteLine("Clicked on create, Fav Name: " + txtFavName.Text);
             CreateFav.Visible = false;
+
+            // Create the new favourite object
+            Favourite favourite = new Favourite { Name = txtFavName.Text, UserId = user.Id };
+
             // Insert into database, will display one more new save
+            if (unitOfWork.FavouriteRepository.Insert(favourite) == null) 
+                throw new Exception($"Unable to create Favourite {txtFavName.Text}.");
+
+            // Save changes
+            unitOfWork.Save();
+
+            // Refresh page
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
         protected void btnShowPH_click(object sender, EventArgs e)

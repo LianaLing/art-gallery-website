@@ -24,10 +24,15 @@ namespace ArtGalleryWebsite
                 ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
                 // Set the user as a session state (filtered out 'PasswordHash')
-                HttpContext.Current.Session["user"] = IdentityHelper.FilterUser(user);
+                Session["user"] = IdentityHelper.FilterUser(user);
 
                 // Update user's cart in session state if it is null
                 Helper.UpdateCartSessionStateIfNull(unitOfWork, Session, user.Id);
+            }
+            else
+            {
+                Session["user"] = null;
+                Session["cart"] = null;
             }
 
             // Inject session state to client side

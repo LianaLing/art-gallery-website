@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using ArtGalleryWebsite.Models;
@@ -12,6 +11,7 @@ using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.DAL.Extensions;
 using ArtGalleryWebsite.Models.Entities;
 using ArtGalleryWebsite.User_Control;
+using ArtGalleryWebsite.Utils;
 
 namespace ArtGalleryWebsite
 {
@@ -26,41 +26,22 @@ namespace ArtGalleryWebsite
         protected static CartItemDTO ci;
         protected static int btnCiCount = 0;
 
-        public class Pair<T1, T2>
-        {
-            public T1 First { get; set; }
-            public T2 Second { get; set; }
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
             // Get current session user
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-            ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
-            if (cart == null) throw new Exception($"User {user.Name} has no items in cart.");
+            // Fetch cart items
+            cartItems = fetchCartItems(user.Id);
 
-            cartItems = unitOfWork.GetCartItems(cart.Id);
-            if (cartItems.Count == 0) throw new Exception($"User {user.Name} has no items in cart.");
+            // Render cart items
+            renderCartItems(cartItems);
 
             // Calculate
             decimal subtotal = cartItems.Sum(ci => ci.Art.Price);
             decimal shipping = 20;
             decimal total = subtotal + shipping;
-
-            Dictionary<int, Pair<CartItemDTO, int>> grouped = new Dictionary<int, Pair<CartItemDTO, int>>();
-
-            foreach (var ci in cartItems)
-            {
-                if (grouped.ContainsKey(ci.Art.Id))
-                    grouped[ci.Art.Id].Second++;
-                else
-                    grouped[ci.Art.Id] = new ArtGalleryWebsite.Cart.Pair<CartItemDTO, int> { First = ci, Second = 1 };
-            }
-
-            foreach (var g in grouped)
-                System.Diagnostics.Trace.WriteLine(g.Value);
 
             // Set labels
             setLblSubtotal(subtotal);
@@ -84,6 +65,39 @@ namespace ArtGalleryWebsite
                 btnCiCount = 0;
             }
 
+            validateShipBill();
+
+            // Compare credit card expiration date to ensure it is not in the past
+            CompareExpDate.ValueToCompare = DateTime.Today.ToShortDateString();
+        }
+
+        // Fetch cart items from database
+        protected List<CartItemDTO> fetchCartItems(int user_id)
+        {
+            // Check whether user has a cart
+            ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user_id);
+            if (cart == null) throw new Exception($"User {user_id} has no items in cart.");
+
+            // Fetch cart items
+            List<CartItemDTO> cartItems = unitOfWork.GetCartItems(cart.Id);
+            if (cartItems.Count == 0) throw new Exception($"User {user_id} has no items in cart.");
+
+            return cartItems;
+        }
+
+        // Render cartItems to frontend using dynamic user control
+        protected void renderCartItems(List<CartItemDTO> cartItems)
+        {
+            Dictionary<int, Pair<CartItemDTO, int>> grouped = new Dictionary<int, Pair<CartItemDTO, int>>();
+
+            foreach (var ci in cartItems)
+            {
+                if (grouped.ContainsKey(ci.Art.Id))
+                    grouped[ci.Art.Id].Second++;
+                else
+                    grouped[ci.Art.Id] = new Pair<CartItemDTO, int> { First = ci, Second = 1 };
+            }
+
             foreach (var ci in grouped)
             {
                 CartItemNoQty ciControl = (CartItemNoQty)LoadControl("~/User_Control/CartItemNoQty.ascx");
@@ -91,11 +105,6 @@ namespace ArtGalleryWebsite
                 ciControl.Quantity = ci.Value.Second;
                 ItemsList.Controls.Add(ciControl);
             }
-
-            validateShipBill();
-
-            // Compare credit card expiration date to ensure it is not in the past
-            CompareExpDate.ValueToCompare = DateTime.Today.ToShortDateString();
         }
 
         private void setLblSubtotal(decimal subtotal)
@@ -282,7 +291,11 @@ namespace ArtGalleryWebsite
             validateShipBill();
             string alertContent = "";
             if (!CardDetail.Visible && !cardDetailSubmitted)
+            {
                 CardDetail.Visible = true;
+                // Prefill with card if already have
+                return;
+            }
 
             if (cardDetailSubmitted)
             {
@@ -312,6 +325,8 @@ namespace ArtGalleryWebsite
                     )
                 {
                     // Insert to database
+                    // CreateOrderFunc (create order -> create billigndetails -> create paymentmethod -> create payment -> update order)
+
                     alertContent += "Full Name: " + txtFullName.Text;
                     alertContent += "\nEmail: " + txtEmail.Text;
                     if (txtAddrL2 != null || txtAddrL2.Text != "")
@@ -348,6 +363,8 @@ namespace ArtGalleryWebsite
                     }
 
                     // Wrap up the transaction, send email
+                    // ConfirmPaymentFunc (update payment succeed -> update order succeed)
+                    // SendEmailFunc
                     lblPayConfirmHeader.Text = "Payment Successful";
                     lblPayConfirmBody.Text = alertContent;
                     enableFields(false);

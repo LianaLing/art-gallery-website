@@ -21,6 +21,13 @@ namespace ArtGalleryWebsite.DAL
         public DbSet<UserLikes> UserLikes { get; set; }
         public DbSet<ShoppingCart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderArt> OrderArts { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<Card> Cards { get; set; }
+        public DbSet<BillingDetails> BillingDetails { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -39,6 +46,13 @@ namespace ArtGalleryWebsite.DAL
             modelBuilder.Entity<UserLikes>().ToTable("UserLikes");
             modelBuilder.Entity<ShoppingCart>().ToTable("ShoppingCart");
             modelBuilder.Entity<CartItem>().ToTable("CartItem");
+            modelBuilder.Entity<Order>().ToTable("Order");
+            modelBuilder.Entity<OrderArt>().ToTable("OrderArt");
+            modelBuilder.Entity<Payment>().ToTable("Payment");
+            modelBuilder.Entity<PaymentMethod>().ToTable("PaymentMethod");
+            modelBuilder.Entity<Card>().ToTable("Card");
+            modelBuilder.Entity<BillingDetails>().ToTable("BillingDetails");
+            modelBuilder.Entity<Address>().ToTable("Address");
 
             // Set auto-increment properties
             modelBuilder.Entity<Models.Identity.User>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
@@ -49,6 +63,17 @@ namespace ArtGalleryWebsite.DAL
             modelBuilder.Entity<Favourite>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<ShoppingCart>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             modelBuilder.Entity<CartItem>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Order>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Payment>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<PaymentMethod>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Card>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<BillingDetails>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            modelBuilder.Entity<Address>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            // 1-to-1 relationship
+            //modelBuilder.Entity<Order>()
+            //    .HasOptional(o => o.Payment)
+            //    .WithRequired(p => p.Order);
         }
     }
 }

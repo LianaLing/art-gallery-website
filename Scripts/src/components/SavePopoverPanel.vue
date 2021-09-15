@@ -89,6 +89,7 @@ export default defineComponent({
       fav_id: number
     ): boolean => {
       for (let i = 0; i < saved.length; i++) {
+        if (!saved[i].art) continue;
         if (saved[i].art.id === art.id && saved[i].id === fav_id) {
           return true;
         }
