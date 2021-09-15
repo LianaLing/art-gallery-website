@@ -11,6 +11,7 @@ using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.DAL.Extensions;
 using ArtGalleryWebsite.Models.Entities;
+using ArtGalleryWebsite.User_Control;
 
 namespace ArtGalleryWebsite
 {
@@ -21,6 +22,15 @@ namespace ArtGalleryWebsite
         private static bool cardDetailSubmitted = false;
 
         protected List<CartItemDTO> cartItems;
+
+        protected static CartItemDTO ci;
+        protected static int btnCiCount = 0;
+
+        public class Pair<T1, T2>
+        {
+            public T1 First { get; set; }
+            public T2 Second { get; set; }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -38,6 +48,19 @@ namespace ArtGalleryWebsite
             decimal subtotal = cartItems.Sum(ci => ci.Art.Price);
             decimal shipping = 20;
             decimal total = subtotal + shipping;
+
+            Dictionary<int, Pair<CartItemDTO, int>> grouped = new Dictionary<int, Pair<CartItemDTO, int>>();
+
+            foreach (var ci in cartItems)
+            {
+                if (grouped.ContainsKey(ci.Art.Id))
+                    grouped[ci.Art.Id].Second++;
+                else
+                    grouped[ci.Art.Id] = new ArtGalleryWebsite.Cart.Pair<CartItemDTO, int> { First = ci, Second = 1 };
+            }
+
+            foreach (var g in grouped)
+                System.Diagnostics.Trace.WriteLine(g.Value);
 
             // Set labels
             setLblSubtotal(subtotal);
@@ -58,13 +81,35 @@ namespace ArtGalleryWebsite
                 cardDetailSubmitted = false;
                 enableFields(true);
                 btnPayWith.Enabled = true;
+                btnCiCount = 0;
             }
+
+            // foreach (var ci in cartItems)
+            // {
+            //     CartItemNoQty ciControl = (CartItemNoQty)LoadControl("~/User_Control/CartItemNoQty.ascx");
+            //     ciControl.CartItem = ci;
+            //     ItemsList.Controls.Add(ciControl);
+            // }
+            foreach (var ci in grouped)
+            {
+                CartItemNoQty ciControl = (CartItemNoQty)LoadControl("~/User_Control/CartItemNoQty.ascx");
+                ciControl.CartItem = ci.Value.First;
+                ciControl.Quantity = ci.Value.Second;
+                ItemsList.Controls.Add(ciControl);
+            }
+            //btnCiGen.DataBind();
 
             validateShipBill();
 
             // Compare credit card expiration date to ensure it is not in the past
             CompareExpDate.ValueToCompare = DateTime.Today.ToShortDateString();
         }
+
+        // protected void btnCiGen_click(object sender, EventArgs e)
+        // {
+        //     ci = cartItems[btnCiCount++];
+        //     System.Diagnostics.Trace.WriteLine(ci.Art.Description);
+        // }
 
         private void setLblSubtotal(decimal subtotal)
         {

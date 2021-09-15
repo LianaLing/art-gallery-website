@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="Cart" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="Cart.aspx.cs"
     Inherits="ArtGalleryWebsite.Cart" %>
+<%@ Reference Control="~/User_Control/CartItemNoQty.ascx" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <!-- Hidden buttons to receive and process simulated clicks from frontend -->
@@ -43,9 +44,12 @@
               border-l-transparent
               border-t-red" /> -->
                 <!-- Item Detail -->
+                <%--<asp:Button runat="server" ID="btnCiGen" OnClick="btnCiGen_click" CssClass="hidden" />--%>
                 <asp:Panel runat="server" ID="ItemsList">
-                    <% foreach (var ci in cartItems)
-                        { %>
+                   <%-- <% foreach (var ci in cartItems)
+                        { btnCiGen_click(btnCiGen, new EventArgs()); %>
+                        <uc:CartItemNoQty runat="server" CartItem=<%# ci.Art.Description %> />
+
                     <div class="py-5 flex w-full mt-2">
                         <!-- Image -->
                         <div class="w-[8.5em] mr-5">
@@ -61,7 +65,7 @@
                             <p class="mt-auto ml-auto">RM <%= ci.Art.Price %></p>
                         </div>
                     </div>
-                    <% } %>
+                    <% } %>--%>
                 </asp:Panel>
                 <!-- Shipping and Billing -->
                 <asp:Button
