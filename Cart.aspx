@@ -44,21 +44,21 @@
               border-t-red" /> -->
                 <!-- Item Detail -->
                 <asp:Panel runat="server" ID="ItemsList">
-                    <% foreach (var art in Arts)
+                    <% foreach (var ci in cartItems)
                         { %>
                     <div class="py-5 flex w-full mt-2">
                         <!-- Image -->
                         <div class="w-[8.5em] mr-5">
                             <img
                                 class="object-cover w-[8.5em] h-[8.5em] rounded-3xl"
-                                src="<%= art.Url %>"
-                                alt="<%= art.Description %>" />
+                                src="<%= ci.Art.Url %>"
+                                alt="<%= ci.Art.Description %>" />
                         </div>
                         <!-- Description -->
                         <div class="flex flex-col w-[75%]">
-                            <p class="font-bold text-xl"><%= art.Description %></p>
-                            <p>By <%= art.Author.Name %></p>
-                            <p class="mt-auto ml-auto">RM <%= art.Price %></p>
+                            <p class="font-bold text-xl"><%= ci.Art.Description %></p>
+                            <p>By <%= ci.Art.Author.Name %></p>
+                            <p class="mt-auto ml-auto">RM <%= ci.Art.Price %></p>
                         </div>
                     </div>
                     <% } %>

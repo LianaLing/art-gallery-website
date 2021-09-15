@@ -5,6 +5,8 @@ using System.Web.SessionState;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using ArtGalleryWebsite.Models.Entities;
+using ArtGalleryWebsite.DAL;
 
 namespace ArtGalleryWebsite.Utils
 {
@@ -66,6 +68,17 @@ namespace ArtGalleryWebsite.Utils
             context.Response.Write(response);
             context.Response.Flush();
             context.Response.End();
+        }
+        public static void UpdateCartSessionStateIfNull(UnitOfWork unitOfWork, HttpSessionState session, int user_id)
+        {
+            if (session["cart"] == null)
+            {
+                // User's shopping cart
+                List<ShoppingCart> found = (List<ShoppingCart>)unitOfWork.ShoppingCartRepository.Get(cart => cart.UserId == user_id);
+
+                // Set the user's shopping cart as a session state
+                session["cart"] = found.Count != 0 ? found[0] : null;
+            }
         }
     }
 }

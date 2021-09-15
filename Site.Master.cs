@@ -5,11 +5,14 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Utils;
+using ArtGalleryWebsite.DAL;
 
 namespace ArtGalleryWebsite
 {
 	public partial class SiteMaster : MasterPage
 	{
+        private static UnitOfWork unitOfWork = new UnitOfWork();
+
         protected void Page_Load(object sender, EventArgs e)
 		{
 			// If current user is logged in
@@ -22,6 +25,9 @@ namespace ArtGalleryWebsite
 
                 // Set the user as a session state (filtered out 'PasswordHash')
                 HttpContext.Current.Session["user"] = IdentityHelper.FilterUser(user);
+
+                // Update user's cart in session state if it is null
+                Helper.UpdateCartSessionStateIfNull(unitOfWork, Session, user.Id);
             }
 
             // Inject session state to client side

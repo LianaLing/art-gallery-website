@@ -10,6 +10,7 @@ using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.DAL.Extensions;
+using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite
 {
@@ -19,7 +20,7 @@ namespace ArtGalleryWebsite
 
         private static bool cardDetailSubmitted = false;
 
-        protected List<ArtDetailDTO> Arts;
+        protected List<CartItemDTO> cartItems;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,16 +28,14 @@ namespace ArtGalleryWebsite
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-            var data = unitOfWork.GetArtDetails();
+            ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
+            if (cart == null) throw new Exception($"User {user.Name} has no items in cart.");
 
-            Arts = data.AsEnumerable().Select(d =>
-            {
-                d.Price = decimal.Round(d.Price, 2, MidpointRounding.AwayFromZero);
-                return d;
-            }).ToList();
+            cartItems = unitOfWork.GetCartItems(cart.Id);
+            if (cartItems.Count == 0) throw new Exception($"User {user.Name} has no items in cart.");
 
             // Calculate
-            decimal subtotal = Arts.Sum(d => d.Price);
+            decimal subtotal = cartItems.Sum(ci => ci.Art.Price);
             decimal shipping = 20;
             decimal total = subtotal + shipping;
 
@@ -59,8 +58,6 @@ namespace ArtGalleryWebsite
                 cardDetailSubmitted = false;
                 enableFields(true);
             }
-
-            System.Diagnostics.Trace.WriteLine(data);
 
             validateShipBill();
 
