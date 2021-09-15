@@ -92,11 +92,13 @@ namespace ArtGalleryWebsite
         private static UnitOfWork unitOfWork = new UnitOfWork();
         private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
 
+        protected IEnumerable<ArtQuery> PHis = new List<ArtQuery>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Icon[] icons =
            {
-                new Icon("icon_0001", "https://img.icons8.com/material/24/000000/pencil--v1.png", "Edit Icon", "", "https://icons8.com/icon/5824/pencil", "Icons8"),
+                new Icon("icon_0001", "https://img.icons8.com/material-outlined/24/000000/activity-history.png", "Activity History Icon", "", "https://icons8.com/icon/115230/activity-history", "Icons8"),
                 new Icon("icon_0002", "https://img.icons8.com/material-rounded/24/000000/share.png", "Share Icon", "", "https://icons8.com/icon/83213/share", "Icons8"),
                 new Icon("icon_0003", "https://img.icons8.com/material-outlined/24/000000/settings--v1.png", "Settings Icon", "UserDetail.aspx", "https://icons8.com/icon/82535/settings", "Icons8"),
                 new Icon("icon_0004", "https://img.icons8.com/material-rounded/24/000000/add.png", "Add Icon", "", "https://icons8.com/icon/85096/add", "Icons8"),
@@ -110,6 +112,8 @@ namespace ArtGalleryWebsite
             var data = selectNonEmptyFavourites(user.Id);
             var count = countArtInFavourites(user.Id);
 
+            PHis = selectAllArt();
+
             // Pass data into hidden field for frontend to parse
             registerHiddenField("iconsState", icons);
             registerHiddenField("state", data);
@@ -118,7 +122,41 @@ namespace ArtGalleryWebsite
             if (!IsPostBack)
             {
                 CreateFav.Visible = false;
+                PurchaseHistory.Visible = false;
             }
+        }
+
+        // Fetch all [Art]s in the database
+        private IEnumerable<ArtQuery> selectAllArt()
+        {
+            // Return the result
+            return (from art in dbContext.Arts
+                    join author in dbContext.Authors on art.AuthorID equals author.Id
+                    join user in dbContext.Users on author.Id equals user.AuthorId
+                    orderby art.Likes descending
+                    select new ArtQuery
+                    {
+                        id = art.Id,
+                        style = art.Style,
+                        description = art.Description,
+                        price = art.Price,
+                        stock = art.Stock,
+                        likes = art.Likes,
+                        url = art.Url,
+                        author = new ArtQuery.Author
+                        {
+                            id = author.Id,
+                            description = author.Description,
+                            verified = author.Verified,
+                            username = user.UserName,
+                            name = user.Name,
+                            ic = user.Ic,
+                            dob = user.Dob,
+                            contactNo = user.PhoneNumber,
+                            email = user.Email,
+                            avatarUrl = user.AvatarUrl
+                        }
+                    }).AsEnumerable<ArtQuery>();
         }
 
         private void registerHiddenField(string id, object obj)
@@ -244,6 +282,15 @@ namespace ArtGalleryWebsite
             System.Diagnostics.Trace.WriteLine("Clicked on create, Fav Name: " + txtFavName.Text);
             CreateFav.Visible = false;
             // Insert into database, will display one more new save
+        }
+
+        protected void btnShowPH_click(object sender, EventArgs e)
+        {
+           PurchaseHistory.Visible = true;
+        }
+        protected void btnClosePH_click(object sender, EventArgs e)
+        {
+            PurchaseHistory.Visible = false;
         }
 
         private void validateCreateFav()

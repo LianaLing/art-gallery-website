@@ -121,6 +121,8 @@ export default defineComponent({
         triggerBackendControl(e, "MainContent_btnUserDetailPage");
       } else if (str === "Add Icon") {
         triggerBackendControl(e, "MainContent_btnShowCreateFav");
+      } else if ((str = "Activity History Icon")) {
+        triggerBackendControl(e, "MainContent_btnShowPH");
       } else {
         window.alert("Button function is not implemented yet.");
       }
