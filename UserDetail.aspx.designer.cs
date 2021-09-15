@@ -24,15 +24,6 @@ namespace ArtGalleryWebsite
         protected global::System.Web.UI.WebControls.Panel UserDetailForm;
 
         /// <summary>
-        /// ReqFullName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::ArtGalleryWebsite.User_Control.ReqField ReqFullName;
-
-        /// <summary>
         /// txtFullName control.
         /// </summary>
         /// <remarks>

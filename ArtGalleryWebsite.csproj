@@ -169,7 +169,6 @@
     <Content Include="Home.aspx" />
     <None Include="Scripts\src\components\ArtCard.vue" />
     <Content Include="User_Control\ErrorLabel.ascx" />
-    <Content Include="User_Control\ReqField.ascx" />
     <Content Include="Web.sitemap" />
     <TypeScriptCompile Include="shims-vue.d.ts" />
     <Content Include="SiteMap.aspx" />
@@ -385,13 +384,6 @@
     <Compile Include="User.aspx.cs">
       <DependentUpon>User.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="User_Control\ReqField.ascx.cs">
-      <DependentUpon>ReqField.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="User_Control\ReqField.ascx.designer.cs">
-      <DependentUpon>ReqField.ascx</DependentUpon>
     </Compile>
     <Compile Include="Utils\Database.cs" />
     <Compile Include="Utils\Helper.cs" />

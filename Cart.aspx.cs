@@ -57,6 +57,7 @@ namespace ArtGalleryWebsite
                 CardDetail.Visible = false;
                 cardDetailSubmitted = false;
                 enableFields(true);
+                btnPayWith.Enabled = true;
             }
 
             validateShipBill();
@@ -174,6 +175,8 @@ namespace ArtGalleryWebsite
             System.Diagnostics.Trace.WriteLine("Checked");
             if (cboxDefaultAddr.Checked) // Using default address, disable input
             {
+                // Change addr text to default address
+
                 enableAddr(false);
             }
             else
@@ -281,7 +284,7 @@ namespace ArtGalleryWebsite
 
                     if (rdbtnCard.Checked)
                     {
-                        //alertContent += ddlCardBrand.Text.ToUpper() + " card: " + txtCardNo.Text;
+                        alertContent += ddlCardBrand.Text.ToUpper() + " card: " + txtCardNo.Text;
                     }
                     else if (rdbtnTng.Checked)
                     {
@@ -300,10 +303,12 @@ namespace ArtGalleryWebsite
                         alertContent = "Please select a payment method.";
                     }
 
+                    // Wrap up the transaction, send email
                     lblPayConfirmHeader.Text = "Payment Successful";
                     lblPayConfirmBody.Text = alertContent;
                     enableFields(false);
                     System.Diagnostics.Trace.WriteLine(alertContent);
+                    btnPayWith.Enabled = false;
                 }
                 else
                 {
