@@ -16,7 +16,6 @@ namespace ArtGalleryWebsite
     public partial class Home : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ApplicationDbContext dbContext = (ApplicationDbContext) unitOfWork.GetContext();
 
         protected int artId;
         protected int favId;
@@ -31,12 +30,6 @@ namespace ArtGalleryWebsite
             // Get current session user
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
-
-            // User's shopping cart
-            List<ShoppingCart> found = (List<ShoppingCart>)unitOfWork.ShoppingCartRepository.Get(cart => cart.UserId == user.Id);
-
-            // Set the user's shopping cart as a session state
-            Session["cart"] = found.Count != 0 ? found[0] : null;
 
             // Get data for the page
             var data = unitOfWork.GetArtDetails();

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using ArtGalleryWebsite.Models.Entities;
+using ArtGalleryWebsite.Models.DTO;
 
 namespace ArtGalleryWebsite.DAL.Extensions
 {
@@ -69,6 +70,52 @@ namespace ArtGalleryWebsite.DAL.Extensions
             unitOfWork.Save();
 
             return newCart;
+        }
+
+        public static List<CartItemDTO> GetCartItems(this UnitOfWork unitOfWork, int cart_id)
+        {
+            // Check if cart exists
+            ShoppingCart cart = unitOfWork.ShoppingCartRepository.GetById(cart_id);
+            if (cart == null) throw new Exception($"Cart {cart_id} does not exist");
+
+            ApplicationDbContext dbContext = (ApplicationDbContext) unitOfWork.GetContext();
+
+            return dbContext.CartItems
+                .Where(ci => ci.CartId == cart_id)
+                .Join(
+                    dbContext.Users,
+                    ci => ci.Art.AuthorId,
+                    u => u.AuthorId,
+                    (ci, u) => new CartItemDTO
+                    {
+                        Id = ci.Id,
+                        Quantity = ci.Quantity,
+                        ArtId = ci.ArtId,
+                        Art = new ArtDetailDTO {
+                            Id = ci.Art.Id,
+                            Description = ci.Art.Description,
+                            Likes = ci.Art.Likes,
+                            Price = ci.Art.Price,
+                            Stock = ci.Art.Stock,
+                            Style = ci.Art.Style,
+                            Url = ci.Art.Url,
+                            Author = new ArtDetailDTO.ArtDetailDTOAuthor {
+                                Id = (int)ci.Art.Author.Id,
+                                Verified = ci.Art.Author.Verified,
+                                Description = ci.Art.Author.Description,
+                                Name = u.Name,
+                                AvatarUrl = u.AvatarUrl,
+                                ContactNo = u.PhoneNumber,
+                                Dob = u.Dob,
+                                Email = u.Email,
+                                Ic = u.Ic,
+                                Username = u.UserName
+                            }
+                        },
+                        CartId = ci.CartId,
+                        Cart = ci.Cart
+                    }
+                ).ToList();
         }
     }
 }

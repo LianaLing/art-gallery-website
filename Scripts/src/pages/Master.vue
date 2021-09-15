@@ -5,20 +5,12 @@
       <h1 class="font-bold font-garamond text-xl text-accent">Art Gallery</h1>
     </button>
     <div class="flex font-bold text-dark items-center">
-      <div class="mr-8">
+      <div class="flex items-center mr-8">
         <a
           class="font-garamond mr-1 py-2 px-3 hover:underline"
           href="About.aspx"
           >About</a
         >
-        <template v-if="Object.keys(session).length !== 0">
-          <a
-            class="font-garamond mr-1 py-2 px-3 hover:underline"
-            href="Cart.aspx"
-          >
-            Cart
-          </a>
-        </template>
         <template
           v-if="
             Object.keys(session).length !== 0 &&
@@ -31,6 +23,39 @@
             >Dashboard</a
           >
         </template>
+        <div
+          class="relative"
+          v-if="
+            Object.keys(session).length !== 0 &&
+            session.cart &&
+            session.cart.total !== 0
+          "
+        >
+          <a
+            class="font-garamond mr-1 py-2 px-3 hover:underline cursor-pointer"
+            @click="cartHandler"
+          >
+            Cart
+          </a>
+          <div
+            class="
+              flex
+              justify-center
+              items-center
+              absolute
+              top-0
+              right-0
+              w-4
+              h-4
+              rounded-full
+              bg-accent
+              text-white
+            "
+            style="font-size: 10px"
+          >
+            {{ session.cart.total }}
+          </div>
+        </div>
       </div>
 
       <template v-if="Object.keys(session).length === 0">
@@ -118,6 +143,13 @@ export default defineComponent({
     },
   },
   setup() {
+    const session = useSession();
+    session.value = getStateFromBackend<Session>("session");
+
+    console.log(session.value);
+
+    const claims = <Claims[]>session.value.user?.claims;
+
     const authView = useAuthView();
 
     const setAuthView = (val: AuthView) => (authView.value = val);
@@ -145,18 +177,30 @@ export default defineComponent({
       window.location.href = data.redirectUrl;
     };
 
-    return { loginHandler, signupHandler, logoutHandler };
-  },
-  data() {
-    const session = useSession();
-    session.value = getStateFromBackend<Session>("session");
+    const cartHandler = (event: Event) => {
+      event.preventDefault();
 
-    const claims = <Claims[]>session.value.user?.claims;
+      if (Object.keys(session.value).length === 0) {
+        alert("Error occured");
+        return;
+      }
 
-    console.log(session.value);
+      if (!session.value.cart) {
+        alert("You don't have anything in your cart yet");
+        return;
+      }
 
-    // const claims = claimsArr[0];
-    return { session, claims };
+      window.location.href = "Cart.aspx";
+    };
+
+    return {
+      loginHandler,
+      signupHandler,
+      logoutHandler,
+      cartHandler,
+      session,
+      claims,
+    };
   },
 });
 </script>
