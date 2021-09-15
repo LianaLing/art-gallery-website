@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ArtGalleryWebsite.Models.Entities;
 using ArtGalleryWebsite.DAL;
+using ArtGalleryWebsite.Models.DTO;
 
 namespace ArtGalleryWebsite.Utils
 {
@@ -74,17 +75,17 @@ namespace ArtGalleryWebsite.Utils
             if (session["cart"] == null)
             {
                 // User's shopping cart
-                List<ShoppingCart> found = (List<ShoppingCart>)unitOfWork.ShoppingCartRepository.Get(cart => cart.UserId == user_id);
+                List<ShoppingCart> found = (List<ShoppingCart>)unitOfWork.ShoppingCartRepository.Get(c => c.UserId == user_id);
 
                 // If no cart, set the session as null
-                if (found == null || found.Count != 0)
+                if (found == null || found.Count == 0)
                 {
                     session["cart"] = null;
                     return;
                 }
 
                 // Take away unwanted properties
-                var intermediate = new
+                ShoppingCartDTO cart = new ShoppingCartDTO
                 {
                     Id = found[0].Id,
                     Total = found[0].Total,
@@ -92,7 +93,7 @@ namespace ArtGalleryWebsite.Utils
                 };
 
                 // Set the user's shopping cart as a session state
-                session["cart"] = intermediate;
+                session["cart"] = cart;
             }
         }
     }
