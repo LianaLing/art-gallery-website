@@ -87,8 +87,8 @@ namespace ArtGalleryWebsite
             }
             catch (Exception ex)
             {
-                ErrorLabel.Visible = true;
-                ErrorLabel.Text = $"{ex}";
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
                 System.Diagnostics.Trace.WriteLine("ERROR: " + ex);
                 return false;
             }
@@ -110,8 +110,8 @@ namespace ArtGalleryWebsite
             }
             catch (Exception ex)
             {
-                ErrorLabel.Visible = true;
-                ErrorLabel.Text = $"{ex}";
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
                 return ex + " [Artwork already saved in this collection.]";
             }
         }
@@ -134,8 +134,8 @@ namespace ArtGalleryWebsite
             }
             catch (Exception ex)
             {
-                ErrorLabel.Visible = true;
-                ErrorLabel.Text = $"{ex}";
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
                 return ex + " [Artwork already deleted from this collection.]";
             }
         }
@@ -184,8 +184,8 @@ namespace ArtGalleryWebsite
             }
             catch (Exception ex)
             {
-                ErrorLabel.Visible = true;
-                ErrorLabel.Text = $"{ex}";
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
             }
         }
 
@@ -217,8 +217,8 @@ namespace ArtGalleryWebsite
             }
             catch (Exception ex)
             {
-                ErrorLabel.Visible = true;
-                ErrorLabel.Text = $"{ex}";
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
             }
         }
 
@@ -229,8 +229,8 @@ namespace ArtGalleryWebsite
             // Handle specific exception.
             if (exc is HttpUnhandledException)
             {
-                ErrorLabel.Visible = true;
-                ErrorLabel.Text = "An error occurred on this page.";
+                lblErr.Text = "An error occurred on this page. Please verify your " +
+                "information to resolve the issue.";
             }
             // Clear the error from the server.
             Server.ClearError();

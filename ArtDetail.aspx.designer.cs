@@ -60,13 +60,13 @@ namespace ArtGalleryWebsite
         protected global::System.Web.UI.WebControls.Button btnCartPage;
 
         /// <summary>
-        /// ErrorLabel control.
+        /// lblErr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorLabel;
+        protected global::ArtGalleryWebsite.User_Control.ErrorLabel lblErr;
 
         /// <summary>
         /// ArtDetailRef1 control.

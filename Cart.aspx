@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="Cart" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="Cart.aspx.cs"
     Inherits="ArtGalleryWebsite.Cart" %>
+<%@ Reference Control="~/User_Control/CartItemNoQty.ascx" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <!-- Hidden buttons to receive and process simulated clicks from frontend -->
@@ -44,24 +45,6 @@
               border-t-red" /> -->
                 <!-- Item Detail -->
                 <asp:Panel runat="server" ID="ItemsList">
-                    <% foreach (var ci in cartItems)
-                        { %>
-                    <div class="py-5 flex w-full mt-2">
-                        <!-- Image -->
-                        <div class="w-[8.5em] mr-5">
-                            <img
-                                class="object-cover w-[8.5em] h-[8.5em] rounded-3xl"
-                                src="<%= ci.Art.Url %>"
-                                alt="<%= ci.Art.Description %>" />
-                        </div>
-                        <!-- Description -->
-                        <div class="flex flex-col w-[75%]">
-                            <p class="font-bold text-xl"><%= ci.Art.Description %></p>
-                            <p>By <%= ci.Art.Author.Name %></p>
-                            <p class="mt-auto ml-auto">RM <%= ci.Art.Price %></p>
-                        </div>
-                    </div>
-                    <% } %>
                 </asp:Panel>
                 <!-- Shipping and Billing -->
                 <asp:Button
@@ -96,7 +79,7 @@
                             </asp:RequiredFieldValidator>
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input block rounded-full block w-full col-span-2"
+                                CssClass="form-input block rounded-full block w-full col-span-2 disabled:opacity-50"
                                 ID="txtFullName"
                                 placeholder="John M. Doe" />
                             <asp:RegularExpressionValidator runat="server" ID="RegexFullName"
@@ -116,7 +99,7 @@
                             </asp:RequiredFieldValidator>
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input rounded-full block w-full col-span-2"
+                                CssClass="form-input rounded-full block w-full col-span-2 disabled:opacity-50"
                                 ID="txtEmail"
                                 placeholder="john@example.com" />
                             <asp:RegularExpressionValidator runat="server" ID="RegexEmail"
@@ -127,7 +110,7 @@
                                 ValidationGroup="VGShipBill">
                             </asp:RegularExpressionValidator>
 
-                            <asp:CheckBox runat="server" ID="cboxDefaultAddr" Text="        Use default address" CssClass="col-span-2 m-2"
+                            <asp:CheckBox runat="server" ID="cboxDefaultAddr" Text="        Use default address" CssClass="col-span-2 m-2 disabled:opacity-50"
                                 OnCheckedChanged="cboxDefaultAddr_change" ClientIDMode="static" AutoPostBack="true" Checked="false" />
 
                             <label for="txtAddrL1" class="p-2">Address Line 1 </label>
@@ -139,7 +122,7 @@
                             </asp:RequiredFieldValidator>
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input rounded-full block w-full col-span-2"
+                                CssClass="form-input rounded-full block w-full col-span-2 disabled:opacity-50"
                                 ID="txtAddrL1"
                                 placeholder="542 W. 15th Street" />
                             <asp:RegularExpressionValidator runat="server" ID="RangeAddrL1"
@@ -152,7 +135,7 @@
                             <label for="txtAddrL2" class="p-2">Address Line 2 </label>
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input rounded-full block w-full col-span-2"
+                                CssClass="form-input rounded-full block w-full col-span-2 disabled:opacity-50"
                                 ID="txtAddrL2"
                                 placeholder="Apartment 1, Suite 2" />
                             <asp:RegularExpressionValidator runat="server" ID="RangeAddrL2"
@@ -181,12 +164,12 @@
                             </asp:RequiredFieldValidator>
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input rounded-full col-start-1 col-end-3"
+                                CssClass="form-input rounded-full col-start-1 col-end-3 disabled:opacity-50"
                                 ID="txtAddrCity"
                                 placeholder="Shah Alam" />
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input rounded-full col-start-3 col-end-5"
+                                CssClass="form-input rounded-full col-start-3 col-end-5 disabled:opacity-50"
                                 ID="txtAddrPC"
                                 placeholder="40000" />
                             <asp:RegularExpressionValidator runat="server" ID="RangeAddrCity"
@@ -219,12 +202,12 @@
                             </asp:RequiredFieldValidator>
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input rounded-full col-start-1 col-end-3"
+                                CssClass="form-input rounded-full col-start-1 col-end-3 disabled:opacity-50"
                                 ID="txtAddrState"
                                 placeholder="Selangor" />
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input rounded-full col-start-3 col-end-5"
+                                CssClass="form-input rounded-full col-start-3 col-end-5 disabled:opacity-50"
                                 ID="txtAddrCountry"
                                 placeholder="Malaysia" />
                             <asp:RegularExpressionValidator runat="server" ID="RangeAddrState"
@@ -253,7 +236,7 @@
                             </asp:RequiredFieldValidator>
                             <asp:TextBox
                                 runat="server"
-                                CssClass="form-input rounded-full block w-full col-span-2"
+                                CssClass="form-input rounded-full block w-full col-span-2 disabled:opacity-50"
                                 ID="txtPhone"
                                 placeholder="+6012-3456 789" />
                             <asp:RegularExpressionValidator runat="server" ID="RegexPhone"
@@ -362,6 +345,7 @@
               py-2
               rounded-full
               hover:bg-accent-hover
+              disabled:opacity-50
             "
                         Text="Pay Using This Method" />
                 </div>
@@ -484,7 +468,7 @@
                 </div>
                 <!-- Modal Div -->
             </asp:Panel>
-            <!-- Credit Card Details Div --> 
+            <!-- Credit Card Details Div -->
             <!-- Confirmation Message -->
             <asp:Panel runat="server" ID="PaymentIndicator" CssClass="p-10 border-accent border-dashed border-2 display">
                 <asp:Label runat="server" ID="lblPayConfirmHeader" class="text-xl block font-bold text-accent" />
