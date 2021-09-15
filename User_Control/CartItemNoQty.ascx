@@ -11,10 +11,10 @@
                         </div>
                         <!-- Description -->
                         <div class="flex flex-col w-[75%]">
-                            <p ID="ciDesc" class="font-bold text-xl"><%= CartItem.Art.Description %></p>
-                            <p ID="ciAuthor"><%= CartItem.Art.Author.Name %></p>
-                            <p ID="ciQty">Qty: <%= Quantity %></p>
-                            <p ID="ciPrice" class="mt-auto ml-auto">RM <%= CartItem.Art.Price * Quantity %></p>
+                            <p class="font-bold text-xl"><%= CartItem.Art.Description %></p>
+                            <p>By <%= CartItem.Art.Author.Name %></p>
+                            <p class="">Qty: <%= Quantity %></p>
+                            <p class="mt-auto ml-auto">RM <%= CartItem.Art.Price * Quantity %></p>
                         </div>
                     </div>
                 

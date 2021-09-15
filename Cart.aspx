@@ -44,28 +44,7 @@
               border-l-transparent
               border-t-red" /> -->
                 <!-- Item Detail -->
-                <%--<asp:Button runat="server" ID="btnCiGen" OnClick="btnCiGen_click" CssClass="hidden" />--%>
                 <asp:Panel runat="server" ID="ItemsList">
-                   <%-- <% foreach (var ci in cartItems)
-                        { btnCiGen_click(btnCiGen, new EventArgs()); %>
-                        <uc:CartItemNoQty runat="server" CartItem=<%# ci.Art.Description %> />
-
-                    <div class="py-5 flex w-full mt-2">
-                        <!-- Image -->
-                        <div class="w-[8.5em] mr-5">
-                            <img
-                                class="object-cover w-[8.5em] h-[8.5em] rounded-3xl"
-                                src="<%= ci.Art.Url %>"
-                                alt="<%= ci.Art.Description %>" />
-                        </div>
-                        <!-- Description -->
-                        <div class="flex flex-col w-[75%]">
-                            <p class="font-bold text-xl"><%= ci.Art.Description %></p>
-                            <p>By <%= ci.Art.Author.Name %></p>
-                            <p class="mt-auto ml-auto">RM <%= ci.Art.Price %></p>
-                        </div>
-                    </div>
-                    <% } %>--%>
                 </asp:Panel>
                 <!-- Shipping and Billing -->
                 <asp:Button
