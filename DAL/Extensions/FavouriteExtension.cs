@@ -7,7 +7,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
 {
     public static class FavouriteExtension
     {
-        public static IEnumerable<FavDTO> GetUserFavourites(this UnitOfWork unitOfWork, int user_id)
+        public static List<FavDTO> GetUserFavourites(this UnitOfWork unitOfWork, int user_id)
         {
             ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
@@ -59,7 +59,8 @@ namespace ArtGalleryWebsite.DAL.Extensions
                             Description = x.Author.Description,
                             Verified = x.Author.Verified
                         }
-                    });
+                    })
+                    .ToList();
         }
 
         public static List<ArtCountInFavDTO> ArtCountInUserFavourites(this UnitOfWork unitOfWork, int user_id)

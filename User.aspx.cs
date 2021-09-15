@@ -91,7 +91,6 @@ namespace ArtGalleryWebsite
     public partial class User : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
         protected IEnumerable<ArtDetailDTO> PHis = new List<ArtDetailDTO>();
 
@@ -109,27 +108,19 @@ namespace ArtGalleryWebsite
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-            // Get data for the page
-
-
             // Will only return favourites in [Favourite] that have >= 1 row of data
             // Empty favourites will not be returned
-            var data = unitOfWork.GetUserFavourites(user.Id);
-
-            System.Diagnostics.Trace.WriteLine(data);
-
-            foreach (var d in data)
-            {
-                System.Diagnostics.Trace.WriteLine(d);
-            }
+            List<FavDTO> data = unitOfWork.GetUserFavourites(user.Id);
 
             // Return the total number of rows in [FavArt] for each [Favourite]
-            var counts = unitOfWork.ArtCountInUserFavourites(user.Id);
+            List<ArtCountInFavDTO> counts = unitOfWork.ArtCountInUserFavourites(user.Id);
 
             // Pass data into hidden field for frontend to parse
             Helper.RegisterHiddenField(Page, "iconsState", icons);
             Helper.RegisterHiddenField(Page, "state", data);
             Helper.RegisterHiddenField(Page, "countsState", counts);
+
+            unitOfWork.GetOrderDetailsByUserId(user.Id);
 
             // Purchase history
             PHis = unitOfWork.GetArtDetails();

@@ -6,7 +6,7 @@
   >
     <!-- Thumbnail -->
     <div class="relative">
-      <a v-if="save.length !== 0" :href="save[0].art.url">
+      <a v-if="save.length !== 0" :href="save[0].art.url" target="_blank">
         <img
           v-if="save[0].art !== undefined"
           class="object-cover rounded-l-2xl h-[161px] w-[11rem]"
@@ -30,11 +30,12 @@
           group-hover:backdrop-brightness-75
         "
         :class="transition"
+        target="_blank"
       />
     </div>
 
     <div class="h-[10rem] grid gap-[2px] grid-rows-2 relative">
-      <a v-if="save.length > 1" :href="save[1].art.url">
+      <a v-if="save.length > 1" :href="save[1].art.url" target="_blank">
         <img
           v-if="save[1].art !== undefined"
           class="object-cover rounded-tr-2xl h-[5rem] w-[5rem]"
@@ -54,6 +55,7 @@
             group-hover:backdrop-brightness-75
           "
           :class="transition"
+          target="_blank"
         />
       </a>
       <div
@@ -61,7 +63,7 @@
         class="bg-light object-cover rounded-tr-2xl h-[79px] w-[5rem]"
       />
 
-      <a v-if="save.length > 2" :href="save[2].art.url">
+      <a v-if="save.length > 2" :href="save[2].art.url" target="_blank">
         <img
           v-if="save[2].art !== undefined"
           class="object-cover rounded-br-2xl h-[79px] w-[5rem]"
@@ -81,6 +83,7 @@
             group-hover:backdrop-brightness-75
           "
           :class="transition"
+          target="_blank"
         />
       </a>
       <div

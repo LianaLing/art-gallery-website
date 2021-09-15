@@ -76,8 +76,23 @@ namespace ArtGalleryWebsite.Utils
                 // User's shopping cart
                 List<ShoppingCart> found = (List<ShoppingCart>)unitOfWork.ShoppingCartRepository.Get(cart => cart.UserId == user_id);
 
+                // If no cart, set the session as null
+                if (found == null || found.Count != 0)
+                {
+                    session["cart"] = null;
+                    return;
+                }
+
+                // Take away unwanted properties
+                var intermediate = new
+                {
+                    Id = found[0].Id,
+                    Total = found[0].Total,
+                    UserId = found[0].UserId
+                };
+
                 // Set the user's shopping cart as a session state
-                session["cart"] = found.Count != 0 ? found[0] : null;
+                session["cart"] = intermediate;
             }
         }
     }

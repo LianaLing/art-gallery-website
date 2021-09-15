@@ -12,13 +12,22 @@
         :icon="i"
       /> -->
 
-      <div v-for="i in icons" :key="i.id" class="bg-transparent px-10 py-6">
+      <div
+        v-for="i in icons"
+        :key="i.id"
+        class="
+          bg-transparent
+          mx-6
+          my-2
+          px-4
+          py-4
+          cursor-pointer
+          hover:bg-light-hover
+          rounded-full
+        "
+      >
         <button @click="btnHandler($event, i.alt)">
-          <img
-            :src="i.src"
-            :alt="i.alt"
-            class="inline hover:bg-light-hover rounded-full"
-          />
+          <img :src="i.src" :alt="i.alt" class="inline" />
         </button>
       </div>
     </div>

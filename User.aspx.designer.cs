@@ -51,6 +51,15 @@ namespace ArtGalleryWebsite
         protected global::System.Web.UI.WebControls.Button btnShowCreateFav;
 
         /// <summary>
+        /// btnShowPH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnShowPH;
+
+        /// <summary>
         /// CreateFav control.
         /// </summary>
         /// <remarks>
@@ -112,6 +121,15 @@ namespace ArtGalleryWebsite
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Panel PurchaseHistory;
+
+        /// <summary>
+        /// PHItems control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PHItems;
 
         /// <summary>
         /// btnClosePH control.

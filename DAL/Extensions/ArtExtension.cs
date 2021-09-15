@@ -1,11 +1,10 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
 using ArtGalleryWebsite.Models.DTO;
 
 namespace ArtGalleryWebsite.DAL.Extensions
 {
-    public static class ArtsExtension
+    public static class ArtExtension
     {
         public static ArtDetailDTO GetArtDetailById(this UnitOfWork unitOfWork, int art_id)
         {

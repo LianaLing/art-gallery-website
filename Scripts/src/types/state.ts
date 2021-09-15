@@ -3,8 +3,8 @@
  * ASP.NET
  */
 export type Session = {
-  user: User | null;
-  cart: Cart | null;
+  user?: User | null;
+  cart?: Cart | null;
 };
 
 export type User = {

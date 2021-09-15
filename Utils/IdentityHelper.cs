@@ -1,9 +1,11 @@
 ﻿using ArtGalleryWebsite.Models;
 using Newtonsoft.Json;
 using System;
+using System.Web;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Web;
+using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite.Utils
 {
@@ -98,29 +100,76 @@ namespace ArtGalleryWebsite.Utils
             return $"Api/Auth.aspx?{queryString}";
         }
 
-        public static Dictionary<string, object> FilterUser(ApplicationUser user, Dictionary<string, object> overrideValues = null)
+        public static Dictionary<string, object> FilterUser(ApplicationUser user)
         {
             // If user is null
             if (user == null)
                 return null;
 
-            // If no custom overrideValues is specified then initialize the default overrideValues
-            if (overrideValues == null)
-                overrideValues = new Dictionary<string, object>() 
-                { 
-                    { "passwordHash", null } 
-                };
+            // Extract all the user's orders out
+            var orders = user.Orders.Select(o => new
+            {
+                Id = o.Id,
+                Status = o.Status,
+                Remark = o.Remark,
+                CreatedAt = o.CreatedAt,
+                UpdatedAt = o.UpdatedAt,
+                PaymentId = o.PaymentId,
+                UserId = o.UserId,
+                AddressId = o.AddressId,
+                Address = o.Address,
+            }).ToList();
+
+            // Extract all the user's paymentmethods out
+            var paymentMethods = user.PaymentMethods.Select(pm => new
+            {
+                Id = pm.Id,
+                Type = pm.Type,
+                CreatedAt = pm.CreatedAt,
+                UpdatedAt = pm.UpdatedAt,
+                UserId = pm.UserId,
+                CardId = pm.CardId,
+                Card = pm.Card,
+                BillingDetailsId = pm.BillingDetailsId,
+                BillingDetails = pm.BillingDetails == null ? null : new
+                {
+                    Id = pm.BillingDetails.Id,
+                    Name = pm.BillingDetails.Name,
+                    Email = pm.BillingDetails.Email,
+                    Phone = pm.BillingDetails.Phone,
+                    CreatedAt = pm.BillingDetails.CreatedAt,
+                    UpdatedAt = pm.BillingDetails.UpdatedAt,
+                    AddressId = pm.BillingDetails.AddressId,
+                    Address = pm.BillingDetails.Address
+                }
+            }).ToList();
+
+            var intermediate = new
+            {
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                LockoutEndDateUtc = user.LockoutEndDateUtc,
+                LockoutEnabled = user.LockoutEnabled,
+                Claims = user.Claims,
+                Id = user.Id,
+                UserName = user.UserName,
+                Name = user.Name,
+                Ic = user.Ic,
+                Dob = user.Dob,
+                AvatarUrl = user.AvatarUrl,
+                AuthorId = user.AuthorId,
+                Orders = orders,
+                PaymentMethods = paymentMethods,
+            };
 
             // First we serialize the user as JSON
-            string json = Helper.SerializeObject(user);
+            string json = Helper.SerializeObject(intermediate);
 
             // Then deserialize it back to a dictionary
             Dictionary<string, object> dictionary = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-
-            // For each override value in the dictionary
-            // replace it accordingly
-            foreach (KeyValuePair<string, object> overrideValue in overrideValues)
-                dictionary[overrideValue.Key] = overrideValue.Value;
 
             return dictionary;
         }

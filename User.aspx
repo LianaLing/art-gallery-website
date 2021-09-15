@@ -9,6 +9,7 @@
         <asp:Button ID="btnFavDetailPage" runat="server" OnClick="btnFavDetailPage_click" CssClass="hidden"/>
         <asp:Button ID="btnShowCreateFav" runat="server" OnClick="btnShowCreateFav_click" CssClass="hidden"/>
         <asp:Button ID="btnShowPH" runat="server" OnClick="btnShowPH_click" CssClass="hidden"/>
+
         <div id="app">
         </div>
 

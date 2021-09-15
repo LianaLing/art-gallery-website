@@ -14,6 +14,8 @@
         <template
           v-if="
             Object.keys(session).length !== 0 &&
+            session &&
+            session.user &&
             claims[0].claimValue === 'artist'
           "
         >
@@ -27,6 +29,7 @@
           class="relative"
           v-if="
             Object.keys(session).length !== 0 &&
+            session &&
             session.cart &&
             session.cart.total !== 0
           "
@@ -58,7 +61,34 @@
         </div>
       </div>
 
-      <template v-if="Object.keys(session).length === 0">
+      <template
+        v-if="Object.keys(session).length !== 0 && session && session.user"
+      >
+        <button
+          class="font-bold font-garamond hover:underline"
+          @click="userPageHandler"
+        >
+          You are logged in as: {{ session.user?.userName }}
+        </button>
+        <button
+          class="
+            font-bold
+            bg-accent
+            rounded-full
+            font-garamond
+            text-white
+            ml-4
+            py-2
+            px-3
+            hover:bg-accent-hover
+          "
+          @click="logoutHandler"
+        >
+          Log out
+        </button>
+      </template>
+
+      <template v-else>
         <button
           class="
             bg-accent
@@ -86,31 +116,6 @@
           @click="signupHandler"
         >
           Sign up
-        </button>
-      </template>
-
-      <template v-else>
-        <button
-          class="font-bold font-garamond hover:underline"
-          @click="userPageHandler"
-        >
-          You are logged in as: {{ session.user?.userName }}
-        </button>
-        <button
-          class="
-            font-bold
-            bg-accent
-            rounded-full
-            font-garamond
-            text-white
-            ml-4
-            py-2
-            px-3
-            hover:bg-accent-hover
-          "
-          @click="logoutHandler"
-        >
-          Log out
         </button>
       </template>
     </div>
@@ -144,7 +149,17 @@ export default defineComponent({
   },
   setup() {
     const session = useSession();
-    session.value = getStateFromBackend<Session>("session");
+    const backendSession = getStateFromBackend<Session>("session");
+
+    if (!backendSession) {
+      session.value = { user: null, cart: null };
+    } else if (backendSession && backendSession.user && backendSession.cart) {
+      session.value = backendSession;
+    } else if (backendSession && backendSession.user) {
+      session.value = { ...backendSession, cart: null };
+    } else if (backendSession && backendSession.cart) {
+      session.value = { ...backendSession, user: null };
+    }
 
     console.log(session.value);
 
