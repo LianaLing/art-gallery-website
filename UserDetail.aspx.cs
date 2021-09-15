@@ -13,6 +13,8 @@ namespace ArtGalleryWebsite
         {
             // DOB should not be in the future
             CompareDOB.ValueToCompare = DateTime.Today.ToShortDateString();
+            // Compare credit card expiration date to ensure it is not in the past
+            CompareExpDate.ValueToCompare = DateTime.Today.ToShortDateString();
             if (!IsPostBack)
             {
             }// Compare username with database
@@ -29,6 +31,27 @@ namespace ArtGalleryWebsite
             {
                 e.Day.IsSelectable = false;
                 e.Cell.ForeColor = System.Drawing.Color.Gray;
+            }
+        }
+
+        protected void ddlCardBrand_change(object sender, EventArgs e)
+        {
+            System.Diagnostics.Trace.WriteLine("Selection index changed");
+            if (ddlCardBrand.SelectedValue == "visa")
+            {
+                RegexCardNo.ValidationExpression = "^4[0-9]{12}(?:[0-9]{3})?$";
+            }
+            else if (ddlCardBrand.SelectedValue == "mastercard")
+            {
+                RegexCardNo.ValidationExpression = "^(5[1-5][0-9]{14}|2(22[1-9][0-9]{12}|2[3-9][0-9]{13}|[3-6][0-9]{14}|7[0-1][0-9]{13}|720[0-9]{12}))$";
+            }
+            else if (ddlCardBrand.SelectedValue == "amex")
+            {
+                RegexCardNo.ValidationExpression = "^3[47][0-9]{13}$";
+            }
+            else if (ddlCardBrand.SelectedValue == "unionpay")
+            {
+                RegexCardNo.ValidationExpression = "^(62[0-9]{14,17})$";
             }
         }
 

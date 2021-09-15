@@ -277,7 +277,88 @@
                             ValidationGroup="VGAccountDetail"
                             >
                             </asp:RegularExpressionValidator>
-                    </asp:Panel>
+                        <!-- Credit Card Details -->
+                        <div class="grid grid-col-2 gap-2 w-full">
+                        <asp:DropDownList runat="server" ID="ddlCardBrand" AutoPostBack="True" OnSelectedIndexChanged="ddlCardBrand_change" CssClass="rounded-full col-span-2">
+                            <asp:ListItem value="visa" selected="True"> Visa </asp:ListItem>
+                            <asp:ListItem value="mastercard"> Master </asp:ListItem>
+                            <asp:ListItem value="amex"> Amex </asp:ListItem>
+                            <asp:ListItem value="unionpay"> Unionpay </asp:ListItem>
+                        </asp:DropDownList>
+
+                            <label for="txtCardNo" class="p-2"> Card No </label>
+                            <asp:RequiredFieldValidator runat="server" ID="ReqCardNo"
+                                ErrorMessage="* Required"
+                                ControlToValidate="txtCardNo"
+                                CssClass="text-red text-sm text-right"
+                                ValidationGroup="VGAccountDetail"
+                                >
+                                </asp:RequiredFieldValidator>
+                            <asp:TextBox
+                                runat="server"
+                                CssClass="form-input rounded-full block w-full col-span-2"
+                                ID="txtCardNo"
+                                placeholder="000000000000000"
+                            />
+                            <asp:RegularExpressionValidator runat="server" ID="RegexCardNo"
+                                ControlToValidate="txtCardNo"
+                                ErrorMessage="Please enter a valid card."
+                                CssClass="text-red text-sm col-span-2"
+                                ValidationExpression="^4[0-9]{12}(?:[0-9]{3})?$"
+                                ValidationGroup="VGAccountDetail"
+                                >
+                                </asp:RegularExpressionValidator>
+                            </div> <!-- Visa and Card No Div -->
+                            <div class="grid grid-cols-4 grid-auto-rows gap-2">
+                            <label for="txtExpDate" class="p-2"> Expiry Date </label>
+                            <asp:RequiredFieldValidator runat="server" ID="ReqExpDate"
+                                ErrorMessage="* Required"
+                                ControlToValidate="txtExpDate"
+                                CssClass="text-red text-sm text-right"
+                                ValidationGroup="VGAccountDetail"
+                                >
+                                </asp:RequiredFieldValidator>
+                            <label for="txtCVV" class="p-2"> CVV </label>
+                            <asp:RequiredFieldValidator runat="server" ID="ReqCVV"
+                                ErrorMessage="* Required"
+                                ControlToValidate="txtCVV"
+                                CssClass="text-red text-sm text-right"
+                                ValidationGroup="VGAccountDetail"
+                                >
+                                </asp:RequiredFieldValidator>
+
+                            <asp:TextBox
+                                runat="server"
+                                CssClass="form-input rounded-full block w-full col-start-1 col-end-3"
+                                ID="txtExpDate"
+                                placeholder="01/MM/YYYY"
+                            />
+                            <asp:TextBox
+                                runat="server"
+                                CssClass="form-input rounded-full block w-full col-start-3 col-end-5"
+                                ID="txtCVV"
+                                placeholder="000"
+                            />
+
+                            <asp:CompareValidator runat="server" ID="CompareExpDate"
+                                ControlToValidate="txtExpDate"
+                                ErrorMessage="Please enter a valid date."
+                                Type="Date"
+                                Operator="GreaterThanEqual"
+                                CssClass="text-red text-sm col-start-1 col-end-3"
+                                ValidationGroup="VGAccountDetail"
+                                >
+                                </asp:CompareValidator>
+                            <asp:RegularExpressionValidator runat="server" ID="RegexCVV"
+                                ControlToValidate="txtCVV"
+                                ErrorMessage="Please enter a valid CVV."
+                                CssClass="text-red text-sm col-start-3 col-end-5"
+                                ValidationExpression="^[0-9]{3,4}$"
+                                ValidationGroup="VGAccountDetail"
+                                >
+                                </asp:RegularExpressionValidator>
+                            </div> <!-- CVV and EXP Date Div -->
+                    </asp:Panel> <!-- Account Panel-->
                 </div> <!-- Forms Div -->
 
                 <div class="flex justify-center gap-36 py-10">
