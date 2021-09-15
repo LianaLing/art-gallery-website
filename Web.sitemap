@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
-  <siteMapNode url="~/Default.aspx" title="Landing Page"  description="Default landing page">
-    <siteMapNode url="~/Home.aspx" title="Home Page"  description="Home page">
-      <siteMapNode url="~/About.aspx" title="About Page"  description="About page" />
-      <siteMapNode url="~/Cart.aspx" title="Cart Page"  description="Cart page" />
-      <siteMapNode url="~/Dashboard.aspx" title="Artist Dashboard Page"  description="Artist dashboard page accessible only when login as artist" />
-      <siteMapNode url="~/User.aspx" title="User Page"  description="User page">
-        <siteMapNode url="~/UserDetail.aspx" title="User Detail Page"  description="User detail page" />
-        <siteMapNode url="~/FavDetail.aspx" title="Favourites Detail Page"  description="Favourites detail page" />
-        <siteMapNode url="~/Construction.aspx" title="Construction Page"  description="Represents pages under construction" />
+  <siteMapNode url="~/Default.aspx" title="Landing Page" description="Default landing page">
+    <siteMapNode url="~/Home.aspx" title="Home Page" description="Home page">
+      <siteMapNode url="~/About.aspx" title="About Page" description="About page" />
+      <siteMapNode url="~/Cart.aspx" title="Cart Page" description="Cart page" />
+      <siteMapNode url="~/Dashboard.aspx" title="Artist Dashboard Page" description="Artist dashboard page accessible only when login as artist" />
+      <siteMapNode url="~/User.aspx" title="User Page" description="User page">
+      <siteMapNode url="~/UserDetail.aspx" title="User Detail Page" description="User detail page" />
+      <siteMapNode url="~/FavDetail.aspx" title="Favourites Detail Page" description="Favourites detail page" />
+      <siteMapNode url="~/Construction.aspx" title="Construction Page" description="Represents pages under construction" />
       </siteMapNode>
     </siteMapNode>
   </siteMapNode>
