@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Newtonsoft.Json;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using ArtGalleryWebsite.Models;
@@ -18,11 +16,10 @@ namespace ArtGalleryWebsite
     public partial class Cart : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
         private static bool cardDetailSubmitted = false;
 
-        protected IEnumerable<ArtDetailDTO> Arts;
+        protected List<ArtDetailDTO> Arts;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,17 +27,13 @@ namespace ArtGalleryWebsite
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-            // Get data for the page
-            IEnumerable<ArtDetailDTO> data = selectAllArt();
+            var data = unitOfWork.GetArtDetails();
 
-            // Register hidden field to pass data from backend to frontend
-            //registerHiddenField("arts", data);
-
-            Arts = data.Select(d =>
+            Arts = data.AsEnumerable().Select(d =>
             {
                 d.Price = decimal.Round(d.Price, 2, MidpointRounding.AwayFromZero);
                 return d;
-            });
+            }).ToList();
 
             // Calculate
             decimal subtotal = Arts.Sum(d => d.Price);
@@ -67,43 +60,12 @@ namespace ArtGalleryWebsite
                 enableFields(true);
             }
 
+            System.Diagnostics.Trace.WriteLine(data);
+
             validateShipBill();
 
             // Compare credit card expiration date to ensure it is not in the past
             CompareExpDate.ValueToCompare = DateTime.Today.ToShortDateString();
-        }
-
-        // Fetch all [Art]s in the database
-        private IEnumerable<ArtDetailDTO> selectAllArt()
-        {
-            // Return the result
-            return (from art in dbContext.Arts
-                    join author in dbContext.Authors on art.AuthorId equals author.Id
-                    join user in dbContext.Users on author.Id equals user.AuthorId
-                    orderby art.Likes descending
-                    select new ArtDetailDTO
-                    {
-                        Id = art.Id,
-                        Style = art.Style,
-                        Description = art.Description,
-                        Price = art.Price,
-                        Stock = art.Stock,
-                        Likes = art.Likes,
-                        Url = art.Url,
-                        Author = new ArtDetailDTO.ArtDetailDTOAuthor
-                        {
-                            Id = author.Id,
-                            Description = author.Description,
-                            Verified = author.Verified,
-                            Username = user.UserName,
-                            Name = user.Name,
-                            Ic = user.Ic,
-                            Dob = user.Dob,
-                            ContactNo = user.PhoneNumber,
-                            Email = user.Email,
-                            AvatarUrl = user.AvatarUrl
-                        }
-                    }).AsEnumerable<ArtDetailDTO>();
         }
 
         private void setLblSubtotal(decimal subtotal)
@@ -126,7 +88,7 @@ namespace ArtGalleryWebsite
             lblTotal.Text = decimal.Round(total, 2) + "";
         }
 
-        private void setDefault(ApplicationUser user)
+        private void setDefault(Models.Identity.User user)
         {
             txtFullName.Text = user.Name;
             txtEmail.Text = user.Email;
@@ -207,7 +169,7 @@ namespace ArtGalleryWebsite
             txtAddrPC.Enabled = state;
             txtAddrState.Enabled = state;
             txtAddrCountry.Enabled = state;
-            Server.TransferRequest(Request.Url.AbsolutePath, false);
+            //Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
         protected void cboxDefaultAddr_change(object sender, EventArgs e)
@@ -322,7 +284,7 @@ namespace ArtGalleryWebsite
 
                     if (rdbtnCard.Checked)
                     {
-                        alertContent += ddlCardBrand.Text.ToUpper() + " card: " + txtCardNo.Text;
+                        //alertContent += ddlCardBrand.Text.ToUpper() + " card: " + txtCardNo.Text;
                     }
                     else if (rdbtnTng.Checked)
                     {

@@ -5,16 +5,11 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Utils;
-using ArtGalleryWebsite.DAL;
-using ArtGalleryWebsite.Models.Entities;
-using System.Collections.Generic;
 
 namespace ArtGalleryWebsite
 {
 	public partial class SiteMaster : MasterPage
 	{
-		private static UnitOfWork unitOfWork = new UnitOfWork();
-
         protected void Page_Load(object sender, EventArgs e)
 		{
 			// If current user is logged in
@@ -25,12 +20,21 @@ namespace ArtGalleryWebsite
 				// Get the current user
                 ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-				// Set the user as a session state (filtered out 'PasswordHash')
-				Session["user"] = IdentityHelper.FilterUser(user);
+                // Set the user as a session state (filtered out 'PasswordHash')
+                HttpContext.Current.Session["user"] = IdentityHelper.FilterUser(user);
             }
-			
-			// Inject session state to client side
-			Helper.InjectSessionState(Page, Session);
+
+            // Inject session state to client side
+            Helper.InjectSessionState(Page, Session);
+        }
+
+		protected void Page_Error(object sender, EventArgs e)
+        {
+			Exception ex = Server.GetLastError();
+
+			System.Diagnostics.Trace.WriteLine($"{ex}");
+
+			Server.ClearError();
         }
 
 		// Control methods controlled by frontend

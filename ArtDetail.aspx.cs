@@ -85,9 +85,11 @@ namespace ArtGalleryWebsite
                 favId = getFavId();
                 System.Diagnostics.Trace.WriteLine($"fav_id: {favId}\nart_id: {artId}");
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                System.Diagnostics.Trace.WriteLine("ERROR: " + e);
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
+                System.Diagnostics.Trace.WriteLine("ERROR: " + ex);
                 return false;
             }
             return true;
@@ -106,9 +108,11 @@ namespace ArtGalleryWebsite
 
                 return $"Successful insertion of FavArt {{ fav_id: {favArt.FavId}, art_id: {favArt.ArtId} }}";
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return e + " [Artwork already saved in this collection.]";
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
+                return ex + " [Artwork already saved in this collection.]";
             }
         }
 
@@ -128,9 +132,11 @@ namespace ArtGalleryWebsite
 
                 return $"Successful insertion of FavArt {{ fav_id: {favId}, art_id: {artId} }}";
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                return e + " [Artwork already deleted from this collection.]";
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
+                return ex + " [Artwork already deleted from this collection.]";
             }
         }
 
@@ -178,7 +184,8 @@ namespace ArtGalleryWebsite
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Trace.WriteLine($"btnLikeHandler_click: {ex}");
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
             }
         }
 
@@ -210,7 +217,8 @@ namespace ArtGalleryWebsite
             }
             catch (Exception ex)
             {
-                throw ex;
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
             }
         }
 
