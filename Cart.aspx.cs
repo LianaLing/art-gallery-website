@@ -207,6 +207,7 @@ namespace ArtGalleryWebsite
             txtAddrPC.Enabled = state;
             txtAddrState.Enabled = state;
             txtAddrCountry.Enabled = state;
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
         protected void cboxDefaultAddr_change(object sender, EventArgs e)

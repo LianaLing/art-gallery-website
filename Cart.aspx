@@ -136,7 +136,7 @@
                   </asp:RegularExpressionValidator>
 
               <asp:CheckBox runat="server" ID="cboxDefaultAddr" Text="        Use default address" CssClass="col-span-2 m-2"
-              OnCheckedChange="" ClientIDMode="static" AutoPostBack="true" Checked="false" onclick="cboxDefaultAddr_change"
+              OnCheckedChanged="cboxDefaultAddr_change" ClientIDMode="static" AutoPostBack="true" Checked="false"
 />
 
               <label for="txtAddrL1" class="p-2"> Address Line 1 </label>
