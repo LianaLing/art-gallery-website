@@ -92,7 +92,8 @@ namespace ArtGalleryWebsite
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
 
-        protected IEnumerable<ArtDetailDTO> PHis = new List<ArtDetailDTO>();
+        //protected IEnumerable<ArtDetailDTO> PHis = new List<ArtDetailDTO>();
+        protected List<OrderDetailDTO> PHis = new List<OrderDetailDTO>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -123,7 +124,7 @@ namespace ArtGalleryWebsite
             unitOfWork.GetOrderDetailsByUserId(user.Id);
 
             // Purchase history
-            PHis = unitOfWork.GetArtDetails();
+            PHis = unitOfWork.GetOrderDetailsByUserId(user.Id);
 
             if (!IsPostBack)
             {

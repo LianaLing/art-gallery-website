@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using ArtGalleryWebsite.Models;
@@ -12,6 +11,7 @@ using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.DAL.Extensions;
 using ArtGalleryWebsite.Models.Entities;
 using ArtGalleryWebsite.User_Control;
+using ArtGalleryWebsite.Utils;
 
 namespace ArtGalleryWebsite
 {
@@ -25,12 +25,6 @@ namespace ArtGalleryWebsite
 
         protected static CartItemDTO ci;
         protected static int btnCiCount = 0;
-
-        public class Pair<T1, T2>
-        {
-            public T1 First { get; set; }
-            public T2 Second { get; set; }
-        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -56,7 +50,7 @@ namespace ArtGalleryWebsite
                 if (grouped.ContainsKey(ci.Art.Id))
                     grouped[ci.Art.Id].Second++;
                 else
-                    grouped[ci.Art.Id] = new ArtGalleryWebsite.Cart.Pair<CartItemDTO, int> { First = ci, Second = 1 };
+                    grouped[ci.Art.Id] = new Pair<CartItemDTO, int> { First = ci, Second = 1 };
             }
 
             foreach (var g in grouped)

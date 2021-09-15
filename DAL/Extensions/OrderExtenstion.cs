@@ -7,10 +7,11 @@ namespace ArtGalleryWebsite.DAL.Extensions
 {
     public static class OrderExtension
     {
-        public static void GetOrderDetailsByUserId(this UnitOfWork unitOfWork, int user_id)
+        public static List<OrderDetailDTO> GetOrderDetailsByUserId(this UnitOfWork unitOfWork, int user_id)
         {
             ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
+            // Fetch the order details with Art from db
             var data = dbContext.Orders
                 .Where(order => order.UserId == user_id)
                 .Join(
@@ -63,10 +64,54 @@ namespace ArtGalleryWebsite.DAL.Extensions
                 )
                 .ToList();
 
+            // Construct a dictionary to filter data
+            Dictionary<int, KeyValuePair<OrderDetailDTO, List<ArtDetailDTO>>> dict = new Dictionary<int, KeyValuePair<OrderDetailDTO, List<ArtDetailDTO>>>();
+
+            // Put art into its own order (non-repeating)
             foreach(var d in data)
             {
-                System.Diagnostics.Trace.WriteLine(d);
+                if (dict.ContainsKey(d.Id))
+                    dict[d.Id].Value.Add(d.Art);
+                else
+                    dict[d.Id] = new KeyValuePair<OrderDetailDTO, List<ArtDetailDTO>>(
+                        new OrderDetailDTO
+                        {
+                            Id = d.Id,
+                            Status = d.Status,
+                            Remark = d.Remark,
+                            CreatedAt = d.CreatedAt,
+                            UpdatedAt = d.UpdatedAt,
+                            PaymentId = d.PaymentId,
+                            AddressId = d.AddressId,
+                            Address = new OrderDetailDTO.OrderDetailDTOAddress
+                            {
+                                Id = d.Address.Id,
+                                City = d.Address.City,
+                                Country = d.Address.Country,
+                                Line1 = d.Address.Line1,
+                                Line2 = d.Address.Line2,
+                                PostalCode = d.Address.PostalCode,
+                                State = d.Address.State,
+                                CreatedAt = d.Address.CreatedAt,
+                                UpdatedAt = d.Address.UpdatedAt,
+                            },
+                            UserId = d.UserId,
+                            Arts = null
+                        }, new List<ArtDetailDTO> { d.Art }
+                        );
             }
+
+            // Construct the result as a list
+            List<OrderDetailDTO> result = new List<OrderDetailDTO>();
+
+            foreach (var d in dict)
+            {
+                OrderDetailDTO toAdd = d.Value.Key;
+                toAdd.Arts = d.Value.Value;
+                result.Add(toAdd);
+            }
+
+            return result;
         }
     }
 }

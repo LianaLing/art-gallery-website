@@ -402,6 +402,7 @@
       <DependentUpon>User.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Utils\Pair.cs" />
     <Compile Include="Utils\Database.cs" />
     <Compile Include="Utils\Helper.cs" />
     <Compile Include="Utils\IdentityHelper.cs" />

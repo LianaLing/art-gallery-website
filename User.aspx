@@ -122,24 +122,27 @@
                 ">
                 <p class="text-center text-3xl font-bold pb-5">Purchase History</p>
                 <asp:Panel runat="server" ID="PHItems" CssClass="">
-                    <% foreach (var p in PHis) { %>
+                    <% foreach (var ph in PHis) { %>
+                        <% foreach (var art in ph.Arts) { %>
                         <div class="py-5 flex w-full mt-2">
                         <!-- Image -->
                         <div class="w-[8.5em] mr-5">
                             <img
                             class="object-cover w-[8.5em] h-[8.5em] rounded-3xl"
-                            src="<%= p.Url %>"
-                            alt="<%= p.Description %>"
+                            src="<%= art.Url %>"
+                            alt="<%= art.Description %>"
                             />
                         </div>
                         <!-- Description -->
                         <div class="flex flex-col w-[75%]">
-                            <p class="font-bold text-xl"><%= p.Description %></p>
-                            <p>By <%= p.Author.Name %></p>
-                            <p class="text-gray-500">Purchased on 12/09/2021 00:00:00</p>
-                            <p class="mt-auto ml-auto">RM <%= p.Price %></p>
+                            <p class="font-bold text-xl"><%= art.Description %></p>
+                            <p>By <%= art.Author.Name %></p>
+                            <%--<p class="text-gray-500">Purchased on 12/09/2021 00:00:00</p>--%>
+                            <p class="text-gray-500">Purchased on <%= ph.UpdatedAt.ToLocalTime() %></p>
+                            <p class="mt-auto ml-auto">RM <%= art.Price.ToString("0.00") %></p>
                         </div>
                         </div>
+                        <% } %>
                     <% } %>
                 </asp:Panel>
 
