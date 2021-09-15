@@ -84,12 +84,6 @@ namespace ArtGalleryWebsite
                 btnCiCount = 0;
             }
 
-            // foreach (var ci in cartItems)
-            // {
-            //     CartItemNoQty ciControl = (CartItemNoQty)LoadControl("~/User_Control/CartItemNoQty.ascx");
-            //     ciControl.CartItem = ci;
-            //     ItemsList.Controls.Add(ciControl);
-            // }
             foreach (var ci in grouped)
             {
                 CartItemNoQty ciControl = (CartItemNoQty)LoadControl("~/User_Control/CartItemNoQty.ascx");
@@ -97,19 +91,12 @@ namespace ArtGalleryWebsite
                 ciControl.Quantity = ci.Value.Second;
                 ItemsList.Controls.Add(ciControl);
             }
-            //btnCiGen.DataBind();
 
             validateShipBill();
 
             // Compare credit card expiration date to ensure it is not in the past
             CompareExpDate.ValueToCompare = DateTime.Today.ToShortDateString();
         }
-
-        // protected void btnCiGen_click(object sender, EventArgs e)
-        // {
-        //     ci = cartItems[btnCiCount++];
-        //     System.Diagnostics.Trace.WriteLine(ci.Art.Description);
-        // }
 
         private void setLblSubtotal(decimal subtotal)
         {
@@ -143,36 +130,18 @@ namespace ArtGalleryWebsite
             txtAddrPC.Text = "40000";
             txtAddrState.Text = "Test addr state";
             txtAddrCountry.Text = "Test addr country";
-        }
-
-        protected void btnShowItems_click(object sender, EventArgs e)
-        {
-            ItemsList.Visible = !ItemsList.Visible;
-        }
-
-        protected void btnShowShipBill_click(object sender, EventArgs e)
-        {
-            ShipBill.Visible = !ShipBill.Visible;
-            btnPayWith.Visible = !btnPayWith.Visible;
-            btnContinue.Visible = !btnContinue.Visible;
-            validateShipBill();
-        }
-
-        protected void btnContinue_click(object sender, EventArgs e)
-        {
-            ShipBill.Visible = true;
-            btnPayWith.Visible = true;
-            btnContinue.Visible = false;
-            validateShipBill();
+            //Get card from database
+            txtCardNo.Text = "4978095994255901";
+            txtExpDate.Text = "01/10/2025";
         }
 
         private void validateShipBill()
         {
-            if (ShipBill.Visible && allFieldEnabled())
+            if (ShipBill.Visible && allFieldsEnabled())
                 Validate("VGShipBill");
         }
 
-        private bool allFieldEnabled()
+        private bool allFieldsEnabled()
         {
             if (txtFullName.Enabled && txtEmail.Enabled && cboxDefaultAddr.Enabled && txtPhone.Enabled && addrEnabled())
             {
@@ -212,7 +181,14 @@ namespace ArtGalleryWebsite
             txtAddrPC.Enabled = state;
             txtAddrState.Enabled = state;
             txtAddrCountry.Enabled = state;
-            //Server.TransferRequest(Request.Url.AbsolutePath, false);
+        }
+
+        private void validateCardDetail()
+        {
+            if (CardDetail.Visible)
+            {
+                Validate("VGCardDetail");
+            }
         }
 
         protected void cboxDefaultAddr_change(object sender, EventArgs e)
@@ -228,6 +204,33 @@ namespace ArtGalleryWebsite
             {
                 enableAddr(true);
             }
+        }
+
+        protected void btnClearCart_click(object sender, EventArgs e)
+        {
+            // Remove all items from cart
+            System.Diagnostics.Trace.WriteLine("Clicked on clear cart button");
+        }
+
+        protected void btnShowItems_click(object sender, EventArgs e)
+        {
+            ItemsList.Visible = !ItemsList.Visible;
+        }
+
+        protected void btnShowShipBill_click(object sender, EventArgs e)
+        {
+            ShipBill.Visible = !ShipBill.Visible;
+            btnPayWith.Visible = !btnPayWith.Visible;
+            btnContinue.Visible = !btnContinue.Visible;
+            validateShipBill();
+        }
+
+        protected void btnContinue_click(object sender, EventArgs e)
+        {
+            ShipBill.Visible = true;
+            btnPayWith.Visible = true;
+            btnContinue.Visible = false;
+            validateShipBill();
         }
 
         protected void btnSubmitCard_click(object sender, EventArgs e)
@@ -250,14 +253,6 @@ namespace ArtGalleryWebsite
             {
                 CardDetail.Visible = true;
                 cardDetailSubmitted = false;
-            }
-        }
-
-        private void validateCardDetail()
-        {
-            if (CardDetail.Visible)
-            {
-                Validate("VGCardDetail");
             }
         }
 
@@ -319,11 +314,15 @@ namespace ArtGalleryWebsite
                     // Insert to database
                     alertContent += "Full Name: " + txtFullName.Text;
                     alertContent += "\nEmail: " + txtEmail.Text;
-                    if (txtAddrL2 != null)
+                    if (txtAddrL2 != null || txtAddrL2.Text != "")
                     {
                         alertContent += $"\nAddress: {txtAddrL1.Text}, {txtAddrL2.Text}, {txtAddrCity.Text}, {txtAddrPC.Text}, {txtAddrState.Text}, {txtAddrCountry.Text}.";
                     }
-                    alertContent += $"\nAddress: {txtAddrL1.Text}, {txtAddrCity.Text}, {txtAddrPC.Text}, {txtAddrState.Text}, {txtAddrCountry.Text}.";
+                    else
+                    {
+                        alertContent += $"\nAddress: {txtAddrL1.Text}, {txtAddrCity.Text}, {txtAddrPC.Text}, {txtAddrState.Text}, {txtAddrCountry.Text}.";
+
+                    }
                     alertContent += "\nPhone: " + txtPhone.Text;
                     alertContent += "\nPaid with ";
 

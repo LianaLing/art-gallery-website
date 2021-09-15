@@ -13,8 +13,18 @@
         <!-- Cart -->
         <div class="lg:w-3/5">
             <div class="px-5">
-                <div class="py-5">
+                <div class="py-5 flex">
                     <p class="font-bold text-4xl">Your Cart</p>
+                    <asp:Button runat="server" ID="btnClearCart" CssClass="
+                        bg-light
+                        font-bold
+                        px-5
+                        py-2
+                        rounded-full
+                        hover:bg-light-hover
+                        ml-auto
+                        "
+                    OnClick="btnClearCart_click" Text="Clear Cart"/>
                 </div>
                 <!-- Item Header -->
                 <asp:Button

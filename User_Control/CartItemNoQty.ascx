@@ -13,7 +13,23 @@
                         <div class="flex flex-col w-[75%]">
                             <p class="font-bold text-xl"><%= CartItem.Art.Description %></p>
                             <p>By <%= CartItem.Art.Author.Name %></p>
-                            <p class="">Qty: <%= Quantity %></p>
+                            <div class="flex">
+                                <asp:Button runat="server" ID="btnQtyDecr" CssClass="
+                                  bg-light
+                                  font-bold
+                                  px-4
+                                  py-1
+                                  rounded-full
+                                  hover:bg-light-hover" OnClick="btnQtyDecr_click" Text="-" />
+                                <p class="">Qty: <%= Quantity %></p>
+                                <asp:Button runat="server" ID="btnQtyIncr" CssClass="
+                                  bg-light
+                                  font-bold
+                                  px-4
+                                  py-1
+                                  rounded-full
+                                  hover:bg-light-hover" OnClick="btnQtyIncr_click" Text="+" />
+                                </div>
                             <p class="mt-auto ml-auto">RM <%= CartItem.Art.Price * Quantity %></p>
                         </div>
                     </div>
