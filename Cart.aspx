@@ -477,5 +477,5 @@
         </div>
     </div>
 
-    <script src="Scripts/dist/CartPage.dist.js"></script>
+    <%--<script src="Scripts/dist/CartPage.dist.js"></script>--%>
 </asp:Content>

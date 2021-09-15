@@ -48,8 +48,6 @@ namespace ArtGalleryWebsite.Models.Entities
         [Column("user_id")]
         public int? UserId { get; set; }
 
-        public virtual Identity.User User { get; set; }
-
         [Column("address_id")]
         public int? AddressId { get; set; }
 

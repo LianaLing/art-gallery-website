@@ -260,6 +260,7 @@
     <Compile Include="DAL\Extensions\ArtExtension.cs" />
     <Compile Include="DAL\Extensions\FavouriteExtension.cs" />
     <Compile Include="DAL\Extensions\OrderExtenstion.cs" />
+    <Compile Include="DAL\Extensions\PaymentExtension.cs" />
     <Compile Include="DAL\Extensions\ShoppingCartExtension.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
@@ -310,8 +311,12 @@
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\ApiResponse.cs" />
+    <Compile Include="Models\DTO\Address.cs" />
+    <Compile Include="Models\DTO\BillingDetailsDTO.cs" />
+    <Compile Include="Models\DTO\CardDTO.cs" />
     <Compile Include="Models\DTO\CartItemDTO.cs" />
     <Compile Include="Models\DTO\OrderDetailDTO.cs" />
+    <Compile Include="Models\DTO\PaymentMethodDTO.cs" />
     <Compile Include="Models\Entities\Address.cs" />
     <Compile Include="Models\Entities\Art.cs" />
     <Compile Include="Models\Entities\Author.cs" />
