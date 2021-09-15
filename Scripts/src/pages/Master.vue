@@ -15,8 +15,9 @@
           <a
             class="font-garamond mr-1 py-2 px-3 hover:underline"
             href="Cart.aspx"
-            >Cart</a
           >
+            Cart
+          </a>
         </template>
         <template
           v-if="

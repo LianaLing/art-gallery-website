@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ArtGalleryWebsite.Models
+namespace ArtGalleryWebsite.Models.DTO
 {
     public class ArtDetailDTO
     {

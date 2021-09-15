@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using ArtGalleryWebsite.Models;
+using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.DAL.Extensions;
 

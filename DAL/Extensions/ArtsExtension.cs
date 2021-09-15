@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ArtGalleryWebsite.Models;
+using ArtGalleryWebsite.Models.DTO;
 
 namespace ArtGalleryWebsite.DAL.Extensions
 {

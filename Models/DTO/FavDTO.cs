@@ -1,6 +1,6 @@
 ﻿using ArtGalleryWebsite.Models.Entities;
 
-namespace ArtGalleryWebsite.Models
+namespace ArtGalleryWebsite.Models.DTO
 {
     public class FavDTO
     {

@@ -52,15 +52,15 @@
               <div class="w-[8.5em] mr-5">
                 <img
                   class="object-cover w-[8.5em] h-[8.5em] rounded-3xl"
-                  src="<%= art.url %>"
-                  alt="<%= art.description %>"
+                  src="<%= art.Url %>"
+                  alt="<%= art.Description %>"
                 />
               </div>
               <!-- Description -->
               <div class="flex flex-col w-[75%]">
-                <p class="font-bold text-xl"><%= art.description %></p>
-                <p>By <%= art.author.name %></p>
-                <p class="mt-auto ml-auto">RM <%= art.price %></p>
+                <p class="font-bold text-xl"><%= art.Description %></p>
+                <p>By <%= art.Author.Name %></p>
+                <p class="mt-auto ml-auto">RM <%= art.Price %></p>
               </div>
             </div>
           <% } %>

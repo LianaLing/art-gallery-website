@@ -314,9 +314,9 @@
     <Compile Include="Models\OldEntities\Favourite.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\OldEntities\User.cs" />
-    <Compile Include="Models\ArtCountInFavDTO.cs" />
-    <Compile Include="Models\ArtDetailDTO.cs" />
-    <Compile Include="Models\FavDTO.cs" />
+    <Compile Include="Models\DTO\ArtCountInFavDTO.cs" />
+    <Compile Include="Models\DTO\ArtDetailDTO.cs" />
+    <Compile Include="Models\DTO\FavDTO.cs" />
     <Compile Include="Models\ISqlParser.cs" />
     <Compile Include="Models\AuthRole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -361,7 +361,6 @@
     <Compile Include="Utils\IdentityHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\Queries\" />
     <Folder Include="Scripts\dist\" />
     <Folder Include="Sql\data\" />
     <Folder Include="Sql\tables\" />

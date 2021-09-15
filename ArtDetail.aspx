@@ -9,6 +9,8 @@
         <asp:Button ID="btnAddToCart" runat="server" OnClick="btnAddToCart_click" CssClass="hidden"/>
         <asp:Button ID="btnCartPage" runat="server" OnClick="btnCartPage_click" CssClass="hidden" PostBackUrl="~/Cart.aspx"/>
 
+        <asp:Label ID="ErrorLabel" runat="server" />
+
         <%-- Frontend code --%>
         <div id="app">
         </div>

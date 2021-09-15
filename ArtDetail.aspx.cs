@@ -9,6 +9,7 @@ using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.DAL.Extensions;
 using ArtGalleryWebsite.Utils;
 using ArtGalleryWebsite.Models;
+using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite
@@ -186,24 +187,45 @@ namespace ArtGalleryWebsite
             // Check if art id exists in query string
             if (getArtId() == 0) throw new Exception("Invalid Art Id");
 
-            // Get current session user
-            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+            try
+            {
+                // Get current session user
+                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-            ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
+                ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
 
-            // If the user does not have a shopping cart
-            if (cart == null)
-                cart = unitOfWork.CreateShoppingCart(user.Id);
+                // If the user does not have a shopping cart
+                if (cart == null)
+                    cart = unitOfWork.CreateShoppingCart(user.Id);
 
-            // Add one art the the shopping cart
-            cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
+                // Add one art the the shopping cart
+                cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
 
-            // Update session state
-            Session["cart"] = cart;
+                // Update session state
+                Session["cart"] = cart;
 
-            // Refresh page
-            Server.TransferRequest(Request.Url.AbsolutePath, false);
+                // Refresh page
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+
+            // Handle specific exception.
+            if (exc is HttpUnhandledException)
+            {
+                ErrorLabel.Text = "An error occurred on this page. Please verify your " +
+                "information to resolve the issue.";
+            }
+            // Clear the error from the server.
+            Server.ClearError();
         }
 
         protected void btnCartPage_click(object sender, EventArgs e)
