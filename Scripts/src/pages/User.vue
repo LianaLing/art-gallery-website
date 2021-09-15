@@ -51,12 +51,13 @@
           v-for="saves in saves2D"
           :key="saves.toString"
         >
-          <SaveCard
-            class="mb-10"
-            v-for="fav in saves"
-            :key="fav.id"
-            :card="fav"
-          />
+          <template v-for="fav in saves" :key="fav.id">
+            <SaveCard
+              v-if="fav && fav.art && fav.author"
+              class="mb-10"
+              :card="fav"
+            />
+          </template>
         </div>
       </div>
     </div>

@@ -5,14 +5,14 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.DAL.Extensions;
 using ArtGalleryWebsite.Models;
+using ArtGalleryWebsite.Models.Entities;
 using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.Utils;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Newtonsoft.Json;
 
 namespace ArtGalleryWebsite
 {
@@ -92,8 +92,8 @@ namespace ArtGalleryWebsite
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
 
-        //protected IEnumerable<ArtDetailDTO> PHis = new List<ArtDetailDTO>();
         protected List<OrderDetailDTO> PHis = new List<OrderDetailDTO>();
+        protected ApplicationUser user = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -107,7 +107,8 @@ namespace ArtGalleryWebsite
 
             // Get session user
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+            ApplicationUser currentUser = manager.FindById(Page.User.Identity.GetUserId<int>());
+            user = currentUser;
 
             // Will only return favourites in [Favourite] that have >= 1 row of data
             // Empty favourites will not be returned
@@ -120,8 +121,6 @@ namespace ArtGalleryWebsite
             Helper.RegisterHiddenField(Page, "iconsState", icons);
             Helper.RegisterHiddenField(Page, "state", data);
             Helper.RegisterHiddenField(Page, "countsState", counts);
-
-            unitOfWork.GetOrderDetailsByUserId(user.Id);
 
             // Purchase history
             PHis = unitOfWork.GetOrderDetailsByUserId(user.Id);
@@ -177,7 +176,19 @@ namespace ArtGalleryWebsite
             validateCreateFav();
             System.Diagnostics.Trace.WriteLine("Clicked on create, Fav Name: " + txtFavName.Text);
             CreateFav.Visible = false;
+
+            // Create the new favourite object
+            Favourite favourite = new Favourite { Name = txtFavName.Text, UserId = user.Id };
+
             // Insert into database, will display one more new save
+            if (unitOfWork.FavouriteRepository.Insert(favourite) == null) 
+                throw new Exception($"Unable to create Favourite {txtFavName.Text}.");
+
+            // Save changes
+            unitOfWork.Save();
+
+            // Refresh page
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
         protected void btnShowPH_click(object sender, EventArgs e)

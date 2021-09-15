@@ -161,8 +161,6 @@ export default defineComponent({
       session.value = { ...backendSession, user: null };
     }
 
-    console.log(session.value);
-
     const claims = <Claims[]>session.value.user?.claims;
 
     const authView = useAuthView();
