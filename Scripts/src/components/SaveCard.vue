@@ -27,7 +27,7 @@
       :class="transition"
     ></div>
 
-    <Button
+    <button
       class="
         bg-accent
         rounded-full
@@ -46,7 +46,7 @@
       onclick=""
     >
       {{ card.name }}
-    </Button>
+    </button>
     <p
       class="
         bg-light
@@ -148,7 +148,7 @@
   </div>
 </template>
 
-  <script lang="ts">
+<script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { ArtResponse } from "../types/api";

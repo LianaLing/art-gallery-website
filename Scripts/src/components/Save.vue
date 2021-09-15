@@ -95,10 +95,10 @@
         save[0].name
       }}</a>
       <br />
-      <h3 v-if="count.total_art <= 1" class="inline">
-        {{ count.total_art }} art &nbsp;
+      <h3 v-if="count.totalArt <= 1" class="inline">
+        {{ count.totalArt }} art &nbsp;
       </h3>
-      <h3 v-else class="inline">{{ count.total_art }} arts &nbsp;</h3>
+      <h3 v-else class="inline">{{ count.totalArt }} arts &nbsp;</h3>
       <!-- <h4 class="text-sm text-gray-500 inline">{{}}</h4> -->
     </div>
     <div v-else>No element</div>
@@ -114,9 +114,6 @@ export default defineComponent({
   props: {
     save: { type: Array as PropType<API.FavResponse[]>, required: true },
     count: { type: Object as PropType<API.FavArtCount>, required: true },
-  },
-  setup(props) {
-    console.log(props.save);
   },
   data() {
     return {

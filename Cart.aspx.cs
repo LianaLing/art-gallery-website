@@ -8,21 +8,21 @@ using System.Web.UI.WebControls;
 using Newtonsoft.Json;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
-using ArtGalleryWebsite.Utils;
-using ArtGalleryWebsite.Models.Queries;
 using ArtGalleryWebsite.Models;
+using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.DAL;
+using ArtGalleryWebsite.DAL.Extensions;
 
 namespace ArtGalleryWebsite
 {
     public partial class Cart : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
+        private static ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
         private static bool cardDetailSubmitted = false;
 
-        protected IEnumerable<ArtQuery> Arts;
+        protected IEnumerable<ArtDetailDTO> Arts;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -31,19 +31,19 @@ namespace ArtGalleryWebsite
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
             // Get data for the page
-            IEnumerable<ArtQuery> data = selectAllArt();
+            IEnumerable<ArtDetailDTO> data = selectAllArt();
 
             // Register hidden field to pass data from backend to frontend
             //registerHiddenField("arts", data);
 
             Arts = data.Select(d =>
             {
-                d.price = decimal.Round(d.price, 2, MidpointRounding.AwayFromZero);
+                d.Price = decimal.Round(d.Price, 2, MidpointRounding.AwayFromZero);
                 return d;
             });
 
             // Calculate
-            decimal subtotal = Arts.Sum(d => d.price);
+            decimal subtotal = Arts.Sum(d => d.Price);
             decimal shipping = 20;
             decimal total = subtotal + shipping;
 
@@ -74,36 +74,36 @@ namespace ArtGalleryWebsite
         }
 
         // Fetch all [Art]s in the database
-        private IEnumerable<ArtQuery> selectAllArt()
+        private IEnumerable<ArtDetailDTO> selectAllArt()
         {
             // Return the result
             return (from art in dbContext.Arts
-                    join author in dbContext.Authors on art.AuthorID equals author.Id
+                    join author in dbContext.Authors on art.AuthorId equals author.Id
                     join user in dbContext.Users on author.Id equals user.AuthorId
                     orderby art.Likes descending
-                    select new ArtQuery
+                    select new ArtDetailDTO
                     {
-                        id = art.Id,
-                        style = art.Style,
-                        description = art.Description,
-                        price = art.Price,
-                        stock = art.Stock,
-                        likes = art.Likes,
-                        url = art.Url,
-                        author = new ArtQuery.Author
+                        Id = art.Id,
+                        Style = art.Style,
+                        Description = art.Description,
+                        Price = art.Price,
+                        Stock = art.Stock,
+                        Likes = art.Likes,
+                        Url = art.Url,
+                        Author = new ArtDetailDTO.ArtDetailDTOAuthor
                         {
-                            id = author.Id,
-                            description = author.Description,
-                            verified = author.Verified,
-                            username = user.UserName,
-                            name = user.Name,
-                            ic = user.Ic,
-                            dob = user.Dob,
-                            contactNo = user.PhoneNumber,
-                            email = user.Email,
-                            avatarUrl = user.AvatarUrl
+                            Id = author.Id,
+                            Description = author.Description,
+                            Verified = author.Verified,
+                            Username = user.UserName,
+                            Name = user.Name,
+                            Ic = user.Ic,
+                            Dob = user.Dob,
+                            ContactNo = user.PhoneNumber,
+                            Email = user.Email,
+                            AvatarUrl = user.AvatarUrl
                         }
-                    }).AsEnumerable<ArtQuery>();
+                    }).AsEnumerable<ArtDetailDTO>();
         }
 
         private void setLblSubtotal(decimal subtotal)

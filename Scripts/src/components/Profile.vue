@@ -51,12 +51,14 @@ import { defineComponent, PropType } from "vue";
 import * as API from "../types/api";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { Session } from "../types/state";
+import Search from "../components/icons/Search.vue";
 
 export default defineComponent({
   components: {
     Popover,
     PopoverButton,
     PopoverPanel,
+    Search,
   },
   props: {
     profile: { type: Object as PropType<Session["user"]>, required: true },

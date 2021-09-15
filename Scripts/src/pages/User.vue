@@ -77,7 +77,7 @@ const icons = JSON.parse(
 
 const data = helper.getStateFromBackend<API.FavResponse[]>("state");
 const saves2D = helper.splitIntoNArrays<API.FavResponse>(data, 3);
-const counts = helper.getStateFromBackend<API.FavArtCount[]>("countState");
+const counts = helper.getStateFromBackend<API.FavArtCount[]>("countsState");
 
 const names = [...new Set(data.map((d) => d.name))];
 

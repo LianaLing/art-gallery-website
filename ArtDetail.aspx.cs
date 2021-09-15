@@ -6,9 +6,10 @@ using System.Collections.Generic;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity;
 using ArtGalleryWebsite.DAL;
+using ArtGalleryWebsite.DAL.Extensions;
 using ArtGalleryWebsite.Utils;
 using ArtGalleryWebsite.Models;
-using ArtGalleryWebsite.Models.Queries;
+using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite
@@ -16,7 +17,6 @@ namespace ArtGalleryWebsite
     public partial class ArtDetail : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
 
         protected int artId;
         protected int favId;
@@ -28,7 +28,7 @@ namespace ArtGalleryWebsite
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
             Icon[] icons =
-          {
+            {
                 new Icon("icon_0001", "https://img.icons8.com/ios-glyphs/30/000000/long-arrow-left.png", "Left Arrow Icon", "/Home.aspx", "https://icons8.com/icon/99996/left-arrow", "Icons8"),
                 new Icon("icon_0002", "https://img.icons8.com/ios-glyphs/30/000000/star--v2.png", "Animated Star Icon", "", "https://icons8.com/icon/hmAU0m6F6i0C/star", "Icons8"),
                 new Icon("icon_0003", "https://img.icons8.com/windows/32/000000/share-rounded.png", "Share Rounded Icon", "", "https://icons8.com/icon/FupVmEePjs1T/share-rounded", "Icons8"),
@@ -36,107 +36,19 @@ namespace ArtGalleryWebsite
                 new Icon("icon_0005", "https://img.icons8.com/ios-filled/32/000000/facebook-like.png", "Facebook Like Icon Filled", "", "https://icons8.com/icon/33479/facebook-like", "Icons8"),
             };
 
-            registerHiddenField("iconsState", icons);
+            Helper.RegisterHiddenField(Page, "iconsState", icons);
 
             // Get data for the page
-            var data = selectCurrentArtDetail();
-            var favs = selectAllFavourites(user.Id);
-            var saved = checkIfArtIsInFav(user.Id);
-            var liked = unitOfWork.isArtLiked(user.Id, getArtId());
+            ArtDetailDTO data = unitOfWork.GetArtDetailById(getArtId());
+            IEnumerable<Favourite> favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
+            IEnumerable<FavDTO> saved = unitOfWork.GetUserFavourites(user.Id);
+            bool liked = unitOfWork.isArtLiked(user.Id, getArtId());
 
             // Register hidden field to pass data from backend to frontend
-            registerHiddenField("artState", data);
-            registerHiddenField("favsState", favs);
-            registerHiddenField("savedState", saved);
-            registerHiddenField("likedState", liked);
-        }
-
-        private void registerHiddenField(string id, object obj)
-        {
-            Page.ClientScript.RegisterHiddenField(id, Helper.SerializeObject(obj));
-        }
-
-        // Get the art which is clicked on
-        private IQueryable<ArtQuery> selectCurrentArtDetail()
-        {
-            //ArtQuery.FetchCurrentArtDetail(getArtId());
-            //return Database.Select<ArtQuery>(ArtQuery.SqlQuery);
-            artId = getArtId();
-
-            return dbContext.Arts
-                .Where(art => art.Id == artId)
-                .Join(
-                    dbContext.Users,
-                    art => art.AuthorID,
-                    user => user.AuthorId,
-                    (art, user) => new ArtQuery
-                    {
-                        id = art.Id,
-                        style = art.Style,
-                        description = art.Description,
-                        price = art.Price,
-                        stock = art.Stock,
-                        likes = art.Likes,
-                        url = art.Url,
-                        author = new ArtQuery.Author
-                        {
-                            id = art.Author.Id,
-                            description = art.Author.Description,
-                            verified = art.Author.Verified,
-                            username = user.UserName,
-                            name = user.Name,
-                            ic = user.Ic,
-                            dob = user.Dob,
-                            contactNo = user.PhoneNumber,
-                            email = user.Email,
-                            avatarUrl = user.AvatarUrl
-                        }
-                    }
-                );
-        }
-
-        // Get all [Favourite]s of the current session user regardles whether it is empty
-        private IEnumerable<Favourite> selectAllFavourites(int id)
-        {
-            //FavQuery.FetchAllUserFavourites(id);
-            //return Database.Select<FavQuery>(FavQuery.SqlQuery);
-            return unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == id, orderBy: fav => fav.OrderBy(f => f.UserId));
-        }
-
-        // Check if this art is saved in the user's [Favourite]s
-        private IQueryable checkIfArtIsInFav(int id)
-        {
-            //FavQuery.FetchCurrentUser(id);
-            //return Database.Select<FavQuery>(FavQuery.SqlQuery);
-
-            return (from art in dbContext.Arts
-                    join author in dbContext.Authors on art.AuthorID equals author.Id
-                    join favArt in dbContext.FavArts on art.Id equals favArt.ArtId
-                    join fav in dbContext.Favourites on favArt.FavId equals fav.Id
-                    join user in dbContext.Users on fav.UserId equals user.Id
-                    where user.Id == id
-                    orderby fav.Id ascending
-                    select new
-                    {
-                        id = fav.Id,
-                        name = fav.Name,
-                        art = new
-                        {
-                            id = art.Id,
-                            style = art.Style,
-                            description = art.Description,
-                            price = art.Price,
-                            stock = art.Stock,
-                            likes = art.Likes,
-                            url = art.Url
-                        },
-                        author = new
-                        {
-                            id = author.Id,
-                            description = author.Description,
-                            verified = author.Verified
-                        }
-                    });
+            Helper.RegisterHiddenField(Page, "artState", data);
+            Helper.RegisterHiddenField(Page, "favsState", favs);
+            Helper.RegisterHiddenField(Page, "savedState", saved);
+            Helper.RegisterHiddenField(Page, "likedState", liked);
         }
 
         // Get art_id from this page's query string, redirected from `Home.aspx.cs`
@@ -222,7 +134,7 @@ namespace ArtGalleryWebsite
             }
         }
 
-        public void btnSaveStar_click(object sender, EventArgs e)
+        protected void btnSaveStar_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())
             {
@@ -230,7 +142,7 @@ namespace ArtGalleryWebsite
             }
         }
 
-        public void btnRemoveStar_click(object sender, EventArgs e)
+        protected void btnRemoveStar_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())
             {
@@ -238,41 +150,102 @@ namespace ArtGalleryWebsite
             }
         }
 
-        public void btnLikeHandler_click(object sender, EventArgs e)
+        protected void btnLikeHandler_click(object sender, EventArgs e)
         {
-            if (getArtId() != 0)
+            // Check if art id exists in query string
+            if (getArtId() == 0) throw new Exception("Invalid Art Id");
+
+            // Get current session user
+            ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+
+            try
+            {
+                int art_id = getArtId();
+
+                // Check if is art not liked
+                if (!unitOfWork.isArtLiked(user.Id, art_id))
+                {
+                    unitOfWork.addLikeToArt(user.Id, art_id);
+                }
+                else
+                {
+                    unitOfWork.removeLikeFromArt(user.Id, art_id);
+                }
+
+                // Refresh the page
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.WriteLine($"btnLikeHandler_click: {ex}");
+            }
+        }
+
+        protected void btnAddToCart_click(object sender, EventArgs e)
+        {
+            // Check if art id exists in query string
+            if (getArtId() == 0) throw new Exception("Invalid Art Id");
+
+            try
             {
                 // Get current session user
                 ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
                 ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-                try
-                {
-                    int art_id = getArtId();
+                ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
 
-                    // Check if is art not liked
-                    if (!unitOfWork.isArtLiked(user.Id, art_id))
-                    {
-                        unitOfWork.addLikeToArt(user.Id, art_id);
-                    }
-                    else
-                    {
-                        unitOfWork.removeLikeFromArt(user.Id, art_id);
-                    }
+                // If the user does not have a shopping cart
+                if (cart == null)
+                    cart = unitOfWork.CreateShoppingCart(user.Id);
 
-                    // Refresh the page
-                    Server.TransferRequest(Request.Url.AbsolutePath, false);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Trace.WriteLine($"btnLikeHandler_click: {ex}");
-                }
+                // Add one art the the shopping cart
+                cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
+
+                // Update session state
+                Session["cart"] = cart;
+
+                // Refresh page
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
-        public void btnCartPage_click(object sender, EventArgs e)
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+
+            // Handle specific exception.
+            if (exc is HttpUnhandledException)
+            {
+                ErrorLabel.Text = "An error occurred on this page. Please verify your " +
+                "information to resolve the issue.";
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
+        protected void btnCartPage_click(object sender, EventArgs e)
         {
 
         }
     }
 }
+
+        //// Get all [Favourite]s of the current session user regardles whether it is empty
+        //private IEnumerable<Favourite> selectAllFavourites(int id)
+        //{
+        //    //FavQuery.FetchAllUserFavourites(id);
+        //    //return Database.Select<FavQuery>(FavQuery.SqlQuery);
+        //    return unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == id, orderBy: fav => fav.OrderBy(f => f.UserId));
+        //}
+
+        //// Check if this art is saved in the user's [Favourite]s
+        //private IQueryable<FavQuery> checkIfArtIsInFav(int id)
+        //{
+        //    //FavQuery.FetchCurrentUser(id);
+        //    //return Database.Select<FavQuery>(FavQuery.SqlQuery);
+        //}

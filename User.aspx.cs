@@ -6,8 +6,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ArtGalleryWebsite.DAL;
+using ArtGalleryWebsite.DAL.Extensions;
 using ArtGalleryWebsite.Models;
-using ArtGalleryWebsite.Models.Queries;
+using ArtGalleryWebsite.Models.DTO;
 using ArtGalleryWebsite.Utils;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -90,9 +91,9 @@ namespace ArtGalleryWebsite
     public partial class User : System.Web.UI.Page
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
-        private static ArtGalleryDbContext dbContext = unitOfWork.GetContext();
+        private static ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
-        protected IEnumerable<ArtQuery> PHis = new List<ArtQuery>();
+        protected IEnumerable<ArtDetailDTO> PHis = new List<ArtDetailDTO>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -109,132 +110,35 @@ namespace ArtGalleryWebsite
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
             // Get data for the page
-            var data = selectNonEmptyFavourites(user.Id);
-            var count = countArtInFavourites(user.Id);
 
-            PHis = selectAllArt();
+
+            // Will only return favourites in [Favourite] that have >= 1 row of data
+            // Empty favourites will not be returned
+            var data = unitOfWork.GetUserFavourites(user.Id);
+
+            System.Diagnostics.Trace.WriteLine(data);
+
+            foreach (var d in data)
+            {
+                System.Diagnostics.Trace.WriteLine(d);
+            }
+
+            // Return the total number of rows in [FavArt] for each [Favourite]
+            var counts = unitOfWork.ArtCountInUserFavourites(user.Id);
 
             // Pass data into hidden field for frontend to parse
-            registerHiddenField("iconsState", icons);
-            registerHiddenField("state", data);
-            registerHiddenField("countState", count);
+            Helper.RegisterHiddenField(Page, "iconsState", icons);
+            Helper.RegisterHiddenField(Page, "state", data);
+            Helper.RegisterHiddenField(Page, "countsState", counts);
+
+            // Purchase history
+            PHis = unitOfWork.GetArtDetails();
 
             if (!IsPostBack)
             {
                 CreateFav.Visible = false;
                 PurchaseHistory.Visible = false;
             }
-        }
-
-        // Fetch all [Art]s in the database
-        private IEnumerable<ArtQuery> selectAllArt()
-        {
-            // Return the result
-            return (from art in dbContext.Arts
-                    join author in dbContext.Authors on art.AuthorID equals author.Id
-                    join user in dbContext.Users on author.Id equals user.AuthorId
-                    orderby art.Likes descending
-                    select new ArtQuery
-                    {
-                        id = art.Id,
-                        style = art.Style,
-                        description = art.Description,
-                        price = art.Price,
-                        stock = art.Stock,
-                        likes = art.Likes,
-                        url = art.Url,
-                        author = new ArtQuery.Author
-                        {
-                            id = author.Id,
-                            description = author.Description,
-                            verified = author.Verified,
-                            username = user.UserName,
-                            name = user.Name,
-                            ic = user.Ic,
-                            dob = user.Dob,
-                            contactNo = user.PhoneNumber,
-                            email = user.Email,
-                            avatarUrl = user.AvatarUrl
-                        }
-                    }).AsEnumerable<ArtQuery>();
-        }
-
-        private void registerHiddenField(string id, object obj)
-        {
-            Page.ClientScript.RegisterHiddenField(id, Helper.SerializeObject(obj));
-        }
-
-        private List<FavQuery> callFavQueryDatabase()
-        {
-            return Database.Select<FavQuery>(FavQuery.SqlQuery);
-        }
-
-        // Will only return favourites in [Favourite] that have >= 1 row of data
-        // Empty favourites will not be returned
-        private IQueryable selectNonEmptyFavourites(int id)
-        {
-            // FavQuery.FetchCurrentUser(id);
-            // return callFavQueryDatabase();
-            return (from art in dbContext.Arts
-                    join author in dbContext.Authors on art.AuthorID equals author.Id
-                    join favArt in dbContext.FavArts on art.Id equals favArt.ArtId
-                    join fav in dbContext.Favourites on favArt.FavId equals fav.Id
-                    join user in dbContext.Users on fav.UserId equals user.Id
-                    where user.Id == id
-                    orderby fav.Id ascending
-                    select new
-                    {
-                        id = fav.Id,
-                        name = fav.Name,
-                        art = new
-                        {
-                            id = art.Id,
-                            style = art.Style,
-                            description = art.Description,
-                            price = art.Price,
-                            stock = art.Stock,
-                            likes = art.Likes,
-                            url = art.Url
-                        },
-                        author = new
-                        {
-                            id = author.Id,
-                            description = author.Description,
-                            verified = author.Verified
-                        }
-                    });
-        }
-
-        // Return the total number of rows in [FavArt] for each [Favourite]
-        private IQueryable countArtInFavourites(int id)
-        {
-            //FavQuery.CountArtInFavourites(id);
-            //return callFavQueryDatabase();
-
-            return dbContext.Users
-                .Where(user => user.Id == id)
-                .Join(
-                    dbContext.Favourites,
-                    user => user.Id,
-                    fav => fav.UserId,
-                    (user, fav) => fav.Id
-                )
-                .Join(
-                    dbContext.FavArts,
-                    favId => favId,
-                    favArt => favArt.FavId,
-                    (favId, favArt) => new { art_id = favArt.ArtId, fav_id = favArt.FavId }
-                )
-                .GroupBy(res => res.fav_id)
-                .Select(res => new { fav_id = res.Key, total_art = res.Count() });
-
-            //return (from user in dbContext.Users
-            //        join fav in dbContext.Favourites on user.Id equals fav.UserId
-            //        join favArt in dbContext.FavArts on fav.Id equals favArt.FavId
-            //        where user.Id == id
-            //        group favArt by favArt.FavId into g
-            //        select new { fav_id = g.Key, total_art = g.Count() }
-            //    );
         }
 
         protected void btnSaveArtDetailPage_click(object sender, EventArgs e)
@@ -286,7 +190,7 @@ namespace ArtGalleryWebsite
 
         protected void btnShowPH_click(object sender, EventArgs e)
         {
-           PurchaseHistory.Visible = true;
+            PurchaseHistory.Visible = true;
         }
         protected void btnClosePH_click(object sender, EventArgs e)
         {

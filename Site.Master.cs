@@ -5,25 +5,18 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Utils;
+using ArtGalleryWebsite.DAL;
+using ArtGalleryWebsite.Models.Entities;
+using System.Collections.Generic;
 
 namespace ArtGalleryWebsite
 {
 	public partial class SiteMaster : MasterPage
 	{
-		protected void Page_Load(object sender, EventArgs e)
+		private static UnitOfWork unitOfWork = new UnitOfWork();
+
+        protected void Page_Load(object sender, EventArgs e)
 		{
-			// If current user is logged in
-			if (Page.User.Identity.IsAuthenticated)
-            {
-                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-
-				// Get the current user
-                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
-
-				// Set the user as a session state (filtered out 'PasswordHash')
-				Session["user"] = IdentityHelper.FilterUser(user);
-            }
-			
 			// Inject session state to client side
 			Helper.InjectSessionState(Page, Session);
 		}

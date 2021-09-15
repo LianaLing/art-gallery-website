@@ -1,17 +1,21 @@
 ﻿using System;
+using System.Data.Entity;
+using ArtGalleryWebsite.Models;
 using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite.DAL
 {
     public class UnitOfWork : IDisposable
     {
-        private ArtGalleryDbContext context = new ArtGalleryDbContext();
+        private ApplicationDbContext context = new ApplicationDbContext();
         private GenericRepository<Art> artRepository;
         private GenericRepository<Author> authorRepository;
-        private GenericRepository<Models.Identity.User> userRepository;
+        private GenericRepository<ApplicationUser> userRepository;
         private GenericRepository<Favourite> favouriteRepository;
         private GenericRepository<FavArt> favArtRepository;
         private GenericRepository<UserLikes> userLikesRepository;
+        private GenericRepository<ShoppingCart> shoppingCartRepository;
+        private GenericRepository<CartItem> cartItemRepository;
         private bool disposed = false;
 
         public GenericRepository<Art> ArtRepository
@@ -32,11 +36,11 @@ namespace ArtGalleryWebsite.DAL
             }
         }
 
-        public GenericRepository<Models.Identity.User> UserRepository
+        public GenericRepository<ApplicationUser> UserRepository
         {
             get
             {
-                if (userRepository == null) userRepository = new GenericRepository<Models.Identity.User>(context);
+                if (userRepository == null) userRepository = new GenericRepository<ApplicationUser>(context);
                 return userRepository;
             }
         }
@@ -58,6 +62,7 @@ namespace ArtGalleryWebsite.DAL
                 return favArtRepository;
             }
         }
+
         public GenericRepository<UserLikes> UserLikesRepository
         {
             get
@@ -67,7 +72,25 @@ namespace ArtGalleryWebsite.DAL
             }
         }
 
-        public ArtGalleryDbContext GetContext()
+        public GenericRepository<ShoppingCart> ShoppingCartRepository
+        {
+            get
+            {
+                if (shoppingCartRepository == null) shoppingCartRepository = new GenericRepository<ShoppingCart>(context);
+                return shoppingCartRepository;
+            }
+        }
+
+        public GenericRepository<CartItem> CartItemRepository
+        {
+            get
+            {
+                if (cartItemRepository == null) cartItemRepository = new GenericRepository<CartItem>(context);
+                return cartItemRepository;
+            }
+        }
+
+        public DbContext GetContext()
         {
             return context;
         }

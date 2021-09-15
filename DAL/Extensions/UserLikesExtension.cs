@@ -1,7 +1,7 @@
 ﻿using System;
 using ArtGalleryWebsite.Models.Entities;
 
-namespace ArtGalleryWebsite.DAL
+namespace ArtGalleryWebsite.DAL.Extensions
 {
     public static class UserLikesExtension
     {

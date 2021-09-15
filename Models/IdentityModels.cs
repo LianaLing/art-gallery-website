@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ArtGalleryWebsite.Models.Identity;
+using ArtGalleryWebsite.Models.Entities;
 
 namespace ArtGalleryWebsite.Models
 {
@@ -25,34 +26,11 @@ namespace ArtGalleryWebsite.Models
         }
     }
 
-    public class ApplicationDbContext : IdentityDbContext<Identity.User, Role, int, UserLogin, UserRole, UserClaim>
+    public class IdentityDbContext : IdentityDbContext<Identity.User, Role, int, UserLogin, UserRole, UserClaim>
     {
-        public ApplicationDbContext()
-            : base("ArtGalleryDB")
+        public IdentityDbContext(string nameOrConnectionString)
+            : base(nameOrConnectionString)
         {
-            Configuration.LazyLoadingEnabled = false;
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            // Map entities to respective tables
-            modelBuilder.Entity<Identity.User>().ToTable("User");
-            modelBuilder.Entity<Role>().ToTable("Role");
-            modelBuilder.Entity<UserRole>().ToTable("UserRole");
-            modelBuilder.Entity<UserClaim>().ToTable("UserClaim");
-            modelBuilder.Entity<UserLogin>().ToTable("UserLogin");
-
-            // Set auto-increment properties
-            modelBuilder.Entity<Identity.User>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            modelBuilder.Entity<UserClaim>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            modelBuilder.Entity<Role>().Property(r => r.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
         }
     }
 }

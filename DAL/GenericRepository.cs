@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace ArtGalleryWebsite.DAL
 {
     public class GenericRepository<TEntity> where TEntity : class
     {
-        internal ArtGalleryDbContext context;
+        internal DbContext context;
         internal DbSet<TEntity> dbSet;
 
-        public GenericRepository(ArtGalleryDbContext context)
+        public GenericRepository(DbContext context)
         {
             this.context = context;
             this.dbSet = context.Set<TEntity>();
@@ -20,6 +21,7 @@ namespace ArtGalleryWebsite.DAL
         public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
         {
             IQueryable<TEntity> query = dbSet;
+
 
             if (filter != null)
             {
@@ -38,6 +40,30 @@ namespace ArtGalleryWebsite.DAL
             else
             {
                 return query.ToList();
+            }
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, string includeProperties = "")
+        {
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            if (orderBy != null)
+            {
+                return await orderBy(query).ToListAsync();
+            }
+            else
+            {
+                return await query.ToListAsync();
             }
         }
 

@@ -15,8 +15,9 @@
           <a
             class="font-garamond mr-1 py-2 px-3 hover:underline"
             href="Cart.aspx"
-            >Cart</a
           >
+            Cart
+          </a>
         </template>
         <template
           v-if="
@@ -149,7 +150,11 @@ export default defineComponent({
   data() {
     const session = useSession();
     session.value = getStateFromBackend<Session>("session");
+
     const claims = <Claims[]>session.value.user?.claims;
+
+    console.log(session.value);
+
     // const claims = claimsArr[0];
     return { session, claims };
   },
