@@ -14,13 +14,14 @@
                     <p class="font-bold">Edit User Details</p>
                     <div class="grid grid-cols-2 grid-auto-rows gap-2">
                     <label for="txtFullName" class="p-2"> Full Name </label>
-                    <asp:RequiredFieldValidator runat="server" ID="ReqFullName"
+                    <%--<asp:RequiredFieldValidator runat="server" ID="ReqFullName"
                         ErrorMessage="* Required"
                         ControlToValidate="txtFullName"
                         CssClass="text-red text-sm text-right"
                         ValidationGroup="VGUserDetail"
                         >
-                        </asp:RequiredFieldValidator>
+                        </asp:RequiredFieldValidator>--%>
+                        <uc:ReqField ID="ReqFullName" runat="server" ControlToValidate="txtFullName" ValidationGroup="VGUserDetail" />
                     <asp:TextBox
                         runat="server"
                         CssClass="form-input block rounded-full block w-full col-span-2"
