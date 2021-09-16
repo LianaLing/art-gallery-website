@@ -27,32 +27,25 @@
         <!-- Share -->
         <Share class="inline-block" :shareIcon="icons[2]" />
         <!-- Purchase -->
-        <Popover class="inline float-right">
+        <Popover class="inline float-right relative">
           <PopoverButton
-            class="
+            :disabled="art.stock <= 0"
+            :class="`
               bg-accent
+              ${art.stock > 0 ? 'hover:bg-accent-hover' : 'opacity-50'}
               float-right
               rounded-full
               font-bold
               text-light
               py-2
               px-4
-              hover:bg-accent-hover
-            "
+            `"
           >
             Purchase
           </PopoverButton>
           <!-- Add to Cart, Purchase Now -->
           <PopoverPanel
-            class="
-              w-[160px]
-              top-[210px]
-              right-[445px]
-              z-10
-              absolute
-              shadow-xl
-              rounded-3xl
-            "
+            class="w-[160px] top-10 right-0 z-10 absolute shadow-xl rounded-3xl"
           >
             <div class="bg-white rounded-3xl p-4 items-center">
               <template v-if="false">

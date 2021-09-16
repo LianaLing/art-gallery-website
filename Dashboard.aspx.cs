@@ -47,7 +47,6 @@ namespace ArtGalleryWebsite
             {
                 try
                 {
-                    //List<Models.Entities.Art> arts = Database.Select<Models.Entities.Art>($"SELECT * FROM Art WHERE author_id = {user.AuthorId};");
                     IEnumerable<Art> arts = unitOfWork.ArtRepository.Get(filter: art => art.AuthorId == user.AuthorId, orderBy: art => art.OrderBy(a => a.Likes));
 
                     if (arts.Count() > 0 && arts != null)
@@ -100,15 +99,6 @@ namespace ArtGalleryWebsite
             {
                 try
                 {
-                    // Update the art in database
-                    //Database.Update($@"UPDATE [Art]
-                    //                       SET [url] = '{url}',
-                    //                           [description] = '{description}',
-                    //                           [price] = {price},
-                    //                           [stock] = {stock},
-                    //                           [style] = '{style}'
-                    //                       WHERE [id] = {id}");
-                    
                     // Fetch the original art from db
                     Art art = unitOfWork.ArtRepository.GetById(id);
                     if (art == null) throw new Exception($"Art with id {id} does not exist");
@@ -150,9 +140,6 @@ namespace ArtGalleryWebsite
             {
                 try
                 {
-                    // Delete the art in database
-                    //Database.Delete($@"DELETE FROM [Art]
-                    //                            WHERE [id] = {id}");
                     if (unitOfWork.ArtRepository.Delete(id) == null) throw new Exception($"Error deleting art with id {id}");
                     unitOfWork.Save();
                 }

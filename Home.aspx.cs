@@ -142,6 +142,7 @@ namespace ArtGalleryWebsite
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
             }
         }
 
@@ -150,6 +151,7 @@ namespace ArtGalleryWebsite
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(removeFromFavArt());
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
             }
         }
 

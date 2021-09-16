@@ -76,12 +76,12 @@ export default defineComponent({
     saveArtHandler: (e: Event, art_id: number, fav_id: number) => {
       e.preventDefault();
       const id = `${art_id}` + "," + `${fav_id}`;
-      helper.triggerBackendControl(e, "MainContent_btnSaveStar", id);
+      helper.triggerBackendControl(e, "MainContent_btnSaveArt", id);
     },
     removeArtHandler: (e: Event, art_id: number, fav_id: number) => {
       e.preventDefault();
       const id = `${art_id}` + "," + `${fav_id}`;
-      helper.triggerBackendControl(e, "MainContent_btnRemoveStar", id);
+      helper.triggerBackendControl(e, "MainContent_btnRemoveArt", id);
     },
     isSaved: (
       art: API.ArtResponse,

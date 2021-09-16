@@ -63,13 +63,13 @@ namespace ArtGalleryWebsite
         private int getFavId()
         {
             string str = "";
-            if (Request.Form[btnSaveStar.UniqueID] != null)
+            if (Request.Form[btnSaveArt.UniqueID] != null)
             {
-                str = Request.Form[btnSaveStar.UniqueID];
+                str = Request.Form[btnSaveArt.UniqueID];
             }
             else
             {
-                str = Request.Form[btnRemoveStar.UniqueID];
+                str = Request.Form[btnRemoveArt.UniqueID];
             }
 
             string[] arr = str.Split(',');
@@ -140,19 +140,21 @@ namespace ArtGalleryWebsite
             }
         }
 
-        protected void btnSaveStar_click(object sender, EventArgs e)
+        protected void btnSaveArt_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
             }
         }
 
-        protected void btnRemoveStar_click(object sender, EventArgs e)
+        protected void btnRemoveArt_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(removeFromFavArt());
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
             }
         }
 

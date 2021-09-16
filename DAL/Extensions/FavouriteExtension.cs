@@ -63,17 +63,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
                         }
                     });
 
-            // Fetch all Favourite
-            IEnumerable<Favourite> favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user_id, orderBy: fav => fav.OrderBy(f => f.UserId));
-            // Convert all Favourite to FavDTO
-            IEnumerable<FavDTO> converted = favs.Select(fav => new FavDTO { Id = fav.Id, Name = fav.Name });
-
-            // Merge two lists to return a full list of favourites (remove duplicates)
-            return populatedFav
-                .Concat(converted)
-                .GroupBy(fav => fav.Id)
-                .Select(group => group.First())
-                .ToList();
+            return populatedFav.ToList();
         }
 
         public static List<ArtCountInFavDTO> ArtCountInUserFavourites(this UnitOfWork unitOfWork, int user_id)
@@ -99,17 +89,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
                 .Select(res => new ArtCountInFavDTO { FavId = res.Key, TotalArt = res.Count() })
                 .AsEnumerable();
 
-            // Fetch all Favourite
-            IEnumerable<Favourite> favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user_id, orderBy: fav => fav.OrderBy(f => f.UserId));
-            // Convert all Favourite to ArtCount of 0
-            IEnumerable<ArtCountInFavDTO> converted = favs.Select(fav => new ArtCountInFavDTO { FavId = fav.Id, TotalArt = 0 });
-
-            // Merge two lists to return a full list of favourites (remove duplicates)
-            return populatedFavCount
-                .Concat(converted)
-                .GroupBy(favCount => favCount.FavId)
-                .Select(group => group.First())
-                .ToList();
+            return populatedFavCount.ToList();
         }
     }
 }
