@@ -151,7 +151,10 @@ export default defineComponent({
     const session = useSession();
     const backendSession = getStateFromBackend<Session>("session");
 
-    if (!backendSession) {
+    if (
+      !backendSession ||
+      (backendSession.user === null && backendSession.cart === null)
+    ) {
       session.value = { user: null, cart: null };
     } else if (backendSession && backendSession.user && backendSession.cart) {
       session.value = backendSession;
