@@ -124,7 +124,7 @@ namespace ArtGalleryWebsite
                 //return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
                 FavArt deleted = unitOfWork.FavArtRepository.Delete(favId, artId);
 
-                if (deleted == null) 
+                if (deleted == null)
                     throw new Exception($"Unable to delete FavArt {{ fav_id: {favId}, art_id: {artId} }}");
                 else
                     unitOfWork.Save();
@@ -139,6 +139,7 @@ namespace ArtGalleryWebsite
 
         public void btnSaveArt_click(object sender, EventArgs e)
         {
+            System.Diagnostics.Trace.WriteLine("clicked on save art");
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
@@ -147,6 +148,7 @@ namespace ArtGalleryWebsite
 
         public void btnRemoveArt_click(object sender, EventArgs e)
         {
+            System.Diagnostics.Trace.WriteLine("clicked on remove art");
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(removeFromFavArt());
@@ -162,54 +164,54 @@ namespace ArtGalleryWebsite
     }
 }
 
-        //// Fetch all [Art]s in the database
-        //private IQueryable selectAllArt()
-        //{
-        //    // Return the result
-        //}
+//// Fetch all [Art]s in the database
+//private IQueryable selectAllArt()
+//{
+//    // Return the result
+//}
 
-        //// Fetch all [Favourite]s of the user regardless of whether it is empty
-        //private IEnumerable<Favourite> selectAllFavourites(int id)
-        //{
-        //    // Fetch all [Favourite]s of the user of the current session, regardless of whether it has rows in [FavArt]
-        //    // [Favourite]s with empty [FavArt] rows will be displayed
-        //    // Useful for finding out all [Favourite]s that belong to a particular user
-        //    return unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == id, orderBy: fav => fav.OrderBy(f => f.UserId));
-        //}
+//// Fetch all [Favourite]s of the user regardless of whether it is empty
+//private IEnumerable<Favourite> selectAllFavourites(int id)
+//{
+//    // Fetch all [Favourite]s of the user of the current session, regardless of whether it has rows in [FavArt]
+//    // [Favourite]s with empty [FavArt] rows will be displayed
+//    // Useful for finding out all [Favourite]s that belong to a particular user
+//    return unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == id, orderBy: fav => fav.OrderBy(f => f.UserId));
+//}
 
-        // Check if the current art is saved in the user's [Favourite]s
-        //private IQueryable checkIfArtIsInFav(int id)
-        //{
-        //    // Fetch [Favourite] rows that belongs to the logged in user in the current session
-        //    // [Favourite]s wil empty [FavArt] rows will not be fetched
-        //    // Ordered by [Favourite].id because the COUNT query is ordered by [FavArt].id
-        //    // Keeping the same order will ease frontend parsing so please do not change this
-        //    return (from art in dbContext.Arts
-        //            join author in dbContext.Authors on art.AuthorId equals author.Id
-        //            join favArt in dbContext.FavArts on art.Id equals favArt.ArtId
-        //            join fav in dbContext.Favourites on favArt.FavId equals fav.Id
-        //            join user in dbContext.Users on fav.UserId equals user.Id
-        //            where user.Id == id
-        //            orderby fav.Id ascending
-        //            select new
-        //            {
-        //                id = fav.Id,
-        //                name = fav.Name,
-        //                art = new
-        //                {
-        //                    id = art.Id,
-        //                    style = art.Style,
-        //                    description = art.Description,
-        //                    price = art.Price,
-        //                    stock = art.Stock,
-        //                    likes = art.Likes,
-        //                    url = art.Url
-        //                },
-        //                author = new
-        //                {
-        //                    id = author.Id,
-        //                    description = author.Description,
-        //                    verified = author.verified
-        //                }
-        //            });
-        //}
+// Check if the current art is saved in the user's [Favourite]s
+//private IQueryable checkIfArtIsInFav(int id)
+//{
+//    // Fetch [Favourite] rows that belongs to the logged in user in the current session
+//    // [Favourite]s wil empty [FavArt] rows will not be fetched
+//    // Ordered by [Favourite].id because the COUNT query is ordered by [FavArt].id
+//    // Keeping the same order will ease frontend parsing so please do not change this
+//    return (from art in dbContext.Arts
+//            join author in dbContext.Authors on art.AuthorId equals author.Id
+//            join favArt in dbContext.FavArts on art.Id equals favArt.ArtId
+//            join fav in dbContext.Favourites on favArt.FavId equals fav.Id
+//            join user in dbContext.Users on fav.UserId equals user.Id
+//            where user.Id == id
+//            orderby fav.Id ascending
+//            select new
+//            {
+//                id = fav.Id,
+//                name = fav.Name,
+//                art = new
+//                {
+//                    id = art.Id,
+//                    style = art.Style,
+//                    description = art.Description,
+//                    price = art.Price,
+//                    stock = art.Stock,
+//                    likes = art.Likes,
+//                    url = art.Url
+//                },
+//                author = new
+//                {
+//                    id = author.Id,
+//                    description = author.Description,
+//                    verified = author.verified
+//                }
+//            });
+//}

@@ -2,11 +2,23 @@
   <Icon class="float-left" :icon="icons[0]" />
   <div class="m-4 flex justify-center font-garamond">
     <div class="rounded-[30px] grid grid-cols-2" :class="artDivTransition">
-      <img
-        :src="art.url"
-        :alt="art.description"
-        class="object-fill rounded-tl-[30px] rounded-bl-[30px]"
-      />
+      <template v-if="imgSize()">
+        <template v-if="width > height">
+          <img
+            :src="art.url"
+            :alt="art.description"
+            class="object-cover rounded-tl-[30px] rounded-bl-[30px] self-center"
+            :class="height"
+          />
+        </template>
+        <div v-else>
+          <img
+            :src="art.url"
+            :alt="art.description"
+            class="object-cover rounded-tl-[30px] rounded-bl-[30px]"
+          />
+        </div>
+      </template>
       <!-- Star -->
       <div class="p-10">
         <Popover class="inline float-left">
@@ -173,6 +185,17 @@ export default defineComponent({
       e.preventDefault();
       triggerBackendControl(e, "MainContent_btnLikeHandler");
     },
+    imgSize() {
+      let img = new Image();
+      img.onload = () => {
+        this.width = img.width;
+        this.height = img.height;
+        // this.artDivTransition = `h-[${this.height}px] w-[${this.width}px] shadow-2xl`;
+        console.log(`w: ${this.width}, ${this.height}`);
+      };
+      img.src = art.url;
+      return true;
+    },
   },
   data() {
     return {
@@ -182,6 +205,8 @@ export default defineComponent({
       favs,
       saved,
       liked,
+      width: 0,
+      height: 0,
     };
   },
 });

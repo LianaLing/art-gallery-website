@@ -5,13 +5,6 @@
 
     <!-- Icons -->
     <div class="w-full flex justify-center">
-      <!-- <Icon
-        :class="toggleFloatRight(i.alt)"
-        v-for="i in icons"
-        :key="i.id"
-        :icon="i"
-      /> -->
-
       <div
         v-for="i in icons"
         :key="i.id"
@@ -61,9 +54,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <Reference /> -->
-
     <br />
   </div>
 </template>
@@ -97,34 +87,8 @@ names.forEach((name) => {
   favGroup[name] = data.filter((d) => d.name === name);
 });
 
-// const favGroup = new Array<API.FavResponse[]>();
-// let g = 0;
-// // Returns a bunch of favs that is ungrouped
-// for (let i = 0; i < data.length; i++) {
-//   if (i !== 0) {
-//     // Check if favs is in the same group
-//     if (data[i].name !== data[i - 1].name) {
-//       //Change group and create new group
-//       favGroup[++g] = new Array<API.FavResponse>();
-//     }
-//   } else {
-//     // At first element, create a new group
-//     favGroup[g] = new Array<API.FavResponse>();
-//   }
-//   favGroup[g].push(data[i]);
-// }
-
 export default defineComponent({
   methods: {
-    // triggerFloatRight(str: string) {
-    //   if (str === "Settings Icon" || str === "Add Icon") {
-    //     this.floatright = "float-right";
-    //     return this.floatright;
-    //   } else {
-    //     this.floatright = "";
-    //     return this.floatright;
-    //   }
-    // },
     btnHandler(e: Event, str: string) {
       e.preventDefault();
       if (str === "Settings Icon") {

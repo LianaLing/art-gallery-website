@@ -58,6 +58,7 @@ namespace ArtGalleryWebsite
         {
           ArtsGrid.DataSource = arts;
           ArtsGrid.DataBind();
+          DashboardLabel.Visible = false;
         }
         else
         {
