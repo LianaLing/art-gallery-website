@@ -7,7 +7,7 @@
         <asp:Button ID="btnRemoveArt" runat="server" OnClick="btnRemoveArt_click" CssClass="hidden"/>
         <asp:Button ID="btnLikeHandler" runat="server" OnClick="btnLikeHandler_click" CssClass="hidden"/>
         <asp:Button ID="btnAddToCart" runat="server" OnClick="btnAddToCart_click" CssClass="hidden"/>
-        <asp:Button ID="btnCartPage" runat="server" OnClick="btnCartPage_click" CssClass="hidden" PostBackUrl="~/Cart.aspx"/>
+        <asp:Button ID="btnPurchaseNow" runat="server" OnClick="btnPurchaseNow_click" CssClass="hidden"/>
 
         <%--<asp:Label ID="ErrorLabel" runat="server" />--%>
         <uc:ErrorLabel ID="lblErr" runat="server" />

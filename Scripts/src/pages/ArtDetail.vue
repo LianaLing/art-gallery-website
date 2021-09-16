@@ -97,7 +97,7 @@
                   block
                   text-white
                 "
-                @click="cartPageHandler"
+                @click="purchaseNowHandler"
               >
                 Purchase Now
               </button>
@@ -151,10 +151,10 @@ export default defineComponent({
     Reference,
   },
   methods: {
-    cartPageHandler(e: Event) {
+    purchaseNowHandler(e: Event) {
       // Prevent button triggers refresh
       e.preventDefault();
-      triggerBackendControl(e, "MainContent_btnCartPage");
+      triggerBackendControl(e, "MainContent_btnPurchaseNow");
     },
     addToCartHandler(e: Event) {
       // Prevent button triggers refresh

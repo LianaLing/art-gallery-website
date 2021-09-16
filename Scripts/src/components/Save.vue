@@ -116,6 +116,8 @@ export default defineComponent({
     count: { type: Object as PropType<API.FavArtCount>, required: true },
   },
   data() {
+    console.log(this.save);
+    console.log(this.count);
     return {
       transition: "transition ease-in-out duration-200",
     };

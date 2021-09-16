@@ -97,6 +97,9 @@ names.forEach((name) => {
   favGroup[name] = data.filter((d) => d.name === name);
 });
 
+console.log(favGroup);
+console.log(counts);
+
 // const favGroup = new Array<API.FavResponse[]>();
 // let g = 0;
 // // Returns a bunch of favs that is ungrouped
