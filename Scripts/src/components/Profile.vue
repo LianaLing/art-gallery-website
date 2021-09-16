@@ -17,10 +17,10 @@
     <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
       @{{ profile.userName }}
     </h2>
-    <h2 class="text-center text-lg text-gray-500 font-bold font-garamond">
+    <h2 class="mb-10 text-center text-lg text-gray-500 font-bold font-garamond">
       {{ profile.email }}
     </h2>
-    <Popover>
+    <!-- <Popover>
       <PopoverButton
         class="
           p-2
@@ -42,7 +42,7 @@
           <div class="flex items-start justify-around mt-4"></div>
         </div>
       </PopoverPanel>
-    </Popover>
+    </Popover> -->
   </template>
 </template>
 

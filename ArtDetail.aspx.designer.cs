@@ -15,22 +15,22 @@ namespace ArtGalleryWebsite
     {
 
         /// <summary>
-        /// btnSaveStar control.
+        /// btnSaveArt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSaveStar;
+        protected global::System.Web.UI.WebControls.Button btnSaveArt;
 
         /// <summary>
-        /// btnRemoveStar control.
+        /// btnRemoveArt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRemoveStar;
+        protected global::System.Web.UI.WebControls.Button btnRemoveArt;
 
         /// <summary>
         /// btnLikeHandler control.
@@ -51,13 +51,13 @@ namespace ArtGalleryWebsite
         protected global::System.Web.UI.WebControls.Button btnAddToCart;
 
         /// <summary>
-        /// btnCartPage control.
+        /// btnPurchaseNow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCartPage;
+        protected global::System.Web.UI.WebControls.Button btnPurchaseNow;
 
         /// <summary>
         /// lblErr control.

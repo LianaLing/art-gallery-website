@@ -87,6 +87,9 @@ names.forEach((name) => {
   favGroup[name] = data.filter((d) => d.name === name);
 });
 
+console.log(favGroup);
+console.log(counts);
+
 export default defineComponent({
   methods: {
     btnHandler(e: Event, str: string) {

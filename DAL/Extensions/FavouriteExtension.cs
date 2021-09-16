@@ -12,7 +12,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
             ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
             // Fetch favourite with populated arts
-            IEnumerable<FavDTO> populatedFav = (from art in dbContext.Arts
+            List<FavDTO> populatedFav = (from art in dbContext.Arts
                                 join author in dbContext.Authors on art.AuthorId equals author.Id
                                 join favArt in dbContext.FavArts on art.Id equals favArt.ArtId
                                 join fav in dbContext.Favourites on favArt.FavId equals fav.Id
@@ -61,19 +61,29 @@ namespace ArtGalleryWebsite.DAL.Extensions
                             Description = x.Author.Description,
                             Verified = x.Author.Verified
                         }
-                    });
+                    }).ToList();
 
             // Fetch all Favourite
             IEnumerable<Favourite> favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user_id, orderBy: fav => fav.OrderBy(f => f.UserId));
-            // Convert all Favourite to FavDTO
-            IEnumerable<FavDTO> converted = favs.Select(fav => new FavDTO { Id = fav.Id, Name = fav.Name });
 
-            // Merge two lists to return a full list of favourites (remove duplicates)
-            return populatedFav
-                .Concat(converted)
-                .GroupBy(fav => fav.Id)
-                .Select(group => group.First())
-                .ToList();
+            foreach (var fav in favs)
+            {
+                bool found = false;
+
+                foreach (var pfav in populatedFav)
+                {
+                    if (fav.Id == pfav.Id)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) continue;
+                else populatedFav.Add(new FavDTO { Id = fav.Id, Name = fav.Name });
+            }
+
+            return populatedFav;
         }
 
         public static List<ArtCountInFavDTO> ArtCountInUserFavourites(this UnitOfWork unitOfWork, int user_id)

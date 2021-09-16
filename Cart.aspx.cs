@@ -458,5 +458,12 @@ namespace ArtGalleryWebsite
             }
 
         }
+
+        protected void btnClearCart_Click(object sender, EventArgs e)
+        {
+            unitOfWork.ClearCart(user.Id);
+            Session["cart"] = null;
+            Response.Redirect("~/Home.aspx");
+        }
     }
 }

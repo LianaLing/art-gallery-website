@@ -162,6 +162,7 @@
                             py-2
                             rounded-full
                             hover:bg-light-hover
+                            cursor-pointer
                             "
                         Text="Close"
                     />

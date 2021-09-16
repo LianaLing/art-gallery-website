@@ -51,6 +51,20 @@ namespace ArtGalleryWebsite
             Helper.RegisterHiddenField(Page, "likedState", liked);
         }
 
+        private void Page_Error(object sender, EventArgs e)
+        {
+            Exception exc = Server.GetLastError();
+
+            // Handle specific exception.
+            if (exc is HttpUnhandledException)
+            {
+                lblErr.Text = "An error occurred on this page. Please verify your " +
+                "information to resolve the issue.";
+            }
+            // Clear the error from the server.
+            Server.ClearError();
+        }
+
         // Get art_id from this page's query string, redirected from `Home.aspx.cs`
         private int getArtId()
         {
@@ -63,13 +77,13 @@ namespace ArtGalleryWebsite
         private int getFavId()
         {
             string str = "";
-            if (Request.Form[btnSaveStar.UniqueID] != null)
+            if (Request.Form[btnSaveArt.UniqueID] != null)
             {
-                str = Request.Form[btnSaveStar.UniqueID];
+                str = Request.Form[btnSaveArt.UniqueID];
             }
             else
             {
-                str = Request.Form[btnRemoveStar.UniqueID];
+                str = Request.Form[btnRemoveArt.UniqueID];
             }
 
             string[] arr = str.Split(',');
@@ -140,19 +154,21 @@ namespace ArtGalleryWebsite
             }
         }
 
-        protected void btnSaveStar_click(object sender, EventArgs e)
+        protected void btnSaveArt_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(insertIntoFavArt());
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
             }
         }
 
-        protected void btnRemoveStar_click(object sender, EventArgs e)
+        protected void btnRemoveArt_click(object sender, EventArgs e)
         {
             if (setFavQueryIds())
             {
                 System.Diagnostics.Trace.WriteLine(removeFromFavArt());
+                Server.TransferRequest(Request.Url.AbsolutePath, false);
             }
         }
 
@@ -222,23 +238,37 @@ namespace ArtGalleryWebsite
             }
         }
 
-        private void Page_Error(object sender, EventArgs e)
+        protected void btnPurchaseNow_click(object sender, EventArgs e)
         {
-            Exception exc = Server.GetLastError();
+            // Check if art id exists in query string
+            if (getArtId() == 0) throw new Exception("Invalid Art Id");
 
-            // Handle specific exception.
-            if (exc is HttpUnhandledException)
+            try
             {
-                lblErr.Text = "An error occurred on this page. Please verify your " +
-                "information to resolve the issue.";
+                // Get current session user
+                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+
+                ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
+
+                // If the user does not have a shopping cart
+                if (cart == null)
+                    cart = unitOfWork.CreateShoppingCart(user.Id);
+
+                // Add one art the the shopping cart
+                cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
+
+                // Update session state
+                Session["cart"] = new ShoppingCartDTO { Id = cart.Id, Total = cart.Total, UserId = cart.UserId };
+
+                // Refresh page
+                Response.Redirect("~/Cart.aspx");
             }
-            // Clear the error from the server.
-            Server.ClearError();
-        }
-
-        protected void btnCartPage_click(object sender, EventArgs e)
-        {
-
+            catch (Exception ex)
+            {
+                lblErr.Visible = true;
+                lblErr.Text = $"{ex}";
+            }
         }
     }
 }

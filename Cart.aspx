@@ -9,22 +9,18 @@
     <div id="app" class="hidden">
     </div>
 
+    <asp:Button ID="btnClearCart" OnClick="btnClearCart_Click" runat="server" CssClass="hidden" />
+
     <div class="flex font-garamond lg:mx-[200px] lg:my-[30px]">
         <!-- Cart -->
         <div class="lg:w-3/5">
             <div class="px-5">
-                <div class="py-5 flex">
+                <div class="flex justify-between items-center py-5">
                     <p class="font-bold text-4xl">Your Cart</p>
-                    <asp:Button runat="server" ID="btnClearCart" CssClass="
-                        bg-light
-                        font-bold
-                        px-5
-                        py-2
-                        rounded-full
-                        hover:bg-light-hover
-                        ml-auto
-                        "
-                    OnClick="btnClearCart_click" Text="Clear Cart"/>
+                    <button onclick="clearCart(event);" class="flex justify-center items-center py-2 px-3 rounded-2xl hover:bg-red-500 hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm-8 5v6h2v-6H9zm4 0v6h2v-6h-2zM9 4v2h6V4H9z" fill="currentColor"/></svg>
+                        <span class="pl-2">Clear cart</span>
+                    </button>
                 </div>
                 <!-- Item Header -->
                 <asp:Button
@@ -486,6 +482,19 @@
             </asp:Panel>
         </div>
     </div>
+
+    <script>
+        const clearCartBtn = document.querySelector("#MainContent_btnClearCart");
+
+        const clearCart = (event) => {
+            event.preventDefault();
+            const prompt = confirm("Are you sure you want to clear the cart?");
+
+            if (!prompt) return;
+
+            clearCartBtn.click();
+        }
+    </script>
 
     <%--<script src="Scripts/dist/CartPage.dist.js"></script>--%>
 </asp:Content>
