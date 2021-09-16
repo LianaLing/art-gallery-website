@@ -210,7 +210,7 @@ namespace ArtGalleryWebsite
                 cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
 
                 // Update session state
-                Session["cart"] = cart;
+                Session["cart"] = new ShoppingCartDTO { Id = cart.Id, Total = cart.Total, UserId = cart.UserId };
 
                 // Refresh page
                 Server.TransferRequest(Request.Url.AbsolutePath, false);

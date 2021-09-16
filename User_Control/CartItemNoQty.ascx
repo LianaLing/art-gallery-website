@@ -30,7 +30,6 @@
                                   rounded-full
                                   hover:bg-light-hover" OnClick="btnQtyIncr_click" Text="+" />
                                 </div>
-                            <p class="mt-auto ml-auto">RM <%= CartItem.Art.Price * Quantity %></p>
+                            <p class="mt-auto ml-auto">RM <%= (CartItem.Art.Price * Quantity).ToString("0.00") %></p>
                         </div>
                     </div>
-                

@@ -19,6 +19,8 @@ namespace ArtGalleryWebsite
     {
         private static UnitOfWork unitOfWork = new UnitOfWork();
 
+        private ApplicationUser user = null;
+
         private static bool cardDetailSubmitted = false;
 
         protected List<CartItemDTO> cartItems;
@@ -30,7 +32,8 @@ namespace ArtGalleryWebsite
         {
             // Get current session user
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+            ApplicationUser currentUser = manager.FindById(Page.User.Identity.GetUserId<int>());
+            user = currentUser;
 
             // Fetch cart items
             cartItems = fetchCartItems(user.Id);
@@ -69,6 +72,16 @@ namespace ArtGalleryWebsite
 
             // Compare credit card expiration date to ensure it is not in the past
             CompareExpDate.ValueToCompare = DateTime.Today.ToShortDateString();
+        }
+
+        protected void Page_Error(object sender, EventArgs e)
+        {
+            Exception ex = Server.GetLastError();
+
+            if (ex is HttpUnhandledException)
+            {
+                System.Diagnostics.Trace.WriteLine(ex);
+            }
         }
 
         // Fetch cart items from database
@@ -245,7 +258,6 @@ namespace ArtGalleryWebsite
         protected void btnSubmitCard_click(object sender, EventArgs e)
         {
             validateCardDetail();
-            System.Diagnostics.Trace.WriteLine(RegexCardNo.IsValid);
             if (RegexCardNo.IsValid
                 && ReqCardNo.IsValid
                 && ReqExpDate.IsValid
@@ -263,6 +275,25 @@ namespace ArtGalleryWebsite
                 CardDetail.Visible = true;
                 cardDetailSubmitted = false;
             }
+
+            // Insert to database
+            // CreateOrderFunc (create order -> create billigndetails -> create paymentmethod -> create payment -> update order)
+            Order order = unitOfWork.CreateTransaction(user.Id, CreateTransactionParams());
+            if (order == null) throw new Exception($"Unable to create order");
+            System.Diagnostics.Trace.WriteLine(order);
+
+            // Wrap up the transaction, send email
+            // ConfirmPaymentFunc (update payment succeed -> update order succeed)
+            unitOfWork.ConfirmPaymentAndOrder(order.Id);
+
+            // Clear cart
+            unitOfWork.ClearCart(user.Id);
+            Session["cart"] = null;
+
+            // SendEmailFunc
+
+            // Refresh page (TODO: redirect to success page)
+            Server.TransferRequest(Request.Url.AbsolutePath, false);
         }
 
         protected void ddlCardBrand_change(object sender, EventArgs e)
@@ -284,6 +315,59 @@ namespace ArtGalleryWebsite
             {
                 RegexCardNo.ValidationExpression = "^(62[0-9]{14,17})$";
             }
+        }
+
+        protected PaymentExtension.TransactionParams CreateTransactionParams()
+        {
+            AddressDTO address = new AddressDTO
+            {
+                Country = txtAddrCountry.Text,
+                State = txtAddrState.Text,
+                City = txtAddrCity.Text,
+                Line1 = txtAddrL1.Text,
+                Line2 = txtAddrL2.Text,
+                PostalCode = txtAddrPC.Text,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
+
+            PaymentExtension.TransactionParams param = new PaymentExtension.TransactionParams
+            {
+                Remark = "No Remark",
+                Currency = "MYR",
+                PaymentDescription = "No Description",
+                TaxRate = 0.06M,
+                ShippingAddress = address,
+                PaymentMethod = new PaymenMethodDTO 
+                { 
+                    UserId = user.Id,
+                    Type = "card", // TODO: Make this dynamic
+                    Card = new CardDTO
+                    {
+                        Brand = ddlCardBrand.SelectedValue,
+                        Name = txtFullName.Text,
+                        Last4 = txtCardNo.Text.Substring(txtCardNo.Text.Length - 4),
+                        ExpMonth = txtExpDate.Text.Split('/')[1],
+                        ExpYear = txtExpDate.Text.Split('/')[2],
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    BillingDetails = new BillingDetailsDTO 
+                    { 
+                        Name = txtFullName.Text,
+                        Email = txtEmail.Text,
+                        Phone = txtPhone.Text,
+                        Address = address,
+                        CreatedAt = DateTime.Now,
+                        UpdatedAt = DateTime.Now
+                    },
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                },
+                CartItems = cartItems
+            };
+
+            return param;
         }
 
         protected void btnPayWith_click(object sender, EventArgs e)
@@ -324,9 +408,6 @@ namespace ArtGalleryWebsite
                     && txtCardNo.Text != ""
                     )
                 {
-                    // Insert to database
-                    // CreateOrderFunc (create order -> create billigndetails -> create paymentmethod -> create payment -> update order)
-
                     alertContent += "Full Name: " + txtFullName.Text;
                     alertContent += "\nEmail: " + txtEmail.Text;
                     if (txtAddrL2 != null || txtAddrL2.Text != "")
@@ -362,9 +443,6 @@ namespace ArtGalleryWebsite
                         alertContent = "Please select a payment method.";
                     }
 
-                    // Wrap up the transaction, send email
-                    // ConfirmPaymentFunc (update payment succeed -> update order succeed)
-                    // SendEmailFunc
                     lblPayConfirmHeader.Text = "Payment Successful";
                     lblPayConfirmBody.Text = alertContent;
                     enableFields(false);

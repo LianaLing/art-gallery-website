@@ -309,6 +309,7 @@
     <Compile Include="Models\DTO\CartItemDTO.cs" />
     <Compile Include="Models\DTO\OrderDetailDTO.cs" />
     <Compile Include="Models\DTO\PaymentMethodDTO.cs" />
+    <Compile Include="Models\DTO\ShoppingCartDTO.cs" />
     <Compile Include="Models\Entities\Address.cs" />
     <Compile Include="Models\Entities\Art.cs" />
     <Compile Include="Models\Entities\Author.cs" />

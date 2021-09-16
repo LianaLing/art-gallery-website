@@ -119,5 +119,38 @@ namespace ArtGalleryWebsite.DAL.Extensions
                     }
                 ).ToList();
         }
+
+        public static void ClearCart(this UnitOfWork unitOfWork, int user_id)
+        {
+            ApplicationDbContext dbContext = (ApplicationDbContext) unitOfWork.GetContext();
+
+            // Check if user exists
+            Models.Identity.User user = unitOfWork.UserRepository.GetById(user_id);
+            if (user == null) throw new Exception($"User {user_id} does not exist");
+
+            // Check if user has a cart
+            List<ShoppingCart> cart = (List<ShoppingCart>) unitOfWork.ShoppingCartRepository.Get(c => c.UserId == user_id);
+            if (cart.Count == 0) throw new Exception($"User {user_id} don't have a shopping cart");
+
+            // Update cart total
+            cart[0].Total = 0;
+            unitOfWork.ShoppingCartRepository.Update(cart[0]);
+
+            // Delete cart items
+            var cartItemsToDelete = dbContext.Carts
+                .Where(c => c.UserId == user_id)
+                .Join(
+                    dbContext.CartItems,
+                    c => c.Id,
+                    ci => ci.CartId,
+                    (c, ci) => ci
+                )
+                .AsEnumerable();
+
+            dbContext.CartItems.RemoveRange(cartItemsToDelete);
+
+            // Save transaction
+            unitOfWork.Save();
+        }
     }
 }
