@@ -338,8 +338,8 @@ namespace ArtGalleryWebsite
                 PaymentDescription = "No Description",
                 TaxRate = 0.06M,
                 ShippingAddress = address,
-                PaymentMethod = new PaymenMethodDTO 
-                { 
+                PaymentMethod = new PaymenMethodDTO
+                {
                     UserId = user.Id,
                     Type = "card", // TODO: Make this dynamic
                     Card = new CardDTO
@@ -352,8 +352,8 @@ namespace ArtGalleryWebsite
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now
                     },
-                    BillingDetails = new BillingDetailsDTO 
-                    { 
+                    BillingDetails = new BillingDetailsDTO
+                    {
                         Name = txtFullName.Text,
                         Email = txtEmail.Text,
                         Phone = txtPhone.Text,
@@ -374,11 +374,15 @@ namespace ArtGalleryWebsite
         {
             validateShipBill();
             string alertContent = "";
-            if (!CardDetail.Visible && !cardDetailSubmitted)
+            if (!CardDetail.Visible && !cardDetailSubmitted && rdbtnCard.Checked)
             {
                 CardDetail.Visible = true;
                 // Prefill with card if already have
                 return;
+            }
+            else
+            {
+                cardDetailSubmitted = true;
             }
 
             if (cardDetailSubmitted)

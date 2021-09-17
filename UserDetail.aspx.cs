@@ -18,6 +18,7 @@ namespace ArtGalleryWebsite
             if (!IsPostBack)
             {
             }// Compare username with database
+            CompareUsername.ValueToCompare = "";
         }
 
         protected void calDOB_changed(Object sender, EventArgs e)

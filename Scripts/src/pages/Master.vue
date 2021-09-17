@@ -12,6 +12,15 @@
           >About</a
         >
         <template
+          v-if="Object.keys(session).length !== 0 && session && session.user"
+        >
+          <a
+            class="font-garamond mr-1 py-2 px-3 hover:underline"
+            href="Home.aspx"
+            >Home</a
+          >
+        </template>
+        <template
           v-if="
             Object.keys(session).length !== 0 &&
             session &&
