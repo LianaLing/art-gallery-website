@@ -81,11 +81,7 @@ export default defineComponent({
     ) => {
       e.preventDefault();
       const id = `${art_id}` + "," + `${fav_id}`;
-      if (btn === "home") {
-        helper.triggerBackendControl(e, "MainContent_btnSaveArt", id);
-      } else {
-        helper.triggerBackendControl(e, "MainContent_btnSaveStar", id);
-      }
+      helper.triggerBackendControl(e, "MainContent_btnSaveArt", id);
     },
     removeArtHandler: (
       e: Event,
@@ -95,10 +91,7 @@ export default defineComponent({
     ) => {
       e.preventDefault();
       const id = `${art_id}` + "," + `${fav_id}`;
-      if (btn === "home") {
-        helper.triggerBackendControl(e, "MainContent_btnRemoveArt", id);
-      }
-      helper.triggerBackendControl(e, "MainContent_btnRemoveStar", id);
+      helper.triggerBackendControl(e, "MainContent_btnRemoveArt", id);
     },
     isSaved: (
       art: API.ArtResponse,
