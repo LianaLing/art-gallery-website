@@ -7,7 +7,6 @@
       <siteMapNode url="~/Dashboard.aspx" title="Artist Dashboard Page" description="Artist dashboard page accessible only when login as artist" />
       <siteMapNode url="~/User.aspx" title="User Page" description="User page">
       <siteMapNode url="~/UserDetail.aspx" title="User Detail Page" description="User detail page" />
-      <siteMapNode url="~/FavDetail.aspx" title="Favourites Detail Page" description="Favourites detail page" />
       <siteMapNode url="~/Construction.aspx" title="Construction Page" description="Represents pages under construction" />
       </siteMapNode>
     </siteMapNode>

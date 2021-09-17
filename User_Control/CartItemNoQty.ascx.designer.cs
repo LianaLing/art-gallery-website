@@ -13,5 +13,23 @@ namespace ArtGalleryWebsite.User_Control
 
     public partial class CartItemNoQty
     {
+
+        /// <summary>
+        /// btnQtyDecr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnQtyDecr;
+
+        /// <summary>
+        /// btnQtyIncr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnQtyIncr;
     }
 }

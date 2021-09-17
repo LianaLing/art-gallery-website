@@ -23,7 +23,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
             CartItem cartItem = new CartItem { Quantity = quantity, ArtId = art.Id, CartId = cart.Id };
 
             // Insert the new cart item
-            if (unitOfWork.CartItemRepository.Insert(cartItem) == null) 
+            if (unitOfWork.CartItemRepository.Insert(cartItem) == null)
                 throw new Exception($"Unable to add Art {art_id} to Cart {cart_id} (Can't insert into CartItem)");
 
             // Update the cart total
@@ -43,7 +43,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
             if (user == null) throw new Exception($"User {user_id} does not exist");
 
             // Get the cart
-            List<ShoppingCart> cart = (List<ShoppingCart>) unitOfWork.ShoppingCartRepository.Get(c => c.UserId == user_id);
+            List<ShoppingCart> cart = (List<ShoppingCart>)unitOfWork.ShoppingCartRepository.Get(c => c.UserId == user_id);
 
             // Return the first result or null
             return cart.FirstOrDefault();
@@ -56,7 +56,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
             if (user == null) throw new Exception($"User {user_id} does not exist");
 
             // Check if user already has a cart
-            List<ShoppingCart> cart = (List<ShoppingCart>) unitOfWork.ShoppingCartRepository.Get(c => c.UserId == user_id);
+            List<ShoppingCart> cart = (List<ShoppingCart>)unitOfWork.ShoppingCartRepository.Get(c => c.UserId == user_id);
             if (cart.Count != 0) throw new Exception($"User {user_id} already has a shopping cart");
 
             // Create a cart
@@ -78,7 +78,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
             ShoppingCart cart = unitOfWork.ShoppingCartRepository.GetById(cart_id);
             if (cart == null) throw new Exception($"Cart {cart_id} does not exist");
 
-            ApplicationDbContext dbContext = (ApplicationDbContext) unitOfWork.GetContext();
+            ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
             return dbContext.CartItems
                 .Where(ci => ci.CartId == cart_id)
@@ -91,7 +91,8 @@ namespace ArtGalleryWebsite.DAL.Extensions
                         Id = ci.Id,
                         Quantity = ci.Quantity,
                         ArtId = ci.ArtId,
-                        Art = new ArtDetailDTO {
+                        Art = new ArtDetailDTO
+                        {
                             Id = ci.Art.Id,
                             Description = ci.Art.Description,
                             Likes = ci.Art.Likes,
@@ -99,7 +100,8 @@ namespace ArtGalleryWebsite.DAL.Extensions
                             Stock = ci.Art.Stock,
                             Style = ci.Art.Style,
                             Url = ci.Art.Url,
-                            Author = new ArtDetailDTO.ArtDetailDTOAuthor {
+                            Author = new ArtDetailDTO.ArtDetailDTOAuthor
+                            {
                                 Id = (int)ci.Art.Author.Id,
                                 Verified = ci.Art.Author.Verified,
                                 Description = ci.Art.Author.Description,

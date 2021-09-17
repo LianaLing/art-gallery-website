@@ -162,7 +162,6 @@
     <Content Include="Default.aspx" />
     <Content Include="Error_Pages\Internal.aspx" />
     <Content Include="Error_Pages\Oops.aspx" />
-    <Content Include="FavDetail.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -293,13 +292,6 @@
     </Compile>
     <Compile Include="Error_Pages\Oops.aspx.designer.cs">
       <DependentUpon>Oops.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FavDetail.aspx.cs">
-      <DependentUpon>FavDetail.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FavDetail.aspx.designer.cs">
-      <DependentUpon>FavDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
