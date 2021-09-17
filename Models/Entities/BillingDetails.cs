@@ -38,7 +38,7 @@ namespace ArtGalleryWebsite.Models.Entities
         public DateTime UpdatedAt { get; set; }
 
         [Column("address_id")]
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
 
         public virtual Address Address { get; set; }
 

@@ -144,7 +144,7 @@ namespace ArtGalleryWebsite
         private void setDefault(Models.Identity.User user)
         {
             txtFullName.Text = user.Name;
-            txtEmail.Text = user.Email;
+            txtEmail.Text = "marcustutorial@hotmail.com";
             txtPhone.Text = user.PhoneNumber;
             // Get user address from database
             txtAddrL1.Text = "Test addr line 1";
@@ -277,27 +277,7 @@ namespace ArtGalleryWebsite
                 cardDetailSubmitted = false;
             }
 
-            using (UnitOfWork unitOfWork = new UnitOfWork())
-            {
-                // Insert to database
-                // CreateOrderFunc (create order -> create billigndetails -> create paymentmethod -> create payment -> update order)
-                Order order = unitOfWork.CreateTransaction(user.Id, CreateTransactionParams());
-                if (order == null) throw new Exception($"Unable to create order");
-                System.Diagnostics.Trace.WriteLine(order);
-
-                // Wrap up the transaction, send email
-                // ConfirmPaymentFunc (update payment succeed -> update order succeed)
-                unitOfWork.ConfirmPaymentAndOrder(order.Id);
-
-                // Clear cart
-                unitOfWork.ClearCart(user.Id);
-                Session["cart"] = null;
-
-                // SendEmailFunc
-
-                // Refresh page (TODO: redirect to success page)
-                Response.Redirect($"~/PaymentResult.aspx?order_id={order.Id}");
-            }
+            makePaymentTransaction();
         }
 
         protected void ddlCardBrand_change(object sender, EventArgs e)
@@ -345,8 +325,11 @@ namespace ArtGalleryWebsite
                 PaymentMethod = new PaymentMethodDTO
                 {
                     UserId = user.Id,
-                    Type = "card", // TODO: Make this dynamic
-                    Card = new CardDTO
+                    Type = rdbtnCard.Checked ? "card" : 
+                           rdbtnFpx.Checked ? "fpx" : 
+                           rdbtnGrab.Checked ? "grab" : 
+                           rdbtnTng.Checked ? "tng" : null,
+                    Card = rdbtnCard.Checked ? new CardDTO
                     {
                         Brand = ddlCardBrand.SelectedValue,
                         Name = txtFullName.Text,
@@ -355,7 +338,7 @@ namespace ArtGalleryWebsite
                         ExpYear = txtExpDate.Text.Split('/')[2],
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now
-                    },
+                    } : null,
                     BillingDetails = new BillingDetailsDTO
                     {
                         Name = txtFullName.Text,
@@ -381,7 +364,6 @@ namespace ArtGalleryWebsite
             if (!CardDetail.Visible && !cardDetailSubmitted && rdbtnCard.Checked)
             {
                 CardDetail.Visible = true;
-                // Prefill with card if already have
                 return;
             }
             else
@@ -451,6 +433,11 @@ namespace ArtGalleryWebsite
                         alertContent = "Please select a payment method.";
                     }
 
+                    if (rdbtnFpx.Checked || rdbtnGrab.Checked || rdbtnTng.Checked)
+                    {
+                        makePaymentTransaction();
+                    }
+
                     lblPayConfirmHeader.Text = "Payment Successful";
                     lblPayConfirmBody.Text = alertContent;
                     enableFields(false);
@@ -464,7 +451,44 @@ namespace ArtGalleryWebsite
                     System.Diagnostics.Trace.WriteLine("Please fill up shipping details.");
                 }
             }
+        }
 
+        protected void makePaymentTransaction()
+        {
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                // Insert to database
+                // CreateOrderFunc (create order -> create billigndetails -> create paymentmethod -> create payment -> update order)
+                Order order = unitOfWork.CreateTransaction(user.Id, CreateTransactionParams());
+                if (order == null) throw new Exception($"Unable to create order");
+                System.Diagnostics.Trace.WriteLine(order);
+
+                // Wrap up the transaction, send email
+                // ConfirmPaymentFunc (update payment succeed -> update order succeed)
+                unitOfWork.ConfirmPaymentAndOrder(order.Id);
+
+                // Clear cart
+                unitOfWork.ClearCart(user.Id);
+                Session["cart"] = null;
+
+                // SendEmailFunc
+                Helper.SendEmail(
+                    txtEmail.Text, 
+                    $"ArtGalleryWebsite Receipt: {order.Id} (Successful Payment)", 
+                    $@"
+                    Payment Successful!
+
+                    Order ID: {order.Id}
+                    Order Remark: {order.Remark}
+                    Order Date: {order.UpdatedAt.ToLocalTime()}
+                    Shipping Address: {order.Address.Line1}, {order.Address.Line2}, {order.Address.City}, {order.Address.PostalCode}, {order.Address.State}, {order.Address.Country}
+                    Recipient Name: {txtFullName.Text}
+                    Phone Number: {txtPhone.Text}
+                    ");
+
+                // Refresh page 
+                Response.Redirect($"~/PaymentResult.aspx?order_id={order.Id}");
+            }
         }
 
         protected void btnClearCart_Click(object sender, EventArgs e)

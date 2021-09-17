@@ -11,7 +11,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
             ApplicationDbContext dbContext = (ApplicationDbContext)unitOfWork.GetContext();
 
             // Fetch the order details with Art from db
-            var data = dbContext.Orders
+            var query = dbContext.Orders
                 .Where(order => order.UserId == user_id)
                 .Join(
                     dbContext.OrderArts,
@@ -23,7 +23,8 @@ namespace ArtGalleryWebsite.DAL.Extensions
                     dbContext.Arts,
                     a => a.orderArt.ArtId,
                     art => art.Id,
-                    (a, art) => new { 
+                    (a, art) => new
+                    {
                         Id = a.order.Id,
                         Status = a.order.Status,
                         Remark = a.order.Remark,
@@ -31,7 +32,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
                         UpdatedAt = a.order.UpdatedAt,
                         PaymentId = a.order.PaymentId,
                         AddressId = a.order.AddressId,
-                        Address = new OrderDetailDTO.OrderDetailDTOAddress 
+                        Address = new OrderDetailDTO.OrderDetailDTOAddress
                         {
                             Id = a.order.Address.Id,
                             City = a.order.Address.City,
@@ -44,7 +45,8 @@ namespace ArtGalleryWebsite.DAL.Extensions
                             UpdatedAt = a.order.Address.UpdatedAt,
                         },
                         UserId = a.order.UserId,
-                        Art = new ArtDetailDTO { 
+                        Art = new ArtDetailDTO
+                        {
                             Id = art.Id,
                             Description = art.Description,
                             Likes = art.Likes,
@@ -58,10 +60,13 @@ namespace ArtGalleryWebsite.DAL.Extensions
                                 Description = art.Author.Description,
                                 Verified = art.Author.Verified
                             }
-                        } 
+                        }
                     }
-                )
-                .ToList();
+                );
+
+            System.Diagnostics.Trace.WriteLine(query.ToString());
+
+            var data = query.ToList();
 
             // Construct a dictionary to filter data
             Dictionary<int, KeyValuePair<OrderDetailDTO, List<ArtDetailDTO>>> dict = new Dictionary<int, KeyValuePair<OrderDetailDTO, List<ArtDetailDTO>>>();

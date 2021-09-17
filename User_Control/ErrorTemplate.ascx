@@ -6,5 +6,10 @@
         </asp:Panel>
         <br />
         <div class="flex justify-center p-20">
-        <asp:Button runat="server" ID="btnErrToHome" PostBackUrl="~/Home.aspx" CssClass="rounded-full px-5 py-2 bg-accent hover:bg-accent-hover text-white font-garamond font-bold text-xl" Text="Return to Home Page"/>
+        <asp:Button 
+            runat="server" 
+            ID="btnErrToHome" 
+            PostBackUrl="~/Home.aspx" 
+            CssClass="rounded-full px-5 py-2 bg-accent hover:bg-accent-hover text-white font-garamond font-bold text-xl" 
+            Text="Return to Home Page"/>
         </div>

@@ -14,9 +14,6 @@ namespace ArtGalleryWebsite
 
         }
 
-        //private string _CreditRef;
-        //private string _Alt;
-
         public string CreditRef
         {
             get { return lbtnRef.PostBackUrl; }
@@ -34,10 +31,6 @@ namespace ArtGalleryWebsite
             get { return lblAuthor.Text; }
             set { lblAuthor.Text = value; }
         }
-
-        //public string href;
-        //public string creditRef;
-        //public string author;
 
     }
 }

@@ -3,16 +3,22 @@ using System.Web;
 using System.Web.UI;
 using System.Web.SessionState;
 using System.Collections.Generic;
+using System.Net.Configuration;
+using System.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using ArtGalleryWebsite.Models.Entities;
 using ArtGalleryWebsite.DAL;
 using ArtGalleryWebsite.Models.DTO;
+using System.Net.Mail;
+using System.Net;
 
 namespace ArtGalleryWebsite.Utils
 {
     public static class Helper
     {
+        private static SmtpSection secObj = (SmtpSection)ConfigurationManager.GetSection("system.net/mailSettings/smtp");
+
         // Helps to retrieve session data from the session object
         public static Dictionary<string, object> GetSessionDatas(HttpSessionState Session)
         {
@@ -94,6 +100,27 @@ namespace ArtGalleryWebsite.Utils
 
                 // Set the user's shopping cart as a session state
                 session["cart"] = cart;
+            }
+        }
+
+        public static void SendEmail(string recipientEmail, string subject, string body)
+        {
+            using (MailMessage mm = new MailMessage())
+            {
+                mm.From = new MailAddress(secObj.From); //--- Email address of the sender
+                mm.To.Add(recipientEmail); //---- Email address of the recipient.
+                mm.Subject = subject; //---- Subject of email.
+                mm.Body = body; //---- Content of email.
+             
+                SmtpClient smtp = new SmtpClient();
+                smtp.Host = secObj.Network.Host; //---- SMTP Host Details. 
+                smtp.EnableSsl = secObj.Network.EnableSsl; //---- Specify whether host accepts SSL Connections or not.
+                NetworkCredential NetworkCred = new NetworkCredential(secObj.Network.UserName, secObj.Network.Password);
+                //---Your Email and password
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = NetworkCred;
+                smtp.Port = 587; //---- SMTP Server port number. This varies from host to host. 
+                smtp.Send(mm);
             }
         }
     }

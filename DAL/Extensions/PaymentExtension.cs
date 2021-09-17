@@ -103,34 +103,55 @@ namespace ArtGalleryWebsite.DAL.Extensions
 
             unitOfWork.Save();
 
-            // Create card
-            Card card = new Card
-            {
-                Brand = param.PaymentMethod.Card.Brand,
-                Name = param.PaymentMethod.Card.Name,
-                Last4 = param.PaymentMethod.Card.Last4,
-                ExpYear = param.PaymentMethod.Card.ExpYear,
-                ExpMonth = param.PaymentMethod.Card.ExpMonth,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
-            card = unitOfWork.CardRepository.Insert(card);
-            if (card == null) throw new Exception($"Unable to create card for User {user_id}");
+            Card card = null;
 
-            unitOfWork.Save();
+            if (param.PaymentMethod.Type.Equals("card"))
+            {
+                // Create card
+                card = new Card
+                {
+                    Brand = param.PaymentMethod.Card.Brand,
+                    Name = param.PaymentMethod.Card.Name,
+                    Last4 = param.PaymentMethod.Card.Last4,
+                    ExpYear = param.PaymentMethod.Card.ExpYear,
+                    ExpMonth = param.PaymentMethod.Card.ExpMonth,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now
+                };
+                card = unitOfWork.CardRepository.Insert(card);
+                if (card == null) throw new Exception($"Unable to create card for User {user_id}");
+
+                unitOfWork.Save();
+            }
 
             // Create payment method
-            PaymentMethod paymentMethod = new PaymentMethod
+            PaymentMethod paymentMethod = null;
+            if (card != null)
             {
-                Type = param.PaymentMethod.Type,
-                CardId = card.Id,
-                Card = card,
-                UserId = user_id,
-                BillingDetailsId = billingDetails.Id,
-                BillingDetails = billingDetails,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-            };
+                paymentMethod = new PaymentMethod
+                {
+                    Type = param.PaymentMethod.Type,
+                    CardId = card.Id,
+                    Card = card,
+                    UserId = user_id,
+                    BillingDetailsId = billingDetails.Id,
+                    BillingDetails = billingDetails,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                };
+            }
+            else
+            {
+                paymentMethod = new PaymentMethod
+                {
+                    Type = param.PaymentMethod.Type,
+                    UserId = user_id,
+                    BillingDetailsId = billingDetails.Id,
+                    BillingDetails = billingDetails,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                };
+            }
             paymentMethod = unitOfWork.PaymentMethodRepository.Insert(paymentMethod);
             if (paymentMethod == null) throw new Exception($"Unable to create payment method for User {user_id}");
 
