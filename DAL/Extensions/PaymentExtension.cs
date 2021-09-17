@@ -36,6 +36,40 @@ namespace ArtGalleryWebsite.DAL.Extensions
 
             unitOfWork.Save();
 
+            // Create corresponding order 
+            // Count quantity in a dictionary
+            Dictionary<int, int> quantity = new Dictionary<int, int>();
+
+            foreach (var ci in param.CartItems)
+            {
+                if (quantity.ContainsKey(ci.ArtId))
+                    quantity[ci.ArtId]++;
+                else
+                    quantity[ci.ArtId] = 1;
+            }
+
+            // Merge the list 
+            List<CartItem> cartItems = param.CartItems
+                .GroupBy(ci => ci.ArtId)
+                .Select(group => new CartItem 
+                    { 
+                        ArtId = group.Key, 
+                        CartId = group.First().CartId, 
+                        Quantity = quantity[group.Key]
+                    }
+                )
+                .ToList();
+
+            // Then create the orderArt
+            foreach (var ci in cartItems)
+            {
+                OrderArt res = unitOfWork.OrderArtRepository.Insert(
+                    new OrderArt { ArtId = ci.ArtId, OrderId = order.Id, Quantity = ci.Quantity }
+                );
+
+                if (res == null) throw new Exception($"Unable to insert OrderArt for Art {ci.ArtId} and Order {order.Id}");
+            }
+
             // Create address
             Address address = new Address
             {
