@@ -16,8 +16,6 @@ namespace ArtGalleryWebsite
 {
     public partial class ArtDetail : System.Web.UI.Page
     {
-        private static UnitOfWork unitOfWork = new UnitOfWork();
-
         protected int artId;
         protected int favId;
 
@@ -38,17 +36,20 @@ namespace ArtGalleryWebsite
 
             Helper.RegisterHiddenField(Page, "iconsState", icons);
 
-            // Get data for the page
-            ArtDetailDTO data = unitOfWork.GetArtDetailById(getArtId());
-            IEnumerable<Favourite> favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
-            IEnumerable<FavDTO> saved = unitOfWork.GetUserFavourites(user.Id);
-            bool liked = unitOfWork.isArtLiked(user.Id, getArtId());
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                // Get data for the page
+                ArtDetailDTO data = unitOfWork.GetArtDetailById(getArtId());
+                IEnumerable<Favourite> favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
+                IEnumerable<FavDTO> saved = unitOfWork.GetUserFavourites(user.Id);
+                bool liked = unitOfWork.isArtLiked(user.Id, getArtId());
 
-            // Register hidden field to pass data from backend to frontend
-            Helper.RegisterHiddenField(Page, "artState", data);
-            Helper.RegisterHiddenField(Page, "favsState", favs);
-            Helper.RegisterHiddenField(Page, "savedState", saved);
-            Helper.RegisterHiddenField(Page, "likedState", liked);
+                // Register hidden field to pass data from backend to frontend
+                Helper.RegisterHiddenField(Page, "artState", data);
+                Helper.RegisterHiddenField(Page, "favsState", favs);
+                Helper.RegisterHiddenField(Page, "savedState", saved);
+                Helper.RegisterHiddenField(Page, "likedState", liked);
+            }
         }
 
         private void Page_Error(object sender, EventArgs e)
@@ -113,20 +114,23 @@ namespace ArtGalleryWebsite
         private string insertIntoFavArt()
         {
             //FavQuery.InsertFavArt();
-            try
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                //return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";
-                FavArt favArt = new FavArt { ArtId = artId, FavId = favId };
-                unitOfWork.FavArtRepository.Insert(favArt);
-                unitOfWork.Save();
+                try
+                {
+                    //return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";
+                    FavArt favArt = new FavArt { ArtId = artId, FavId = favId };
+                    unitOfWork.FavArtRepository.Insert(favArt);
+                    unitOfWork.Save();
 
-                return $"Successful insertion of FavArt {{ fav_id: {favArt.FavId}, art_id: {favArt.ArtId} }}";
-            }
-            catch (Exception ex)
-            {
-                lblErr.Visible = true;
-                lblErr.Text = $"{ex}";
-                return ex + " [Artwork already saved in this collection.]";
+                    return $"Successful insertion of FavArt {{ fav_id: {favArt.FavId}, art_id: {favArt.ArtId} }}";
+                }
+                catch (Exception ex)
+                {
+                    lblErr.Visible = true;
+                    lblErr.Text = $"{ex}";
+                    return ex + " [Artwork already saved in this collection.]";
+                }
             }
         }
 
@@ -134,23 +138,26 @@ namespace ArtGalleryWebsite
         private string removeFromFavArt()
         {
             //FavQuery.RemoveFromFavArt();
-            try
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                //return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
-                FavArt deleted = unitOfWork.FavArtRepository.Delete(favId, artId);
+                try
+                {
+                    //return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
+                    FavArt deleted = unitOfWork.FavArtRepository.Delete(favId, artId);
 
-                if (deleted == null)
-                    throw new Exception($"Unable to delete FavArt {{ fav_id: {favId}, art_id: {artId} }}");
-                else
-                    unitOfWork.Save();
+                    if (deleted == null)
+                        throw new Exception($"Unable to delete FavArt {{ fav_id: {favId}, art_id: {artId} }}");
+                    else
+                        unitOfWork.Save();
 
-                return $"Successful insertion of FavArt {{ fav_id: {favId}, art_id: {artId} }}";
-            }
-            catch (Exception ex)
-            {
-                lblErr.Visible = true;
-                lblErr.Text = $"{ex}";
-                return ex + " [Artwork already deleted from this collection.]";
+                    return $"Successful insertion of FavArt {{ fav_id: {favId}, art_id: {artId} }}";
+                }
+                catch (Exception ex)
+                {
+                    lblErr.Visible = true;
+                    lblErr.Text = $"{ex}";
+                    return ex + " [Artwork already deleted from this collection.]";
+                }
             }
         }
 
@@ -181,27 +188,30 @@ namespace ArtGalleryWebsite
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-            try
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                int art_id = getArtId();
-
-                // Check if is art not liked
-                if (!unitOfWork.isArtLiked(user.Id, art_id))
+                try
                 {
-                    unitOfWork.addLikeToArt(user.Id, art_id);
-                }
-                else
-                {
-                    unitOfWork.removeLikeFromArt(user.Id, art_id);
-                }
+                    int art_id = getArtId();
 
-                // Refresh the page
-                Server.TransferRequest(Request.Url.AbsolutePath, false);
-            }
-            catch (Exception ex)
-            {
-                lblErr.Visible = true;
-                lblErr.Text = $"{ex}";
+                    // Check if is art not liked
+                    if (!unitOfWork.isArtLiked(user.Id, art_id))
+                    {
+                        unitOfWork.addLikeToArt(user.Id, art_id);
+                    }
+                    else
+                    {
+                        unitOfWork.removeLikeFromArt(user.Id, art_id);
+                    }
+
+                    // Refresh the page
+                    Server.TransferRequest(Request.Url.AbsolutePath, false);
+                }
+                catch (Exception ex)
+                {
+                    lblErr.Visible = true;
+                    lblErr.Text = $"{ex}";
+                }
             }
         }
 
@@ -210,31 +220,34 @@ namespace ArtGalleryWebsite
             // Check if art id exists in query string
             if (getArtId() == 0) throw new Exception("Invalid Art Id");
 
-            try
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                // Get current session user
-                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+                try
+                {
+                    // Get current session user
+                    ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-                ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
+                    ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
 
-                // If the user does not have a shopping cart
-                if (cart == null)
-                    cart = unitOfWork.CreateShoppingCart(user.Id);
+                    // If the user does not have a shopping cart
+                    if (cart == null)
+                        cart = unitOfWork.CreateShoppingCart(user.Id);
 
-                // Add one art the the shopping cart
-                cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
+                    // Add one art the the shopping cart
+                    cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
 
-                // Update session state
-                Session["cart"] = new ShoppingCartDTO { Id = cart.Id, Total = cart.Total, UserId = cart.UserId };
+                    // Update session state
+                    Session["cart"] = new ShoppingCartDTO { Id = cart.Id, Total = cart.Total, UserId = cart.UserId };
 
-                // Refresh page
-                Server.TransferRequest(Request.Url.AbsolutePath, false);
-            }
-            catch (Exception ex)
-            {
-                lblErr.Visible = true;
-                lblErr.Text = $"{ex}";
+                    // Refresh page
+                    Server.TransferRequest(Request.Url.AbsolutePath, false);
+                }
+                catch (Exception ex)
+                {
+                    lblErr.Visible = true;
+                    lblErr.Text = $"{ex}";
+                }
             }
         }
 
@@ -243,31 +256,34 @@ namespace ArtGalleryWebsite
             // Check if art id exists in query string
             if (getArtId() == 0) throw new Exception("Invalid Art Id");
 
-            try
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                // Get current session user
-                ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-                ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
+                try
+                {
+                    // Get current session user
+                    ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                    ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-                ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
+                    ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user.Id);
 
-                // If the user does not have a shopping cart
-                if (cart == null)
-                    cart = unitOfWork.CreateShoppingCart(user.Id);
+                    // If the user does not have a shopping cart
+                    if (cart == null)
+                        cart = unitOfWork.CreateShoppingCart(user.Id);
 
-                // Add one art the the shopping cart
-                cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
+                    // Add one art the the shopping cart
+                    cart = unitOfWork.AddArtToShoppingCart(cart.Id, getArtId(), quantity: 1);
 
-                // Update session state
-                Session["cart"] = new ShoppingCartDTO { Id = cart.Id, Total = cart.Total, UserId = cart.UserId };
+                    // Update session state
+                    Session["cart"] = new ShoppingCartDTO { Id = cart.Id, Total = cart.Total, UserId = cart.UserId };
 
-                // Refresh page
-                Response.Redirect("~/Cart.aspx");
-            }
-            catch (Exception ex)
-            {
-                lblErr.Visible = true;
-                lblErr.Text = $"{ex}";
+                    // Refresh page
+                    Response.Redirect("~/Cart.aspx");
+                }
+                catch (Exception ex)
+                {
+                    lblErr.Visible = true;
+                    lblErr.Text = $"{ex}";
+                }
             }
         }
     }

@@ -22,5 +22,7 @@ namespace ArtGalleryWebsite.Models.Entities
         [Key]
         [Column("order_id", Order = 2)]
         public int OrderId { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

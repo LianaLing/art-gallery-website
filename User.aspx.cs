@@ -90,8 +90,6 @@ namespace ArtGalleryWebsite
 
     public partial class User : System.Web.UI.Page
     {
-        private static UnitOfWork unitOfWork = new UnitOfWork();
-
         protected List<OrderDetailDTO> PHis = new List<OrderDetailDTO>();
         protected ApplicationUser user = null;
 
@@ -110,20 +108,23 @@ namespace ArtGalleryWebsite
             ApplicationUser currentUser = manager.FindById(Page.User.Identity.GetUserId<int>());
             user = currentUser;
 
-            // Will only return favourites in [Favourite] that have >= 1 row of data
-            // Empty favourites will not be returned
-            List<FavDTO> data = unitOfWork.GetUserFavourites(user.Id);
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                // Will only return favourites in [Favourite] that have >= 1 row of data
+                // Empty favourites will not be returned
+                List<FavDTO> data = unitOfWork.GetUserFavourites(user.Id);
 
-            // Return the total number of rows in [FavArt] for each [Favourite]
-            List<ArtCountInFavDTO> counts = unitOfWork.ArtCountInUserFavourites(user.Id);
+                // Return the total number of rows in [FavArt] for each [Favourite]
+                List<ArtCountInFavDTO> counts = unitOfWork.ArtCountInUserFavourites(user.Id);
 
-            // Pass data into hidden field for frontend to parse
-            Helper.RegisterHiddenField(Page, "iconsState", icons);
-            Helper.RegisterHiddenField(Page, "state", data);
-            Helper.RegisterHiddenField(Page, "countsState", counts);
+                // Pass data into hidden field for frontend to parse
+                Helper.RegisterHiddenField(Page, "iconsState", icons);
+                Helper.RegisterHiddenField(Page, "state", data);
+                Helper.RegisterHiddenField(Page, "countsState", counts);
 
-            // Purchase history
-            PHis = unitOfWork.GetOrderDetailsByUserId(user.Id);
+                // Purchase history
+                PHis = unitOfWork.GetOrderDetailsByUserId(user.Id);
+            }
 
             if (!IsPostBack)
             {
@@ -177,15 +178,18 @@ namespace ArtGalleryWebsite
             System.Diagnostics.Trace.WriteLine("Clicked on create, Fav Name: " + txtFavName.Text);
             CreateFav.Visible = false;
 
-            // Create the new favourite object
-            Favourite favourite = new Favourite { Name = txtFavName.Text, UserId = user.Id };
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                // Create the new favourite object
+                Favourite favourite = new Favourite { Name = txtFavName.Text, UserId = user.Id };
 
-            // Insert into database, will display one more new save
-            if (unitOfWork.FavouriteRepository.Insert(favourite) == null) 
-                throw new Exception($"Unable to create Favourite {txtFavName.Text}.");
+                // Insert into database, will display one more new save
+                if (unitOfWork.FavouriteRepository.Insert(favourite) == null) 
+                    throw new Exception($"Unable to create Favourite {txtFavName.Text}.");
 
-            // Save changes
-            unitOfWork.Save();
+                // Save changes
+                unitOfWork.Save();
+            }
 
             // Refresh page
             Server.TransferRequest(Request.Url.AbsolutePath, false);

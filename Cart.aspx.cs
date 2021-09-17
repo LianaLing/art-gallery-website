@@ -17,8 +17,6 @@ namespace ArtGalleryWebsite
 {
     public partial class Cart : System.Web.UI.Page
     {
-        private static UnitOfWork unitOfWork = new UnitOfWork();
-
         private ApplicationUser user = null;
 
         private static bool cardDetailSubmitted = false;
@@ -87,15 +85,18 @@ namespace ArtGalleryWebsite
         // Fetch cart items from database
         protected List<CartItemDTO> fetchCartItems(int user_id)
         {
-            // Check whether user has a cart
-            ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user_id);
-            if (cart == null) throw new Exception($"User {user_id} has no items in cart.");
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                // Check whether user has a cart
+                ShoppingCart cart = unitOfWork.GetShoppingCartByUserId(user_id);
+                if (cart == null) throw new Exception($"User {user_id} has no items in cart.");
 
-            // Fetch cart items
-            List<CartItemDTO> cartItems = unitOfWork.GetCartItems(cart.Id);
-            if (cartItems.Count == 0) throw new Exception($"User {user_id} has no items in cart.");
+                // Fetch cart items
+                List<CartItemDTO> cartItems = unitOfWork.GetCartItems(cart.Id);
+                if (cartItems.Count == 0) throw new Exception($"User {user_id} has no items in cart.");
 
-            return cartItems;
+                return cartItems;
+            }
         }
 
         // Render cartItems to frontend using dynamic user control
@@ -260,24 +261,27 @@ namespace ArtGalleryWebsite
                 cardDetailSubmitted = false;
             }
 
-            // Insert to database
-            // CreateOrderFunc (create order -> create billigndetails -> create paymentmethod -> create payment -> update order)
-            Order order = unitOfWork.CreateTransaction(user.Id, CreateTransactionParams());
-            if (order == null) throw new Exception($"Unable to create order");
-            System.Diagnostics.Trace.WriteLine(order);
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                // Insert to database
+                // CreateOrderFunc (create order -> create billigndetails -> create paymentmethod -> create payment -> update order)
+                Order order = unitOfWork.CreateTransaction(user.Id, CreateTransactionParams());
+                if (order == null) throw new Exception($"Unable to create order");
+                System.Diagnostics.Trace.WriteLine(order);
 
-            // Wrap up the transaction, send email
-            // ConfirmPaymentFunc (update payment succeed -> update order succeed)
-            unitOfWork.ConfirmPaymentAndOrder(order.Id);
+                // Wrap up the transaction, send email
+                // ConfirmPaymentFunc (update payment succeed -> update order succeed)
+                unitOfWork.ConfirmPaymentAndOrder(order.Id);
 
-            // Clear cart
-            unitOfWork.ClearCart(user.Id);
-            Session["cart"] = null;
+                // Clear cart
+                unitOfWork.ClearCart(user.Id);
+                Session["cart"] = null;
 
-            // SendEmailFunc
+                // SendEmailFunc
 
-            // Refresh page (TODO: redirect to success page)
-            Server.TransferRequest(Request.Url.AbsolutePath, false);
+                // Refresh page (TODO: redirect to success page)
+                Response.Redirect($"~/PaymentResult.aspx?order_id={order.Id}");
+            }
         }
 
         private void validateCardDetail()
@@ -330,7 +334,7 @@ namespace ArtGalleryWebsite
                 PaymentDescription = "No Description",
                 TaxRate = 0.06M,
                 ShippingAddress = address,
-                PaymentMethod = new PaymenMethodDTO 
+                PaymentMethod = new PaymentMethodDTO 
                 { 
                     UserId = user.Id,
                     Type = "card", // TODO: Make this dynamic
@@ -449,9 +453,12 @@ namespace ArtGalleryWebsite
 
         protected void btnClearCart_Click(object sender, EventArgs e)
         {
-            unitOfWork.ClearCart(user.Id);
-            Session["cart"] = null;
-            Response.Redirect("~/Home.aspx");
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                unitOfWork.ClearCart(user.Id);
+                Session["cart"] = null;
+                Response.Redirect("~/Home.aspx");
+            }
         }
     }
 }

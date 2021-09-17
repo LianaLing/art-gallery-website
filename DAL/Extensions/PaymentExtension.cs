@@ -15,7 +15,7 @@ namespace ArtGalleryWebsite.DAL.Extensions
             public string PaymentDescription { get; set; }
             public decimal TaxRate { get; set; }
             public AddressDTO ShippingAddress { get; set; }
-            public PaymenMethodDTO PaymentMethod { get; set; }
+            public PaymentMethodDTO PaymentMethod { get; set; }
             public List<CartItemDTO> CartItems { get; set; }
         }
 

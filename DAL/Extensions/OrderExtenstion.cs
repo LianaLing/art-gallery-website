@@ -112,5 +112,19 @@ namespace ArtGalleryWebsite.DAL.Extensions
 
             return result;
         }
+
+        public static OrderDetailDTO GetOrderDetail(this UnitOfWork unitOfWork, int user_id, int order_id)
+        {
+            List<OrderDetailDTO> orders = unitOfWork.GetOrderDetailsByUserId(user_id);
+
+            foreach( var order in orders)
+            {
+                System.Diagnostics.Trace.WriteLine(order.Id);
+            }
+
+            return orders
+                .Where(res => res.Id == order_id)
+                .FirstOrDefault();
+        }
     }
 }

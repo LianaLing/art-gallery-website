@@ -17,6 +17,7 @@ namespace ArtGalleryWebsite.DAL
         private GenericRepository<ShoppingCart> shoppingCartRepository;
         private GenericRepository<CartItem> cartItemRepository;
         private GenericRepository<Order> orderRepository;
+        private GenericRepository<OrderArt> orderArtRepository;
         private GenericRepository<BillingDetails> billingDetailsRepository;
         private GenericRepository<Address> addressRepository;
         private GenericRepository<Card> cardRepository;
@@ -102,6 +103,15 @@ namespace ArtGalleryWebsite.DAL
             {
                 if (orderRepository == null) orderRepository = new GenericRepository<Order>(context);
                 return orderRepository;
+            }
+        }
+
+        public GenericRepository<OrderArt> OrderArtRepository
+        {
+            get
+            {
+                if (orderArtRepository == null) orderArtRepository = new GenericRepository<OrderArt>(context);
+                return orderArtRepository;
             }
         }
 

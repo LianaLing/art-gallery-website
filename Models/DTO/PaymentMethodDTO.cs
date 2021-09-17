@@ -2,7 +2,7 @@
 
 namespace ArtGalleryWebsite.Models.DTO
 {
-    public class PaymenMethodDTO
+    public class PaymentMethodDTO
     {
         public int Id { get; set; }
 

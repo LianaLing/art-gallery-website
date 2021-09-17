@@ -15,8 +15,6 @@ namespace ArtGalleryWebsite
 {
     public partial class Home : System.Web.UI.Page
     {
-        private static UnitOfWork unitOfWork = new UnitOfWork();
-
         protected int artId;
         protected int favId;
 
@@ -31,16 +29,19 @@ namespace ArtGalleryWebsite
             ApplicationUserManager manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             ApplicationUser user = manager.FindById(Page.User.Identity.GetUserId<int>());
 
-            // Get data for the page
-            var data = unitOfWork.GetArtDetails();
-            var favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
-            var saved = unitOfWork.GetUserFavourites(user.Id);
+            using (UnitOfWork unitOfWork = new UnitOfWork())
+            {
+                // Get data for the page
+                var data = unitOfWork.GetArtDetails();
+                var favs = unitOfWork.FavouriteRepository.Get(filter: fav => fav.UserId == user.Id, orderBy: fav => fav.OrderBy(f => f.UserId));
+                var saved = unitOfWork.GetUserFavourites(user.Id);
 
-            // Get data for the page
-            // Inject the data (serialized as a JSON string) as a hidden field at client side
-            Helper.RegisterHiddenField(Page, "arts", data);
-            Helper.RegisterHiddenField(Page, "favs", favs);
-            Helper.RegisterHiddenField(Page, "saves", saved);
+                // Get data for the page
+                // Inject the data (serialized as a JSON string) as a hidden field at client side
+                Helper.RegisterHiddenField(Page, "arts", data);
+                Helper.RegisterHiddenField(Page, "favs", favs);
+                Helper.RegisterHiddenField(Page, "saves", saved);
+            }
         }
 
         // Parse the value of the button, which is passed to backend from frontend
@@ -100,18 +101,21 @@ namespace ArtGalleryWebsite
         private string insertIntoFavArt()
         {
             //FavQuery.InsertFavArt(); //Query
-            try
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                //return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";
-                FavArt favArt = new FavArt { ArtId = artId, FavId = favId };
-                unitOfWork.FavArtRepository.Insert(favArt);
-                unitOfWork.Save();
+                try
+                {
+                    //return "Affected " + Database.Insert(FavQuery.SqlQuery) + " row(s)";
+                    FavArt favArt = new FavArt { ArtId = artId, FavId = favId };
+                    unitOfWork.FavArtRepository.Insert(favArt);
+                    unitOfWork.Save();
 
-                return $"Successful insertion of FavArt {{ fav_id: {favArt.FavId}, art_id: {favArt.ArtId} }}";
-            }
-            catch (Exception e)
-            {
-                return e + " [Artwork already saved in this collection.]";
+                    return $"Successful insertion of FavArt {{ fav_id: {favArt.FavId}, art_id: {favArt.ArtId} }}";
+                }
+                catch (Exception e)
+                {
+                    return e + " [Artwork already saved in this collection.]";
+                }
             }
         }
 
@@ -119,21 +123,24 @@ namespace ArtGalleryWebsite
         private string removeFromFavArt()
         {
             //FavQuery.RemoveFromFavArt();
-            try
+            using (UnitOfWork unitOfWork = new UnitOfWork())
             {
-                //return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
-                FavArt deleted = unitOfWork.FavArtRepository.Delete(favId, artId);
+                try
+                {
+                    //return "Affected " + Database.Delete(FavQuery.SqlQuery) + " row(s)";
+                    FavArt deleted = unitOfWork.FavArtRepository.Delete(favId, artId);
 
-                if (deleted == null) 
-                    throw new Exception($"Unable to delete FavArt {{ fav_id: {favId}, art_id: {artId} }}");
-                else
-                    unitOfWork.Save();
+                    if (deleted == null) 
+                        throw new Exception($"Unable to delete FavArt {{ fav_id: {favId}, art_id: {artId} }}");
+                    else
+                        unitOfWork.Save();
 
-                return $"Successful insertion of FavArt {{ fav_id: {favId}, art_id: {artId} }}";
-            }
-            catch (Exception e)
-            {
-                return e + " [Artwork already deleted from this collection.]";
+                    return $"Successful insertion of FavArt {{ fav_id: {favId}, art_id: {artId} }}";
+                }
+                catch (Exception e)
+                {
+                    return e + " [Artwork already deleted from this collection.]";
+                }
             }
         }
 
