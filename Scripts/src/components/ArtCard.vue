@@ -51,7 +51,7 @@
         :art="art"
         :saved="savedState"
         transition="right-0 top-14"
-        btn="MainContent_btnSaveArt"
+        btn="home"
       />
     </Popover>
     <p

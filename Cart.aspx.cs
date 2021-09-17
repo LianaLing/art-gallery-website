@@ -378,11 +378,15 @@ namespace ArtGalleryWebsite
         {
             validateShipBill();
             string alertContent = "";
-            if (!CardDetail.Visible && !cardDetailSubmitted)
+            if (!CardDetail.Visible && !cardDetailSubmitted && rdbtnCard.Checked)
             {
                 CardDetail.Visible = true;
                 // Prefill with card if already have
                 return;
+            }
+            else
+            {
+                cardDetailSubmitted = true;
             }
 
             if (cardDetailSubmitted)
