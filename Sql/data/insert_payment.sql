@@ -1,0 +1,7 @@
+-- Inserted rows
+--INSERT INTO [Payment] VALUES ('1234.56', 'MYR', 'Bought an artwork', 'succeeded', '12.34', NULL, '2020-10-11', '2020-10-11', '2020-10-11', '1');
+--INSERT INTO [Payment] VALUES ('8888', 'MYR', 'Bought four artworks', 'succeeded', '88', NULL, '2020-10-11', '2020-10-11', '2020-10-11', '2');
+--INSERT INTO [Payment] VALUES ('5555', 'MYR', 'Processing', 'processing', '55', NULL, NULL, '2020-10-11', '2020-10-11', NULL);
+--INSERT INTO [Payment] VALUES ('541', 'MYR', NULL, 'succeeded', '5.41', NULL, '2020-10-11', '2020-10-11', '2020-10-11', '6');
+--INSERT INTO [Payment] VALUES ('666', 'MYR', 'Canceled', 'canceled', '6.60', NULL, NULL, '2020-10-11', '2020-10-11', NULL);
+--INSERT INTO [Payment] VALUES ('999', 'MYR', NULL, 'canceled', '9.90', NULL, NULL, '2020-10-11', '2020-10-11', NULL);

@@ -1,0 +1,7 @@
+-- Inserted data
+-- INSERT INTO [PaymentMethod] VALUES ('card', '2020-10-11', '2020-10-11', '1', '1', '1');
+-- INSERT INTO [PaymentMethod] VALUES ('card', '2020-10-11', '2020-10-11', '2', '2', '2');
+-- INSERT INTO [PaymentMethod] VALUES ('card', '2020-10-11', '2020-10-11', '8', '3', '3');
+-- INSERT INTO [PaymentMethod] VALUES ('card', '2020-10-11', '2020-10-11', '9', '4', '4');
+-- INSERT INTO [PaymentMethod] VALUES ('card', '2020-10-11', '2020-10-11', '10', '5', '5');
+-- INSERT INTO [PaymentMethod] VALUES ('card', '2020-10-11', '2020-10-11', '11', '6', '6');

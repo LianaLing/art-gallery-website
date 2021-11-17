@@ -1,0 +1,7 @@
+-- Inserted data
+--INSERT INTO [Address] VALUES ('Malaysia', 'Selangor', 'Shah Alam', '55, Jalan Anggerik Eria, 31/44', NULL, '40460', '2020-10-11', '2020-10-11');
+--INSERT INTO [Address] VALUES ('Malaysia', 'Sarawak', 'Sibu', '55, Jalan Anggerik Eria, 31/44', NULL, '40460', '2020-10-11', '2020-10-11');
+--INSERT INTO [Address] VALUES ('Malaysia', 'Sabah', 'Kota Kinabalu', '55, Jalan Anggerik Eria, 31/44', NULL, '40460', '2020-10-11', '2020-10-11');
+--INSERT INTO [Address] VALUES ('Malaysia', 'Sarawak', 'Kuching', '55, Jalan Anggerik Eria, 31/44', NULL, '40460', '2020-10-11', '2020-10-11');
+--INSERT INTO [Address] VALUES ('Malaysia', 'Selangor', 'Klang', '55, Jalan Anggerik Eria, 31/44', NULL, '40460', '2020-10-11', '2020-10-11');
+--INSERT INTO [Address] VALUES ('Malaysia', 'Selangor', 'Shah Alam', '55, Jalan Anggerik Eria, 31/44', NULL, '40460', '2020-10-11', '2020-10-11');

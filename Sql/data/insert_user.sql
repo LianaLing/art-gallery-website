@@ -1,0 +1,12 @@
+-- Inserted rows
+-- INSERT INTO [User] VALUES ('liana', '1', 'Liana Ling', '020429101540', '2002-04-29', 'https://avatars.githubusercontent.com/u/68136684?v=4', '0172801215', 'liana@gmail.com', '1');
+-- INSERT INTO [User] VALUES ('marcus', '1', 'Marcus Lee', '000000000000', '2002-04-29', 'https://avatars.githubusercontent.com/u/59773847?v=4', '0172801215', 'marcus@gmail.com', '2');
+-- INSERT INTO [User] VALUES ('francois', '1', 'Fran�ois Boucher', '000000000000', '2002-04-29', 'https://upload.wikimedia.org/wikipedia/commons/f/f9/Boucher_par_Gustav_Lundberg_1741.jpg', '0172801215', 'francois@gmail.com', '3');
+-- INSERT INTO [User] VALUES ('vangogh', '1', 'Vincent van Gogh', '000000000000', '2002-04-29', '', '0172801215', 'vangogh@gmail.com', '4');
+-- INSERT INTO [User] VALUES ('monet', '1', 'Claude Monet', '000000000000', '2002-04-29', '', '0172801215', 'monet@gmail.com', '5');
+-- INSERT INTO [User] VALUES ('michelangelo', '1', 'Michelangelo', '000000000000', '2002-04-29', '', '0172801215', 'michelangelo@gmail.com', '6');
+-- INSERT INTO [User] VALUES ('munch', '1', 'Edvard Munch', '000000000000', '2002-04-29', '', '0172801215', 'munch@gmail.com', '1021');
+-- INSERT INTO [User] VALUES ('yanwen', '1', 'Yan Mun', '000000000000', '2002-04-29', '', '0172801215', 'yanwen@gmail.com', NULL);
+-- INSERT INTO [User] VALUES ('jingpei', '1', 'Jing Pei', '000000000000', '2002-04-29', '', '0172801215', 'jingpei@gmail.com', NULL);
+-- INSERT INTO [User] VALUES ('jasmine', '1', 'Jasmine', '000000000000', '2002-04-29', '', '0172801215', 'jasminejingpei@gmail.com', NULL);
+-- INSERT INTO [User] VALUES ('ron', '1', 'Ron Weasley', '000000000000', '2002-04-29', '', '0172801215', 'ron@gmail.com', NULL);
